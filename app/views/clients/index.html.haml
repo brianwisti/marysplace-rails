@@ -1,0 +1,11 @@
+= content_for(:title) do
+  Clients
+
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+= paginate @clients
+
+= render @clients
+
+= paginate @clients

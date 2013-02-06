@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Mary's Place<% if content_for? :title %>: <%= yield :title %><% end %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+        <%= stylesheet_link_tag "application", media: "all" %>
+        <%= csrf_meta_tags %>
+    </head>
+    <body>
+        <%= render partial: "layouts/site-navbar" %>
+        <div class="container-fluid">
+            <% if content_for? :title %>
+                <div class="row-fluid">
+                    <h2><%= yield :title %></h2>
+                </div>
+            <% end %>
+            <div class="row-fluid">
+                <% if content_for? :sidebar %>
+                    <div class="span3">
+                        <div class="well sidebar-nav">
+                            <%= yield :sidebar %>
+                        </div>
+                    </div>
+                    <div class="span9">
+                        <div class="log">
+                            <% if notice %><p id="notice"class="text-info"><%= notice %></p><% end %>
+                            <%= yield %>
+                        </div>
+                    </div>
+                <% else %>
+                    <div class="hero-unit">
+                        <div class="log">
+                            <% if notice %><p id="notice"class="text-info"><%= notice %></p><% end %>
+                            <%= yield %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+        <footer>
+            <p>Mary's Place 2012</p>
+        </footer>
+        <%= javascript_include_tag "jquery" %>
+        <%= javascript_include_tag "jquery-ui" %>
+        <script src="/bootstrap/js/bootstrap.js"></script>
+        <%= javascript_include_tag :application %>
+    </body>
+</html>

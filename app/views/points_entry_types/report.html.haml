@@ -1,0 +1,27 @@
+= content_for(:title) do
+  = @points_entry_type.name
+  Report
+
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+%p Looking at #{@count} entries.
+%p #{number_with_delimiter(@total_points)} total points
+
+- if @monthly_points
+  %p From #{@start_date} to #{@end_date}
+  %table.table
+    %thead
+      %tr
+        %th Span
+        %th Total
+    %tbody
+      - @monthly_points.each do |k,v|
+        %tr
+          %td= link_to k, report_points_entry_type_path(@points_entry_type, p: k)
+          %td= number_with_delimiter(v)
+- elsif @points_entries
+  %p 
+    Back to
+    = link_to "report.", report_points_entry_type_path(@points_entry_type)
+  = render 'points_entries/as_table', points_entries: @points_entries

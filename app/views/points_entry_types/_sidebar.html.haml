@@ -1,0 +1,9 @@
+%ul.nav.nav-list
+  %li= link_to "#{@points_entry_type.name} Report", report_points_entry_type_path(@points_entry_type)
+  - if @points_entry_type
+    - if can? :edit, @points_entry_type
+      %li= link_to "Edit #{@points_entry_type.name}", edit_points_entry_type_path(@points_entry_type)
+    - if can? :create, PointsEntry
+      %li= link_to "Log #{@points_entry_type.name} Activity", entry_points_entry_type_path(@points_entry_type)
+  - if can? :create, PointsEntryType
+    %li= link_to "Create Points Entry Type", new_points_entry_type_path

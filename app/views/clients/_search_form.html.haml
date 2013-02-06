@@ -1,0 +1,6 @@
+- search_query = nil if local_assigns[:search_query].nil?
+= form_tag(search_clients_path, method: :get, class: "form-search") do
+  = text_field_tag 'q', search_query, placeholder: "Search for a client...",
+    class: "input-medium search-query"
+  = button_tag 'Search', type: "submit", 
+    class: "btn"

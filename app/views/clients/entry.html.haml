@@ -1,0 +1,8 @@
+= content_for(:title) do
+  Log Points for
+  = @client.current_alias
+
+=content_for(:sidebar) do
+  = render 'sidebar'
+
+= render 'points_entries/form'

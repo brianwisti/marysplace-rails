@@ -1,0 +1,30 @@
+- hide ||= []
+%table.table.entries
+  %thead
+    %tr
+      %th Performed On
+      - unless hide.include? :client
+        %th Client
+      - unless hide.include? :points_entry_type
+        %th Type
+      %th Points
+      %th Added By
+      %th Actions
+    %tbody
+    - points_entries.each do |entry|
+      %tr
+        %td= entry.performed_on
+        - unless hide.include? :client
+          %td= link_to entry.client.current_alias, entry.client
+        - unless hide.include? :points_entry_type
+          %td= link_to entry.points_entry_type.name, entry.points_entry_type
+        %td
+          - if entry.bailed
+            %span.text-error Bailed!
+          = entry.points
+        %td= link_to entry.added_by.login, entry.added_by
+        %td
+          = link_to "View", entry
+          - if can? :manage, PointsEntry
+            = link_to "Change", edit_points_entry_path(entry)
+            = link_to "Remove", entry, method: :delete, confirm: "Are you sure?"

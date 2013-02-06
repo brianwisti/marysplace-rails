@@ -1,0 +1,39 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <% if current_user %>
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <%= link_to image_tag('marys-place-icon.png') + " Mary's Place", root_url, class: "brand" %>
+        <div class="btn-group pull-right">
+          <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+            <i class="icon-user"></i>
+            <%= current_user.login %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Profile", current_user %></li>
+            <li class="divider"></li>
+            <li><%= link_to "Sign Out", logout_url, method: :delete %></li>
+          </ul>
+        </div>
+        <div class="nav-collapse">
+          <ul class="nav">
+            <% sections.each do |section| %>
+              <% if section[:active] %>
+                <li class="active"><%= link_to section[:title], section[:url] %></li>
+              <% else %>
+                <li><%= link_to section[:title], section[:url] %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <%= link_to image_tag('marys-place-icon.png') + " Mary's Place", root_url, class: "brand" %>
+      <% end %>
+    </div>
+  </div>
+</div>

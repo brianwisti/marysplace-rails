@@ -1,0 +1,9 @@
+= content_for(:title) do
+  Log
+  = @points_entry_type.name
+  Activity
+
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+= render 'points_entries/form'

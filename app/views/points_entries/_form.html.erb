@@ -1,0 +1,70 @@
+<%= form_for(@points_entry) do |f| %>
+  <% if @points_entry.errors.any? -%>
+    <div id="error_explanation">
+      <h2><%= pluralize(@points_entry.errors.count, "error") %></h2>
+      <ul>
+        <% @points_entry.errors.full_messages.each do |msg| -%>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :client_id, class: 'control-label' %>
+      <div class="controls">
+        <% current_alias = if @points_entry.client.nil? then nil else @points_entry.client.current_alias end %>
+        <%= text_field_tag "current_alias", current_alias,
+          data: { provide: 'typeahead', field: 'points_entry_client_id' },
+          autocomplete: 'off',
+          class: 'client-typeahead' %>
+          <small><span class="help-block"><%= link_to "Add Client", new_client_path %></span></small>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :points_entry_type_id, class: 'control-label' %>
+      <div class="controls">
+        <% name = if @points_entry.points_entry_type.nil? then nil else @points_entry.points_entry_type.name end %>
+        <%= text_field_tag "points_entry_type", name,
+          data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points' },
+          autocomplete: 'off',
+          class: 'pointsentrytype-typeahead' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :points, class: 'control-label' %>
+      <div class="controls">
+        <% if @points_entry.points_entry_type.nil? -%>
+          <%= f.number_field :points, data: { default: 0 }, autocomplete: 'off' %>
+        <% else -%>
+          <%= f.number_field :points, data: { default: @points_entry.points_entry_type.default_points }, autocomplete: 'off' %>
+        <% end -%>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :bailed, class: 'checkbox' do -%>
+        <%= f.check_box :bailed, data: { field: 'points_entry_points', penalty: 100 }, class: 'bailed' -%>
+        Bailed
+      <% end -%>
+    </div>
+
+    <% unless @points_entry.new_record? -%>
+      <div class="control-group">
+	<%= f.label :performed_on, class: 'control-label' %>
+	<div class="controls">
+	  <%= f.date_select :performed_on %>
+	</div>
+      </div>
+    <% end -%>
+
+    <%= f.hidden_field :client_id %>
+    <%= f.hidden_field :points_entry_type_id %>
+    <div class="form-actions">
+      <%= f.submit class: "btn" %>
+    </div>
+  </fieldset>
+<% end %>

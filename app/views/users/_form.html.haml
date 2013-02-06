@@ -1,0 +1,29 @@
+= form_for @user do |f|
+  - if @user.errors.any?
+    .error_explanation
+      %h2
+        = pluralize @user.errors.count, "error"
+        prevented this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    %legend Account Details
+    .control-group
+      = f.label :login
+      = f.text_field :login
+    .control-group
+      = f.label :name
+      = f.text_field :name
+    .control-group
+      = f.label :email
+      = f.text_field :email
+    .control-group
+      - if f.object.new_record?
+        = f.label :password
+      - else
+        = f.label :password, "Change password"
+      = f.password_field :password
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation
+    = f.submit class: "btn"

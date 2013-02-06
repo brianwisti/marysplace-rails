@@ -1,0 +1,5 @@
+<% if can? :create, PointsEntry %>
+  <div class="summary">
+    <%= link_to "Log Points", new_points_entry_path, class: "btn btn-block" %>
+  </div>
+<% end %>

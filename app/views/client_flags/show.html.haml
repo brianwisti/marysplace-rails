@@ -1,0 +1,41 @@
+= content_for(:title) do
+  Flag for
+  = @client_flag.client.current_alias
+
+=content_for(:sidebar) do
+  = render 'sidebar'
+
+%p#notice= notice
+
+%p
+  %b Client:
+  = link_to @client_flag.client.current_alias, @client_flag.client
+%p
+  %b Created by:
+  = link_to @client_flag.created_by.login, @client_flag.created_by
+%p
+  %b Description:
+  = @client_flag.description
+%p
+  %b Consequence:
+  = @client_flag.consequence
+%p
+  %b Action required:
+  = @client_flag.action_required
+%p
+  %b Is blocking:
+  = @client_flag.is_blocking
+- if @client_flag.expires_on
+  %p
+    %b Expires on:
+    = @client_flag.expires_on
+- if @client_flag.resolved_on
+  %p
+    %b Resolved:
+    On
+    = @client_flag.resolved_on
+    by
+    = @client_flag.resolved_by.login
+  %p
+    %b Resolution:
+    = @client_flag.resolution || 'None given'

@@ -1,0 +1,10 @@
+= content_for(:title) do
+  Editing
+  = @client.current_alias
+
+= content_for(:sidebar) do
+  %ul.nav.nav-list
+    %li= link_to 'Show', @client
+
+= render 'form'
+

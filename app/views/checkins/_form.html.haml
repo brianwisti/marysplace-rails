@@ -1,0 +1,31 @@
+= form_for(@checkin, class: "form-inline") do |f|
+  -if @checkin.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@checkin.errors.count, "error")} prohibited this checkin from being saved:"
+      %ul
+        - @checkin.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    .control-group
+      = f.label :client_id, class: 'control-label'
+      .controls
+        - if @checkin.client
+          = text_field_tag "current_alias", @checkin.client.current_alias, 
+            data: { provide: 'typeahead', field: 'checkin_client_id' },
+            class: 'client-typeahead'
+        - else
+          = text_field_tag "current_alias", nil,
+            data: { provide: 'typeahead', field: 'checkin_client_id' },
+            class: 'client-typeahead'
+        = f.hidden_field :client_id
+    -unless @checkin.new_record?
+      .control-group
+        = f.label :checkin_at, class: 'control-label'
+        .controls
+          = f.datetime_select :checkin_at
+      .control-group
+        = f.label :notes, class: 'control-label'
+        .controls
+          = f.text_area :notes
+    .form-actions
+      = f.submit class: "btn"

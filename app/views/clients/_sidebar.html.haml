@@ -1,0 +1,15 @@
+%ul.nav.nav-list
+  = render 'search_form'
+  - if @client
+    - if can? :show, PointsEntry
+      %li= link_to "Points Log", entries_client_path(@client)
+    - if can? :show, Checkin
+      %li= link_to "Checkins", checkins_client_path(@client)
+    - if can? :show, ClientFlag
+      %li= link_to "Flags", flags_client_path(@client)
+    - if can? :create, PointsEntry
+      %li= link_to "Log Points for #{@client.current_alias}", entry_client_path(@client)
+    - if can? :edit, @client
+      %li= link_to "Edit #{@client.current_alias}", edit_client_path(@client)
+  - if can? :create, Client
+    %li= link_to "New Client", new_client_path

@@ -1,0 +1,16 @@
+.summary
+  .header
+    = link_to user.login, user
+    - if user == current_user
+      %em That's you!
+  .btn-toolbar
+    - if can? :edit, user
+      .btn-group
+        = link_to "Edit", edit_user_path(user),
+          class: "btn btn-mini"
+    - if user != current_user and can? :manage, User
+      .btn-group.roles-toggler{ data: { toggler: "buttons-checkbox" } }
+        = render 'roles-toggler', user: user, roles: @roles
+    - else
+      .btn-group{ data: { toggler: "buttons-checkbox" } }
+        = render 'roles-toggler', user: user, roles: @roles

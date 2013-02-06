@@ -1,0 +1,40 @@
+= form_for @client_flag do |f|
+  -if @client_flag.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@client_flag.errors.count, "error")} prohibited this client_flag from being saved:"
+      %ul
+        - @client_flag.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    .control-group
+      = f.label :client_id
+      .controls
+        - if @client_flag.client
+          = text_field_tag "current_alias", @client_flag.client.current_alias,
+            data: { provide: 'typeahead', field: 'client_flag_client_id' },
+            class: 'client-typeahead'
+        - else
+          = text_field_tag "current_alias", nil, 
+            data: { provide: 'typeahead', field: 'client_flag_client_id' },
+            class: 'client-typeahead'
+        = f.hidden_field :client_id
+    #flag-description-control.control-group
+      = f.label :description
+      .controls
+        = f.text_area :description
+    #flag-consequence-control.control-group
+      = f.label :consequence
+      .controls
+        = f.text_area :consequence
+    #flag-action-required-control.control-group
+      = f.label :action_required
+      .controls
+        = f.text_area :action_required
+    .control-group
+      = f.label :is_blocking, class: 'label'
+      = f.check_box :is_blocking
+    .control-group
+      = f.label :expires_on
+      .controls
+        = f.date_select :expires_on, include_blank: true
+    = f.submit 'Save'

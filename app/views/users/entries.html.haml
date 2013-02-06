@@ -1,0 +1,12 @@
+= content_for(:title) do
+  Points Logged by
+  = @user.login
+
+=content_for(:sidebar) do
+  = render 'sidebar'
+= paginate @entries
+
+= render 'points_entries/as_table', points_entries: @entries,
+  hide: [ :added_by ]
+
+= paginate @entries

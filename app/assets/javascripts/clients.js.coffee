@@ -1,0 +1,34 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+
+clients = []
+
+typeahead_options =
+  url: '/clients/search.json'
+  method: 'get'
+  displayField: 'current_alias'
+  preDispatch: (query) ->
+    return {
+      q: query
+    }
+  preProcess: (data) ->
+    if data.success == false
+      return false
+    clients = data
+    return data
+
+$clientTypeahead = $('.client-typeahead')
+if $clientTypeahead.length > 0
+  $clientTypeahead
+  .typeahead(ajax: typeahead_options)
+  .change () ->
+    selected_alias = $(this).val()
+    selected = $.grep(clients, (client, i) ->
+      client.current_alias == selected_alias)[0]
+    if selected
+      selected_id = selected.id
+      if selected_id
+        console.log(selected_id)
+        data_field = $(this).data('field')
+        $("##{data_field}").val(selected_id)

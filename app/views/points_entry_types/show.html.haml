@@ -1,0 +1,22 @@
+= content_for(:title) do 
+  = @points_entry_type.name
+
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+%dl
+  %dt Name
+  %dd= @points_entry_type.name
+  %dt Description
+  %dd= @points_entry_type.description
+  %dt Default Points
+  %dd= @points_entry_type.default_points
+  %dt Is Active?
+  %dd= @points_entry_type.is_active
+
+- if can? :show, PointsEntry
+  %h2 Log
+  = paginate @points_entries
+  = render 'points_entries/as_table', points_entries: @points_entries,
+    hide: [ :points_entry_type ]
+  = paginate @points_entries

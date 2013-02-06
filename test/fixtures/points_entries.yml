@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  client: amy_a
+  points_entry_type: dishes
+  performed_on: 2012-07-27
+  bailed: false
+  points: 1
+  added_by: admin
+
+two:
+  client: amy_a
+  points_entry_type: sweep
+  performed_on: 2012-07-27
+  bailed: false
+  points: 1
+  added_by: admin

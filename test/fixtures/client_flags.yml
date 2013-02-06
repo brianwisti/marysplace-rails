@@ -1,0 +1,30 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+blocked_carol_c:
+  client: carol_c
+  created_by: admin
+  description: MyText
+  consequence: MyText
+  action_required: MyText
+  is_blocking: true
+  expires_on: <%= 7.days.from_now %>
+
+one:
+  client: amy_a
+  created_by: admin
+  description: MyText
+  consequence: MyText
+  action_required: MyText
+  is_blocking: false
+  expires_on: <%= 30.days.from_now %>
+
+two:
+  client: beth_b
+  created_by: admin
+  description: MyText
+  consequence: MyText
+  action_required: MyText
+  is_blocking: false
+  expires_on: 2012-09-11
+  resolved_by: admin
+  resolved_on: 2012-09-11

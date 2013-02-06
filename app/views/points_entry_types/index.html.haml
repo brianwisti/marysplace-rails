@@ -1,0 +1,9 @@
+= content_for(:title) do
+  Points Entry Types
+
+- if can? :manage, PointsEntryType
+  = content_for(:sidebar) do
+    %ul.nav.nav-list
+      %li= link_to "New Entry Type", new_points_entry_type_path
+
+= render @points_entry_types

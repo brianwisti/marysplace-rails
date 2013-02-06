@@ -1,0 +1,10 @@
+= content_for(:title) do
+  Welcome
+
+= content_for(:sidebar) do
+  %ul.nav.nav-list
+    = render 'clients/search_form'
+
+= render 'client_flags'
+
+= render 'checkins'

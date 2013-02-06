@@ -1,0 +1,6 @@
+%ul.nav.nav-list
+  - if can? :manage, ClientFlag
+    - if @client_flag
+      %li= link_to "Edit", edit_client_flag_path(@client_flag)
+      %li= link_to "Resolve", resolve_client_flag_path(@client_flag)
+    %li= link_to "New", new_client_flag_path

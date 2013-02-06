@@ -1,0 +1,24 @@
+= form_for(@points_entry_type) do |f|
+  - if @points_entry_type.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@points_entry_type.errors.count, "error")
+        prevented this category from being created.
+      %ul
+        - @points_entry_type.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    .control-group
+      = f.label :name
+      = f.text_field :name
+    .control-group
+      = f.label :description
+      = f.text_field :description
+    .control-group
+      = f.label :default_points
+      = f.number_field :default_points
+    .control-group
+      = f.label :is_active, { class: "checkbox" } do
+        = f.check_box :is_active, class: "checkbox"
+        Is Active?
+    = f.submit class: "btn"

@@ -1,0 +1,33 @@
+= content_for(:title) do
+  Showing Entry
+
+= content_for(:sidebar) do
+  %ul.nav.nav-list
+    - if can? :edit, @points_entry
+      %li= link_to "Edit", edit_points_entry_path(@points_entry)
+    - if can? :create, PointsEntry
+      %li=link_to "New", new_points_entry_path
+
+- if notice
+  %p#notice
+    %span.label Notice
+    = notice
+  %p 
+    %span.label.label-info Info
+    = @points_entry.client.current_alias
+    now has 
+    = number_with_delimiter(@points_entry.client.point_balance)
+    points
+
+%dl
+  %dt Client
+  %dd= link_to @points_entry.client.current_alias, @points_entry.client
+  %dt Type
+  %dd= link_to @points_entry.points_entry_type.name, @points_entry.points_entry_type
+  %dt Performed On
+  %dd= @points_entry.performed_on
+  %dt Points
+  %dd= @points_entry.points
+  - if @points_entry.bailed
+    %dd
+      %em (Bailed)

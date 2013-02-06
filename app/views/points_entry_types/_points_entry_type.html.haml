@@ -1,0 +1,10 @@
+.summary
+  .header
+    - if points_entry_type.is_active
+      %strong= link_to points_entry_type.name, points_entry_type
+    - else points_entry_type.is_active
+      %em
+        = link_to points_entry_type.name, points_entry_type
+        (Inactive)
+    Default
+    = points_entry_type.default_points

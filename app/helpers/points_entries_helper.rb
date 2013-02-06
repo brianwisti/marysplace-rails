@@ -1,0 +1,2 @@
+module PointsEntriesHelper
+end

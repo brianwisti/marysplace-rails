@@ -1,0 +1,9 @@
+= content_for(:title) do
+  Client Flags
+
+= content_for(:sidebar) do
+  - if can? :create, ClientFlag
+    %ul.nav.nav-list
+      %li= link_to 'Add Flag', new_client_flag_path
+
+= render @client_flags

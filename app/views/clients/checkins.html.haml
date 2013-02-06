@@ -1,0 +1,16 @@
+= content_for(:title) do
+  Checkins for
+  = @client.current_alias
+
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+= render @client
+
+%h2 Checkins
+
+= paginate @checkins
+
+= render @checkins
+
+= paginate @checkins

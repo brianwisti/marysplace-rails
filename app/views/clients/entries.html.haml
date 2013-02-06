@@ -1,0 +1,17 @@
+= content_for(:title) do
+  Points Entries for
+  = @client.current_alias
+
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+= render @client
+
+%h2 Entries
+
+= paginate @entries
+
+= render 'points_entries/as_table', points_entries: @entries,
+  hide: [ :client ]
+
+= paginate @entries
