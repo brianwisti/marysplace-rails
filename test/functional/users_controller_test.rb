@@ -73,10 +73,23 @@ class UsersControllerTest < ActionController::TestCase
     end
   end
 
-  test "admin can update any user" do
+  test "users can update themselves" do
     UserSession.create users(:staff)
     put :update, id: users(:staff), user: { login: 'newlogin' }
     assert_equal "newlogin", assigns(:user).login
+  end
+
+  test "admin can update anyone" do
+    UserSession.create users(:admin)
+    put :update, id: users(:staff), user: { login: 'newlogin' }
+    assert_equal "newlogin", assigns(:user).login
+  end
+
+  test "user cannot update just any user" do
+    UserSession.create users(:staff)
+    assert_raises(CanCan::AccessDenied) {
+      put :update, id: users(:admin), user: { login: 'newlogin' }
+    }
   end
 
 end
