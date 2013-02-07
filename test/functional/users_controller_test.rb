@@ -15,6 +15,11 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to new_user_session_path
   end
 
+  test "anonymous should not edit users" do
+    get :edit, id: users(:admin)
+    assert_redirected_to new_user_session_path
+  end
+
   test "should show user" do
     UserSession.create users(:admin)
     get :show, id: users(:admin)
@@ -24,6 +29,12 @@ class UsersControllerTest < ActionController::TestCase
   test "shows specified user to user" do
     UserSession.create users(:admin)
     get :show, id: users(:staff)
+    assert_response :success
+  end
+
+  test "users can edit their own profile" do
+    UserSession.create users(:admin)
+    get :edit, id: users(:admin)
     assert_response :success
   end
 

@@ -34,11 +34,10 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if params[:id]
+    @user = User.find(params[:id])
+    
+    if @user != @current_user
       authorize! :manage, User
-      @user = User.find(params[:id])
-    else
-      @user = @current_user
     end
   end
 
