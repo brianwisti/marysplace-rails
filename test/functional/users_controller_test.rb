@@ -92,4 +92,13 @@ class UsersControllerTest < ActionController::TestCase
     }
   end
 
+  test "a bad update sends user back to the profile" do
+    UserSession.create users(:staff)
+    put :update, id: users(:staff), user: { 
+      password:              'wook',
+      password_confirmation: 'wick'
+    }
+    assert_template :edit
+  end
+
 end
