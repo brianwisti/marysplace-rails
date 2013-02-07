@@ -10,8 +10,8 @@ class Ability
     end
 
     if user.role? :staff
-      can :manage, User
       can :manage, Client
+      can :show, User
       can :show, PointsEntryType
       can :manage, PointsEntry
       can :manage, Checkin

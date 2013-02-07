@@ -38,6 +38,13 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "normal users cannot edit other profiles" do
+    UserSession.create users(:staff)
+    assert_raises(CanCan::AccessDenied) {
+      get :edit, id: users(:admin)
+    }
+  end
+
   test "should get new" do
     get :new
     assert_response :success
