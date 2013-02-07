@@ -42,16 +42,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    if params[:id]
+    @user = User.find(params[:id])
+
+    if @user != @current_user
       authorize! :manage, User
-      @user = User.find(params[:id])
-    else
-      @user = @current_user # makes our views "cleaner" and more consistent
     end
 
     if @user.update_attributes(params[:user])
       flash[:notice] = "Account updated!"
-      redirect_to account_url
+      redirect_to @user
     else
       render action: :edit
     end

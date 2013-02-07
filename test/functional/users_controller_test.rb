@@ -73,4 +73,10 @@ class UsersControllerTest < ActionController::TestCase
     end
   end
 
+  test "admin can update any user" do
+    UserSession.create users(:staff)
+    put :update, id: users(:staff), user: { login: 'newlogin' }
+    assert_equal "newlogin", assigns(:user).login
+  end
+
 end
