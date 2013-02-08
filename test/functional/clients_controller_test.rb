@@ -54,5 +54,8 @@ class ClientsControllerTest < ActionController::TestCase
     q = "amy"
     get :search, q: q
     assert_response :success
+    
+    get :search, format: :json, q: q
   end
+
 end
