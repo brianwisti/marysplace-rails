@@ -49,4 +49,10 @@ class ClientsControllerTest < ActionController::TestCase
 
     assert_redirected_to clients_path
   end
+
+  test "should search client aliases" do
+    q = "amy"
+    get :search, q: q
+    assert_response :success
+  end
 end

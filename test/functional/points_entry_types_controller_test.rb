@@ -53,4 +53,10 @@ class PointsEntryTypesControllerTest < ActionController::TestCase
 
     assert_redirected_to points_entry_types_path
   end
+
+  test "should perform a search" do
+    q = "dishes"
+    get :search, format: :json, q: q
+    assert_response :success
+  end
 end
