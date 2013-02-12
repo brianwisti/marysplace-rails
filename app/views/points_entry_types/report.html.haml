@@ -14,12 +14,14 @@
     %thead
       %tr
         %th Span
-        %th Total
+        %th Number Entries
+        %th Total Points
     %tbody
-      - @monthly_points.each do |k,v|
+      - @monthly_points.each do |entry|
         %tr
-          %td= link_to k, report_points_entry_type_path(@points_entry_type, p: k)
-          %td= number_with_delimiter(v)
+          %td= Date.parse(entry.month).strftime("%Y %B")
+          %td= entry.entries
+          %td= number_with_delimiter(entry.points)
 - elsif @points_entries
   %p 
     Back to

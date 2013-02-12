@@ -27,12 +27,11 @@ class PointsEntry < ActiveRecord::Base
     type = args[:type]
     from = args[:from]
     to   = args[:to]
-    h = select('performed_on, sum(points)')
+    h = select("date_trunc('month', performed_on) as month, sum(points) as points, count(id) as entries")
       .where(performed_on: from..to,
              points_entry_type_id: type)
-      .group('performed_on')
-      .order('performed_on')
-      .calculate(:sum, :points)
+      .group('month')
+      .order('month')
     return h
   end
 end
