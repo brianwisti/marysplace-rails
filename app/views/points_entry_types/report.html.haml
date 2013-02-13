@@ -1,7 +1,12 @@
 = content_for(:title) do
   = @points_entry_type.name
   Report for
-  = @year
+  - if @day > 0
+    = @span.strftime("%d %B %Y")
+  - elsif @month > 0
+    = @span.strftime("%B %Y")
+  -else
+    = @span.strftime("%Y")
 
 = content_for(:sidebar) do
   = render 'sidebar'
@@ -18,12 +23,19 @@
     %li.active= link_to @year, annual_report_points_entry_type_path({ id: @points_entry_type, year: @year })
     %li= link_to @next_year.year, annual_report_points_entry_type_path({ id: @points_entry_type, year: @next_year.year })
 
-- if @month
-  .pagination.pagination-large.pagination-centered
+- if @month > 0
+  .pagination.pagination-centered
     %ul
       %li= link_to @last_month.strftime("%Y %b"), monthly_report_points_entry_type_path({ id: @points_entry_type, year: @last_month.year, month: @last_month.month })
       %li.active= link_to @span.strftime("%Y %b"), monthly_report_points_entry_type_path({ id: @points_entry_type, year: @span.year, month: @span.month })
       %li= link_to @next_month.strftime("%Y %b"), monthly_report_points_entry_type_path({ id: @points_entry_type, year: @next_month.year, month: @next_month.month })
+
+- if @day > 0
+  .pagination.pagination-small.pagination-centered
+    %ul
+      %li= link_to @last_day.strftime("%Y %b %d"), daily_report_points_entry_type_path({ id: @points_entry_type, year: @last_day.year, month: @last_day.month, day: @last_day.day })
+      %li.active= link_to @span.strftime("%Y %b %d"), daily_report_points_entry_type_path({ id: @points_entry_type, year: @span.year, month: @span.month })
+      %li= link_to @next_day.strftime("%Y %b %d"), daily_report_points_entry_type_path({ id: @points_entry_type, year: @next_day.year, month: @next_day.month, day: @next_day.day })
 
 %table.table
   %thead
@@ -33,15 +45,22 @@
       %th Total Points
   %tbody
     = yield :totals
-    - @rows.each do |entry|
-      - entry_date = Date.parse(entry.span)
-      %tr
-        %td
-          - if @month
-            = entry_date.strftime("%Y %B %d")
-          - else
-            = link_to entry_date.strftime("%Y %B"),
-              monthly_report_points_entry_type_path({ id: @points_entry_type.id, year: entry_date.year, month: entry_date.month})
-        %td= entry.entries
-        %td= number_with_delimiter(entry.points)
-    = yield :totals
+    - if @rows
+      - @rows.each do |entry|
+        - entry_date = Date.parse(entry.span)
+        %tr
+          %td
+            - if @month > 0
+              = link_to entry_date.strftime("%Y %B %d"),
+                daily_report_points_entry_type_path({ id: @points_entry_type.id, year: entry_date.year, month: entry_date.month, day: entry_date.day})
+            - else
+              = link_to entry_date.strftime("%Y %B"),
+                monthly_report_points_entry_type_path({ id: @points_entry_type.id, year: entry_date.year, month: entry_date.month})
+          %td= entry.entries
+          %td= number_with_delimiter(entry.points)
+      = yield :totals
+
+- if @entries and @entries.length > 0
+  = render 'points_entries/as_table', points_entries: @entries,
+    hide: [ :points_entry_type ]
+

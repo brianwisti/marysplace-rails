@@ -117,12 +117,24 @@ class PointsEntryTypesController < ApplicationController
   def report
     @points_entry_type = PointsEntryType.find(params[:id])
     now = Date.today
-    @year = params[:year].to_i || now.year
+    @year = params[:year] || now.year
+    @year = @year.to_i
+    @month = params[:month].to_i
+    @day = params[:day].to_i
 
-    if params[:month]
-      @month = params[:month].to_i
-      @span = Date.new(@year, @month, 1)
-      @rows = @points_entry_type.points_entries.per_day_in(@year, @month)
+    if @month > 0
+      if @day > 0
+        @span = Date.new(@year, @month, @day)
+        @entries = @points_entry_type.points_entries.where('performed_on = ?', @span)
+        @last_day = @span - 1.day
+        @next_day = @span + 1.day
+        @total_points = @entries.inject(0) { |sum, entry| sum += entry.points }
+        @total_entries = @entries.length
+      else
+        @span = Date.new(@year, @month, 1)
+        @rows = @points_entry_type.points_entries.per_day_in(@year, @month)
+      end
+
       @last_month = @span - 1.month
       @next_month = @span + 1.month
     else
@@ -133,8 +145,10 @@ class PointsEntryTypesController < ApplicationController
     @last_year = @span - 1.year
     @next_year = @span + 1.year
 
-    @total_points = @rows.inject(0)  { |sum, row| sum += row.points }
-    @total_entries = @rows.inject(0) { |sum, row| sum += row.entries.to_i }
+    if @rows
+      @total_points = @rows.inject(0)  { |sum, row| sum += row.points }
+      @total_entries = @rows.inject(0) { |sum, row| sum += row.entries.to_i }
+    end
 
     respond_to do |format|
       format.html
