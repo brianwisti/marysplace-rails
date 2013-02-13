@@ -19,6 +19,12 @@ Marysplace::Application.routes.draw do
 
     member do
       get 'entry'
+      get 'report/:year/:month' => 'points_entry_types#report',
+        constraints: {
+          year: %r/\d{4}/,
+          month: %r/\d\d?/,
+        },
+        as: 'monthly_report'
       get 'report/:year' => 'points_entry_types#report', 
         constraints: {
           year: %r/\d{4}/,

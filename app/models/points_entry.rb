@@ -26,23 +26,21 @@ class PointsEntry < ActiveRecord::Base
   def self.per_month_in(year)
     start = Date.new(year.to_i, 1, 1)
     finish = start.end_of_year
+    self.report_for_span(start, finish, 'month')
+  end
 
-    select("date_trunc('month', performed_on) as month, sum(points) as points, count(id) as entries")
+  def self.per_day_in(year, month)
+    start = Date.new(year.to_i, month.to_i, 1)
+    finish = start.end_of_month
+    self.report_for_span(start, finish, 'day')
+  end
+
+  def self.report_for_span(start, finish, span)
+    return unless %w{month day}.include? span
+    select("date_trunc('#{span}', performed_on) as span, sum(points) as points, count(id) as entries")
       .where(performed_on: start..finish)
-      .group('month')
-      .order('month')
+      .group('span')
+      .order('span')
   end
 
-
-  def self.sum_by_month(args)
-    type = args[:type]
-    from = args[:from]
-    to   = args[:to]
-    h = select("date_trunc('month', performed_on) as month, sum(points) as points, count(id) as entries")
-      .where(performed_on: from..to,
-             points_entry_type_id: type)
-      .group('month')
-      .order('month')
-    return h
-  end
 end

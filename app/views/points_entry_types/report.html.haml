@@ -1,6 +1,7 @@
 = content_for(:title) do
   = @points_entry_type.name
-  Report
+  Report for
+  = @year
 
 = content_for(:sidebar) do
   = render 'sidebar'
@@ -13,10 +14,17 @@
 
 .pagination.pagination-large.pagination-centered
   %ul
-    %li= link_to @year.to_i - 1, annual_report_points_entry_type_path({ id: @points_entry_type, year: @year.to_i - 1 })
-    %li.active
-      %a(href='#')= @year
-    %li= link_to @year.to_i + 1, annual_report_points_entry_type_path({ id: @points_entry_type, year: @year.to_i + 1 })
+    %li= link_to @last_year.year, annual_report_points_entry_type_path({ id: @points_entry_type, year: @last_year.year })
+    %li.active= link_to @year, annual_report_points_entry_type_path({ id: @points_entry_type, year: @year })
+    %li= link_to @next_year.year, annual_report_points_entry_type_path({ id: @points_entry_type, year: @next_year.year })
+
+- if @month
+  .pagination.pagination-large.pagination-centered
+    %ul
+      %li= link_to @last_month.strftime("%Y %b"), monthly_report_points_entry_type_path({ id: @points_entry_type, year: @last_month.year, month: @last_month.month })
+      %li.active= link_to @span.strftime("%Y %b"), monthly_report_points_entry_type_path({ id: @points_entry_type, year: @span.year, month: @span.month })
+      %li= link_to @next_month.strftime("%Y %b"), monthly_report_points_entry_type_path({ id: @points_entry_type, year: @next_month.year, month: @next_month.month })
+
 %table.table
   %thead
     %tr
@@ -26,8 +34,14 @@
   %tbody
     = yield :totals
     - @rows.each do |entry|
+      - entry_date = Date.parse(entry.span)
       %tr
-        %td= Date.parse(entry.month).strftime("%Y %B")
+        %td
+          - if @month
+            = entry_date.strftime("%Y %B %d")
+          - else
+            = link_to entry_date.strftime("%Y %B"),
+              monthly_report_points_entry_type_path({ id: @points_entry_type.id, year: entry_date.year, month: entry_date.month})
         %td= entry.entries
         %td= number_with_delimiter(entry.points)
     = yield :totals

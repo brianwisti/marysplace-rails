@@ -117,10 +117,22 @@ class PointsEntryTypesController < ApplicationController
   def report
     @points_entry_type = PointsEntryType.find(params[:id])
     now = Date.today
-    @year = params[:year] || now.year
+    @year = params[:year].to_i || now.year
 
-    # TODO: Replace with actual report generation
-    @rows = @points_entry_type.points_entries.per_month_in(@year)
+    if params[:month]
+      @month = params[:month].to_i
+      @span = Date.new(@year, @month, 1)
+      @rows = @points_entry_type.points_entries.per_day_in(@year, @month)
+      @last_month = @span - 1.month
+      @next_month = @span + 1.month
+    else
+      @span = Date.new(@year, 1, 1)
+      @rows = @points_entry_type.points_entries.per_month_in(@year)
+    end
+
+    @last_year = @span - 1.year
+    @next_year = @span + 1.year
+
     @total_points = @rows.inject(0)  { |sum, row| sum += row.points }
     @total_entries = @rows.inject(0) { |sum, row| sum += row.entries.to_i }
 
