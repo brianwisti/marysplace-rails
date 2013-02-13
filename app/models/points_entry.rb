@@ -23,6 +23,17 @@ class PointsEntry < ActiveRecord::Base
     self.performed_on ||= Date.today
   end
 
+  def self.per_month_in(year)
+    start = Date.new(year.to_i, 1, 1)
+    finish = start.end_of_year
+
+    select("date_trunc('month', performed_on) as month, sum(points) as points, count(id) as entries")
+      .where(performed_on: start..finish)
+      .group('month')
+      .order('month')
+  end
+
+
   def self.sum_by_month(args)
     type = args[:type]
     from = args[:from]

@@ -5,25 +5,29 @@
 = content_for(:sidebar) do
   = render 'sidebar'
 
-%p Looking at #{@count} entries.
-%p #{number_with_delimiter(@total_points)} total points
+= content_for(:totals) do
+  %tr.info
+    %td Total
+    %td= number_with_delimiter(@total_entries)
+    %td= number_with_delimiter(@total_points)
 
-- if @monthly_points
-  %p From #{@start_date} to #{@end_date}
-  %table.table
-    %thead
+.pagination.pagination-large.pagination-centered
+  %ul
+    %li= link_to @year.to_i - 1, annual_report_points_entry_type_path({ id: @points_entry_type, year: @year.to_i - 1 })
+    %li.active
+      %a(href='#')= @year
+    %li= link_to @year.to_i + 1, annual_report_points_entry_type_path({ id: @points_entry_type, year: @year.to_i + 1 })
+%table.table
+  %thead
+    %tr
+      %th Span
+      %th Number Entries
+      %th Total Points
+  %tbody
+    = yield :totals
+    - @rows.each do |entry|
       %tr
-        %th Span
-        %th Number Entries
-        %th Total Points
-    %tbody
-      - @monthly_points.each do |entry|
-        %tr
-          %td= Date.parse(entry.month).strftime("%Y %B")
-          %td= entry.entries
-          %td= number_with_delimiter(entry.points)
-- elsif @points_entries
-  %p 
-    Back to
-    = link_to "report.", report_points_entry_type_path(@points_entry_type)
-  = render 'points_entries/as_table', points_entries: @points_entries
+        %td= Date.parse(entry.month).strftime("%Y %B")
+        %td= entry.entries
+        %td= number_with_delimiter(entry.points)
+    = yield :totals

@@ -116,23 +116,13 @@ class PointsEntryTypesController < ApplicationController
   # GET /points_entry_types/1/report.json
   def report
     @points_entry_type = PointsEntryType.find(params[:id])
-    @performed_on = params[:p] || ''
+    now = Date.today
+    @year = params[:year] || now.year
 
     # TODO: Replace with actual report generation
-    @points_entries = @points_entry_type.points_entries
-
-    if @performed_on != ''
-      @points_entries = @points_entries.where(performed_on: @performed_on)
-    else
-      @start_date = @points_entries.first.performed_on
-      @end_date = @points_entries.last.performed_on
-      @monthly_points = @points_entries.sum_by_month(type: @points_entry_type.id,
-                                                     from: @start_date,
-                                                     to:   @end_date)
-    end
-
-    @count = @points_entries.count
-    @total_points = @points_entries.sum(:points)
+    @rows = @points_entry_type.points_entries.per_month_in(@year)
+    @total_points = @rows.inject(0)  { |sum, row| sum += row.points }
+    @total_entries = @rows.inject(0) { |sum, row| sum += row.entries.to_i }
 
     respond_to do |format|
       format.html
