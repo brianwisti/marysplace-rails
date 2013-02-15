@@ -18,8 +18,8 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
 
     if @user.save
-      flash[:notice] = "Account registered!"
-      redirect_back_or_default root_path
+      flash[:notice] = "User created!"
+      redirect_to @user
     else
       render :action => :new
     end

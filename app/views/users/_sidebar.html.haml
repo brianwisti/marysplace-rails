@@ -1,6 +1,9 @@
 %ul.nav.nav-list
-  %li= link_to "Show", @user
-  - if can? :edit, @user
-    %li= link_to "Edit Account", edit_user_path(@user)
-  - if can? :show, PointsEntry
-    %li= link_to "Points Logged", entries_user_path(@user)
+  - if can?(:manage, User)
+    %li= link_to "Create User", new_user_path
+    - if @user
+      %li= link_to "Show", @user
+      - if can? :edit, @user
+        %li= link_to "Edit Account", edit_user_path(@user)
+      - if can? :show, PointsEntry
+        %li= link_to "Points Logged", entries_user_path(@user)
