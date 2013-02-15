@@ -39,18 +39,34 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "normal users cannot edit other profiles" do
-    UserSession.create users(:staff)
+    UserSession.create users(:front_desk)
+
     assert_raises(CanCan::AccessDenied) {
       get :edit, id: users(:admin)
     }
   end
 
   test "should get new" do
+    UserSession.create users(:admin)
     get :new
     assert_response :success
   end
 
+  test "should not allow anonymous creation of new users" do
+    attributes = {
+      login:                 'newuser',
+      password:              'password',
+      password_confirmation: 'password'
+    }
+
+    assert_difference('User.count', 0) do
+      post :create, user: attributes
+    end
+  end
+
   test "should create a new user" do
+    UserSession.create users(:admin)
+
     attributes = {
       login:                 'newuser',
       password:              'password',
@@ -87,9 +103,9 @@ class UsersControllerTest < ActionController::TestCase
 
   test "user cannot update just any user" do
     UserSession.create users(:staff)
-    assert_raises(CanCan::AccessDenied) {
-      put :update, id: users(:admin), user: { login: 'newlogin' }
-    }
+    old_login = users(:admin).login
+    put :update, id: users(:admin), user: { login: 'newlogin' }
+    assert_equal old_login, users(:admin).login
   end
 
   test "a bad update sends user back to the profile" do

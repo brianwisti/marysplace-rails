@@ -11,7 +11,7 @@ class Ability
 
     if user.role? :staff
       can :manage, Client
-      can :show, User
+      can :manage, User
       can :show, PointsEntryType
       can :manage, PointsEntry
       can :manage, Checkin
