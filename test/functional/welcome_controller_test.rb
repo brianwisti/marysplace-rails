@@ -23,18 +23,6 @@ class WelcomeControllerTest < ActionController::TestCase
     end
   end
 
-  test "Staff navbar" do
-    UserSession.create users(:staff)
-    get :index
-    assert_response :success
-
-    assert_select 'div.navbar' do
-      assert_select 'ul.nav' do
-        assert_select 'li', 6
-      end
-    end
-  end
-
   test "Front Desk navbar" do
     UserSession.create users(:front_desk)
     get :index

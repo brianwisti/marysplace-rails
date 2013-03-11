@@ -21,7 +21,7 @@ class CheckinsControllerTest < ActionController::TestCase
 
   test "should create checkin" do
     assert_difference('Checkin.count') do
-      post :create, checkin: { client_id: @checkin.client.id, user_id: @checkin.user.id, checkin_at: @checkin.checkin_at, notes: @checkin.notes }
+      post :create, checkin: { client_id: @checkin.client.id, user_id: @checkin.user.id, checkin_at: Time.now, notes: @checkin.notes }
     end
 
     assert_redirected_to new_checkin_path
@@ -38,7 +38,7 @@ class CheckinsControllerTest < ActionController::TestCase
   end
 
   test "should update checkin" do
-    put :update, id: @checkin, checkin: { checkin_at: @checkin.checkin_at, notes: @checkin.notes }
+    put :update, id: @checkin, checkin: { checkin_at: Time.now, notes: @checkin.notes }
     assert_redirected_to checkin_path(assigns(:checkin))
   end
 
