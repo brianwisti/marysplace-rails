@@ -8,7 +8,11 @@ Marysplace::Application.routes.draw do
     end
   end
 
-  resources :checkins
+  resources :checkins do
+    collection do
+      get 'today'
+    end
+  end
 
   resources :points_entries
 

@@ -85,4 +85,8 @@ class CheckinsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def today
+    @checkins = Checkin.today
+  end
 end

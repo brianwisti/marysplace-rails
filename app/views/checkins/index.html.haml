@@ -2,9 +2,7 @@
   Checkins
 
 = content_for(:sidebar) do
-  - if can? :create, Checkin
-    %ul.nav.nav-list
-      %li= link_to 'New Checkin', new_checkin_path
+  =render 'sidebar'
 
 = paginate @checkins
 

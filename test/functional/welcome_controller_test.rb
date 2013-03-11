@@ -33,6 +33,7 @@ class WelcomeControllerTest < ActionController::TestCase
     assert_select 'a[href=/checkins]', "Checkins"
     assert_select 'a[href=/points_entry_types]', false
     assert_select 'a[href=/client_flags]', false
+    assert_select 'a.checkin-count', '0'
   end
 
   test "Staff navbar" do

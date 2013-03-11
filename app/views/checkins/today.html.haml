@@ -1,0 +1,17 @@
+= content_for(:title) do
+  Today's Checkins
+
+= content_for(:sidebar) do
+  =render 'sidebar'
+
+%p
+  %span.checkin-count= @checkins.count
+  checkins
+%table.table.entries
+  %thead
+    %tr
+      %th Checkin At
+      %th Client
+      %th Checked In By
+  %tbody
+    = render @checkins

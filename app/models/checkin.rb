@@ -19,4 +19,10 @@ class Checkin < ActiveRecord::Base
       errors[:client_id] << 'already checked in'
     end
   end
+
+  def self.today
+    today = Time.now
+    time = Time.new(today.year, today.month, today.day, 0, 0)
+    Checkin.where('checkin_at > ?', time)
+  end
 end

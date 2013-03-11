@@ -1,19 +1,13 @@
-.summary
-  .header
-    %p
-      %em= l(checkin.checkin_at, format: :long)
-      %strong= link_to checkin.client.current_alias, checkin.client
-      by
-      = link_to checkin.user.login, checkin.user
-    - if checkin.notes
-      %strong Notes:
-      %p= checkin.notes
-  .btn-group
-    - if can? :edit, checkin
-      = link_to "Edit", edit_checkin_path(checkin),
-        class: "btn btn-mini"
-    - if can? :delete, checkin
-      = link_to 'Destroy', checkin, 
-        data: {confirm: 'Are you sure?'}, method: :delete,
-        class: "btn btn-mini"
-
+%tr
+  %td= l(checkin.checkin_at, format: :long)
+  %td= link_to checkin.client.current_alias, checkin.client
+  %td= link_to checkin.user.login, checkin.user
+  - if can? :edit, checkin
+    %td
+      .btn-group
+        = link_to "Edit", edit_checkin_path(checkin),
+            class: "btn btn-mini"
+        - if can? :delete, checkin
+          = link_to 'Destroy', checkin, 
+            data: {confirm: 'Are you sure?'}, method: :delete,
+            class: "btn btn-mini"
