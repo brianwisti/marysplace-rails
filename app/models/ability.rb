@@ -7,6 +7,7 @@ class Ability
     if user.role? :front_desk
       can :show, Client
       can :create, Checkin
+      can :show, Checkin
     end
 
     if user.role? :staff

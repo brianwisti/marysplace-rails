@@ -35,22 +35,28 @@ class WelcomeControllerTest < ActionController::TestCase
     end
   end
 
-  test "Volunteer navbar" do
+  test "Front Desk navbar" do
     UserSession.create users(:front_desk)
     get :index
     assert_response :success
-
-    assert_select 'div.navbar' do 
-      assert_select 'ul.nav' do |element|
-        assert_select 'li', 1
-      end
-    end
+    assert_select 'a[href=/users]', false
+    assert_select 'a[href=/clients]', "Clients"
+    assert_select 'a[href=/points_entries]', false
+    assert_select 'a[href=/checkins]', "Checkins"
+    assert_select 'a[href=/points_entry_types]', false
+    assert_select 'a[href=/client_flags]', false
   end
 
-  test "Staff welcome" do
+  test "Staff navbar" do
     UserSession.create users(:staff)
     get :index
 
     assert_select 'div.flags', 1
+    assert_select 'a[href=/users]', "Users"
+    assert_select 'a[href=/clients]', "Clients"
+    assert_select 'a[href=/points_entries]', "Points Log"
+    assert_select 'a[href=/checkins]', "Checkins"
+    assert_select 'a[href=/points_entry_types]', "Points Entry Types"
+    assert_select 'a[href=/client_flags]', "Client Flags"
   end
 end
