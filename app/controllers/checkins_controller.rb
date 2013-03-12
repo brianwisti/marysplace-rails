@@ -89,4 +89,41 @@ class CheckinsController < ApplicationController
   def today
     @checkins = Checkin.today
   end
+
+  def report
+    now = Time.now.in_time_zone
+    @year = params[:year] || now.year
+    @year = @year.to_i
+    @month = params[:month].to_i
+    @day = params[:day].to_i
+
+    if @month > 0
+      if @day > 0
+        @span = DateTime.new(@year, @month, @day, 0, 0)
+        @checkins = Checkin.where('checkin_at > ?', @span)
+        @last_day = @span - 1.day
+        @next_day = @span + 1.day
+      else
+        @span = DateTime.new(@year, @month, 1, 0, 0)
+        @rows = Checkin.per_day_in(@year, @month)
+      end
+
+      @last_month = @span - 1.month
+      @next_month = @span + 1.month
+    else
+      @span = DateTime.new(@year, 1, 1, 0, 0)
+      @rows = Checkin.per_month_in(@year)
+    end
+
+    @last_year = @span - 1.year
+    @next_year = @span + 1.year
+
+    if @row
+      @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
+    end
+
+    respond_to do |format|
+      format.html
+    end
+  end
 end

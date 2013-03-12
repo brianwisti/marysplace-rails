@@ -15,11 +15,31 @@ class Checkin < ActiveRecord::Base
     time = Time.new(checkin_at.year, checkin_at.month, checkin_at.day, 0, 0)
 
 
-    if new_record?
+    if new_record? or client_id_changed?
       if Checkin.where('client_id = ? and checkin_at > ?', client, time).count > 0
         errors[:client_id] << 'already checked in'
       end
     end
+  end
+
+  def self.per_month_in(year)
+    start = DateTime.new(year.to_i, 1, 1, 0, 0)
+    finish = start.end_of_year
+    self.report_for_span(start, finish, 'month')
+  end
+
+  def self.per_day_in(year, month)
+    start = DateTime.new(year.to_i, month.to_i, 1, 0, 0)
+    finish = start.end_of_month
+    self.report_for_span(start, finish, 'day')
+  end
+
+  def self.report_for_span(start, finish, span)
+    return unless %w{month day}.include? span
+    select("date_trunc('#{span}', checkin_at) as span, count(id) as checkins")
+      .where(checkin_at: start..finish)
+      .group('span')
+      .order('span')
   end
 
   def self.today
