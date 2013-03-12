@@ -6,7 +6,7 @@
 
 %p
   %span.checkin-count= @checkins.count
-  checkins
+  = "checkin".pluralize(@checkins.count)
 %table.table.entries
   %thead
     %tr

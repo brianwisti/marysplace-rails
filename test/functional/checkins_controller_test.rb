@@ -13,6 +13,7 @@ class CheckinsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:checkins)
     assert_select "table.table"
+    assert_select "a[href=?]", "/checkins/today"
   end
 
   test "should get new" do
