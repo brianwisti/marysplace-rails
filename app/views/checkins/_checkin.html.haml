@@ -5,9 +5,9 @@
   - if can? :edit, checkin
     %td
       .btn-group
-        = link_to "Edit", edit_checkin_path(checkin),
+        = link_to "Change", edit_checkin_path(checkin),
             class: "btn btn-mini"
         - if can? :delete, checkin
-          = link_to 'Destroy', checkin, 
+          = link_to 'Remove', checkin, 
             data: {confirm: 'Are you sure?'}, method: :delete,
             class: "btn btn-mini"
