@@ -21,7 +21,7 @@ class Checkin < ActiveRecord::Base
   end
 
   def self.today
-    today = Time.now
+    today = Time.now - 7.hours
     time = Time.new(today.year, today.month, today.day, 0, 0)
     Checkin.where('checkin_at > ?', time)
   end
