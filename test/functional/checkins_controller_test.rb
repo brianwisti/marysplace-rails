@@ -12,6 +12,7 @@ class CheckinsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_not_nil assigns(:checkins)
+    assert_select "table.table"
   end
 
   test "should get new" do
