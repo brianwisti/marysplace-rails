@@ -11,6 +11,13 @@ Marysplace::Application.routes.draw do
   resources :checkins do
     collection do
       get 'today'
+      get 'on/:year/:month/:day' => 'checkins#on',
+        constraints: {
+          year: %r/\d{4}/,
+          month: %r/\d\d?/,
+          day: %r/\d\d?/
+        },
+        as: 'on'
       get 'report/:year/:month/:day' => 'checkins#report',
         constraints: {
           year: %r/\d{4}/,

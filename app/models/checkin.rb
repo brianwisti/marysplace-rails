@@ -42,9 +42,14 @@ class Checkin < ActiveRecord::Base
       .order('span')
   end
 
+  def self.on(day)
+    start_time = day.beginning_of_day
+    end_time   = day.end_of_day
+    Checkin.where('checkin_at > ? and checkin_at < ?', start_time, end_time)
+  end
+
   def self.today
-    today = Time.current
-    time = Time.new(today.year, today.month, today.day, 0, 0)
-    Checkin.where('checkin_at > ?', time)
+    today = Date.today
+    self.on(today)
   end
 end

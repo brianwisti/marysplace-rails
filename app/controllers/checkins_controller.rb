@@ -86,8 +86,25 @@ class CheckinsController < ApplicationController
     end
   end
 
+  def on
+    @year = params[:year].to_i
+    @month = params[:month].to_i
+    @day = params[:day].to_i
+    @checkin_date = Date.new(@year, @month, @day)
+    today = Date.today
+
+    if @checkin_date < today
+      @tomorrow = @checkin_date + 1.day
+    end
+
+    @yesterday = @checkin_date - 1.day
+    @checkins = Checkin.on(@checkin_date)
+  end
+
   def today
+    today = Date.today
     @checkins = Checkin.today
+    @yesterday = today - 1.day
   end
 
   def report

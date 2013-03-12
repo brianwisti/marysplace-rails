@@ -32,6 +32,11 @@ class ClientsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should show client checkins" do
+    get :checkins, id: @client
+    assert_response :success
+  end
+
   test "should get edit" do
     get :edit, id: @client
     assert_response :success

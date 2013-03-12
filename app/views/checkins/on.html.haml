@@ -1,0 +1,29 @@
+= content_for(:title) do
+  Checkins On
+  = @checkin_date
+
+= content_for(:sidebar) do
+  =render 'sidebar'
+
+.row-fluid
+  .span6
+    %p
+      - if @yesterday
+        = link_to @yesterday, on_checkins_path(year: @yesterday.year, month: @yesterday.month, day: @yesterday.day)
+  .span6
+    %p.text-right
+      - if @tomorrow
+        = link_to @tomorrow, on_checkins_path(year: @tomorrow.year, month: @tomorrow.month, day: @tomorrow.day)
+
+%p
+  %span.checkin-count= @checkins.count
+  = "checkin".pluralize(@checkins.count)
+- if @checkins.count > 0
+  %table.table.entries
+    %thead
+      %tr
+        %th Checkin At
+        %th Client
+        %th Checked In By
+    %tbody
+      = render @checkins

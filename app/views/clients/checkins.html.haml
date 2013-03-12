@@ -11,6 +11,13 @@
 
 = paginate @checkins
 
-= render @checkins
+%table.table.entries
+  %thead
+    %tr
+      %th Checkin At
+      %th Client
+      %th Checked In By
+  %tbody
+    = render @checkins
 
 = paginate @checkins
