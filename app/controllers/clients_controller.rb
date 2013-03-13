@@ -138,4 +138,37 @@ class ClientsController < ApplicationController
       format.json { render json: @flags }
     end
   end
+
+  def new_login
+    authorize! :create, User
+    @client = Client.find(params[:id])
+  end
+
+  def create_login
+    authorize! :create, User
+    @client = Client.find(params[:id])
+    password = params[:password]
+    password_confirmation = params[:password_confirmation]
+
+    if password == password_confirmation
+      @client.create_login(password: password, 
+                           password_confirmation: password_confirmation)
+      if @client.login
+        flash[:notice] = "Login created"
+      end
+    else
+      flash[:error] = "Password and confirmation do not match"
+    end
+
+
+    respond_to do |format|
+      format.html do
+        if @client.login
+          redirect_to @client 
+        else
+          render action: :new_login
+        end
+      end
+    end
+  end
 end

@@ -41,6 +41,11 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    rescue_from CanCan::AccessDenied do |exception|
+      flash[:error] = "That resource is unavailable to you."
+      redirect_to root_url
+    end
+
     def sections
       # There's *got* to be a prettier way to do this.
       arr = []

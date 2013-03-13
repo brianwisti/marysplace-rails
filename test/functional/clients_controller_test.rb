@@ -63,4 +63,27 @@ class ClientsControllerTest < ActionController::TestCase
     get :search, format: :json, q: q
   end
 
+  test "should get client login form" do
+    get :new_login, id: @client
+    assert_response :success
+  end
+
+  test "should not get client login form for unprivileged users" do
+    UserSession.create(users(:front_desk))
+    get :new_login, id: @client
+    assert_redirected_to root_url
+  end
+
+  test "should create client login" do
+    assert_difference("User.count") do
+      put :create_login, id: @client, password: "waffle", password_confirmation: "waffle"
+    end
+    assert_redirected_to client_path(@client)
+  end
+
+  test "should not create client login form for unprivileged users" do
+    UserSession.create(users(:front_desk))
+    put :create_login, id: @client, password: "waffle", password_confirmation: "waffle"
+    assert_redirected_to root_url
+  end
 end

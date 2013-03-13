@@ -1,0 +1,19 @@
+= content_for(:title) do
+  Create Login for #{@client.current_alias}
+
+=content_for(:sidebar) do
+  = render 'sidebar'
+
+%p 
+  Please use the form below to provide a password.
+
+= form_tag do
+  = hidden_field_tag(:client_id, @client)
+  %fieldset
+    .control-group
+      = label_tag(:password, "Password:")
+      = password_field_tag(:password)
+    .control-group
+      = label_tag(:password_confirmation, "Confirm:")
+      = password_field_tag(:password_confirmation)
+    = submit_tag class: "btn"
