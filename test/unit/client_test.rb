@@ -45,4 +45,14 @@ class ClientTest < ActiveSupport::TestCase
       "is smart enough to ignore trailing spaces."
   end
 
+  test "associated user account" do
+    client = clients(:amy_a)
+    password = "waffle"
+    assert !client.login,
+      "Client does not have a login until we create one."
+    assert client.create_login(password: password, password_confirmation: password)
+    assert client.login,
+      "Client has a login after we create one."
+  end
+
 end

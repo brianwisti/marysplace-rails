@@ -13,6 +13,8 @@ class Client < ActiveRecord::Base
     class_name: "User"
   belongs_to :last_edited_by,
     class_name: "User"
+  belongs_to :login,
+    class_name: "User"
 
   has_many :points_entries
   has_many :checkins
@@ -22,8 +24,11 @@ class Client < ActiveRecord::Base
     self.point_balance ||= 0
   end
 
-  def update_points!
-    self.point_balance = self.points_entries.sum(:points)
+  def create_login(opts)
+    password = opts[:password]
+    confirmation = opts[:password_confirmation]
+    username = self.current_alias
+    self.login = User.create(login: username, password: password, password_confirmation: confirmation)
     self.save
   end
 
@@ -33,6 +38,11 @@ class Client < ActiveRecord::Base
 
   def is_blocked?
     return self.client_flags.where(is_blocking: true, resolved_on: nil).count > 0
+  end
+
+  def update_points!
+    self.point_balance = self.points_entries.sum(:points)
+    self.save
   end
 
   def self.quicksearch(query)
