@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
   has_many :points_entries,
     foreign_key: :added_by_id
 
+  # Some users are also clients
+  has_one :client,
+    foreign_key: :login_id
+
   def role?(role)
     self.roles.exists?( name: role.to_s )
   end

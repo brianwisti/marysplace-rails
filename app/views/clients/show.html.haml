@@ -12,6 +12,17 @@
     - if @client.is_blocked?
       %span.label.label-important Blocked
     = @client.current_alias
+  %dt Login Code
+  %dd
+    - if @client.login
+      - if can? :show, User
+        = link_to @client.login.login, @client.login
+      - else
+        = @client.login.login
+    - else
+      %span.label.label-info None
+      - if can? :manage, User
+        = link_to "Create One", new_login_client_path(@client)
   - if can? :manage, @client
     %dt Full Name
     %dd= @client.full_name

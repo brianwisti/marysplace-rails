@@ -10,6 +10,9 @@
   %dd= @user.login
   %dt Name
   %dd= @user.name
+  - if @user.client and can? :show, Client
+    %dt For Client
+    %dd= link_to @user.client.current_alias, @user.client
   %dt Login Count
   %dd= @user.login_count
   %dt Last Activity

@@ -7,7 +7,7 @@
 %p 
   Please use the form below to provide a password.
 
-= form_tag do
+= form_tag(create_login_client_path(@client), method: "PUT") do
   = hidden_field_tag(:client_id, @client)
   %fieldset
     .control-group
@@ -16,4 +16,4 @@
     .control-group
       = label_tag(:password_confirmation, "Confirm:")
       = password_field_tag(:password_confirmation)
-    = submit_tag class: "btn"
+    = submit_tag "Save", class: "btn"
