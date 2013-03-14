@@ -1,3 +1,5 @@
+require 'zlib' # TODO: Is there a better place to require this?
+
 class Client < ActiveRecord::Base
   attr_accessible :added_by, :added_by_id, :birthday, :current_alias, 
     :full_name, :last_edited_by, :last_edited_by_id, :notes, :oriented_on, :other_aliases, 
@@ -27,7 +29,10 @@ class Client < ActiveRecord::Base
   def create_login(opts)
     password = opts[:password]
     confirmation = opts[:password_confirmation]
-    username = self.current_alias
+    # Generate a sufficiently unique login code
+    # short enough to type, but not just straight current_alias (which can change)
+    source = "RE|#{self.current_alias}|#{self.created_at.to_i}"
+    username = sprintf "%08x", Zlib.crc32(source)
     self.login = User.create(login: username, password: password, password_confirmation: confirmation)
     self.save
   end
