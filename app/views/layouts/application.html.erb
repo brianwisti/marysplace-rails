@@ -43,9 +43,9 @@
         <footer>
             <p>Mary's Place 2012</p>
         </footer>
-        <%= javascript_include_tag "jquery" %>
-        <%= javascript_include_tag "jquery-ui" %>
-        <script src="/bootstrap/js/bootstrap.js"></script>
-        <%= javascript_include_tag :application %>
+        <%= javascript_include_tag "jquery", defer: true, async: true %>
+        <%= javascript_include_tag "jquery-ui" , defer: true, async: true%>
+        <script src="/bootstrap/js/bootstrap.js" defer="defer" async="async"></script>
+        <%= javascript_include_tag :application, defer: true, async: true%>
     </body>
 </html>
