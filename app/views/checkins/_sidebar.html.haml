@@ -3,3 +3,4 @@
     %li= link_to "Today's Checkins", today_checkins_path
     - if can? :create, Checkin
       %li= link_to 'New Checkin', new_checkin_path
+      %li= link_to 'Start Self Checkins', selfcheck_checkins_path

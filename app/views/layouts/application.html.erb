@@ -26,14 +26,24 @@
                     </div>
                     <div class="span9">
                         <div class="log">
-                            <% if notice %><p id="notice"class="text-info"><%= notice %></p><% end %>
+                          <% if flash[:notice] -%>
+                            <p id="notice" class="text-info"><%= flash[:notice] %></p>
+                          <% end -%>
+                          <% if flash[:alert] -%>
+                            <p id="alert" class="text-alert"><%= flash[:alert] %></p>
+                          <% end -%>
                             <%= yield %>
                         </div>
                     </div>
                 <% else %>
                     <div class="hero-unit">
                         <div class="log">
-                            <% if notice %><p id="notice"class="text-info"><%= notice %></p><% end %>
+                          <% if notice -%>
+                            <p id="notice"class="text-info"><%= notice %></p>
+                          <% end -%>
+                          <% if flash[:alert] -%>
+                            <p id="alert" class="text-alert"><%= flash[:alert] %></p>
+                          <% end -%>
                             <%= yield %>
                         </div>
                     </div>

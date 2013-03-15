@@ -51,4 +51,28 @@ class CheckinsControllerTest < ActionController::TestCase
 
     assert_redirected_to checkins_path
   end
+
+  test "should show selfcheck" do
+    get :selfcheck
+    assert_response :success
+  end
+
+  test "should create selfcheckin" do
+    client = Client.create(current_alias: "New Client", added_by_id: users(:admin).id)
+    client.create_login password: "waffle", password_confirmation: "waffle"
+    assert_difference('Checkin.count', 1) do
+      put :selfcheck_post, login: client.login.login
+    end
+    assert_redirected_to selfcheck_checkins_path
+    assert flash[:notice]
+  end
+
+  test "should not create selfcheckin for invalid login" do
+    client = Client.create(current_alias: "New Client", added_by_id: users(:admin).id)
+    client.create_login password: "waffle", password_confirmation: "waffle"
+    put :selfcheck_post, login: "12345678"
+    assert_redirected_to selfcheck_checkins_path
+    assert flash[:alert]
+  end
+
 end

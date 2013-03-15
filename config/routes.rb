@@ -10,6 +10,8 @@ Marysplace::Application.routes.draw do
 
   resources :checkins do
     collection do
+      get 'selfcheck'
+      put 'selfcheck_post'
       get 'today'
       get 'on/:year/:month/:day' => 'checkins#on',
         constraints: {

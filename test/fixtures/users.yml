@@ -30,3 +30,12 @@ front_desk:
   single_access_token: MyString
   perishable_token: MyString
   roles: front_desk
+
+client_1:
+  login: f2345a78
+  crypted_password: MyString
+  password_salt: MyString
+  persistence_token: MyString
+  single_access_token: MyString
+  perishable_token: MyString
+

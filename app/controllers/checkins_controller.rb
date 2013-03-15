@@ -143,4 +143,29 @@ class CheckinsController < ApplicationController
       format.html
     end
   end
+
+  def selfcheck
+    authorize! :create, Checkin
+  end
+
+  def selfcheck_post
+    authorize! :create, Checkin
+    login_code = params[:login]
+    checkin_at = DateTime.now
+
+    login = User.find_by_login login_code
+    if login and login.client
+      checkin = Checkin.create(client_id: login.client.id, user_id: current_user.id, checkin_at: checkin_at)
+      if checkin
+        flash[:notice] = "#{checkin_at}: #{login.client.current_alias}"
+      else
+        flash[:alert] = "#{checkin_at}: Unable to checkin #{login.client.current_alias}"
+      end
+    else
+      flash[:alert] = "No client found for #{login_code}"
+    end
+
+    flash.keep
+    redirect_to selfcheck_checkins_path
+  end
 end

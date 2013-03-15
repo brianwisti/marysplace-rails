@@ -1,0 +1,8 @@
+= content_for(:title) do
+  Client Selfcheck
+
+= form_tag(selfcheck_post_checkins_path, method: :put, class: "form-inline")  do
+  %fieldset
+    = text_field_tag :login, nil, maxlength: 8, size: 8, class: "input-small", placeholder: "Login"
+    = submit_tag "Checkin", class: "btn"
+
