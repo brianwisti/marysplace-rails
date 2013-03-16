@@ -146,6 +146,7 @@ class CheckinsController < ApplicationController
 
   def selfcheck
     authorize! :create, Checkin
+    @checkins = Checkin.today.order('checkin_at DESC')
   end
 
   def selfcheck_post
@@ -157,9 +158,9 @@ class CheckinsController < ApplicationController
     if login and login.client
       checkin = Checkin.create(client_id: login.client.id, user_id: current_user.id, checkin_at: checkin_at)
       if checkin
-        flash[:notice] = "#{checkin_at}: #{login.client.current_alias}"
+        flash[:notice] = "Checked in #{login.client.current_alias}"
       else
-        flash[:alert] = "#{checkin_at}: Unable to checkin #{login.client.current_alias}"
+        flash[:alert] = "Unable to checkin #{login.client.current_alias}"
       end
     else
       flash[:alert] = "No client found for #{login_code}"

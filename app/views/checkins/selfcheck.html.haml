@@ -6,3 +6,11 @@
     = text_field_tag :login, nil, maxlength: 8, size: 8, class: "input-small", placeholder: "Login"
     = submit_tag "Checkin", class: "btn"
 
+%table.table.entries
+  %thead
+    %tr
+      %th Checkin At
+      %th Client
+      %th Checked In By
+  %tbody
+    = render @checkins
