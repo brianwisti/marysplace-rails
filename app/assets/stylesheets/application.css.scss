@@ -12,6 +12,9 @@
  *= require_tree .
  */
 
+@import "bootstrap";
+@import "bootstrap-responsive";
+
 td.numeric {
   text-align: right;
   font-family: monospace;

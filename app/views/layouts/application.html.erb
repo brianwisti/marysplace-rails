@@ -4,8 +4,6 @@
         <meta charset="utf-8">
         <title>Mary's Place<% if content_for? :title %>: <%= yield :title %><% end %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
         <%= stylesheet_link_tag "application", media: "all" %>
         <%= csrf_meta_tags %>
     </head>
@@ -53,9 +51,6 @@
         <footer>
             <p>Mary's Place 2012</p>
         </footer>
-        <%= javascript_include_tag "jquery", defer: true, async: true %>
-        <%= javascript_include_tag "jquery-ui" , defer: true, async: true%>
-        <script src="/bootstrap/js/bootstrap.js" defer="defer" async="async"></script>
         <%= javascript_include_tag :application, defer: true, async: true%>
     </body>
 </html>
