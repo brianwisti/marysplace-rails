@@ -1,30 +1,23 @@
 .summary
   .header
     %p
-      = image_tag "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/avatar-blank-small.png"
-      - if client.is_flagged?
-        %i.icon-flag
-      %strong
-        - unless client.is_active
-          %span.label.label-info Inactive
-        - if client.is_blocked?
-          %span.label.label-important Blocked
-        = link_to client.current_alias, client
-      - if client.other_aliases
-        %em= client.other_aliases
-    - if can? :manage, client
-      %p
-        - if client.oriented_on
-          %em= client.oriented_on
-        - else
-          %em Not oriented
-      %p
-        = number_with_delimiter client.point_balance
-        Points
-    .btn-group
-      - if can? :edit, client
-        = link_to "Edit", edit_client_path(client), 
-          class: "btn btn-mini"
-      - if can? :show, client
-        = link_to "Details", client_path(client), 
-          class: "btn btn-mini"
+      = small_avatar_of client
+    - if client.is_flagged?
+      %i.icon-flag
+    %strong
+      - unless client.is_active
+        %span.label.label-info Inactive
+      - if client.is_blocked?
+        %span.label.label-important Blocked
+      = link_to client.current_alias, client
+    - if client.other_aliases
+      %em= client.other_aliases
+  - if can? :manage, client
+    %p
+      = number_with_delimiter client.point_balance
+      Points
+    %p
+      - if client.oriented_on
+        %em= client.oriented_on
+      - else
+        %em Not oriented

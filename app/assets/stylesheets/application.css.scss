@@ -20,6 +20,23 @@ td.numeric {
   font-family: monospace;
 }
 
+.summary {
+  float: none;
+  clear: both;
+  margin: 0.5em 0;
+
+  img {
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    margin-top: 0;
+    line-height: 1em;
+  }
+}
+
 @media 
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px) {
