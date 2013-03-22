@@ -16,6 +16,8 @@ gem 'cancan'
 gem 'kaminari'
 gem 'haml-rails'
 gem 'activeadmin'
+gem 'paperclip'
+gem 'aws-sdk'
 
 group :development do
   gem 'better_errors'
