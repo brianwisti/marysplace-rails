@@ -1,8 +1,12 @@
 <% if can? :show, Checkin %>
-  <div class="checkins">
-    <p><%= link_to @checkin_count, today_checkins_path, class: "checkin-count" %> checkins today</p>
-    <% if can? :create, Checkin %>
-      <%= link_to "Record Checkin", new_checkin_path, class: "btn btn-block" %>
-    <% end %>
+  <div class="row-fluid checkins">
+    <div class="span8">
+      <%= link_to @checkin_count, today_checkins_path, class: "checkin-count" %> checkins today
+    </div>
+    <div class="span4">
+      <% if can? :create, Checkin %>
+        <%= link_to "Record Checkin", new_checkin_path, class: "btn btn-block" %>
+      <% end %>
+    </div>
   </div>
 <% end %>

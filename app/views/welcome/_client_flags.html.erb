@@ -1,13 +1,13 @@
 <% if can? :show, ClientFlag %>
-  <div class="flags">
-    <h3>Client Flags</h3>
-    <% if @client_flags %>
-      <% @client_flags.each do |client_flag| %>
-        <%= render client_flag %>
-      <% end %>
+  <div class="row-fluid flags">
+    <div class="span8">
+      <%= link_to @client_flags.count, client_flags_path %> 
+      Client Flags
+    </div>
+    <div class="span4">
+    <% if can? :create, ClientFlag %>
+      <%= link_to "Add Flag", new_client_flag_path, class: "btn btn-block" %>
     <% end %>
-  <% if can? :create, ClientFlag %>
-    <%= link_to "Add Flag", new_client_flag_path, class: "btn btn-block" %>
-  <% end %>
+  </div>
   </div>
 <% end %>
