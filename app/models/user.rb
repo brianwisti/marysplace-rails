@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessible :login, :name, :email, :password, :password_confirmation, :avatar, :avatar_file_name
-  attr_accessor :avatar, :avatar_file_name
+  attr_accessor :avatar
 
   acts_as_authentic do |c|
     c.login_field = 'login'
