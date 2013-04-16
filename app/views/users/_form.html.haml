@@ -10,6 +10,10 @@
   %fieldset
     %legend Account Details
     .control-group
+      = image_tag @user.avatar.url(:square)
+      = f.label :avatar
+      = f.file_field :avatar
+    .control-group
       = f.label :login
       = f.text_field :login
     .control-group
