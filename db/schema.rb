@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130416034221) do
+ActiveRecord::Schema.define(:version => 20130501010031) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20130416034221) do
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
     t.integer  "added_by_id"
+    t.boolean  "is_finalized",         :default => true
   end
 
   add_index "points_entries", ["client_id"], :name => "index_points_entries_on_client_id"
