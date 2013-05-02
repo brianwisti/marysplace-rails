@@ -6,6 +6,7 @@ class PointsEntryType < ActiveRecord::Base
     uniqueness: true
 
   has_many :points_entries
+  has_many :signup_lists
 
   def self.quicksearch(query)
     starts_with = "#{query}%"

@@ -1,0 +1,14 @@
+= content_for(:title) do
+  Signup Lists
+
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+%table
+  %thead
+    %tr
+      %th Date
+  %tbody
+    - @signup_lists.each do |list|
+      %tr
+        %td= @list.signup_at

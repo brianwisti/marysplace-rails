@@ -43,6 +43,11 @@ Marysplace::Application.routes.draw do
   end
 
   resources :points_entries
+  resources :signup_lists do
+    collection do
+      get 'new_for'
+    end
+  end
 
   resources :points_entry_types do
     collection do
@@ -50,6 +55,9 @@ Marysplace::Application.routes.draw do
     end
 
     member do
+      get 'signup_lists'
+      get 'signup_list'
+
       get 'entry'
       get 'report/:year/:month/:day' => 'points_entry_types#report',
         constraints: {

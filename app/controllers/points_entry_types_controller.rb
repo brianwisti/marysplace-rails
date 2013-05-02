@@ -154,4 +154,28 @@ class PointsEntryTypesController < ApplicationController
       format.html
     end
   end
+
+  def signup_lists
+    @points_entry_type = PointsEntryType.find(params[:id].to_i)
+    @signup_lists = @points_entry_type.signup_lists
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def create_signup_list
+    @points_entry_type = PointsEntryType.find(params[:id].to_i)
+    @signup_list = SignupList.new(params[:signup_list])
+
+    respond_to do |format|
+      if @signup_list.save
+        format.html { redirect_to @signup_list, notice: 'Signup List was successfully created.' }
+        format.json { render json: @signup_list, status: :created, location: @signup_list }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @signup_list.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end
