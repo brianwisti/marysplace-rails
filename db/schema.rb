@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503043800) do
+ActiveRecord::Schema.define(:version => 20130507125623) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(:version => 20130503043800) do
   add_index "client_flags", ["client_id"], :name => "index_client_flags_on_client_id"
 
   create_table "clients", :force => true do |t|
-    t.string   "current_alias",                       :null => false
+    t.string   "current_alias",                        :null => false
     t.string   "full_name"
     t.text     "other_aliases"
     t.date     "oriented_on"
@@ -66,12 +66,13 @@ ActiveRecord::Schema.define(:version => 20130503043800) do
     t.date     "birthday"
     t.string   "phone_number"
     t.text     "notes"
-    t.integer  "added_by_id",                         :null => false
+    t.integer  "added_by_id",                          :null => false
     t.integer  "last_edited_by_id"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.boolean  "is_active",         :default => true
     t.integer  "login_id"
+    t.boolean  "is_flagged",        :default => false
   end
 
   create_table "points_entries", :force => true do |t|

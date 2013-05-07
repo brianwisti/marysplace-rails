@@ -55,4 +55,15 @@ class ClientTest < ActiveSupport::TestCase
       "Client has a login after we create one."
   end
 
+  test "flagging" do
+    client = clients(:amy_a)
+    user = users(:admin)
+    assert_equal false, client.is_flagged
+    flag = ClientFlag.create! client_id: client.id, created_by_id: user.id
+    assert !flag.is_resolved?
+    client.reload
+    assert client.is_flagged,
+      "Creation of a new flag is indicated in Client.is_flagged"
+  end
+
 end

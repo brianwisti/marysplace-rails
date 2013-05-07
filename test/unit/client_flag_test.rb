@@ -19,4 +19,20 @@ class ClientFlagTest < ActiveSupport::TestCase
     assert flag.errors[:client].empty?
     assert flag.errors[:created_by].empty?
   end
+
+  test "is_resolved check" do
+    today = Date.today
+    flag = ClientFlag.new client_id: @client.id, created_by_id: @user.id
+    assert !flag.is_resolved?,
+      "Newly created flag is unresolved"
+    flag.resolved_on = today
+    assert flag.is_resolved?,
+      "Resolved flag is resolved"
+    flag.resolved_on = nil
+    assert !flag.is_resolved?,
+      "Clearing resolved_on restores is_resolved? falsiness"
+    flag.expires_on = today
+    assert flag.is_resolved?,
+      "Expired flag is resolved"
+  end
 end

@@ -12,4 +12,30 @@ class ClientFlag < ActiveRecord::Base
     presence: true
   validates :created_by,
     presence: true
+
+  def is_resolved?
+    today = Date.today
+
+    if self.resolved_on and self.resolved_on <= today
+      return true
+    end
+
+    if self.expires_on and self.expires_on <= today
+      return true
+    end
+
+    return false
+  end
+
+  after_save do
+    if self.is_resolved? 
+      if self.client.is_flagged == true
+        self.client.update_attributes is_flagged: false
+      end
+    else
+      if self.client.is_flagged == false
+        self.client.update_attributes is_flagged: true
+      end
+    end
+  end
 end
