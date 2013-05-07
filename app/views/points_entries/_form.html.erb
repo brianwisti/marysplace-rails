@@ -16,9 +16,10 @@
       <div class="controls">
         <% current_alias = if @points_entry.client.nil? then nil else @points_entry.client.current_alias end %>
         <%= text_field_tag "current_alias", current_alias,
-          data: { provide: 'typeahead', field: 'points_entry_client_id' },
+          data: { provide: 'typeahead', field: 'points_entry_client_id', balance: 0 },
           autocomplete: 'off',
           class: 'client-typeahead' %>
+          <span class="point-balance text-info"></span>
           <small><span class="help-block"><%= link_to "Add Client", new_client_path %></span></small>
       </div>
     </div>
@@ -31,6 +32,7 @@
           data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points' },
           autocomplete: 'off',
           class: 'pointsentrytype-typeahead' %>
+        <span class="point-total text-info"></span>
       </div>
     </div>
 
@@ -42,6 +44,7 @@
         <% else -%>
           <%= f.number_field :points, data: { default: @points_entry.points_entry_type.default_points }, autocomplete: 'off' %>
         <% end -%>
+        <span class="new-balance text-info"></span>
       </div>
     </div>
 

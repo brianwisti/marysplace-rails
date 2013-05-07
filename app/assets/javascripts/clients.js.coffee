@@ -29,6 +29,7 @@ if $clientTypeahead.length > 0
     if selected
       selected_id = selected.id
       if selected_id
-        console.log(selected_id)
         data_field = $(this).data('field')
         $("##{data_field}").val(selected_id)
+        $(this).data('balance', selected.point_balance)
+        $('.point-balance').html(String(selected.point_balance).commafy())

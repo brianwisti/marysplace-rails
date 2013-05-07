@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require typeahead
+//= require app
 //= require checkins
 //= require client_flags
 //= require clients

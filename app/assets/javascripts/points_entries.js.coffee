@@ -21,7 +21,8 @@ if $entryTypeTypeahead.length > 0
             points = selected.default_points
             points_field = $(this).data('pointsfield')
             $("##{points_field}").val(points)
-            $("##{points_field}").data('default', points)
+              .data('default', points)
+              .change()
       $('.bailed').change () ->
         field = "##{$(this).data('field')}"
         if $(this).is ':checked'
@@ -32,4 +33,9 @@ if $entryTypeTypeahead.length > 0
         else
           default_points = $(field).data 'default'
           $(field).val default_points
-
+        $(field).change()
+      $('#points_entry_points').change () ->
+        entry_value = parseInt $(this).val()
+        initial_balance = parseInt $('.point-balance').html().digits()
+        new_total = entry_value + initial_balance
+        $('.new-balance').html new_total.commafy()
