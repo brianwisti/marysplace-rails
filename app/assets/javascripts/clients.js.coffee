@@ -33,7 +33,7 @@ if $clientTypeahead.length > 0
         $("##{data_field}").val(selected_id)
         $(this).data('balance', selected.point_balance)
         $('.point-balance').html(String(selected.point_balance).commafy())
-        if selected.is_flagged
+        if selected.is_flagged == true
           $('.is-flagged').show()
           $('.is-flagged a').attr('href', "/clients/#{selected_id}/flags")
         else
