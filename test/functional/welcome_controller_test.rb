@@ -18,7 +18,7 @@ class WelcomeControllerTest < ActionController::TestCase
 
     assert_select 'div.navbar' do
       assert_select 'ul.nav' do
-        assert_select 'li', 7
+        assert_select 'li', 6
       end
     end
   end

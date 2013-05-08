@@ -1,7 +1,8 @@
 .summary
   .header
     %p
-      = small_avatar_of client
+      - if client.login
+        = image_tag client.login.avatar.url(:thumb)
     - if client.is_flagged?
       %i.icon-flag
     %strong

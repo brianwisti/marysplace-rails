@@ -4,7 +4,8 @@
 = content_for(:sidebar) do
   =render 'sidebar'
 
-= image_tag "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/avatar-blank-medium.png"
+- if @client.login
+  = image_tag @client.login.avatar.url(:square)
 %dl
   %dt Current Alias
   %dd

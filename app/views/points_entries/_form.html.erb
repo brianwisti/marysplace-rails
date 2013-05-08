@@ -19,8 +19,28 @@
           data: { provide: 'typeahead', field: 'points_entry_client_id', balance: 0 },
           autocomplete: 'off',
           class: 'client-typeahead' %>
+        <% if @points_entry.client %>
+          <% if @points_entry.client.is_flagged %>
+            <span class="is-flagged">
+              <i class="icon-flag"></i>
+              <%= link_to "flagged", flags_client_path(@points_entry.client), class: "text-error" %>
+            </span>
+          <% else %>
+            <span class="is-flagged" style="display:none">
+              <i class="icon-flag"></i>
+              <%= link_to "flagged", '#', class: "text-error" %>
+            </span>
+          <% end %>
+          <span class="point-balance text-info"><%= number_with_delimiter(@points_entry.client.point_balance) %> </span>
+          <small><span class="help-block"><%= link_to "Add Client", new_client_path %></span></small>
+        <% else %>
+          <span class="is-flagged" style="display:none">
+            <i class="icon-flag"></i>
+            <%= link_to "flagged", '#', class: "text-error" %>
+          </span>
           <span class="point-balance text-info"></span>
           <small><span class="help-block"><%= link_to "Add Client", new_client_path %></span></small>
+        <% end %>
       </div>
     </div>
 

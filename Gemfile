@@ -15,7 +15,6 @@ gem 'authlogic', :git => 'https://github.com/james2m/authlogic.git', :branch => 
 gem 'cancan'
 gem 'kaminari'
 gem 'haml-rails'
-gem 'activeadmin'
 gem 'paperclip'
 gem 'aws-sdk'
 

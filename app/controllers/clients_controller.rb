@@ -21,7 +21,7 @@ class ClientsController < ApplicationController
     respond_to do |format|
       format.html # search.html.haml
       format.json { 
-        render json: @clients.select([:id, :current_alias, :other_aliases, :point_balance])
+        render json: @clients.select([:id, :current_alias, :other_aliases, :point_balance, :is_flagged])
       }
     end
   end

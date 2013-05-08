@@ -49,11 +49,6 @@ class ApplicationController < ActionController::Base
     def sections
       # There's *got* to be a prettier way to do this.
       arr = []
-      admin_section = {
-        title: "Admin",
-        url: admin_root_path,
-        active: params[:controller] == 'admin'
-      }
       user_section = {
         title: "Users", 
         url: users_path, 
@@ -84,10 +79,6 @@ class ApplicationController < ActionController::Base
         url: client_flags_path, 
         active: params[:controller] == 'client_flags'
       }
-
-      if current_user.role? :admin
-        arr.push admin_section
-      end
 
       if can? :manage, User
         arr.push user_section

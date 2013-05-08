@@ -1,5 +1,4 @@
 Marysplace::Application.routes.draw do
-  ActiveAdmin.routes(self)
 
   resources :client_flags do
     member do
