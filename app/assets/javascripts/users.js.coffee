@@ -1,8 +1,8 @@
 $ ->
-  $('.roles-toggler')
+  $('.roles-toggler button.btn')
     .button()
     .bind 'click', (event) ->
-      $clicked = $(event.srcElement)
+      $clicked = $(event.currentTarget)
       user = $clicked.data('user')
       role = $clicked.data('role')
       post_data =
@@ -11,7 +11,6 @@ $ ->
       url = "/users/#{user}/toggle_role"
       $.post url, post_data, (response) ->
         message = response.result
-        console.log message
         $('.log')
           .addClass('alert')
           .text(message)

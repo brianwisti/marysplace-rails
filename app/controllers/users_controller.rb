@@ -77,11 +77,16 @@ class UsersController < ApplicationController
         end
       end
 
+      flash[:notice] = message
+
       @result = {
         result: message
       }
 
-      render json: @result
+      respond_to do |format|
+        format.html { redirect_to users_path }
+        format.json { render json: @result  }
+      end
     end
   end
 
