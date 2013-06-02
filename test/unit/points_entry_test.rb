@@ -29,4 +29,31 @@ class PointsEntryTest < ActiveSupport::TestCase
     assert_equal Date.today, entry.performed_on
   end
 
+  test "stringified summary" do
+    entry = PointsEntry.new
+    entry.client = clients(:amy_a)
+    entry.points_entry_type = points_entry_types(:am_chairs)
+    entry.points = 50
+    entry.added_by = users(:admin)
+
+    summary = entry.summarize
+    assert_equal "#{entry.performed_on} #{entry.client.current_alias} #{entry.points_entry_type.name} #{entry.points}", summary
+  end
+
+  test "report span" do
+    start = DateTime.new(2012, 1, 1)
+    finish = DateTime.new(2012, 12, 1)
+    assert_nil PointsEntry.report_for_span(start, finish, "minute")
+    assert PointsEntry.report_for_span(start, finish, "month")
+    assert PointsEntry.report_for_span(start, finish, "day")
+  end
+
+  test "monthly reports" do
+    assert PointsEntry.per_month_in(2012)
+  end
+
+  test "daily reports" do
+    assert PointsEntry.per_day_in(2012, 7)
+  end
+
 end
