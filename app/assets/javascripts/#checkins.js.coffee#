@@ -3,10 +3,8 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #
 
-autoSubmit = (evt) ->
-  if this.value.length >= 8
-    $('#login-form').submit()
+# eb349cd9
 
-$('#login')
-  .keyup(autoSubmit)
-  .focus()
+autoSubmit = (evt) ->
+$('#login').focus()
+$('#login').keyup(

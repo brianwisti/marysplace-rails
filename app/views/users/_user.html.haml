@@ -4,6 +4,8 @@
     = link_to user.login, user
     - if user == current_user
       %em That's you!
+    - elsif user.client
+      %em= link_to user.client.current_alias, user.client
   .btn-toolbar
     - if can? :edit, user
       .btn-group

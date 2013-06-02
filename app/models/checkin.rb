@@ -1,5 +1,5 @@
 class Checkin < ActiveRecord::Base
-  attr_accessible :checkin_at, :notes, :client, :user, :client_id, :user_id
+  attr_accessible :checkin_at, :notes, :client, :user, :client_id, :user_id, :is_valid
   belongs_to :client
   belongs_to :user
 
@@ -10,6 +10,17 @@ class Checkin < ActiveRecord::Base
   validates :checkin_at,
     presence: true
   validate :no_checkin_for_client_on_same_day 
+
+  before_create :validate_client
+
+  def validate_client
+    if self.client.is_blocked?
+      self.is_valid = false
+      self.notes = "Please notify staff immediately about #{self.client.current_alias}"
+    else
+      self.is_valid = true
+    end
+  end
 
   def no_checkin_for_client_on_same_day
     time = Time.new(checkin_at.year, checkin_at.month, checkin_at.day, 0, 0)
