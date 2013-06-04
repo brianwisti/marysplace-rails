@@ -20,6 +20,11 @@ td.numeric {
   font-family: monospace;
 }
 
+th .current {
+  padding: 6px;
+  border: thin black solid;
+}
+
 .summary {
   float: none;
   clear: both;
