@@ -1,8 +1,7 @@
-.summary
-  .header
-    %p
-      - if client.login
-        = image_tag client.login.avatar.url(:thumb)
+%tr
+  %td
+    - if client.login
+      = image_tag client.login.avatar.url(:thumb)
     - if client.is_flagged?
       %i.icon-flag
     %strong
@@ -11,14 +10,11 @@
       - if client.is_blocked?
         %span.label.label-important Blocked
       = link_to client.current_alias, client
-    - if client.other_aliases
-      %em= client.other_aliases
+      - if client.other_aliases
+        %em= client.other_aliases
   - if can? :manage, client
-    %p
+    %td
       = number_with_delimiter client.point_balance
       Points
-    %p
-      - if client.oriented_on
-        %em= client.oriented_on
-      - else
-        %em Not oriented
+    %td
+      = client.created_at.to_date

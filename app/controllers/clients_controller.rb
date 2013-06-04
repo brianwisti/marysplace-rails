@@ -1,10 +1,11 @@
 class ClientsController < ApplicationController
   before_filter :require_user
+  helper_method :sort_column, :sort_direction
 
   # GET /clients
   # GET /clients.json
   def index
-    @clients = Client.order(:current_alias).page params[:page]
+    @clients = Client.order(sort_column + " " + sort_direction).page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -170,5 +171,21 @@ class ClientsController < ApplicationController
         end
       end
     end
+  end
+
+  private
+
+  def sort_column
+    default = "current_alias"
+    return default unless params[:sort]
+
+    Client.column_names.include?(params[:sort]) ? params[:sort] : "current_alias"
+  end
+
+  def sort_direction
+    default = "asc"
+    return default unless params[:direction]
+
+    %{asc desc}.include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

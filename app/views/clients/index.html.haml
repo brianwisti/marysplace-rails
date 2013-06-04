@@ -6,6 +6,14 @@
 
 = paginate @clients
 
-= render @clients
+%table.table
+  %thead
+    %tr
+      %th= sortable "current_alias"
+      - if can? :manage, Client
+        %th= sortable "point_balance"
+        %th= sortable "created_at"
+  %tbody
+    = render @clients
 
 = paginate @clients
