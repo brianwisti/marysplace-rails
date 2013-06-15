@@ -4,6 +4,8 @@
 = content_for(:sidebar) do
   = render 'sidebar'
 
+= page_entries_info @clients
+
 = paginate @clients
 
 %table.table
