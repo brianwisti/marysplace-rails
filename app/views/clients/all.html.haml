@@ -1,5 +1,5 @@
 = content_for(:title) do
-  Active Clients
+  All Clients
 
 = content_for(:sidebar) do
   = render 'sidebar'
@@ -8,7 +8,7 @@
 
 = paginate @clients
 
-%p= link_to "Include inactive", all_clients_path
+%p= link_to "Only active", clients_path
 
 %table.table
   %thead

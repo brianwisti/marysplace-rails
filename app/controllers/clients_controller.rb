@@ -2,10 +2,16 @@ class ClientsController < ApplicationController
   before_filter :require_user
   helper_method :sort_column, :sort_direction
 
+  # GET /all
+  # GET /all.json
+  def all
+    @clients = Client.order(sort_column + " " + sort_direction).page params[:page]
+  end
+
   # GET /clients
   # GET /clients.json
   def index
-    @clients = Client.order(sort_column + " " + sort_direction).page params[:page]
+    @clients = Client.where(is_active: true).order(sort_column + " " + sort_direction).page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb

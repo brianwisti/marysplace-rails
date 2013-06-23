@@ -82,6 +82,7 @@ Marysplace::Application.routes.draw do
 
   resources :clients do
     collection do
+      get 'all'
       get 'search'
     end
 
