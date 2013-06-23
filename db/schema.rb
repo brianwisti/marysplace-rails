@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602063915) do
+ActiveRecord::Schema.define(:version => 20130621121017) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(:version => 20130602063915) do
     t.integer  "login_id"
     t.boolean  "is_flagged",        :default => false
   end
+
+  add_index "clients", ["current_alias"], :name => "index_clients_on_current_alias", :unique => true
 
   create_table "points_entries", :force => true do |t|
     t.integer  "client_id",                               :null => false
