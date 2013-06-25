@@ -179,6 +179,20 @@ class ClientsController < ApplicationController
     end
   end
 
+  def card
+    authorize! :manage, Client
+
+    @client = Client.find(params[:id].to_i)
+    respond_to do |format|
+      if @client.login
+        format.html
+      else
+        flash[:error] = "#{@client.current_alias} has no login yet."
+        redirect_to @client
+      end
+    end
+  end
+
   private
 
   def sort_column

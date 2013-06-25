@@ -1,0 +1,6 @@
+%h1= @client.current_alias
+
+= image_tag @client.login.avatar.url(:square)
+
+%p= @client.login.barcode_data.html_safe
+%p= @client.login.login

@@ -42,9 +42,12 @@ GEM
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
+    barby (0.5.1)
     better_errors (0.8.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     bootstrap-sass (2.3.1.0)
       sass (~> 3.2)
     builder (3.0.4)
@@ -62,6 +65,7 @@ GEM
       execjs
     coffee-script-source (1.6.2)
     daemons (1.1.9)
+    debug_inspector (0.0.2)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (1.4.0)
@@ -73,6 +77,11 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    has_barcode (0.2.3)
+      activesupport (>= 3)
+      barby
+      i18n
+      rake
     highline (1.6.18)
     hike (1.2.2)
     i18n (0.6.4)
@@ -165,10 +174,12 @@ DEPENDENCIES
   authlogic!
   aws-sdk
   better_errors
+  binding_of_caller
   bootstrap-sass (~> 2.3.1.0)
   cancan
   coffee-rails (~> 3.2.1)
   haml-rails
+  has_barcode
   highline
   jquery-rails
   kaminari

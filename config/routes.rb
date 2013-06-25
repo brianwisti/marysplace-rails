@@ -87,6 +87,7 @@ Marysplace::Application.routes.draw do
     end
 
     member do
+      get 'card'
       get 'checkins'
       get 'entries'
       get 'entry'

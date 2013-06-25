@@ -6,6 +6,7 @@
     <div class="span4">
       <% if can? :create, Checkin %>
         <%= link_to "Record Checkin", new_checkin_path, class: "btn btn-block" %>
+        <%= link_to "Start Selfcheck", selfcheck_checkins_path, class: "btn btn-block" %>
       <% end %>
     </div>
   </div>

@@ -1,4 +1,7 @@
+require 'barby/barcode/code_128'
 class User < ActiveRecord::Base
+  include HasBarcode
+
   attr_accessible :login, :name, :email, :password, :password_confirmation, :avatar, :avatar_file_name
   attr_accessor :avatar
 
@@ -23,6 +26,11 @@ class User < ActiveRecord::Base
       medium: '300x300>'
     },
     default_url: "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/:style/blank.png"
+
+  has_barcode :barcode,
+    outputter: :svg,
+    type: Barby::Code128B,
+    value: Proc.new { |u| u.login }
 
   def role?(role)
     self.roles.exists?( name: role.to_s )
