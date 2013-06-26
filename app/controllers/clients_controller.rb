@@ -185,7 +185,7 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id].to_i)
     respond_to do |format|
       if @client.login
-        format.html
+        format.html { render layout: 'card' }
       else
         flash[:error] = "#{@client.current_alias} has no login yet."
         redirect_to @client
