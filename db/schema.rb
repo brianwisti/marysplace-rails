@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130621121017) do
+ActiveRecord::Schema.define(:version => 20130628023047) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -51,9 +51,10 @@ ActiveRecord::Schema.define(:version => 20130621121017) do
     t.date     "expires_on"
     t.integer  "resolved_by_id"
     t.date     "resolved_on"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.text     "resolution"
+    t.boolean  "can_shop",        :default => true
   end
 
   add_index "client_flags", ["client_id"], :name => "index_client_flags_on_client_id"

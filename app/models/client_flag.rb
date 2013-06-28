@@ -1,6 +1,6 @@
 class ClientFlag < ActiveRecord::Base
   attr_accessible :action_required, :consequence, :client_id, :created_by, :created_by_id, 
-    :description, :expires_on, :is_blocking, :resolved_by_id, :resolved_on
+    :description, :expires_on, :is_blocking, :resolved_by_id, :resolved_on, :can_shop
 
   belongs_to :client
   belongs_to :created_by,
@@ -12,6 +12,8 @@ class ClientFlag < ActiveRecord::Base
     presence: true
   validates :created_by,
     presence: true
+
+  scope :unresolved, where(["resolved_on is null or expires_on > ?", Date.today])
 
   def is_resolved?
     today = Date.today

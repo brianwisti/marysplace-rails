@@ -22,6 +22,10 @@ class Client < ActiveRecord::Base
   has_many :checkins
   has_many :client_flags
 
+  # TODO: Replace alias hack w/renaming the relationship.
+  #       That means digging through templates too.
+  alias :flags :client_flags
+
   before_save do
     self.point_balance ||= 0
   end
@@ -37,12 +41,19 @@ class Client < ActiveRecord::Base
     self.save
   end
 
+  # Does this client have unresolved flags?
   def is_flagged?
-    return self.client_flags.where(resolved_on: nil).count > 0
+    return self.flags.unresolved.count > 0
   end
 
+  # Can this client make purchases?
+  def can_shop?
+    return self.flags.unresolved.where(can_shop: false).count == 0
+  end
+
+  # Should this client be blocked from entry?
   def is_blocked?
-    return self.client_flags.where(is_blocking: true, resolved_on: nil).count > 0
+    return self.flags.unresolved.where(is_blocking: true).count > 0
   end
 
   def update_points!

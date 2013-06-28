@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'pp'
 
 class ClientTest < ActiveSupport::TestCase
   test "required fields" do
@@ -66,4 +67,12 @@ class ClientTest < ActiveSupport::TestCase
       "Creation of a new flag is indicated in Client.is_flagged"
   end
 
+  test "block from shopping" do
+    client = clients(:amy_a)
+    user = users(:admin)
+    assert_equal true, client.can_shop?
+    flag = ClientFlag.create! client_id: client.id, created_by_id: user.id, can_shop: false
+    client.reload
+    assert_equal false, client.can_shop?
+  end
 end
