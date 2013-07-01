@@ -23,11 +23,15 @@
           <% if @points_entry.client.is_flagged %>
             <span class="is-flagged">
               <i class="icon-flag"></i>
+              <% if !@points_entry.client.can_shop? %>
+                <span class="label label-important">No Shopping</span>
+              <% end %>
               <%= link_to "flagged", flags_client_path(@points_entry.client), class: "text-error" %>
             </span>
           <% else %>
             <span class="is-flagged" style="display:none">
               <i class="icon-flag"></i>
+              <span class="label label-important shopping-blocked-label" style="display: none">No Shopping</span>
               <%= link_to "flagged", '#', class: "text-error" %>
             </span>
           <% end %>
@@ -36,6 +40,7 @@
         <% else %>
           <span class="is-flagged" style="display:none">
             <i class="icon-flag"></i>
+            <span class="label label-important shopping-blocked-label" style="display: none">No Shopping</span>
             <%= link_to "flagged", '#', class: "text-error" %>
           </span>
           <span class="point-balance text-info"></span>

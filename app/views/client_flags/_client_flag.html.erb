@@ -4,13 +4,17 @@
       <span class="label label-info">Resolved</span>
       <%= client_flag.resolved_on %> by <%= client_flag.resolved_by.login %>
     <% end %>
-    <% if client_flag.expires_on %>
-      Expires <%= client_flag.expires_on %>
-    <% end %>
     <% if client_flag.is_blocking %>
       <span class="label label-important">Blocking</span>
     <% end %>
+    <% if !client_flag.can_shop %>
+      <span class="label label-important">No Shopping</span>
+    <% end %>
     <%= link_to client_flag.client.current_alias, client_flag %> 
+    <% if client_flag.description %><%= client_flag.description %><% end %>
+    <% if client_flag.expires_on %>
+      Expires <%= client_flag.expires_on %>
+    <% end %>
       <small>
         - added <%= time_ago_in_words client_flag.created_at %> ago by <%= client_flag.created_by.login %>
       </small>

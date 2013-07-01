@@ -36,5 +36,11 @@ if $clientTypeahead.length > 0
         if selected.is_flagged == true
           $('.is-flagged').show()
           $('.is-flagged a').attr('href', "/clients/#{selected_id}/flags")
+          if selected.can_shop == true
+            console.log "Shopping is okay"
+            $('.shopping-blocked-label').hide()
+          else
+            $('.shopping-blocked-label').show()
+            console.log "Shopping is verboten"
         else
           $('.is-flagged').hide()
