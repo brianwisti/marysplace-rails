@@ -56,6 +56,7 @@ class PointsEntryTest < ActiveSupport::TestCase
     assert PointsEntry.per_day_in(2012, 7)
   end
 
+<<<<<<< HEAD
   test "block shopping after bail" do
     client = clients(:amy_a)
     entry_type = points_entry_types(:am_chairs)
@@ -74,5 +75,4 @@ class PointsEntryTest < ActiveSupport::TestCase
     assert_equal "Bailed on #{entry_type.name} - #{entry.performed_on}", flag.description,
       "explain reason for this flag"
   end
-
 end
