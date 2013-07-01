@@ -56,4 +56,23 @@ class PointsEntryTest < ActiveSupport::TestCase
     assert PointsEntry.per_day_in(2012, 7)
   end
 
+  test "block shopping after bail" do
+    client = clients(:amy_a)
+    entry_type = points_entry_types(:am_chairs)
+    assert client.can_shop?
+    entry = PointsEntry.new
+    entry.client = client
+    entry.points_entry_type = entry_type
+    entry.points = -100
+    entry.bailed = true
+    entry.added_by = users(:admin)
+    entry.save!
+    client.reload
+    assert !client.can_shop?,
+      "No shopping for two weeks after a bail."
+    flag = client.flags.last
+    assert_equal "Bailed on #{entry_type.name} - #{entry.performed_on}", flag.description,
+      "explain reason for this flag"
+  end
+
 end

@@ -1,3 +1,5 @@
+require 'pp'
+
 class PointsEntry < ActiveRecord::Base
   belongs_to :client
   belongs_to :points_entry_type
@@ -22,6 +24,14 @@ class PointsEntry < ActiveRecord::Base
 
   before_create do
     self.performed_on ||= Date.today
+
+    if self.bailed == true
+      flag = ClientFlag.create!(client_id: self.client.id,
+                                created_by_id: self.added_by_id,
+                                description: "Bailed on #{self.points_entry_type.name} - #{self.performed_on}",
+                                can_shop: false,
+                                expires_on: Date.today + 2.weeks)
+    end
   end
 
   def self.per_month_in(year)
