@@ -23,11 +23,6 @@
   <td>
     <%= client_flag.client.current_alias %>
   </td>
-  <% if can? :manage, ClientFlag %>
-    <td>
-      <%= client_flag.description %>
-    </td>
-  <% end %>
   <td>
     <%= client_flag.created_at.to_date %> by <%= client_flag.created_by.login %>
   <td>
