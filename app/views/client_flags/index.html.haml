@@ -6,4 +6,5 @@
     %ul.nav.nav-list
       %li= link_to 'Add Flag', new_client_flag_path
 
-= render @client_flags
+%table.table
+  = render @client_flags

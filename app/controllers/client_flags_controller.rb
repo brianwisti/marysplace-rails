@@ -4,7 +4,7 @@ class ClientFlagsController < ApplicationController
   # GET /client_flags
   # GET /client_flags.json
   def index
-    @client_flags = ClientFlag.all
+    @client_flags = ClientFlag.order("id DESC")
 
     respond_to do |format|
       format.html # index.html.erb

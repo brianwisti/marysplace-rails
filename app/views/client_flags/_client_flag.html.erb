@@ -1,22 +1,36 @@
-<div class="summary">
-  <div class="header">
+<% if client_flag.resolved_on %>
+  <tr class="success">
+<% elsif client_flag.is_blocking %>
+  <tr class="error">
+<% else %>
+  <tr>
+<% end %>
+  <td>
     <% if client_flag.resolved_on %>
-      <span class="label label-info">Resolved</span>
-      <%= client_flag.resolved_on %> by <%= client_flag.resolved_by.login %>
+      <span class="label label-info">
+        Resolved by <%= client_flag.resolved_by.login %>
+      </span>
     <% end %>
+  </td>
+  <td>
     <% if client_flag.is_blocking %>
       <span class="label label-important">Blocking</span>
     <% end %>
     <% if !client_flag.can_shop %>
-      <span class="label label-important">No Shopping</span>
+      <span class="label label-warning">No Shopping</span>
     <% end %>
-    <%= link_to client_flag.client.current_alias, client_flag %> 
-    <% if client_flag.description %><%= client_flag.description %><% end %>
-    <% if client_flag.expires_on %>
-      Expires <%= client_flag.expires_on %>
-    <% end %>
-      <small>
-        - added <%= time_ago_in_words client_flag.created_at %> ago by <%= client_flag.created_by.login %>
-      </small>
-  </div>
-</div>
+  </td>
+  <td>
+    <%= client_flag.client.current_alias %>
+  </td>
+  <% if can? :manage, ClientFlag %>
+    <td>
+      <%= client_flag.description %>
+    </td>
+  <% end %>
+  <td>
+    <%= client_flag.created_at.to_date %> by <%= client_flag.created_by.login %>
+  <td>
+    <%= link_to "Show", client_flag %>
+  </td>
+</tr>
