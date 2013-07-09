@@ -7,6 +7,7 @@
 
 = image_tag @user.avatar.url(:square)
 
+
 %dl
   %dt Login
   %dd= @user.login
@@ -15,6 +16,20 @@
   - if @user.client and can? :show, Client
     %dt For Client
     %dd= link_to @user.client.current_alias, @user.client
+  %dt Roles
+  %dd
+    - if @user != current_user and can? :manage, User
+      .btn-group.roles-toggler{ data: { toggler: "buttons-checkbox" } }
+        = render 'roles-toggler', user: @user, roles: @roles
+    - else
+      .btn-group{ data: { toggler: "buttons-checkbox" } }
+        = render 'roles-toggler', user: @user, roles: @roles
+  %dt Email
+  %dd
+    - if @user.email.blank?
+      %em No email
+    -else
+      = mail_to @user.email
   %dt Login Count
   %dd= @user.login_count
   %dt Last Activity

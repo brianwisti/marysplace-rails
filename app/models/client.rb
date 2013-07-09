@@ -33,12 +33,18 @@ class Client < ActiveRecord::Base
   def create_login(opts)
     password = opts[:password]
     confirmation = opts[:password_confirmation]
-    # Generate a sufficiently unique login code
-    # short enough to type, but not just straight current_alias (which can change)
-    source = "RE|#{self.current_alias}|#{self.created_at.to_i}"
-    username = sprintf "%08x", Zlib.crc32(source)
+    username = self.generate_login_code
     self.login = User.create(login: username, password: password, password_confirmation: confirmation)
     self.save
+  end
+
+  # Generate a sufficiently unique login code
+  #
+  # short enough to type, but not just straight current_alias (which can change)
+  def generate_login_code
+    source = "RE|#{self.current_alias}|#{Time.now.to_i}"
+    login_code = sprintf "%08x", Zlib.crc32(source)
+    return login_code
   end
 
   # Does this client have unresolved flags?

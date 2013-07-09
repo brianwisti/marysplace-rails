@@ -27,6 +27,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @roles = Role.order(:name)
 
     # Anyone can view themselves, but all else requires auth.
     if @user != @current_user
