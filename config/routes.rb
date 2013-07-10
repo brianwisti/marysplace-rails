@@ -1,5 +1,7 @@
 Marysplace::Application.routes.draw do
 
+  resources :roles
+
   resources :client_flags do
     member do
       get 'resolve'

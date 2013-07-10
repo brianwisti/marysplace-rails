@@ -1,0 +1,9 @@
+=content_for(:title) do
+  = @role.name.titleize
+  Users
+
+= content_for(:sidebar) do
+  = render 'users/sidebar'
+
+%table.table
+  = render @role.users

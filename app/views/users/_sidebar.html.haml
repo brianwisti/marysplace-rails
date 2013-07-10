@@ -7,3 +7,6 @@
       %li= link_to "Points Logged by #{@user.login}", entries_user_path(@user)
   - elsif can?(:manage, User)
     %li= link_to "Create User", new_user_path
+  - if @roles
+    - @roles.each do |role|
+      %li= link_to role.name.titleize, role
