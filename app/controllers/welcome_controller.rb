@@ -4,5 +4,10 @@ class WelcomeController < ApplicationController
   def index
     @client_flags = ClientFlag.order('created_at').limit(5)
     @checkin_count = Checkin.today.count
+
+    if current_user.email.blank? and !session[:email_alert_shown]
+      @email_alert_needed = true
+      session[:email_alert_shown] = true
+    end
   end
 end

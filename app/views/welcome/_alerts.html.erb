@@ -1,0 +1,9 @@
+<% if @email_alert_needed %>
+  <div class="alert">
+    <p>We need an email address for 
+    <%= link_to 'your account', edit_user_path( current_user ) %>, so you can
+    safely reset your password and we can notify you about major changes.
+    It will not be shared with anybody outside of Mary's Place.
+    </p>
+  </div>
+<% end %>

@@ -48,4 +48,10 @@ class WelcomeControllerTest < ActionController::TestCase
     assert_select 'a[href=/points_entry_types]', "Points Entry Types"
     assert_select 'a[href=/client_flags]', "Client Flags"
   end
+
+  test "Missing email notification" do
+    UserSession.create users(:new_hire)
+    get :index
+    assert_select 'div.alert', 1
+  end
 end

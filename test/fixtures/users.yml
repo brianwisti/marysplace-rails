@@ -15,6 +15,16 @@ admin:
 
 staff:
   login: staff
+  email: staff@localhost
+  crypted_password: MyString
+  password_salt: MyString
+  persistence_token: MyString
+  single_access_token: MyString
+  perishable_token: MyString
+  roles: staff
+
+new_hire:
+  login: new_hire
   crypted_password: MyString
   password_salt: MyString
   persistence_token: MyString
@@ -24,6 +34,7 @@ staff:
 
 front_desk:
   login: volunteer
+  email: test@localhost
   crypted_password: MyString
   password_salt: MyString
   persistence_token: MyString
