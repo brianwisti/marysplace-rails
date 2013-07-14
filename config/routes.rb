@@ -1,5 +1,8 @@
 Marysplace::Application.routes.draw do
 
+  resources :messages
+
+
   resources :roles
 
   resources :client_flags do
