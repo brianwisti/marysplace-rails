@@ -5,4 +5,7 @@ class Message < ActiveRecord::Base
     presence: true
   validates :author_id,
     presence: true
+
+  belongs_to :author,
+    class_name: "User"
 end
