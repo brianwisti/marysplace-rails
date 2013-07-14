@@ -1,7 +1,4 @@
-%h1 Editing message
+= content_for(:title) do
+  Editing Message
 
 = render 'form'
-
-= link_to 'Show', @message
-\|
-= link_to 'Back', messages_path
