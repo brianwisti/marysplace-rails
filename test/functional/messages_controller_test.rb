@@ -1,10 +1,11 @@
 require 'test_helper'
 
 class MessagesControllerTest < ActionController::TestCase
+  fixtures :users
   setup :activate_authlogic
 
   setup do
-    @message = messages(:one)
+    @message = Message.create(content: "Test Message", author_id: users(:admin).id)
     UserSession.create users(:admin)
   end
 

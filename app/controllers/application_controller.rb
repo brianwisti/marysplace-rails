@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user_session, :current_user, :sections
+  helper_method :current_user_session, :current_user, :sections, :message_count
 
   private
     def current_user_session
@@ -11,6 +11,16 @@ class ApplicationController < ActionController::Base
     def current_user
       return @current_user if defined?(@current_user)
       @current_user = current_user_session && current_user_session.user
+    end
+
+    def message_count
+      return 0 unless current_user
+
+      if current_user.last_message_check
+        Message.since(current_user.last_message_check)
+      else
+        Message.since(current_user.created_at)
+      end
     end
 
     def require_user

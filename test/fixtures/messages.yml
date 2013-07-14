@@ -2,8 +2,8 @@
 
 one:
   content: MyText
-  author_id: users(:admin).id
+  author: admin
 
 two:
   content: MyText
-  author_id: users(:admin).id
+  author: admin

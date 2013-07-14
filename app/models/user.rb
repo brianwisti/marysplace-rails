@@ -2,7 +2,7 @@ require 'barby/barcode/code_128'
 class User < ActiveRecord::Base
   include HasBarcode
 
-  attr_accessible :login, :name, :email, :password, :password_confirmation, :avatar, :avatar_file_name
+  attr_accessible :login, :name, :email, :password, :password_confirmation, :avatar, :avatar_file_name, :last_message_check
   attr_accessor :avatar
 
   acts_as_authentic do |c|
@@ -31,6 +31,11 @@ class User < ActiveRecord::Base
     outputter: :svg,
     type: Barby::Code128B,
     value: Proc.new { |u| u.login }
+
+  def messages_checked!
+    self.update_attributes(last_message_check: DateTime.now)
+    self.reload
+  end
 
   def role?(role)
     self.roles.exists?( name: role.to_s )

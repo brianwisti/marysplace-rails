@@ -6,6 +6,7 @@ class MessagesController < ApplicationController
   def index
     authorize! :show, Message
     @messages = Message.all
+    current_user.messages_checked!
 
     respond_to do |format|
       format.html # index.html.erb
