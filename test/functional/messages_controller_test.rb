@@ -1,8 +1,11 @@
 require 'test_helper'
 
 class MessagesControllerTest < ActionController::TestCase
+  setup :activate_authlogic
+
   setup do
     @message = messages(:one)
+    UserSession.create users(:admin)
   end
 
   test "should get index" do
