@@ -18,7 +18,7 @@ class MessagesControllerTest < ActionController::TestCase
 
   test "should create message" do
     assert_difference('Message.count') do
-      post :create, message: { content: @message.content }
+      post :create, message: { content: @message.content, author_id: @message.author_id }
     end
 
     assert_redirected_to message_path(assigns(:message))
