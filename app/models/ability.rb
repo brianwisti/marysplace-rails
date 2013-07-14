@@ -17,6 +17,7 @@ class Ability
       can :manage, PointsEntry
       can :manage, Checkin
       can :manage, ClientFlag
+      can :show, Message
     end
 
     if user.role? :admin
