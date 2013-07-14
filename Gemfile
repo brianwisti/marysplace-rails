@@ -18,6 +18,7 @@ gem 'haml-rails'
 gem 'paperclip'
 gem 'aws-sdk'
 gem 'has_barcode'
+gem 'markdownizer'
 
 group :development do
   gem 'better_errors'

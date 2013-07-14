@@ -1,6 +1,8 @@
 %div.alert.alert-info
-  %p= message.content
   %p
-    = link_to message.author.login, message.author
-    \--
+    Written
     = link_to message.created_at.to_date, message
+    by
+    %em
+      = link_to message.author.login, message.author
+  != message.rendered_content
