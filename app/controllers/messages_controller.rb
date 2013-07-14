@@ -48,6 +48,7 @@ class MessagesController < ApplicationController
   def create
     authorize! :create, Message
     @message = Message.new(params[:message])
+    @message.author = current_user
 
     respond_to do |format|
       if @message.save

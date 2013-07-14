@@ -1,19 +1,9 @@
-%h1 Listing messages
+= content_for(:title) do
+  Messages
 
-%table
-  %tr
-    %th Content
-    %th
-    %th
-    %th
+- if can? :create, Message
+  = content_for(:sidebar) do
+    %ul.nav.nav-list
+      %li= link_to 'New Message', new_message_path
 
-  - @messages.each do |message|
-    %tr
-      %td= message.content
-      %td= link_to 'Show', message
-      %td= link_to 'Edit', edit_message_path(message)
-      %td= link_to 'Destroy', message, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Message', new_message_path
+= render @messages

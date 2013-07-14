@@ -1,9 +1,15 @@
-%p#notice= notice
+= content_for(:title) do
+  Message
+  = @message.created_at.to_date
+  by
+  = @message.author.login
 
-%p
-  %b Content:
-  = @message.content
+= content_for(:sidebar) do
+  %ul.nav.nav-list
+    %li= link_to "All Messages", messages_path
 
-= link_to 'Edit', edit_message_path(@message)
-\|
-= link_to 'Back', messages_path
+= render @message
+
+- if can? :manage, @message
+  = link_to 'Edit', edit_message_path(@message)
+  = link_to 'Destroy', @message, method: :delete, data: { confirm: 'Are you sure?' }

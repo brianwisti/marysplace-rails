@@ -1,0 +1,6 @@
+%div.alert.alert-info
+  %p= message.content
+  %p
+    = link_to message.author.login, message.author
+    \--
+    = link_to message.created_at.to_date, message

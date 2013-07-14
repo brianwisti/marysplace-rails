@@ -28,5 +28,4 @@ class MessageTest < ActiveSupport::TestCase
     assert_equal @author, @message.author,
       "Confirm message author"
   end
-
 end
