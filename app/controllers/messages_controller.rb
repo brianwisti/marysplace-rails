@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
+    authorize! :show, Message
     @messages = Message.all
 
     respond_to do |format|
@@ -15,6 +16,7 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
+    authorize! :show, Message
     @message = Message.find(params[:id])
 
     respond_to do |format|
@@ -26,6 +28,7 @@ class MessagesController < ApplicationController
   # GET /messages/new
   # GET /messages/new.json
   def new
+    authorize! :create, Message
     @message = Message.new
 
     respond_to do |format|
@@ -36,12 +39,14 @@ class MessagesController < ApplicationController
 
   # GET /messages/1/edit
   def edit
+    authorize! :edit, Message
     @message = Message.find(params[:id])
   end
 
   # POST /messages
   # POST /messages.json
   def create
+    authorize! :create, Message
     @message = Message.new(params[:message])
 
     respond_to do |format|
@@ -58,6 +63,7 @@ class MessagesController < ApplicationController
   # PUT /messages/1
   # PUT /messages/1.json
   def update
+    authorize! :update, Message
     @message = Message.find(params[:id])
 
     respond_to do |format|
@@ -74,6 +80,7 @@ class MessagesController < ApplicationController
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
+    authorize! :destroy, Message
     @message = Message.find(params[:id])
     @message.destroy
 
