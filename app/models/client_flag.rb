@@ -13,7 +13,8 @@ class ClientFlag < ActiveRecord::Base
   validates :created_by,
     presence: true
 
-  scope :unresolved, where(["resolved_on is null or expires_on > ?", Date.today])
+  scope :resolved, where(["resolved_on is not null or expires_on <= ?", Date.today])
+  scope :unresolved, where(["(resolved_on is null) and (expires_on is null or expires_on > ?)", Date.today])
 
   def is_resolved?
     today = Date.today

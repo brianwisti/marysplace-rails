@@ -12,6 +12,24 @@ class ClientFlagsController < ApplicationController
     end
   end
 
+  def resolved
+    @client_flags = ClientFlag.resolved.order("id DESC")
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @client_flags }
+    end
+  end
+
+  def unresolved
+    @client_flags = ClientFlag.unresolved.order("id DESC")
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @client_flags }
+    end
+  end
+
   # GET /client_flags/1
   # GET /client_flags/1.json
   def show

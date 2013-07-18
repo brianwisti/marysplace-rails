@@ -10,6 +10,11 @@ Marysplace::Application.routes.draw do
       get 'resolve'
       post 'resolve_store'
     end
+
+    collection do
+      get 'resolved'
+      get 'unresolved'
+    end
   end
 
   resources :checkins do
