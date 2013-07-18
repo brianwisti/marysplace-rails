@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
   # GET /messages.json
   def index
     authorize! :show, Message
-    @messages = Message.all
+    @messages = Message.order("created_at DESC")
     current_user.messages_checked!
 
     respond_to do |format|

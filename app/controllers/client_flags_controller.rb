@@ -4,6 +4,7 @@ class ClientFlagsController < ApplicationController
   # GET /client_flags
   # GET /client_flags.json
   def index
+    authorize! :show, ClientFlag
     @client_flags = ClientFlag.order("id DESC")
 
     respond_to do |format|
@@ -13,6 +14,7 @@ class ClientFlagsController < ApplicationController
   end
 
   def resolved
+    authorize! :show, ClientFlag
     @client_flags = ClientFlag.resolved.order("id DESC")
 
     respond_to do |format|
@@ -22,6 +24,7 @@ class ClientFlagsController < ApplicationController
   end
 
   def unresolved
+    authorize! :show, ClientFlag
     @client_flags = ClientFlag.unresolved.order("id DESC")
 
     respond_to do |format|
@@ -33,6 +36,7 @@ class ClientFlagsController < ApplicationController
   # GET /client_flags/1
   # GET /client_flags/1.json
   def show
+    authorize! :show, ClientFlag
     @client_flag = ClientFlag.find(params[:id])
 
     respond_to do |format|
@@ -44,6 +48,7 @@ class ClientFlagsController < ApplicationController
   # GET /client_flags/new
   # GET /client_flags/new.json
   def new
+    authorize! :create, ClientFlag
     @client_flag = ClientFlag.new
 
     respond_to do |format|
@@ -54,12 +59,14 @@ class ClientFlagsController < ApplicationController
 
   # GET /client_flags/1/edit
   def edit
+    authorize! :edit, ClientFlag
     @client_flag = ClientFlag.find(params[:id])
   end
 
   # POST /client_flags
   # POST /client_flags.json
   def create
+    authorize! :create, ClientFlag
     params[:client_flag][:created_by] = current_user
     @client_flag = ClientFlag.new(params[:client_flag])
 
@@ -77,6 +84,7 @@ class ClientFlagsController < ApplicationController
   # PUT /client_flags/1
   # PUT /client_flags/1.json
   def update
+    authorize! :update, ClientFlag
     @client_flag = ClientFlag.find(params[:id])
 
     respond_to do |format|
@@ -93,6 +101,7 @@ class ClientFlagsController < ApplicationController
   # DELETE /client_flags/1
   # DELETE /client_flags/1.json
   def destroy
+    authorize! :destroy, ClientFlag
     @client_flag = ClientFlag.find(params[:id])
     @client_flag.destroy
 
