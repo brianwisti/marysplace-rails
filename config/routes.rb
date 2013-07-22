@@ -1,13 +1,16 @@
 Marysplace::Application.routes.draw do
 
-  get "store/index"
+  get "store/index",
+    as: 'store'
   put "store/start"
-  put "store/finish"
+  put "store/finish/:id" => 'store#finish',
+    as: 'store/finish'
   get "store/open"
   put "store/add"
   delete "store/remove"
   put "store/change"
-  get "store/show/:id" => 'store#show'
+  get "store/show/:id" => 'store#show',
+    as: 'store/show'
 
   resources :messages
 

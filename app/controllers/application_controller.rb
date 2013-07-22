@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
       }
       store_section = {
         title: "Store",
-        url: store_index_path,
+        url: store_path,
         active: params[:controller] == 'store'
       }
 

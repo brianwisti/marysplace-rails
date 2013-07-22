@@ -1,2 +1,18 @@
-%h1 Store#show
-%p Find me in app/views/store/show.html.haml
+= content_for(:title) do
+  Cart for
+  = @cart.shopper.current_alias
+
+%dl
+  %dt Started At
+  %dd= @cart.started_at
+  %dt Finished At
+  - if @cart.finished_at
+    %dd= @cart.finished_at
+  - else
+    %dd
+      %span.label Open
+      = link_to "Finish", store_finish_path(@cart), method: :put, class: "btn"
+  %dt Total Points
+  %dd= @cart.total
+  %dt Handled By
+  %dd= @cart.handled_by.login
