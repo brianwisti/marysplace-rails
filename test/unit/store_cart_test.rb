@@ -25,4 +25,9 @@ class StoreCartTest < ActiveSupport::TestCase
     assert @cart.finished_at,
       "StoreCart#finish sets finished_at for the finished cart."
   end
+
+  test "StoreCart -> Client relation" do
+    assert_equal @client, @cart.shopper,
+      "Every StoreCart has a Client doing the shopping"
+  end
 end
