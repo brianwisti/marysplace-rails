@@ -12,6 +12,11 @@ class StoreController < ApplicationController
     @cart = StoreCart.start(@shopper, @handled_by)
   end
 
+  def show
+    authorize! :show, StoreCart
+    @cart = StoreCart.find(params[:id])
+  end
+
   def finish
   end
 

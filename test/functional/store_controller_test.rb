@@ -5,8 +5,9 @@ class StoreControllerTest < ActionController::TestCase
 
   setup do
     @user = users(:admin)
-    @client = clients(:amy_a)
     UserSession.create @user
+    @client = clients(:amy_a)
+    @cart = StoreCart.start(@client, @user)
   end
 
   test "should get index" do
@@ -19,6 +20,11 @@ class StoreControllerTest < ActionController::TestCase
       put :start, { shopper_id: @client }
       assert_response :success
     end
+  end
+
+  test "should get show" do
+    get :show, id: @cart
+    assert_response :success
   end
 
   test "should get finish" do

@@ -7,6 +7,7 @@ Marysplace::Application.routes.draw do
   put "store/add"
   delete "store/remove"
   put "store/change"
+  get "store/show/:id" => 'store#show'
 
   resources :messages
 
