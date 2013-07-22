@@ -69,11 +69,6 @@ class ApplicationController < ActionController::Base
         url: clients_path, 
         active: params[:controller] == 'clients'
       }
-      points_entry_type_section = {
-        title: "Points Entry Types", 
-        url: points_entry_types_path, 
-        active: params[:controller] == 'points_entry_types'
-      }
       points_entry_section = {
         title: "Points Log", 
         url: points_entries_path, 
@@ -88,6 +83,11 @@ class ApplicationController < ActionController::Base
         title: "Client Flags", 
         url: client_flags_path, 
         active: params[:controller] == 'client_flags'
+      }
+      store_section = {
+        title: "Store",
+        url: store_index_path,
+        active: params[:controller] == 'store'
       }
 
       if can? :manage, User
@@ -106,14 +106,12 @@ class ApplicationController < ActionController::Base
         arr.push checkin_section
       end
 
-      # TODO: Actually, this will go into a subsection of points_entries
-      #       You know, once points_entries are in place.
-      if can? :show, PointsEntryType
-        arr.push points_entry_type_section
-      end
-
       if can? :show, ClientFlag
         arr.push client_flag_section
+      end
+
+      if can? :show, StoreCart
+        arr.push store_section
       end
 
       return arr

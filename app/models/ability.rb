@@ -18,6 +18,7 @@ class Ability
       can :manage, Checkin
       can :manage, ClientFlag
       can :show, Message
+      can :manage, StoreCart
     end
 
     if user.role? :admin
