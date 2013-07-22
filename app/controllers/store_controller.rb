@@ -5,6 +5,11 @@ class StoreController < ApplicationController
   end
 
   def start
+    authorize! :create, StoreCart
+
+    @shopper = Client.find(params[:shopper_id].to_i)
+    @handled_by = current_user
+    @cart = StoreCart.start(@shopper, @handled_by)
   end
 
   def finish

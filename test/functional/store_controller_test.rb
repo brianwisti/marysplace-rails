@@ -4,7 +4,8 @@ class StoreControllerTest < ActionController::TestCase
   setup :activate_authlogic
 
   setup do
-    @user = users(:staff)
+    @user = users(:admin)
+    @client = clients(:amy_a)
     UserSession.create @user
   end
 
@@ -14,8 +15,10 @@ class StoreControllerTest < ActionController::TestCase
   end
 
   test "should get start" do
-    get :start
-    assert_response :success
+    assert_difference('StoreCart.count') do
+      put :start, { shopper_id: @client }
+      assert_response :success
+    end
   end
 
   test "should get finish" do

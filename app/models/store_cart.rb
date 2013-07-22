@@ -4,11 +4,16 @@ class StoreCart < ActiveRecord::Base
   belongs_to :shopper,
     class_name: "Client"
 
+  belongs_to :handled_by,
+    class_name: "User"
+
   def self.start(shopper, handler)
-    StoreCart.create(shopper_id:    shopper.id,
-                     handled_by_id: handler.id,
-                     started_at:    DateTime.now,
-                     total:         0)
+    StoreCart.create do |cart|
+      cart.shopper    = shopper
+      cart.handled_by = handler
+      cart.started_at = DateTime.now
+      cart.total      = 0
+    end
   end
 
   def finish

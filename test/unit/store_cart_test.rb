@@ -30,4 +30,9 @@ class StoreCartTest < ActiveSupport::TestCase
     assert_equal @client, @cart.shopper,
       "Every StoreCart has a Client doing the shopping"
   end
+
+  test "StoreCart -> User relation" do
+    assert_equal @user, @cart.handled_by,
+      "Every StoreCart has a User handling the Client's shopping"
+  end
 end
