@@ -7,4 +7,8 @@ class StoreCart < ActiveRecord::Base
                      started_at:    DateTime.now,
                      total:         0)
   end
+
+  def finish
+    self.update_attributes(finished_at: DateTime.now)
+  end
 end
