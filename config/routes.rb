@@ -1,5 +1,13 @@
 Marysplace::Application.routes.draw do
 
+  get "store/index"
+  put "store/start"
+  put "store/finish"
+  get "store/open"
+  put "store/add"
+  delete "store/remove"
+  put "store/change"
+
   resources :messages
 
 
