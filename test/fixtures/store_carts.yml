@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  shopper_id: 1
+  started_at: 2013-07-21 17:28:58
+  finished_at: 2013-07-21 17:28:58
+  handled_by_id: 1
+  total: 1
+
+two:
+  shopper_id: 1
+  started_at: 2013-07-21 17:28:58
+  finished_at: 2013-07-21 17:28:58
+  handled_by_id: 1
+  total: 1
