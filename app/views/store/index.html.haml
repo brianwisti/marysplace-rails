@@ -1,2 +1,26 @@
-%h1 Store#index
-%p Find me in app/views/store/index.html.haml
+= content_for(:title) do
+  Bon Mary's Store
+
+= form_tag(store_start_path, method: :put, class: "form-inline") do
+  .control-group
+    .controls
+      = text_field_tag "current_alias", nil,
+        data: { provide: 'typeahead', field: 'shopper_id', balance: 0 },
+        autocomplete: 'off',
+        class: 'client-typeahead'
+      %span.summary
+        %span.point-total.text-info
+      = button_tag "Start Shopping!", class: "btn"
+      = hidden_field_tag :shopper_id
+
+%table.table
+  - @carts.each do |cart|
+    %tr
+      %td= cart.shopper.current_alias
+      %td= cart.started_at
+      %td
+        - if cart.finished_at
+          = cart.finished_at
+        - else
+          %span.label Open
+      %td= cart.total

@@ -31,7 +31,6 @@ class WelcomeControllerTest < ActionController::TestCase
     assert_select 'a[href=/clients]', "Clients"
     assert_select 'a[href=/points_entries]', false
     assert_select 'a[href=/checkins]', "Checkins"
-    assert_select 'a[href=/points_entry_types]', false
     assert_select 'a[href=/client_flags]', false
     assert_select 'a.checkin-count', '0'
   end
@@ -39,13 +38,13 @@ class WelcomeControllerTest < ActionController::TestCase
   test "Staff navbar" do
     UserSession.create users(:staff)
     get :index
+    assert_response :success
 
     assert_select 'div.flags', 1
     assert_select 'a[href=/users]', "Users"
     assert_select 'a[href=/clients]', "Clients"
     assert_select 'a[href=/points_entries]', "Points Log"
     assert_select 'a[href=/checkins]', "Checkins"
-    assert_select 'a[href=/points_entry_types]', "Points Entry Types"
     assert_select 'a[href=/client_flags]', "Client Flags"
   end
 

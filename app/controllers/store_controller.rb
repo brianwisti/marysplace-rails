@@ -2,6 +2,7 @@ class StoreController < ApplicationController
   before_filter :require_user
 
   def index
+    @carts = StoreCart.all
   end
 
   def start
