@@ -1,6 +1,10 @@
-%h1 Listing catalog_items
+= content_for(:title) do
+  Store Catalog
 
-%table
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+%table.table
   %tr
     %th Name
     %th Cost
@@ -19,7 +23,3 @@
       %td= link_to 'Show', catalog_item
       %td= link_to 'Edit', edit_catalog_item_path(catalog_item)
       %td= link_to 'Destroy', catalog_item, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Catalog item', new_catalog_item_path

@@ -1,6 +1,9 @@
 = content_for(:title) do
   Bon Mary's Store
 
+= content_for(:sidebar) do
+  = render 'sidebar'
+
 = form_tag(store_start_path, method: :put, class: "form-inline") do
   .control-group
     .controls

@@ -1,0 +1,5 @@
+%ul.nav.nav-list
+  %li= link_to "Store", store_path
+  - if can? :create, CatalogItem
+    %li= link_to 'New Item', new_catalog_item_path
+
