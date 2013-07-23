@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: General - 50
+  cost: 50
+  description: MyText
+  is_available: false
+
+two:
+  name: General - 100
+  cost: 100
+  description: MyText
+  is_available: false

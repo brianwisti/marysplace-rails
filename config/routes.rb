@@ -1,5 +1,8 @@
 Marysplace::Application.routes.draw do
 
+  resources :catalog_items
+
+
   get "store/index",
     as: 'store'
   put "store/start"

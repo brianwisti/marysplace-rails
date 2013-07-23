@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @catalog_item.name
+%p
+  %b Cost:
+  = @catalog_item.cost
+%p
+  %b Description:
+  = @catalog_item.description
+%p
+  %b Is available:
+  = @catalog_item.is_available
+
+= link_to 'Edit', edit_catalog_item_path(@catalog_item)
+\|
+= link_to 'Back', catalog_items_path
