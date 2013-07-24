@@ -11,3 +11,9 @@ two:
   cost: 100
   description: MyText
   is_available: false
+
+general:
+  name: General
+  cost: 0
+  description: MyText
+  is_available: true
