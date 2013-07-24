@@ -50,6 +50,12 @@ class StoreController < ApplicationController
   end
 
   def remove
+    authorize! :destroy, StoreCartItem
+
+    @cart = StoreCart.find(params[:id])
+    item = @cart.items.find(params[:item_id])
+    item.destroy
+    redirect_to store_show_path(@cart)
   end
 
   def change

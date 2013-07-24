@@ -10,7 +10,7 @@ class StoreControllerTest < ActionController::TestCase
     @cart = StoreCart.start(@client, @user)
     @catalog_item = catalog_items(:general)
     @cart_item_attributes = {
-      catalog_item_id: @catalog_item,
+      catalog_item_id: @catalog_item.id,
       cost:            @catalog_item.cost
     }
   end
@@ -50,8 +50,13 @@ class StoreControllerTest < ActionController::TestCase
   end
 
   test "should get remove" do
-    get :remove
-    assert_response :success
+    cart_item = @cart.items.create @cart_item_attributes
+
+    assert_difference('StoreCartItem.count', -1) do
+      delete :remove, id: @cart, item_id: cart_item.id
+    end
+
+    assert_response :redirect
   end
 
   test "should get change" do
