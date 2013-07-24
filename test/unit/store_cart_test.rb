@@ -50,4 +50,19 @@ class StoreCartTest < ActiveSupport::TestCase
     assert_equal @catalog_item.cost, @cart.total,
       "Cart total updates when an item is added"
   end
+
+  test "Updated total on CartItem removal" do
+    cart_item = StoreCartItem.create do |item|
+      item.catalog_item  = @catalog_item
+      item.cost          = @catalog_item.cost
+      item.store_cart    = @cart
+    end
+    @cart.reload
+    assert_equal @catalog_item.cost, @cart.total,
+      "sanity check"
+    cart_item.destroy
+    @cart.reload
+    assert_equal 0, @cart.total,
+      "Cart total updates when an item is removed"
+  end
 end
