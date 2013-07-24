@@ -1,18 +1,16 @@
-%p#notice= notice
+= content_for(:title) do
+  Catalog: #{@catalog_item.name}
 
-%p
-  %b Name:
-  = @catalog_item.name
-%p
-  %b Cost:
-  = @catalog_item.cost
-%p
-  %b Description:
-  = @catalog_item.description
-%p
-  %b Is available:
-  = @catalog_item.is_available
 
-= link_to 'Edit', edit_catalog_item_path(@catalog_item)
-\|
-= link_to 'Back', catalog_items_path
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+%dl
+  %dt Name
+  %dd= @catalog_item.name
+  %dt Cost
+  %dd= @catalog_item.cost
+  %dt Description
+  %dd= @catalog_item.description
+  %dt Is Available?
+  %dd= @catalog_item.is_available

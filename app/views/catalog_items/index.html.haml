@@ -10,16 +10,4 @@
     %th Cost
     %th Description
     %th Is available
-    %th
-    %th
-    %th
-
-  - @catalog_items.each do |catalog_item|
-    %tr
-      %td= catalog_item.name
-      %td= catalog_item.cost
-      %td= catalog_item.description
-      %td= catalog_item.is_available
-      %td= link_to 'Show', catalog_item
-      %td= link_to 'Edit', edit_catalog_item_path(catalog_item)
-      %td= link_to 'Destroy', catalog_item, :method => :delete, :data => { :confirm => 'Are you sure?' }
+  = render @catalog_items

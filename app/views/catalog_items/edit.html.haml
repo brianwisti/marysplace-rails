@@ -1,7 +1,7 @@
-%h1 Editing catalog_item
+= content_for(:title) do
+  Changing Catalog: #{@catalog_item.name}
+
+= content_for(:sidebar) do
+  = render 'sidebar'
 
 = render 'form'
-
-= link_to 'Show', @catalog_item
-\|
-= link_to 'Back', catalog_items_path
