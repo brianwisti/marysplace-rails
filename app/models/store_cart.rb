@@ -7,6 +7,9 @@ class StoreCart < ActiveRecord::Base
   belongs_to :handled_by,
     class_name: "User"
 
+  has_many :items,
+    class_name: "StoreCartItem"
+
   def self.start(shopper, handler)
     StoreCart.create do |cart|
       cart.shopper    = shopper
@@ -18,5 +21,9 @@ class StoreCart < ActiveRecord::Base
 
   def finish
     self.update_attributes(finished_at: DateTime.now)
+  end
+
+  def update_total
+    self.update_attributes(total: self.items.sum('cost'))
   end
 end

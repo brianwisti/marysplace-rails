@@ -3,4 +3,12 @@ class StoreCartItem < ActiveRecord::Base
 
   belongs_to :catalog_item
   belongs_to :store_cart
+
+  after_create :update_cart_total
+
+  private
+
+  def update_cart_total
+    self.store_cart.update_total
+  end
 end

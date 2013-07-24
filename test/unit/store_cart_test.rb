@@ -4,6 +4,7 @@ class StoreCartTest < ActiveSupport::TestCase
   setup do
     @user = users(:staff)
     @client = clients(:amy_a)
+    @catalog_item = CatalogItem.create(name: "widget", cost: 50)
     @cart = StoreCart.start(@client, @user)
   end
 
@@ -34,5 +35,19 @@ class StoreCartTest < ActiveSupport::TestCase
   test "StoreCart -> User relation" do
     assert_equal @user, @cart.handled_by,
       "Every StoreCart has a User handling the Client's shopping"
+  end
+
+  test "StoreCart -> CartItem relation" do
+    assert @cart.respond_to?(:items),
+      "StoreCart#items holds the CartItems in this StoreCart"
+  end
+
+  test "Updated total on CartItem addition" do
+    assert_equal 0, @cart.total,
+      "Carts start with a total of zero points"
+    @cart.items.create { |i| i.catalog_item = @catalog_item; i.cost = @catalog_item.cost }
+    @cart.reload
+    assert_equal @catalog_item.cost, @cart.total,
+      "Cart total updates when an item is added"
   end
 end
