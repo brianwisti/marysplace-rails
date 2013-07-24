@@ -8,6 +8,11 @@ class StoreControllerTest < ActionController::TestCase
     UserSession.create @user
     @client = clients(:amy_a)
     @cart = StoreCart.start(@client, @user)
+    @catalog_item = catalog_items(:general)
+    @cart_item_attributes = {
+      catalog_item_id: @catalog_item,
+      cost:            @catalog_item.cost
+    }
   end
 
   test "should get index" do
@@ -38,8 +43,10 @@ class StoreControllerTest < ActionController::TestCase
   end
 
   test "should get add" do
-    get :add
-    assert_response :success
+    assert_difference('StoreCartItem.count') do
+      put :add, id: @cart, store_cart_item: @cart_item_attributes
+      assert_response :redirect
+    end
   end
 
   test "should get remove" do

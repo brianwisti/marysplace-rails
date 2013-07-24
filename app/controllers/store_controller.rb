@@ -33,6 +33,20 @@ class StoreController < ApplicationController
   end
 
   def add
+    authorize! :create, StoreCartItem
+
+    @cart = StoreCart.find(params[:id])
+    # TODO: Learn a more graceful way to add StoreCartItem from params
+    catalog_item = CatalogItem.find(params[:store_cart_item][:catalog_item_id])
+    cost = params[:store_cart_item][:cost]
+
+    @cart.items.create! do |item|
+      item.catalog_item = catalog_item
+      item.cost         = cost
+    end
+
+    flash[:notice] = "Item added to cart"
+    redirect_to store_show_path(@cart)
   end
 
   def remove

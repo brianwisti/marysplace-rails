@@ -17,4 +17,5 @@ class StoreCartItemTest < ActiveSupport::TestCase
   test "Store Cart connection" do
     assert_equal @cart, @cart_item.store_cart
   end
+
 end
