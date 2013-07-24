@@ -4,7 +4,7 @@ class StoreCartItem < ActiveRecord::Base
   belongs_to :catalog_item
   belongs_to :store_cart
 
-  after_create :update_cart_total
+  after_save :update_cart_total
   after_destroy :update_cart_total
 
   private
