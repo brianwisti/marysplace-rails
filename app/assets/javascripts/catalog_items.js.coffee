@@ -4,7 +4,8 @@
 
 items = []
 $itemName = $('.catalog-item-typeahead')
-initial_balance = $itemName.data('balance')
+$clientBalance = $('.client-balance')
+initial_balance = $clientBalance.data('balance')
 
 $.getJSON '/catalog_items.json', (data) ->
   catalog_items = $.grep(data, (item) -> item.is_available == true)
@@ -21,7 +22,7 @@ $.getJSON '/catalog_items.json', (data) ->
         cost = selected.cost
         cost_field = $(this).data('pointsfield')
         $("##{cost_field}").val(cost).change()
-  $('item_cost').change () ->
+  $('#item_cost').change () ->
     entry_value = parseInt $(this).val()
     balance = initial_balance - entry_value
-    console.log(balance)
+    $clientBalance.html(balance)

@@ -19,21 +19,22 @@
   %dd= @cart.total
   %dt Handled By
   %dd= @cart.handled_by.login
+  - if @cart.is_open?
+    %dt Balance After Purchase
+    %dd.client-balance{data: { balance: @cart.shopper.point_balance } }= @cart.shopper.point_balance
 
-- if can? :create, StoreCartItem
+- if @cart.is_open? and can? :create, StoreCartItem
   = form_tag(store_add_path(@cart), method: :put, class: "form-inline") do
     .control-group
       .controls
-        = label_tag 'item-name', "Item"
+        = label_tag 'item-name-typeahead', "Item"
         = text_field_tag "item-name-typeahead", nil,
-          data: { provide: 'typeahead', field: 'item_id', balance: @cart.shopper.point_balance, pointsfield: 'item_cost' },
+          data: { provide: 'typeahead', field: 'item_id', pointsfield: 'item_cost' },
           autocomplete: 'off',
           class: 'catalog-item-typeahead'
         = label_tag :item_cost, "Cost"
         = number_field_tag :item_cost, nil, min: 0, class: "input-small"
         = text_field_tag :item_detail
-        %span.summary
-          %span.point-total.text-info
         = submit_tag "Add to Cart", class: "btn"
         = hidden_field_tag :item_id
 
