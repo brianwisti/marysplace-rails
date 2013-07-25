@@ -9,12 +9,26 @@ This application was created to help the staff and volunteers of [Mary's Place][
 * Client Checkins
 * Incentive Points Tracking
 * Incident reporting and followup
+
+### TODO 
+
 * Client Goal Tracking
 
 ## Requirements
 
 * Ruby 1.9.3+
-* NodeJS for JS runtime (I used 0.8.1, not sure how much versioning matters)
+* NodeJS for JS runtime 
+
+Much of the configuration assumes deployment to a Heroku instance, with 
+external resources being hosted on Amazon Web Services. The following settings
+are stored as environment variables.
+
+* `AWS_ACCESS_KEY_ID`
+* `AWS_BUCKET`
+* `AWS_PAPERCLIP_ROOT`
+* `AWS_SECRET_ACCESS_KEY`
+* `SECRET_TOKEN`
+* `TZ`
 
 ## Author
 
