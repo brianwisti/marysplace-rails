@@ -19,6 +19,10 @@ class StoreCart < ActiveRecord::Base
     end
   end
 
+  def is_open?
+    self.finished_at == nil
+  end
+
   def finish
     now = DateTime.now
     self.update_attributes(finished_at: now)

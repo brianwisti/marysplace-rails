@@ -34,6 +34,18 @@ class StoreCartTest < ActiveSupport::TestCase
     end
   end
 
+  test "StoreCart#is_open on open carts" do
+    assert @cart.is_open?,
+      "An open cart should know it's open."
+  end
+
+  test "StoreCart#is_open on closed carts" do
+    @cart.finish
+    @cart.reload
+    assert_equal false, @cart.is_open?,
+      "A closed cart should know it's not closed."
+  end
+
   test "StoreCart -> Client relation" do
     assert_equal @client, @cart.shopper,
       "Every StoreCart has a Client doing the shopping"
