@@ -44,7 +44,9 @@ class StoreControllerTest < ActionController::TestCase
 
   test "should get add" do
     assert_difference('StoreCartItem.count') do
-      put :add, id: @cart, store_cart_item: @cart_item_attributes
+      put :add, id: @cart, 
+        item_id: @cart_item_attributes[:catalog_item_id],
+        item_cost: @cart_item_attributes[:cost]
       assert_response :redirect
     end
   end

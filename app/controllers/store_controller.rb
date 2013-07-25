@@ -36,13 +36,14 @@ class StoreController < ApplicationController
     authorize! :create, StoreCartItem
 
     @cart = StoreCart.find(params[:id])
-    # TODO: Learn a more graceful way to add StoreCartItem from params
-    catalog_item = CatalogItem.find(params[:store_cart_item][:catalog_item_id])
-    cost = params[:store_cart_item][:cost]
+    catalog_item = CatalogItem.find(params[:item_id].to_i)
+    cost = params[:item_cost].to_i
+    detail = params[:item_detail] || nil
 
     @cart.items.create! do |item|
       item.catalog_item = catalog_item
       item.cost         = cost
+      item.detail       = detail
     end
 
     flash[:notice] = "Item added to cart"

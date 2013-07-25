@@ -9,7 +9,8 @@ Marysplace::Application.routes.draw do
   put "store/finish/:id" => 'store#finish',
     as: 'store/finish'
   get "store/open"
-  put "store/add"
+  put "store/add/:id" => 'store#add',
+    as: 'store/add'
   delete "store/remove"
   put "store/change"
   get "store/show/:id" => 'store#show',
