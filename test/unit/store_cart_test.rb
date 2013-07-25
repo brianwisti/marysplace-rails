@@ -27,6 +27,13 @@ class StoreCartTest < ActiveSupport::TestCase
       "StoreCart#finish sets finished_at for the finished cart."
   end
 
+  test "StoreCart#finish with an item in the cart." do
+    @cart.items.create { |i| i.catalog_item = @catalog_item; i.cost = @catalog_item.cost }
+    assert_difference('PointsEntry.count') do
+      @cart.finish
+    end
+  end
+
   test "StoreCart -> Client relation" do
     assert_equal @client, @cart.shopper,
       "Every StoreCart has a Client doing the shopping"

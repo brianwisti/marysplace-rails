@@ -20,7 +20,15 @@ class StoreCart < ActiveRecord::Base
   end
 
   def finish
-    self.update_attributes(finished_at: DateTime.now)
+    now = DateTime.now
+    self.update_attributes(finished_at: now)
+    PointsEntry.create! do |entry|
+      entry.points_entry_type = PointsEntryType.where(name: 'Purchase').first
+      entry.client            = self.shopper
+      entry.points            = self.total
+      entry.performed_on      = now.to_date
+      entry.added_by          = self.handled_by
+    end
   end
 
   def update_total
