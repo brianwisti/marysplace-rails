@@ -18,6 +18,8 @@ class StoreController < ApplicationController
     authorize! :show, StoreCart
 
     @cart = StoreCart.find(params[:id])
+    @shopper = @cart.shopper
+    @initial_balance = @shopper.point_balance - @cart.total
   end
 
   def finish

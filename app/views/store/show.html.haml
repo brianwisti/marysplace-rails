@@ -7,7 +7,7 @@
 
 %dl
   %dt Shopper
-  %dd= link_to @cart.shopper.current_alias, @cart.shopper
+  %dd= link_to @shopper.current_alias, @cart.shopper
   %dt Started At
   %dd= @cart.started_at
   %dt Finished At
@@ -16,14 +16,16 @@
   - else
     %dd
       %span.label Open
-      = link_to "Finish", store_finish_path(@cart), method: :put, class: "btn", data: { confirm: "Finish cart for #{@cart.shopper.current_alias}?" }
+      = link_to "Finish", store_finish_path(@cart), method: :put, class: "btn", data: { confirm: "Finish cart for #{@shopper.current_alias}?" }
   %dt Total Points
   %dd= @cart.total
   %dt Handled By
   %dd= @cart.handled_by.login
   - if @cart.is_open?
-    %dt Balance After Purchase
-    %dd.client-balance{data: { balance: @cart.shopper.point_balance } }= @cart.shopper.point_balance
+    %dt Shopper's Balance
+    %dd= @shopper.point_balance
+    %dt  After Purchase
+    %dd.client-balance{data: { balance: @initial_balance } }= @initial_balance
 
 - if @cart.is_open? and can? :create, StoreCartItem
   = form_tag(store_add_path(@cart), method: :put, class: "form-inline") do
