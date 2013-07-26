@@ -30,7 +30,7 @@ class StoreCart < ActiveRecord::Base
     #TODO: See "Purchase?" Smells a bit to me.
     #      Express transaction in a way that does not assume specific 
     #      PointsEntryTypes
-    entry = PointsEntry.create do |entry|
+    PointsEntry.create do |entry|
       entry.points_entry_type = PointsEntryType.where(name: 'Purchase').first
       entry.client            = self.shopper
       entry.points            = self.total * -1

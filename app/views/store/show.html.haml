@@ -40,10 +40,11 @@
         = submit_tag "Add to Cart", class: "btn"
         = hidden_field_tag :item_id
 
-%table.table
+%table.table.table-striped
   - @cart.items.each do |item|
     %tr
       %td= item.catalog_item.name
       %td= item.cost
       %td= item.detail
-
+      - if can? :manage, StoreCartItem
+        %td= link_to "Remove", store_remove_path(@cart, item_id: item), class: "btn btn-link", method: :delete, data: { confirm: "Remove this item from the cart?" }

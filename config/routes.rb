@@ -11,7 +11,8 @@ Marysplace::Application.routes.draw do
   get "store/open"
   put "store/add/:id" => 'store#add',
     as: 'store/add'
-  delete "store/remove"
+  delete "store/remove/:id" => 'store#remove',
+    as: 'store/remove'
   put "store/change"
   get "store/show/:id" => 'store#show',
     as: 'store/show'
