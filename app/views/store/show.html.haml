@@ -6,6 +6,8 @@
   = render 'sidebar'
 
 %dl
+  %dt Shopper
+  %dd= link_to @cart.shopper.current_alias, @cart.shopper
   %dt Started At
   %dd= @cart.started_at
   %dt Finished At
@@ -14,7 +16,7 @@
   - else
     %dd
       %span.label Open
-      = link_to "Finish", store_finish_path(@cart), method: :put, class: "btn"
+      = link_to "Finish", store_finish_path(@cart), method: :put, class: "btn", data: { confirm: "Finish cart for #{@cart.shopper.current_alias}?" }
   %dt Total Points
   %dd= @cart.total
   %dt Handled By

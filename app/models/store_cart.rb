@@ -26,10 +26,14 @@ class StoreCart < ActiveRecord::Base
   def finish
     now = DateTime.now
     self.update_attributes(finished_at: now)
-    PointsEntry.create! do |entry|
+
+    #TODO: See "Purchase?" Smells a bit to me.
+    #      Express transaction in a way that does not assume specific 
+    #      PointsEntryTypes
+    entry = PointsEntry.create do |entry|
       entry.points_entry_type = PointsEntryType.where(name: 'Purchase').first
       entry.client            = self.shopper
-      entry.points            = self.total
+      entry.points            = self.total * -1
       entry.performed_on      = now.to_date
       entry.added_by          = self.handled_by
     end
