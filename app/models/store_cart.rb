@@ -27,17 +27,7 @@ class StoreCart < ActiveRecord::Base
     if self.is_open?
       now = DateTime.now
       self.update_attributes(finished_at: now)
-
-      #TODO: See "Purchase?" Smells a bit to me.
-      #      Express transaction in a way that does not assume specific 
-      #      PointsEntryTypes
-      PointsEntry.create do |entry|
-        entry.points_entry_type = PointsEntryType.where(name: 'Purchase').first
-        entry.client            = self.shopper
-        entry.points            = self.total * -1
-        entry.performed_on      = now.to_date
-        entry.added_by          = self.handled_by
-      end
+      self.shopper.update_points!
     end
   end
 

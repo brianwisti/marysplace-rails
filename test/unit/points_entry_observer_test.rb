@@ -35,13 +35,16 @@ class PointsEntryObserverTest < ActiveSupport::TestCase
   end
 
   test "When the client in a PointsEntry is changed" do
+    @other_client.update_points!
+
     new_balance = @other_client.point_balance + @entry.points
     @entry.update_attributes(client_id: @other_client.id)
     @client.reload
     assert_equal @client.point_balance, 0,
       "its points are removed from the original client."
+
     @other_client.reload
-    assert_equal @other_client.point_balance, new_balance,
+    assert_equal new_balance, @other_client.point_balance,
       "its points are added to the new client's balance."
   end
 

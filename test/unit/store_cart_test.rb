@@ -28,14 +28,10 @@ class StoreCartTest < ActiveSupport::TestCase
   end
 
   test "StoreCart#finish with an item in the cart." do
+    @client.update_points!
     balance = @client.point_balance
     @cart.items.create { |i| i.catalog_item = @catalog_item; i.cost = @catalog_item.cost }
-    @cart.reload
-
-    assert_difference('PointsEntry.count') do
-      @cart.finish
-    end
-
+    @cart.finish
     @client.reload
     expected_balance = balance - @catalog_item.cost
     assert_equal expected_balance, @client.point_balance,

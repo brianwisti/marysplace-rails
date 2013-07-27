@@ -21,6 +21,10 @@ class Client < ActiveRecord::Base
   has_many :points_entries
   has_many :checkins
   has_many :client_flags
+  has_many :purchases,
+    class_name: 'StoreCart',
+    foreign_key: :shopper_id
+
 
   # TODO: Replace alias hack w/renaming the relationship.
   #       That means digging through templates too.
@@ -63,8 +67,10 @@ class Client < ActiveRecord::Base
   end
 
   def update_points!
-    self.point_balance = self.points_entries.sum(:points)
-    self.save
+    entries_total = self.points_entries.sum(:points)
+    purchase_total = self.purchases.where('finished_at is not null').sum(:total)
+    new_balance = entries_total - purchase_total
+    self.update_attributes(point_balance: new_balance)
   end
 
   def self.quicksearch(query)
