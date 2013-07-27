@@ -86,4 +86,9 @@ class ClientsControllerTest < ActionController::TestCase
     put :create_login, id: @client, password: "waffle", password_confirmation: "waffle"
     assert_redirected_to root_url
   end
+
+  test "should get client purchases" do
+    get :purchases, id: @client
+    assert_response :success
+  end
 end

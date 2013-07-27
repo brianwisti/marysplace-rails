@@ -121,6 +121,7 @@ Marysplace::Application.routes.draw do
       get 'flags'
       get 'new_login'
       put 'create_login'
+      get 'purchases'
     end
   end
 

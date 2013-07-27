@@ -17,14 +17,4 @@
       = hidden_field_tag :shopper_id
 
 %table.table
-  - @carts.each do |cart|
-    %tr
-      %td= cart.shopper.current_alias
-      %td= cart.started_at
-      %td
-        - if cart.finished_at
-          = cart.finished_at
-        - else
-          %span.label Open
-      %td= cart.total
-      %td= link_to "Show", store_show_path(cart)
+  = render @carts

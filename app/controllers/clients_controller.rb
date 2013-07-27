@@ -202,6 +202,19 @@ class ClientsController < ApplicationController
     end
   end
 
+  def purchases
+    authorize! :show, Client
+    authorize! :show, StoreCart
+
+    @client = Client.find(params[:id])
+    @carts = @client.purchases
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @carts }
+    end
+  end
+
   private
 
   def sort_column

@@ -1,0 +1,11 @@
+= content_for(:title) do
+  #{@client.current_alias} Purchases
+
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+%p= link_to "Start Shopping", store_start_path(shopper_id: @client), method: :put, class: "btn",
+  data: { confirm: "Start a cart for #{@client.current_alias}?" }
+
+%table.table
+  = render @carts

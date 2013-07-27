@@ -1,0 +1,10 @@
+%tr
+  %td= store_cart.shopper.current_alias
+  %td= store_cart.started_at
+  %td
+    - if store_cart.finished_at
+      = store_cart.finished_at
+    - else
+      %span.label Open
+  %td= store_cart.total
+  %td= link_to "Show", store_show_path(store_cart)
