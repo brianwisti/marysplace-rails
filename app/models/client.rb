@@ -61,6 +61,11 @@ class Client < ActiveRecord::Base
     return self.purchases.where('finished_at is null').count > 0
   end
 
+  # The current open cart for this client, or nothing.
+  def cart
+    return self.purchases.where('finished_at is null').first
+  end
+
   # Can this client make purchases?
   def can_shop?
     return self.flags.unresolved.where(can_shop: false).count == 0

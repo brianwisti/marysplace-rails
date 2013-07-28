@@ -89,4 +89,15 @@ class ClientTest < ActiveSupport::TestCase
     assert client.is_shopping?,
       "should be true"
   end
+
+  test "Client#cart" do
+    client = clients(:amy_a)
+    assert_nil client.cart,
+      "is nil if there is no cart"
+    user = users(:admin)
+    cart = StoreCart.start(client, user)
+    client.reload
+    assert_equal cart, client.cart,
+      "accesses current cart if one is available"
+  end
 end

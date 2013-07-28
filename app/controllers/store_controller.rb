@@ -10,8 +10,23 @@ class StoreController < ApplicationController
 
     @shopper = Client.find(params[:shopper_id].to_i)
     @handled_by = current_user
-    @cart = StoreCart.start(@shopper, @handled_by)
-    redirect_to store_show_path(@cart)
+    # If client.is_shopping?
+    # If client.can_shop?
+    if @shopper.is_shopping?
+      @cart = @shopper.cart
+      flash[:notice] = "#{@shopper.current_alias} already has a cart open"
+    elsif @shopper.can_shop?
+      @cart = StoreCart.start(@shopper, @handled_by)
+      flash[:notice] = "Cart started for #{@shopper.current_alias}"
+    else
+      flash[:error] = "#{@shopper.current_alias} has a flag that prevents shopping."
+    end
+
+    if @cart
+      redirect_to store_show_path(@cart)
+    else
+      redirect_to store_path
+    end
   end
 
   def show

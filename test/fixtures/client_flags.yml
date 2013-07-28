@@ -7,6 +7,7 @@ blocked_carol_c:
   consequence: MyText
   action_required: MyText
   is_blocking: true
+  can_shop: false
   expires_on: <%= 7.days.from_now %>
 
 one:
@@ -16,6 +17,7 @@ one:
   consequence: MyText
   action_required: MyText
   is_blocking: false
+  can_shop: true
   expires_on: <%= 30.days.from_now %>
 
 two:
@@ -25,6 +27,7 @@ two:
   consequence: MyText
   action_required: MyText
   is_blocking: false
+  can_shop: true
   expires_on: 2012-09-11
   resolved_by: admin
   resolved_on: 2012-09-11
