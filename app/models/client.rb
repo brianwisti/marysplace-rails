@@ -56,6 +56,11 @@ class Client < ActiveRecord::Base
     return self.flags.unresolved.count > 0
   end
 
+  # Does this client have an open StoreCart?
+  def is_shopping?
+    return self.purchases.where('finished_at is null').count > 0
+  end
+
   # Can this client make purchases?
   def can_shop?
     return self.flags.unresolved.where(can_shop: false).count == 0
