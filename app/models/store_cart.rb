@@ -12,12 +12,16 @@ class StoreCart < ActiveRecord::Base
   has_many :items,
     class_name: "StoreCartItem"
 
+  validates_uniqueness_of :finished_at, scope: :shopper_id
+
   def self.start(shopper, handler)
-    StoreCart.create do |cart|
-      cart.shopper    = shopper
-      cart.handled_by = handler
-      cart.started_at = DateTime.now
-      cart.total      = 0
+    if shopper.purchases.where('finished_at is null').count == 0
+      return StoreCart.create do |cart|
+        cart.shopper    = shopper
+        cart.handled_by = handler
+        cart.started_at = DateTime.now
+        cart.total      = 0
+      end
     end
   end
 

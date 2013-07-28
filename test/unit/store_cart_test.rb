@@ -9,6 +9,7 @@ class StoreCartTest < ActiveSupport::TestCase
   end
 
   test "StoreCart.start" do
+    @cart.finish
     assert StoreCart.respond_to?(:start),
       "StoreCart.start is the blessed way to start shopping"
     assert cart = StoreCart.start(@client, @user),
@@ -101,5 +102,10 @@ class StoreCartTest < ActiveSupport::TestCase
     @cart.reload
     assert_equal new_cost, @cart.total,
       "Cart total updates when an item is updated"
+  end
+
+  test "Opening a second StoreCart for a Client" do
+    assert_nil StoreCart.start(@client, @user),
+      "Only one open cart allowed per Client"
   end
 end
