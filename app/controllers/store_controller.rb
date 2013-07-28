@@ -19,7 +19,7 @@ class StoreController < ApplicationController
       @cart = StoreCart.start(@shopper, @handled_by)
       flash[:notice] = "Cart started for #{@shopper.current_alias}"
     else
-      flash[:error] = "#{@shopper.current_alias} has a flag that prevents shopping."
+      flash[:alert] = "#{@shopper.current_alias} has a flag that prevents shopping."
     end
 
     if @cart
