@@ -18,4 +18,11 @@ class StoreCartItemTest < ActiveSupport::TestCase
     assert_equal @cart, @cart_item.store_cart
   end
 
+  test "StoreCartItem cost" do
+    @cart_item.cost = 0
+    @cart_item.save
+    assert @cart_item.errors[:cost].any?,
+      "Must be greater than zero"
+  end
+
 end

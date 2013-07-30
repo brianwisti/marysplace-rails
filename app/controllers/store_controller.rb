@@ -52,20 +52,37 @@ class StoreController < ApplicationController
   end
 
   def add
+    # TODO: Replace with some sort of routing.
     authorize! :create, StoreCartItem
+    @errors = []
 
     @cart = StoreCart.find(params[:id])
-    catalog_item = CatalogItem.find(params[:item_id].to_i)
+    @errors.push("Unable to find cart") unless @cart
+
+    item_id = params[:item_id].to_i
+    catalog_item = CatalogItem.where(id: item_id).first
+    @errors.push("Unable to find catalog item") unless catalog_item
+
     cost = params[:item_cost].to_i
+    @errors.push("Cost must be greater than zero") if cost < 1
+
+
     detail = params[:item_detail] || nil
 
-    @cart.items.create! do |item|
-      item.catalog_item = catalog_item
-      item.cost         = cost
-      item.detail       = detail
+    if @errors.empty?
+      @cart.items.create do |item|
+        item.catalog_item = catalog_item
+        item.cost         = cost
+        item.detail       = detail
+      end
+
+      if @store_cart_item
+        flash[:notice] = "Item added to cart"
+      end
+    else
+      flash[:alert] = %Q[<ul>#{@errors.map { |e| "<li>#{e}</li>" }.join('') }</ul>].html_safe
     end
 
-    flash[:notice] = "Item added to cart"
     redirect_to store_show_path(@cart)
   end
 

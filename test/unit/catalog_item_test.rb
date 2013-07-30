@@ -14,4 +14,11 @@ class CatalogItemTest < ActiveSupport::TestCase
     assert_equal @user, @item.added_by
   end
 
+  test "decimal cost" do
+    @item.cost = 1.50
+    @item.save
+    assert @item.errors[:cost].any?,
+      "decimal CatalogItem is unacceptable"
+  end
+
 end

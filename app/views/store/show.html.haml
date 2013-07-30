@@ -39,7 +39,8 @@
         = label_tag :item_cost, "Cost"
         = number_field_tag :item_cost, nil, min: 0, class: "input-small"
         = label_tag :item_detail, "Description"
-        = text_field_tag :item_detail
+        = text_field_tag :item_detail, nil,
+          placeholder: "Optional description"
         = submit_tag "Add to Cart", class: "btn"
         = hidden_field_tag :item_id
 

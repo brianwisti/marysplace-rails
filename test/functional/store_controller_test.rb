@@ -11,7 +11,7 @@ class StoreControllerTest < ActionController::TestCase
     @catalog_item = catalog_items(:general)
     @cart_item_attributes = {
       catalog_item_id: @catalog_item.id,
-      cost:            @catalog_item.cost
+      cost:            100
     }
   end
 
