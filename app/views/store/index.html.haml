@@ -9,7 +9,7 @@
     .controls
       = text_field_tag "current_alias", nil,
         data: { provide: 'typeahead', field: 'shopper_id', balance: 0 },
-        autocomplete: 'off',
+        autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
         class: 'client-typeahead'
       %span.summary
         %span.point-total.text-info

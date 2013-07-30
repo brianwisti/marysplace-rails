@@ -17,7 +17,7 @@
         <% current_alias = if @points_entry.client.nil? then nil else @points_entry.client.current_alias end %>
         <%= text_field_tag "current_alias", current_alias,
           data: { provide: 'typeahead', field: 'points_entry_client_id', balance: 0 },
-          autocomplete: 'off',
+          autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
           class: 'client-typeahead' %>
         <% if @points_entry.client %>
           <% if @points_entry.client.is_flagged %>
@@ -55,7 +55,7 @@
         <% name = if @points_entry.points_entry_type.nil? then nil else @points_entry.points_entry_type.name end %>
         <%= text_field_tag "points_entry_type", name,
           data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points' },
-          autocomplete: 'off',
+          autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
           class: 'pointsentrytype-typeahead' %>
         <span class="summary">
           <span class="point-total text-info"></span>
