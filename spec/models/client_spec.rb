@@ -7,11 +7,21 @@ describe Client do
       u.password              = "waffle"
       u.password_confirmation = "waffle"
     end
+
+    @client = Client.create do |c|
+      c.current_alias = "Amy A."
+      c.added_by      = @user
+    end
   end
 
   context "the current alias" do
     it "must be present" do
       client = Client.new
+      expect(client).to have(1).errors_on(:current_alias)
+    end
+
+    it "must be unique" do
+      client = Client.new(current_alias: @client.current_alias)
       expect(client).to have(1).errors_on(:current_alias)
     end
   end

@@ -42,12 +42,17 @@ end
 
 gem 'jquery-rails'
 
-group :test do
-  gem 'simplecov', require: false
+group :development, :test do
+  gem 'rspec-rails', '~> 2.13'
+  gem 'factory_girl_rails', '~> 4.2.1'
 end
 
-group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
+group :test do
+  gem 'simplecov', require: false
+  gem 'faker', '~> 1.1.2'
+  gem 'capybara', '~> 2.0.2'
+  gem 'database_cleaner', '~> 0.9.1'
+  gem 'launchy', '~> 2.2.0'
 end
 
 # To use ActiveModel has_secure_password
