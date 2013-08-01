@@ -68,7 +68,16 @@ class Client < ActiveRecord::Base
 
   # Can this client make purchases?
   def can_shop?
-    return self.flags.unresolved.where(can_shop: false).count == 0
+    if self.flags.unresolved.where(can_shop: false).count > 0
+      return false
+    end
+
+    now = Time.now
+    if self.purchases.where(finished_at: now.beginning_of_week..now).count > 0
+      return false
+    end
+
+    return true
   end
 
   # Should this client be blocked from entry?
