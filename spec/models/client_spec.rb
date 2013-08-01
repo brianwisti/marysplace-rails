@@ -44,7 +44,14 @@ describe Client do
   end
 
   describe "Flag tracking" do
-    it "knows when it has unresolved flags"
+    it "knows when it has unresolved flags" do
+      flag = ClientFlag.create do |f|
+        f.created_by = @user
+        f.client     = @client
+        f.can_shop   = false
+      end
+      expect(@client.is_flagged?).to be_true
+    end
 
     it "knows when it has no unresolved flags" do
       expect(@client.is_flagged?).to be_false
@@ -56,7 +63,14 @@ describe Client do
       expect(@client.can_shop?).to be_true
     end
 
-    it "is not allowed if Client has unresolved shop-blocking flags"
+    it "is not allowed if Client has unresolved shop-blocking flags" do
+      flag = ClientFlag.create do |f|
+        f.created_by = @user
+        f.client     = @client
+        f.can_shop   = false
+      end
+      expect(@client.can_shop?).to be_false
+    end
 
     it "is not allowed if Client has already shopped this week" do
       StoreCart.start(@client, @user).finish
