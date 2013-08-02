@@ -4,5 +4,9 @@ FactoryGirl.define do
     is_blocking false
     created_by 
     client
+
+    factory :bail_flag do
+      can_shop false
+    end
   end
 end

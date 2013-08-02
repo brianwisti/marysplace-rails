@@ -82,7 +82,7 @@ describe Client do
 
     context "cannot-shop" do
       it "includes Clients who have unresolved shop-blocking flags" do
-        flag = FactoryGirl.create(:client_flag, can_shop: false)
+        flag = FactoryGirl.create(:bail_flag)
         expect(Client.cannot_shop).to include(flag.client)
       end
 
@@ -97,16 +97,14 @@ describe Client do
       end
 
       it "does not include Clients with expired shop-blocking flags" do
-        flag = FactoryGirl.create(:client_flag, 
-                                  expires_on: 1.day.ago, 
-                                  can_shop: false)
+        flag = FactoryGirl.create(:bail_flag, 
+                                  expires_on: 1.day.ago)
         expect(Client.cannot_shop).not_to include(flag.client)
       end
 
       it "does not include Clients with resolved shop-blocking flags" do
-        flag = FactoryGirl.create(:client_flag, 
-                                  resolved_on: 1.day.ago,
-                                  can_shop: false)
+        flag = FactoryGirl.create(:bail_flag, 
+                                  resolved_on: 1.day.ago)
         expect(Client.cannot_shop).not_to include(flag.client)
       end
 
