@@ -30,6 +30,25 @@ class Client < ActiveRecord::Base
   #       That means digging through templates too.
   alias :flags :client_flags
 
+  def self.cannot_shop
+    now = Time.now
+    find_by_sql [ %{
+        select clients.* 
+          from clients
+        left outer join client_flags cf
+          on cf.client_id = clients.id
+        left outer join store_carts sc
+          on sc.shopper_id = clients.id
+        where (
+          cf.resolved_on is null
+          and cf.can_shop = 'f'
+        )
+        or (
+          sc.finished_at between ? and ?
+        )
+      }, now.beginning_of_week, now ]
+  end
+
   before_save do
     self.point_balance ||= 0
   end

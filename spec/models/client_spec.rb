@@ -77,4 +77,29 @@ describe Client do
       expect(@client.can_shop?).to be_false
     end
   end
+
+  describe "collections" do
+
+    context "cannot-shop" do
+      it "includes Clients who have unresolved shop-blocking flags" do
+        flag = FactoryGirl.create(:client_flag, can_shop: false)
+        expect(Client.cannot_shop).to include(flag.client)
+      end
+
+      it "includes Clients who have already shopped this week" do
+        StoreCart.start(@client, @user).finish
+        expect(Client.cannot_shop).to include(@client)
+      end
+
+      it "does not include Clients with simple warning Flags" do
+        flag = FactoryGirl.create(:client_flag)
+        expect(Client.cannot_shop).not_to include(flag.client)
+      end
+
+      it "does not include Clients who can shop" do
+        expect(Client.cannot_shop).not_to include(@client)
+      end
+    end
+  end
+
 end
