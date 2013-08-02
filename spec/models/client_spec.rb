@@ -96,7 +96,21 @@ describe Client do
         expect(Client.cannot_shop).not_to include(flag.client)
       end
 
-      it "does not include Clients who can shop" do
+      it "does not include Clients with expired shop-blocking flags" do
+        flag = FactoryGirl.create(:client_flag, 
+                                  expires_on: 1.day.ago, 
+                                  can_shop: false)
+        expect(Client.cannot_shop).not_to include(flag.client)
+      end
+
+      it "does not include Clients with resolved shop-blocking flags" do
+        flag = FactoryGirl.create(:client_flag, 
+                                  resolved_on: 1.day.ago,
+                                  can_shop: false)
+        expect(Client.cannot_shop).not_to include(flag.client)
+      end
+
+      it "does not include Clients with a clean slate" do
         expect(Client.cannot_shop).not_to include(@client)
       end
     end

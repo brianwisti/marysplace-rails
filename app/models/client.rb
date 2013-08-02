@@ -40,7 +40,11 @@ class Client < ActiveRecord::Base
         left outer join store_carts sc
           on sc.shopper_id = clients.id
         where (
-          cf.resolved_on is null
+          (
+            ( cf.resolved_on is null and cf.expires_on is null )
+            or
+            ( cf.resolved_on is null and cf.expires_on > now() )
+          )
           and cf.can_shop = 'f'
         )
         or (
