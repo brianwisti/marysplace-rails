@@ -5,6 +5,7 @@ Marysplace::Application.routes.draw do
 
   get "store/index",
     as: 'store'
+  get "store/cannot_shop"
   put "store/start"
   put "store/finish/:id" => 'store#finish',
     as: 'store/finish'

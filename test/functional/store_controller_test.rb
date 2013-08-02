@@ -20,6 +20,11 @@ class StoreControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should get cannot_shop" do
+    get :cannot_shop
+    assert_response :success
+  end
+
   test "should get start" do
     @cart.finish
     assert_difference('StoreCart.count') do

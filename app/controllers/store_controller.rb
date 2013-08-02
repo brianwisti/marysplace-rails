@@ -5,6 +5,10 @@ class StoreController < ApplicationController
     @carts = StoreCart.all
   end
 
+  def cannot_shop
+    @clients = Client.cannot_shop
+  end
+
   def start
     authorize! :create, StoreCart
 
