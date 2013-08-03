@@ -26,7 +26,7 @@ class StoreControllerTest < ActionController::TestCase
   end
 
   test "should get start" do
-    @cart.finish
+    @cart.destroy
     assert_difference('StoreCart.count') do
       put :start, { shopper_id: @client }
       assert_response :redirect

@@ -5,44 +5,32 @@
 = content_for(:sidebar) do
   = render 'sidebar'
 
-%dl
-  %dt Shopper
-  %dd= link_to @shopper.current_alias, @cart.shopper
-  %dt Started At
-  %dd= @cart.started_at
-  %dt Finished At
-  - if @cart.finished_at
-    %dd= @cart.finished_at
-  - else
-    %dd
-      %span.label Open
-      = link_to "Finish", store_finish_path(@cart), method: :put, class: "btn", data: { confirm: "Finish cart for #{@shopper.current_alias}?" }
-  %dt Total Points
-  %dd= @cart.total
-  %dt Handled By
-  %dd= @cart.handled_by.login
-  - if @cart.is_open?
-    %dt Shopper's Balance
-    %dd= number_with_delimiter @shopper.point_balance
-    %dt  After Purchase
-    %dd.client-balance{data: { balance: @initial_balance } }= number_with_delimiter @initial_balance
-
-- if @cart.is_open? and can? :create, StoreCartItem
-  = form_tag(store_add_path(@cart), method: :put, class: "form") do
-    .control-group
-      .controls
-        = label_tag 'item-name-typeahead', "Item"
-        = text_field_tag "item-name-typeahead", nil,
-          data: { provide: 'typeahead', field: 'item_id', pointsfield: 'item_cost' },
-          autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
-          class: 'catalog-item-typeahead'
-        = label_tag :item_cost, "Cost"
-        = number_field_tag :item_cost, nil, min: 0, class: "input-small"
-        = label_tag :item_detail, "Description"
-        = text_field_tag :item_detail, nil,
-          placeholder: "Optional description"
-        = submit_tag "Add to Cart", class: "btn"
-        = hidden_field_tag :item_id
+.row-fluid
+  %span.span6
+    %dl.dl-horizontal
+      %dt Shopper
+      %dd= link_to @shopper.current_alias, @cart.shopper
+      %dt Started At
+      %dd= l(@cart.started_at, format: :long)
+      %dt Finished At
+      - if @cart.finished_at
+        %dd= l(@cart.finished_at, format: :long)
+      - else
+        %dd
+          %span.label Open
+          = link_to "Finish", store_finish_path(@cart), method: :put, class: "btn", data: { confirm: "Finish cart for #{@shopper.current_alias}?" }
+      %dt Total Points
+      %dd= @cart.total
+      %dt Handled By
+      %dd= @cart.handled_by.login
+      - if @cart.is_open?
+        %dt Shopper's Balance
+        %dd= number_with_delimiter @shopper.point_balance
+        %dt  After Purchase
+        %dd.client-balance{data: { balance: @initial_balance } }= number_with_delimiter @initial_balance
+  %span.span6
+    %h3 Add Item
+    = render 'store_cart_items/form'
 
 %table.table.table-striped
   - @cart.items.each do |item|

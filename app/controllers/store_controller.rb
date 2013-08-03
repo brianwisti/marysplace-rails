@@ -14,8 +14,7 @@ class StoreController < ApplicationController
 
     @shopper = Client.find(params[:shopper_id].to_i)
     @handled_by = current_user
-    # If client.is_shopping?
-    # If client.can_shop?
+
     if @shopper.is_shopping?
       @cart = @shopper.cart
       flash[:notice] = "#{@shopper.current_alias} already has a cart open"
@@ -39,6 +38,7 @@ class StoreController < ApplicationController
     authorize! :show, StoreCart
 
     @cart = StoreCart.find(params[:id])
+    @default_item = CatalogItem.first
     @shopper = @cart.shopper
     @initial_balance = @shopper.point_balance - @cart.total
   end
@@ -84,7 +84,7 @@ class StoreController < ApplicationController
         flash[:notice] = "Item added to cart"
       end
     else
-      flash[:alert] = %Q[<ul>#{@errors.map { |e| "<li>#{e}</li>" }.join('') }</ul>].html_safe
+      flash[:alert] = @errors.join('<br>').html_safe
     end
 
     redirect_to store_show_path(@cart)
