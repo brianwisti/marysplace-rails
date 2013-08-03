@@ -12,8 +12,7 @@
   %thead
     %tr
       %th Client Member
-      - if can? :manage, Client
-        %th Point Balance
-        %th Created At
   %tbody
-    = render @clients
+    - @clients.each do |client|
+      %tr
+        %td= render '/clients/info_link', client: client

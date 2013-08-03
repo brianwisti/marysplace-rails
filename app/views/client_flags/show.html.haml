@@ -5,37 +5,47 @@
 =content_for(:sidebar) do
   = render 'sidebar'
 
-%p#notice= notice
-
-%p
-  %b Client:
-  = link_to @client_flag.client.current_alias, @client_flag.client
-%p
-  %b Created by:
-  = link_to @client_flag.created_by.login, @client_flag.created_by
-%p
-  %b Description:
-  = @client_flag.description
-%p
-  %b Consequence:
-  = @client_flag.consequence
-%p
-  %b Action required:
-  = @client_flag.action_required
-%p
-  %b Is blocking:
-  = @client_flag.is_blocking
-- if @client_flag.expires_on
-  %p
-    %b Expires on:
-    = @client_flag.expires_on
-- if @client_flag.resolved_on
-  %p
-    %b Resolved:
-    On
-    = @client_flag.resolved_on
-    by
-    = @client_flag.resolved_by.login
-  %p
-    %b Resolution:
-    = @client_flag.resolution || 'None given'
+%dl.dl-horizontal
+  %dt Client
+  %dd= link_to @client_flag.client.current_alias, @client_flag.client
+  %dt Created 
+  %dd 
+    = l(@client_flag.created_at, format: :long)
+    by 
+    = link_to @client_flag.created_by.login, @client_flag.created_by
+  %dt Description
+  %dd= @client_flag.description || 'None Given'
+  %dt Consequence
+  %dd= @client_flag.consequence || 'None Given'
+  %dt Action Required
+  %dd= @client_flag.action_required || 'None Given'
+  %dt Expires On
+  %dd
+    - if @client_flag.expires_on
+      = l(@client_flag.expires_on, format: :long)
+    - else
+      No expiration
+  %dt Notes
+  %dd
+    = @client_flag.client.current_alias
+    - if @client_flag.is_blocking
+      may not enter while this flag is unresolved.
+    - else
+      is not prevented from entering by this flag.
+  %dd
+    = @client_flag.client.current_alias
+    - if @client_flag.can_shop
+      is not prevented from shopping by this flag.
+    - else
+      may not shop while this flag is unresolved.
+  - if @client_flag.resolved_on
+    %dt Resolved 
+    %dd
+      = l(@client_flag.resolved_on, format: :long)
+      by
+      = link_to @client_flag.resolved_by.login, @client_flag.resolved_by
+    %dt Resolution
+    %dd= @client_flag.resolution || 'None given'
+  - else
+    %dt Resolve
+    %dd= link_to "Resolve", resolve_client_flag_path(@client_flag)

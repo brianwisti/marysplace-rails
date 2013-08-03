@@ -1,17 +1,8 @@
 %tr
   %td
-    - if client.login
-      = image_tag client.login.avatar.url(:thumb)
-    - if client.is_flagged?
-      %i.icon-flag
-    %strong
-      - unless client.is_active
-        %span.label.label-info Inactive
-      - if client.is_blocked?
-        %span.label.label-important Blocked
-      = link_to client.current_alias, client
-      - if client.other_aliases
-        %em= client.other_aliases
+    = render '/clients/info_link', client: client
+    - if client.other_aliases
+      %em= client.other_aliases
   - if can? :manage, client
     %td
       = number_with_delimiter client.point_balance

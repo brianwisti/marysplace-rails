@@ -5,5 +5,4 @@
   - if can? :manage, ClientFlag
     - if @client_flag
       %li= link_to "Change", edit_client_flag_path(@client_flag)
-      %li= link_to "Resolve", resolve_client_flag_path(@client_flag)
     %li= link_to "Add Flag", new_client_flag_path
