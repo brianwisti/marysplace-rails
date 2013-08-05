@@ -12,6 +12,7 @@ describe Client do
       c.current_alias = "Client C."
       c.added_by      = @user
     end
+
   end
 
   describe "validation" do
@@ -76,6 +77,49 @@ describe Client do
       StoreCart.start(@client, @user).finish
       expect(@client.can_shop?).to be_false
     end
+
+    it "knows if the Client has never shopped" do
+      expect(@client.has_shopped?).to be_false
+    end
+
+    it "knows if the Client has shopped" do
+      StoreCart.start(@client, @user).finish
+      expect(@client.has_shopped?).to be_true
+    end
+
+    it "remembers the Client's last shopping session" do
+      cart = StoreCart.start(@client, @user)
+      cart.finish
+      expect(@client.last_shopped_at.to_i).to eql(cart.finished_at.to_i)
+    end
+
+    context "Purchase PointsEntries" do
+      it "count as shopping visits" do
+        entry_type = PointsEntryType.create(name: 'Purchase') 
+        entry = @client.points_entries.create! do |entry|
+          entry.points_entry_type = entry_type
+          entry.added_by          = @user
+          entry.points            = -100
+          entry.performed_on      = Date.today
+        end
+        @client.reload
+
+        expect(@client.has_shopped?).to be_true
+      end
+
+      it "is tracked for last shopping visit" do
+        entry_type = PointsEntryType.create(name: 'Purchase') 
+        entry = @client.points_entries.create! do |entry|
+          entry.points_entry_type = entry_type
+          entry.added_by          = @user
+          entry.points            = -100
+          entry.performed_on      = Date.today
+        end
+        @client.reload
+        expect(@client.last_shopped_at.to_i).to eql(entry.performed_on.to_time.to_i)
+      end
+    end
+
   end
 
   describe "collections" do

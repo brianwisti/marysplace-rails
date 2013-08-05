@@ -108,6 +108,32 @@ class Client < ActiveRecord::Base
     return self.flags.unresolved.where(is_blocking: true).count > 0
   end
 
+  # Have I ever shopped?
+  def has_shopped?
+    self.purchases.count > 0 || self.has_purchase_entry?
+  end
+
+  # When was my last completed shopping trip?
+  def last_shopped_at
+    if self.purchases.count > 0
+      self.purchases.last.finished_at
+    elsif self.has_purchase_entry?
+      self.last_purchase_entry.to_time
+    end
+  end
+
+  def has_purchase_entry?
+    purchase_type = PointsEntryType.where(name: 'Purchase')
+    self.points_entries.where(points_entry_type_id: purchase_type).count > 0
+  end
+
+  def last_purchase_entry
+    if self.has_purchase_entry?
+      purchase_type = PointsEntryType.where(name: 'Purchase')
+      self.points_entries.where(points_entry_type_id: purchase_type).last.performed_on.to_time
+    end
+  end
+
   def update_points!
     entries_total = self.points_entries.sum(:points)
     purchase_total = self.purchases.where('finished_at is not null').sum(:total)

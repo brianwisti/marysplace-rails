@@ -12,7 +12,15 @@
   %thead
     %tr
       %th Client Member
+      %th Last Shopped
   %tbody
     - @clients.each do |client|
       %tr
         %td= render '/clients/info_link', client: client
+        %td
+          - if client.has_shopped?
+            Last shopped
+            = time_ago_in_words(client.last_shopped_at)
+            ago
+          - else
+            %em Has never shopped
