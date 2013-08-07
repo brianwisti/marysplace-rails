@@ -1,10 +1,9 @@
 %span
   - unless client.is_active
     %span.label.label-info Inactive
-  - if client.is_blocked?
-    %span.label.label-important Blocked
-  - unless client.can_shop?
-    %span.label.label-important Cannot Shop
   - if client.is_flagged?
-    %i.icon-flag
+    - if client.is_blocked?
+      %span.label.label-important Blocked
+    - else
+      %span.label.label-important Flagged
   = link_to client.current_alias, client

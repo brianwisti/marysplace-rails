@@ -39,18 +39,29 @@ class Client < ActiveRecord::Base
           on cf.client_id = clients.id
         left outer join store_carts sc
           on sc.shopper_id = clients.id
+        left outer join points_entries pe
+          on pe.client_id = clients.id
+        left outer join points_entry_types pet
+          on pet.id = pe.points_entry_type_id
         where (
-          (
+          ( cf.is_blocking is null or cf.is_blocking = 'f' )
+          and cf.can_shop = 'f'
+          and (
             ( cf.resolved_on is null and cf.expires_on is null )
             or
             ( cf.resolved_on is null and cf.expires_on > now() )
           )
-          and cf.can_shop = 'f'
         )
         or (
           sc.finished_at between ? and ?
         )
-      }, now.beginning_of_week, now ]
+        or (
+          pet.name = 'Purchase'
+          and pe.performed_on between ? and ?
+        )
+        group by clients.id
+        order by clients.current_alias
+      }, now.beginning_of_week, now, now.beginning_of_week, now ]
   end
 
   before_save do
@@ -95,12 +106,14 @@ class Client < ActiveRecord::Base
       return false
     end
 
+    return true unless self.has_shopped?
+
     now = Time.now
-    if self.purchases.where(finished_at: now.beginning_of_week..now).count > 0
-      return false
+    if self.last_shopped_at < now.beginning_of_week
+      return true
     end
 
-    return true
+    return false
   end
 
   # Should this client be blocked from entry?
@@ -115,21 +128,32 @@ class Client < ActiveRecord::Base
 
   # When was my last completed shopping trip?
   def last_shopped_at
-    if self.purchases.count > 0
-      self.purchases.last.finished_at
-    elsif self.has_purchase_entry?
-      self.last_purchase_entry.to_time
+    last_purchase = self.last_purchase
+    last_purchase_entry = self.last_purchase_entry
+
+    if last_purchase && last_purchase_entry
+      [last_purchase, last_purchase_entry].max
+    elsif last_purchase
+      last_purchase
+    elsif last_purchase_entry
+      last_purchase_entry
     end
   end
 
   def has_purchase_entry?
-    purchase_type = PointsEntryType.where(name: 'Purchase')
+    purchase_type = PointsEntryType.where(name: 'Purchase').first
     self.points_entries.where(points_entry_type_id: purchase_type).count > 0
   end
 
+  def last_purchase
+    if self.purchases.count > 0
+      self.purchases.order('finished_at DESC').first.finished_at
+    end
+  end
+
   def last_purchase_entry
+    purchase_type = PointsEntryType.where(name: 'Purchase').first
     if self.has_purchase_entry?
-      purchase_type = PointsEntryType.where(name: 'Purchase')
       self.points_entries.where(points_entry_type_id: purchase_type).last.performed_on.to_time
     end
   end
