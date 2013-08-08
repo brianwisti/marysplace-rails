@@ -152,8 +152,8 @@ class Client < ActiveRecord::Base
   end
 
   def last_purchase_entry
-    purchase_type = PointsEntryType.where(name: 'Purchase').first
     if self.has_purchase_entry?
+      purchase_type = PointsEntryType.where(name: 'Purchase').first
       self.points_entries.where(points_entry_type_id: purchase_type).last.performed_on.to_time
     end
   end

@@ -1,0 +1,13 @@
+- row_for_client_flag(client_flag) do
+  %td
+    - if client_flag.is_resolved?
+      %span.label.label-success
+        - if client_flag.resolved_on
+          Resolved by #{client_flag.resolved_by.login}
+        - elsif client_flag.expires_on
+          Expired on #{client_flag.expires_on}
+    - elsif client_flag.expires_on
+      Expires on #{client_flag.expires_on}
+  %td= client_flag.client.current_alias
+  %td #{client_flag.created_at.to_date} by #{client_flag.created_by.login}
+  %td= link_to "Show", client_flag
