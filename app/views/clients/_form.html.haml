@@ -1,0 +1,34 @@
+= form_for(@client) do |f|
+  - if @client.errors.any?
+    .error_explanation
+      %h3= pluralize @client.errors.count, "Error"
+      %ul
+        - @client.errors.full_messages.each do |msg|
+          %li= msg
+  .row-fluid
+    .span6
+      %fieldset
+        = f.hidden_field :added_by_id
+        = f.hidden_field :last_edited_by_id
+        .control-group
+          = f.label :current_alias
+          = f.text_field :current_alias
+        .control-group
+          = f.label :full_name
+          = f.text_field :full_name
+        .control-group
+          = f.label :phone_number
+          = f.text_field :phone_number
+        .control-group
+          = f.label :other_aliases
+          = f.text_field :other_aliases
+        .control-group
+          = f.label :is_active do
+            = f.check_box :is_active
+            Is currently active?
+        = f.submit class: "btn"
+    .span6
+      %fieldset
+        .control-group
+          = f.label :notes
+          = f.text_area :notes

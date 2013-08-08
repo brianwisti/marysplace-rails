@@ -1,6 +1,6 @@
 %ul.nav.nav-list
   = render 'search_form'
-  - if @client
+  - if @client and @client.id
     - if can? :show, PointsEntry
       %li= link_to "Points Log", entries_client_path(@client)
     - if can? :show, Checkin
