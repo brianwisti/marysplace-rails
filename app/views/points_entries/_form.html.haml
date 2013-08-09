@@ -9,37 +9,28 @@
     .control-group
       = f.label :client_id, class: 'control-label'
       .controls
-        = text_field_tag "current_alias", @current_alias,
+        = text_field_tag "current_alias", @client.current_alias,
           data: { provide: 'typeahead', field: 'points_entry_client_id', balance: 0 },
           autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
           class: 'client-typeahead'
-        - if @points_entry.client
-          - if @points_entry.client.is_flagged
-            %span.is-flagged
-              %i.icon-flag
-              - if !@points_entry.client.can_shop?
-                %span.label.label-important No Shopping
-              = link_to "flagged", flags_client_path(@points_entry.client), class: "text-error"
-          - else
-            %span.is-flagged{ style: "display: none" }
-              %i.icon-flag
-              %span.label.label-important.shopping-blocked-label{ style: "display: none" } No Shopping
-              = link_to "flagged", '#', class: "text-error"
-          %span.point-balance.text-info= number_with_delimiter @points_entry.client.point_balance
-          %small
-            %span.help-block= link_to "Add Client", new_client_path
+        - if @client.is_flagged
+          %span.is-flagged
+            %i.icon-flag
+            - if !@client.can_shop?
+              %span.label.label-important No Shopping
+            = link_to "flagged", flags_client_path(@client), class: "text-error"
         - else
           %span.is-flagged{ style: "display: none" }
             %i.icon-flag
             %span.label.label-important.shopping-blocked-label{ style: "display: none" } No Shopping
-            = link_to "flagged", "#", class: "text-error"
-          %span.point-balance.text-info
-          %small
-            %span.help-block= link_to "Add Client", new_client_path
+            = link_to "flagged", '#', class: "text-error"
+        %span.point-balance.text-info= number_with_delimiter @client.point_balance
+        %small
+          %span.help-block= link_to "Add Client", new_client_path
     .control-group
       = f.label :points_entry_type_id, class: 'control-label'
       .controls
-        = text_field_tag "points_entry_type", @entry_type_name,
+        = text_field_tag "points_entry_type", @points_entry_type.name,
           data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points' },
           autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
           class: 'pointsentrytype-typeahead'
@@ -48,10 +39,7 @@
     .control-group
       = f.label :points, class: 'control-label'
       .controls
-        - if @points_entry.points_entry_type.nil?
-          = f.number_field :points, data: { default: 0 }, autocomplete: 'off'
-        - else
-          = f.number_field :points, data: { default: @points_entry.points_entry_type.default_points }, autocomplete: 'off'
+        = f.number_field :points, data: { default: @points_entry_type.default_points }, autocomplete: 'off'
         %span.new-balance.text-info
     .control-group
       = f.label :bailed, class: 'checkbox' do
