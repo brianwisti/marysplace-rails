@@ -51,16 +51,6 @@ class PointsEntriesController < ApplicationController
     params[:points_entry][:added_by_id] = current_user.id
     @points_entry = PointsEntry.new(params[:points_entry])
 
-    unless @points_entry.client_id
-      if current_alias = params[:current_alias]
-        if client = Client.find_by_current_alias(current_alias)
-          @points_entry.client_id = client.id
-        else
-          flash[:notice] = "Unable to find a client named '#{current_alias}'"
-        end
-      end
-    end
-
     respond_to do |format|
       if @points_entry.save
         format.html { redirect_to @points_entry, notice: 'Points entry was successfully created' }

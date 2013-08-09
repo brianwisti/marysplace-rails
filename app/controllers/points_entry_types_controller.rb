@@ -104,8 +104,11 @@ class PointsEntryTypesController < ApplicationController
   # GET /points_entry_types/1/entry.json
   def entry
     @points_entry_type = PointsEntryType.find(params[:id])
-    @points_entry = PointsEntry.new
-    @points_entry.points_entry_type = @points_entry_type
+    @client = Client.new
+    @points_entry = PointsEntry.new do |entry|
+      entry.points_entry_type = @points_entry_type
+      entry.points            = @points_entry_type.default_points
+    end
    
     respond_to do |format|
       format.html

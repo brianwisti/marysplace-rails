@@ -67,6 +67,7 @@ class ClientsController < ApplicationController
   def entry
     @client = Client.find(params[:id])
     @points_entry = PointsEntry.new
+    @points_entry_type = PointsEntryType.new
     @points_entry.client = @client
 
     respond_to do |format|

@@ -6,6 +6,7 @@ class PointsEntriesControllerTest < ActionController::TestCase
   setup do
     UserSession.create users(:admin)
     @points_entry = points_entries(:one)
+    @client = clients(:amy_a)
     @attributes = {
       client_id: @points_entry.client.id,
       points_entry_type_id: @points_entry.points_entry_type.id,
@@ -32,17 +33,6 @@ class PointsEntriesControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to points_entry_path(assigns(:points_entry))
-  end
-
-  test "should create points_entry w/client alias" do
-    @attributes.delete :client_id
-    assert_difference('PointsEntry.count') do
-      post :create, current_alias: 'Amy A.', points_entry: @attributes
-    end
-
-    assert_no_difference('PointsEntry.count') do
-      post :create, current_alias: 'Ozymandias', points_entry: @attributes
-    end
   end
 
   test "should show points_entry" do
