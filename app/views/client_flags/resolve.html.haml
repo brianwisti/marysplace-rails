@@ -1,0 +1,16 @@
+= content_for(:title) do
+  Resolve Flag
+
+= content_for(:sidebar) do
+  = render 'sidebar'
+
+= form_tag(resolve_store_client_flag_path(@client_flag), method: :post, class: "form") do
+  .control-group
+    %label.control-label{ for: "resolution" } Resolution
+    .controls
+      %textarea{name: "resolution"}
+      %span.help-block
+        %em (Optional)
+        description of resolution
+    .form-actions
+      %button.btn.btn-primary{ type: "submit" } Resolve
