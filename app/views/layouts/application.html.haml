@@ -1,0 +1,45 @@
+!!! 5
+%html
+  %head
+    %meta{charset: "utf-8"}
+    %title
+      Mary's Place
+      - if content_for? :title
+        \: #{yield :title}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
+    = stylesheet_link_tag "application", media: "all"
+    = csrf_meta_tags
+  %body
+    = render partial: "layouts/site-navbar"
+    .container-fluid
+      - if content_for? :title
+        .row-fluid
+          %h2= yield :title
+      - if content_for? :sidebar
+        .span3
+          .well.sidebar-nav
+            = yield :sidebar
+        .span9
+          .log
+            - if flash[:notice]
+              %p#notice.text-info= flash[:notice]
+            - if flash[:alert]
+              %p#alert.alert= flash[:alert]
+            = yield
+      - else
+        .hero-unit
+          .log
+            - if flash[:notice]
+              %p#notice.text-info= flash[:notice]
+            - if flash[:alert]
+              %p#alert.alert= flash[:alert]
+            = yield
+    %footer.text-center
+      %p
+        Written by
+        %a{ href: "http://randomgeekery.org" } Brian Wisti
+        in 2012-2013 for
+        %a{ href: "http://marysplaceseattle.org" } Mary's Place Seattle
+      %p
+        %a{ href: "https://github.com/brianwisti/marysplace-rails" } Source code available on Github.
+    = javascript_include_tag :application, defer: true, async: true
