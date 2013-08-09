@@ -54,4 +54,10 @@ class PointsEntry < ActiveRecord::Base
       .order('span')
   end
 
+  # What is the extra points penalty for bailing on a chore?
+  # TODO: Make this configurable
+  def self.bail_penalty
+    100
+  end
+
 end

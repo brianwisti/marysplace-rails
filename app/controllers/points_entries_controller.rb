@@ -27,6 +27,9 @@ class PointsEntriesController < ApplicationController
   # GET /points_entries/new.json
   def new
     @points_entry = PointsEntry.new
+    @current_alias = nil
+    @entry_type_name = nil
+    @bail_penalty = PointsEntry.bail_penalty
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,6 +40,9 @@ class PointsEntriesController < ApplicationController
   # GET /points_entries/1/edit
   def edit
     @points_entry = PointsEntry.find(params[:id])
+    @current_alias = @points_entry.client.current_alias
+    @entry_type_name = @points_entry.points_entry_type.name
+    @bail_penalty = PointsEntry.bail_penalty
   end
 
   # POST /points_entries

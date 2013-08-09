@@ -1,0 +1,68 @@
+= form_for(@points_entry) do |f|
+  - if @points_entry.errors.any?
+    #error_explanation
+      %h2= pluralize @points_entry.errors.count, "error"
+      %ul
+        - @points_entry.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    .control-group
+      = f.label :client_id, class: 'control-label'
+      .controls
+        = text_field_tag "current_alias", @current_alias,
+          data: { provide: 'typeahead', field: 'points_entry_client_id', balance: 0 },
+          autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
+          class: 'client-typeahead'
+        - if @points_entry.client
+          - if @points_entry.client.is_flagged
+            %span.is-flagged
+              %i.icon-flag
+              - if !@points_entry.client.can_shop?
+                %span.label.label-important No Shopping
+              = link_to "flagged", flags_client_path(@points_entry.client), class: "text-error"
+          - else
+            %span.is-flagged{ style: "display: none" }
+              %i.icon-flag
+              %span.label.label-important.shopping-blocked-label{ style: "display: none" } No Shopping
+              = link_to "flagged", '#', class: "text-error"
+          %span.point-balance.text-info= number_with_delimiter @points_entry.client.point_balance
+          %small
+            %span.help-block= link_to "Add Client", new_client_path
+        - else
+          %span.is-flagged{ style: "display: none" }
+            %i.icon-flag
+            %span.label.label-important.shopping-blocked-label{ style: "display: none" } No Shopping
+            = link_to "flagged", "#", class: "text-error"
+          %span.point-balance.text-info
+          %small
+            %span.help-block= link_to "Add Client", new_client_path
+    .control-group
+      = f.label :points_entry_type_id, class: 'control-label'
+      .controls
+        = text_field_tag "points_entry_type", @entry_type_name,
+          data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points' },
+          autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
+          class: 'pointsentrytype-typeahead'
+        %span.summary
+          %span.point-total.text-info
+    .control-group
+      = f.label :points, class: 'control-label'
+      .controls
+        - if @points_entry.points_entry_type.nil?
+          = f.number_field :points, data: { default: 0 }, autocomplete: 'off'
+        - else
+          = f.number_field :points, data: { default: @points_entry.points_entry_type.default_points }, autocomplete: 'off'
+        %span.new-balance.text-info
+    .control-group
+      = f.label :bailed, class: 'checkbox' do
+        = f.check_box :bailed, data: { field: 'points_entry_points', penalty: @bail_penalty }, class: 'bailed'
+        Bailed
+    - unless @points_entry.new_record?
+      .control-group
+        = f.label :performed_on, class: 'control-label'
+        .controls
+          = f.date_select :performed_on
+    = f.hidden_field :client_id
+    = f.hidden_field :points_entry_type_id
+    .form-actions
+      = f.submit class: "btn"
