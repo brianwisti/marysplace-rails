@@ -11,7 +11,7 @@ gem 'highline' # Used during db seed
 
 gem 'pg'
 
-gem 'authlogic', :git => 'https://github.com/james2m/authlogic.git', :branch => 'fix-migrations'
+gem 'authlogic'
 gem 'cancan'
 gem 'kaminari'
 gem 'haml-rails'

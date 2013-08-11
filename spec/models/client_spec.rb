@@ -2,17 +2,8 @@ require 'spec_helper'
 
 describe Client do
   before(:all) do
-    @user = User.create! do |u|
-      u.login                 = "super"
-      u.password              = "waffle"
-      u.password_confirmation = "waffle"
-    end
-
-    @client = Client.create! do |c|
-      c.current_alias = "Client C."
-      c.added_by      = @user
-    end
-
+    @user = FactoryGirl.create :user
+    @client = FactoryGirl.create :client
   end
 
   describe "validation" do
