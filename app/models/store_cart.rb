@@ -14,6 +14,10 @@ class StoreCart < ActiveRecord::Base
 
   validates_uniqueness_of :finished_at, scope: :shopper_id
 
+  delegate :current_alias,
+    to:     :shopper,
+    prefix: true
+
   def self.start(shopper, handler)
     if shopper.purchases.where('finished_at is null').count == 0
       return StoreCart.create do |cart|
