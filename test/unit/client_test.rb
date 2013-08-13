@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'pp'
 
 class ClientTest < ActiveSupport::TestCase
   test "required fields" do

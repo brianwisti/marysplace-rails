@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724005857) do
+ActiveRecord::Schema.define(:version => 20130813052351) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(:version => 20130724005857) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
+
+  add_index "catalog_items", ["added_by_id"], :name => "index_catalog_items_on_added_by_id"
 
   create_table "checkins", :force => true do |t|
     t.integer  "client_id"
@@ -68,6 +70,8 @@ ActiveRecord::Schema.define(:version => 20130724005857) do
   end
 
   add_index "client_flags", ["client_id"], :name => "index_client_flags_on_client_id"
+  add_index "client_flags", ["created_by_id"], :name => "index_client_flags_on_created_by_id"
+  add_index "client_flags", ["resolved_by_id"], :name => "index_client_flags_on_resolved_by_id"
 
   create_table "clients", :force => true do |t|
     t.string   "current_alias",                        :null => false
@@ -97,6 +101,8 @@ ActiveRecord::Schema.define(:version => 20130724005857) do
     t.datetime "updated_at",       :null => false
   end
 
+  add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
+
   create_table "points_entries", :force => true do |t|
     t.integer  "client_id",                               :null => false
     t.integer  "points_entry_type_id",                    :null => false
@@ -109,6 +115,7 @@ ActiveRecord::Schema.define(:version => 20130724005857) do
     t.boolean  "is_finalized",         :default => true
   end
 
+  add_index "points_entries", ["added_by_id"], :name => "index_points_entries_on_added_by_id"
   add_index "points_entries", ["client_id"], :name => "index_points_entries_on_client_id"
   add_index "points_entries", ["points_entry_type_id"], :name => "index_points_entries_on_points_entry_type_id"
 
@@ -157,6 +164,8 @@ ActiveRecord::Schema.define(:version => 20130724005857) do
     t.datetime "updated_at",           :null => false
   end
 
+  add_index "signup_lists", ["points_entry_type_id"], :name => "index_signup_lists_on_points_entry_type_id"
+
   create_table "store_cart_items", :force => true do |t|
     t.integer  "store_cart_id"
     t.integer  "catalog_item_id"
@@ -165,6 +174,9 @@ ActiveRecord::Schema.define(:version => 20130724005857) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  add_index "store_cart_items", ["catalog_item_id"], :name => "index_store_cart_items_on_catalog_item_id"
+  add_index "store_cart_items", ["store_cart_id"], :name => "index_store_cart_items_on_store_cart_id"
 
   create_table "store_carts", :force => true do |t|
     t.integer  "shopper_id"
@@ -175,6 +187,9 @@ ActiveRecord::Schema.define(:version => 20130724005857) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  add_index "store_carts", ["handled_by_id"], :name => "index_store_carts_on_handled_by_id"
+  add_index "store_carts", ["shopper_id"], :name => "index_store_carts_on_shopper_id"
 
   create_table "user_sessions", :force => true do |t|
     t.string   "session_id", :null => false
