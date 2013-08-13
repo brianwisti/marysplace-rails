@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130813052351) do
+ActiveRecord::Schema.define(:version => 20130813053438) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -91,7 +91,10 @@ ActiveRecord::Schema.define(:version => 20130813052351) do
     t.boolean  "is_flagged",        :default => false
   end
 
+  add_index "clients", ["added_by_id"], :name => "index_clients_on_added_by_id"
   add_index "clients", ["current_alias"], :name => "index_clients_on_current_alias", :unique => true
+  add_index "clients", ["last_edited_by_id"], :name => "index_clients_on_last_edited_by_id"
+  add_index "clients", ["login_id"], :name => "index_clients_on_login_id"
 
   create_table "messages", :force => true do |t|
     t.text     "content"
@@ -139,6 +142,9 @@ ActiveRecord::Schema.define(:version => 20130813052351) do
     t.integer "user_id"
   end
 
+  add_index "roles_users", ["role_id"], :name => "index_roles_users_on_role_id"
+  add_index "roles_users", ["user_id"], :name => "index_roles_users_on_user_id"
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -156,6 +162,10 @@ ActiveRecord::Schema.define(:version => 20130813052351) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
+
+  add_index "signup_entries", ["client_id"], :name => "index_signup_entries_on_client_id"
+  add_index "signup_entries", ["points_entry_id"], :name => "index_signup_entries_on_points_entry_id"
+  add_index "signup_entries", ["signup_list_id"], :name => "index_signup_entries_on_signup_list_id"
 
   create_table "signup_lists", :force => true do |t|
     t.integer  "points_entry_type_id"
