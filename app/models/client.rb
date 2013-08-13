@@ -25,10 +25,26 @@ class Client < ActiveRecord::Base
     class_name: 'StoreCart',
     foreign_key: :shopper_id
 
+  delegate :login,
+    to:     :added_by,
+    prefix: true
+  delegate :login,
+    to: :last_edited_by,
+    prefix: true
 
   # TODO: Replace alias hack w/renaming the relationship.
   #       That means digging through templates too.
   alias :flags :client_flags
+
+  # The generated barcode used for automated checkin
+  def barcode(args={})
+    self.login.barcode_data(args)
+  end
+
+  # The generated code used for automated checkin
+  def login_code
+    self.login.login
+  end
 
   def self.cannot_shop
     now = Time.now

@@ -18,9 +18,9 @@
   %dd
     - if @client.login
       - if can? :show, User
-        = link_to @client.login.login, @client.login
+        = link_to @client.login_code, @client.login
       - else
-        = @client.login.login
+        = @client.login_code
     - else
       %span.label.label-info None
       - if can? :manage, User
@@ -39,8 +39,8 @@
     %dt Notes
     %dd= @client.notes
     %dt Added By
-    %dd= link_to @client.added_by.login, @client.added_by
+    %dd= link_to @client.added_by_login, @client.added_by
     - if @client.last_edited_by
       %dt Last Edited By
-      %dd= link_to @client.last_edited_by.login, @client.last_edited_by
+      %dd= link_to @client.last_edited_by_login, @client.last_edited_by
 
