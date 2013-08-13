@@ -13,6 +13,10 @@ class Checkin < ActiveRecord::Base
 
   before_create :validate_client
 
+  delegate :current_alias,
+    to:     :client,
+    prefix: true
+
   def validate_client
     if self.client.is_blocked?
       self.is_valid = false

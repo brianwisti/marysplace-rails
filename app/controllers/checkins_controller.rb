@@ -49,7 +49,7 @@ class CheckinsController < ApplicationController
 
     respond_to do |format|
       if @checkin.save
-        format.html { redirect_to new_checkin_path, notice: "Checkin for #{@checkin.client.current_alias} was successfully created." }
+        format.html { redirect_to new_checkin_path, notice: "Checkin for #{@checkin.client_current_alias} was successfully created." }
         format.json { render json: @checkin, status: :created, location: @checkin }
       else
         format.html { render action: "new" }
