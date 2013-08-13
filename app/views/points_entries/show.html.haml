@@ -14,16 +14,16 @@
     = notice
   %p 
     %span.label.label-info Info
-    = @points_entry.client.current_alias
+    = @points_entry.client_current_alias
     now has 
-    = number_with_delimiter(@points_entry.client.point_balance)
+    = number_with_delimiter(@points_entry.client_point_balance)
     points
 
 %dl
   %dt Client
-  %dd= link_to @points_entry.client.current_alias, @points_entry.client
+  %dd= link_to @points_entry.client_current_alias, @points_entry.client
   %dt Type
-  %dd= link_to @points_entry.points_entry_type.name, @points_entry.points_entry_type
+  %dd= link_to @points_entry.points_entry_type_name, @points_entry.points_entry_type
   %dt Performed On
   %dd= @points_entry.performed_on
   %dt Points

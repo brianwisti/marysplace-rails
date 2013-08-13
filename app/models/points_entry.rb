@@ -18,6 +18,16 @@ class PointsEntry < ActiveRecord::Base
   validates :points,
     presence: true
 
+  delegate :current_alias,
+    to:     :client,
+    prefix: true
+  delegate :name,
+    to:     :points_entry_type,
+    prefix: true
+  delegate :point_balance,
+    to:     :client,
+    prefix: true
+
   def summarize
     "#{self.performed_on} #{self.client.current_alias} #{self.points_entry_type.name} #{self.points}"
   end
