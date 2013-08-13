@@ -10,6 +10,10 @@ class Message < ActiveRecord::Base
   belongs_to :author,
     class_name: "User"
 
+  delegate :login,
+    to:     :author,
+    prefix: true
+
   def self.since(datetime)
     self.where('created_at > ?', datetime.to_datetime).count
   end
