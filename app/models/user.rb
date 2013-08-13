@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
     type: Barby::Code128B,
     value: Proc.new { |u| u.login }
 
+  delegate :current_alias,
+    to:     :client,
+    prefix: true
+
   def messages_checked!
     self.update_attributes(last_message_check: DateTime.now)
     self.reload

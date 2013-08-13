@@ -5,7 +5,7 @@
     - if user == current_user
       %em That's you!
     - elsif user.client
-      %em= link_to user.client.current_alias, user.client
+      %em= link_to user.client_current_alias, user.client
   %td
     - user.roles.each do |role|
       %span.label.label-info= role.name

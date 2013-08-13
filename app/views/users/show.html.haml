@@ -15,7 +15,7 @@
   %dd= @user.name
   - if @user.client and can? :show, Client
     %dt For Client
-    %dd= link_to @user.client.current_alias, @user.client
+    %dd= link_to @user.client_current_alias, @user.client
   %dt Roles
   %dd
     - if @user != current_user and can? :manage, User
