@@ -14,8 +14,8 @@
     <div class="control-group">
       <%= f.label :points_entry_type_id, class: 'control-label' %>
       <div class="controls">
-        <% name = if @signup_list.points_entry_type.nil? then nil else @signup_list.points_entry_type.name end %>
-        <%= text_field_tag "points_entry_type", name,
+        <%= text_field_tag "points_entry_type", 
+          @signup_list.points_entry_type_name,
           data: { provide: 'typeahead', field: 'signup_list_points_entry_type_id', pointsfield: 'points_entry_points' },
           autocomplete: 'off',
           class: 'pointsentrytype-typeahead' %>

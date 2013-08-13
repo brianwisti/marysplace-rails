@@ -7,4 +7,9 @@ class SignupList < ActiveRecord::Base
     presence: true
   validates :signup_date,
     presence: true
+
+  delegate :name,
+    to:        :points_entry_type,
+    prefix:    true,
+    allow_nil: true
 end
