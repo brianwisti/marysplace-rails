@@ -5,14 +5,14 @@
   = render 'sidebar' 
 - if @checkin.client.is_blocked?
   %div.label.label-important
-    = @checkin.client.current_alias
+    = @checkin.client_current_alias
     may not enter. Please speak with a staff member
 %p
   %b Client:
-  = link_to @checkin.client.current_alias, @checkin.client
+  = link_to @checkin.client_current_alias, @checkin.client
 %p
   %b User:
-  = link_to @checkin.user.login, @checkin.user
+  = link_to @checkin.user_login, @checkin.user
 %p
   %b Checkin at:
   = @checkin.checkin_at

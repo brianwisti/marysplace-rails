@@ -1,8 +1,8 @@
 - row_class = checkin_clue(checkin)
 %tr{class: row_class}
   %td= l(checkin.checkin_at, format: :long)
-  %td= link_to checkin.client.current_alias, checkin.client
-  %td= link_to checkin.user.login, checkin.user
+  %td= link_to checkin.client_current_alias, checkin.client
+  %td= link_to checkin.user_login, checkin.user
   %td= checkin.notes
   - if can? :edit, checkin
     %td

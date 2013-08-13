@@ -16,6 +16,9 @@ class Checkin < ActiveRecord::Base
   delegate :current_alias,
     to:     :client,
     prefix: true
+  delegate :login,
+    to:     :user,
+    prefix: true
 
   def validate_client
     if self.client.is_blocked?
