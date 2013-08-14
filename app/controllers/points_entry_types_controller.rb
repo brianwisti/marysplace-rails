@@ -109,7 +109,7 @@ class PointsEntryTypesController < ApplicationController
       entry.points_entry_type = @points_entry_type
       entry.points            = @points_entry_type.default_points
     end
-   
+
     respond_to do |format|
       format.html
     end

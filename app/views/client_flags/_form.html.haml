@@ -10,11 +10,11 @@
       = f.label :client_id
       .controls
         - if @client_flag.client
-          = text_field_tag "current_alias", @client_flag.client.current_alias,
+          = text_field_tag "current_alias", @client_flag.client_current_alias,
             data: { provide: 'typeahead', field: 'client_flag_client_id' },
             class: 'client-typeahead'
         - else
-          = text_field_tag "current_alias", nil, 
+          = text_field_tag "current_alias", nil,
             data: { provide: 'typeahead', field: 'client_flag_client_id' },
             class: 'client-typeahead'
         = f.hidden_field :client_id

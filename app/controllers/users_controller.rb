@@ -37,7 +37,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    
+
     if @user != @current_user
       authorize! :manage, User
     end
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     role = Role.find(params[:role_id])
 
-    if user and role 
+    if user and role
       if user.roles.include? role
         if user.roles.delete(role)
           message = "#{user.login} is no longer #{role.name}"

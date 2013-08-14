@@ -14,7 +14,7 @@
     <div class="control-group">
       <%= f.label :points_entry_type_id, class: 'control-label' %>
       <div class="controls">
-        <%= text_field_tag "points_entry_type", 
+        <%= text_field_tag "points_entry_type",
           @signup_list.points_entry_type_name,
           data: { provide: 'typeahead', field: 'signup_list_points_entry_type_id', pointsfield: 'points_entry_points' },
           autocomplete: 'off',

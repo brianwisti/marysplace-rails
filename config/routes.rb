@@ -60,7 +60,7 @@ Marysplace::Application.routes.draw do
           month: %r/\d\d?/,
         },
         as: 'monthly_report'
-      get 'report/:year' => 'checkins#report', 
+      get 'report/:year' => 'checkins#report',
         constraints: {
           year: %r/\d{4}/,
         },
@@ -99,7 +99,7 @@ Marysplace::Application.routes.draw do
           month: %r/\d\d?/,
         },
         as: 'monthly_report'
-      get 'report/:year' => 'points_entry_types#report', 
+      get 'report/:year' => 'points_entry_types#report',
         constraints: {
           year: %r/\d{4}/,
         },

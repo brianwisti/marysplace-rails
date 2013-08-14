@@ -10,7 +10,7 @@
       = f.label :client_id, class: 'control-label'
       .controls
         - if @checkin.client
-          = text_field_tag "current_alias", @checkin.client_current_alias, 
+          = text_field_tag "current_alias", @checkin.client_current_alias,
             data: { provide: 'typeahead', field: 'checkin_client_id' },
             class: 'client-typeahead'
         - else

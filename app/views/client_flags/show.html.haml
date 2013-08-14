@@ -1,18 +1,18 @@
 = content_for(:title) do
   Flag for
-  = @client_flag.client.current_alias
+  = @client_flag.client_current_alias
 
 =content_for(:sidebar) do
   = render 'sidebar'
 
 %dl.dl-horizontal
   %dt Client
-  %dd= link_to @client_flag.client.current_alias, @client_flag.client
-  %dt Created 
-  %dd 
+  %dd= link_to @client_flag.client_current_alias, @client_flag.client
+  %dt Created
+  %dd
     = l(@client_flag.created_at, format: :long)
     by 
-    = link_to @client_flag.created_by.login, @client_flag.created_by
+    = link_to @client_flag.created_by_login, @client_flag.created_by
   %dt Description
   %dd= @client_flag.description || 'None Given'
   %dt Consequence
@@ -27,13 +27,13 @@
       No expiration
   %dt Notes
   %dd
-    = @client_flag.client.current_alias
+    = @client_flag.client_current_alias
     - if @client_flag.is_blocking
       may not enter while this flag is unresolved.
     - else
       is not prevented from entering by this flag.
   %dd
-    = @client_flag.client.current_alias
+    = @client_flag.client_current_alias
     - if @client_flag.can_shop
       is not prevented from shopping by this flag.
     - else
@@ -43,7 +43,7 @@
     %dd
       = l(@client_flag.resolved_on, format: :long)
       by
-      = link_to @client_flag.resolved_by.login, @client_flag.resolved_by
+      = link_to @client_flag.resolved_by_login, @client_flag.resolved_by
     %dt Resolution
     %dd= @client_flag.resolution || 'None given'
   - else

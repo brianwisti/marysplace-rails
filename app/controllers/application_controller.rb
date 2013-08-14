@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
       # There's *got* to be a prettier way to do this.
       arr = []
       user_section = {
-        title: "Users", 
+        title: "Users",
         url: users_path, 
         active: params[:controller] == 'users'
       }

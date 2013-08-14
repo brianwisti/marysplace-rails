@@ -1,4 +1,4 @@
--# 
+-#
   Link to the "Previous" page
   available local variables
   url:           url to the previous page
@@ -7,5 +7,5 @@
   per_page:      number of items to fetch per page
   remote:        data-remote
 
-%li.prev= link_to_unless current_page.first?, raw(t 'views.pagination.previous'), url, 
-  :rel => 'prev', :remote => remote
+%li.prev= link_to_unless current_page.first?, raw(t 'views.pagination.previous'),
+  url, :rel => 'prev', :remote => remote

@@ -1,7 +1,7 @@
 require 'zlib' # TODO: Is there a better place to require this?
 
 class Client < ActiveRecord::Base
-  attr_accessible :added_by, :added_by_id, :birthday, :current_alias, 
+  attr_accessible :added_by, :added_by_id, :birthday, :current_alias,
     :full_name, :last_edited_by, :last_edited_by_id, :notes, :oriented_on, :other_aliases, 
     :phone_number, :point_balance, :is_active, :is_flagged
 

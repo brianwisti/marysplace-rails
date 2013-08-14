@@ -24,7 +24,7 @@ class ClientsController < ApplicationController
   def search
     @query = params[:q]
     @clients = Client.quicksearch(@query)
-    mapping = @clients.map do |c| 
+    mapping = @clients.map do |c|
       { id: c.id, 
         current_alias: c.current_alias, 
         other_aliases: c.other_aliases,

@@ -1,5 +1,5 @@
 class ClientFlag < ActiveRecord::Base
-  attr_accessible :action_required, :consequence, :client_id, :created_by, :created_by_id, 
+  attr_accessible :action_required, :consequence, :client_id, :created_by, :created_by_id,
     :description, :expires_on, :is_blocking, :resolved_by_id, :resolved_on, :can_shop
 
   belongs_to :client
@@ -15,6 +15,16 @@ class ClientFlag < ActiveRecord::Base
 
   scope :resolved, where(["resolved_on is not null or expires_on <= ?", Date.today])
   scope :unresolved, where(["(resolved_on is null) and (expires_on is null or expires_on > ?)", Date.today])
+
+  delegate :current_alias,
+    to:     :client,
+    prefix: true
+  delegate :login,
+    to:     :created_by,
+    prefix: true
+  delegate :login,
+    to:     :resolved_by,
+    prefix: true
 
   def is_resolved?
     today = Date.today

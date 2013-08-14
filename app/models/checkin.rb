@@ -9,7 +9,7 @@ class Checkin < ActiveRecord::Base
     presence: true
   validates :checkin_at,
     presence: true
-  validate :no_checkin_for_client_on_same_day 
+  validate :no_checkin_for_client_on_same_day
 
   before_create :validate_client
 

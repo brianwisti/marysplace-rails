@@ -8,7 +8,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string    :email,               :default => ''
       t.string    :persistence_token,   :null => false
       t.string    :single_access_token, :null => false
-      t.string    :perishable_token,    :null => false                   
+      t.string    :perishable_token,    :null => false
 
       t.integer   :login_count,         :null => false, :default => 0
       t.integer   :failed_login_count,  :null => false, :default => 0
@@ -16,7 +16,7 @@ class CreateUsers < ActiveRecord::Migration
       t.datetime  :current_login_at
       t.datetime  :last_login_at
       t.string    :current_login_ip
-      t.string    :last_login_ip     
+      t.string    :last_login_ip
       t.timestamps
     end
   end

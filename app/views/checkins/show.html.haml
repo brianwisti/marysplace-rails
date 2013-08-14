@@ -2,7 +2,7 @@
   Edit Checkin
 
 = content_for(:sidebar) do
-  = render 'sidebar' 
+  = render 'sidebar'
 - if @checkin.client.is_blocked?
   %div.label.label-important
     = @checkin.client_current_alias

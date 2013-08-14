@@ -2,6 +2,6 @@
   - if user.roles.include? role
     %button.btn.btn-mini.active{ data: { toggle: "button", user: user.id, role: role.id } }
       = role.name
-  -else 
+  -else
     %button.btn.btn-mini{ data: { toggle: "button", user: user.id, role: role.id } }
       = role.name

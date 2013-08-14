@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_one :client,
     foreign_key: :login_id
 
-  has_attached_file :avatar, 
+  has_attached_file :avatar,
     styles: {
       thumb:  '100x100>',
       square: '200x200#',
