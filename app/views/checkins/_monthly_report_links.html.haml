@@ -1,0 +1,8 @@
+- last_month = @span - 1.month
+- next_month = @span + 1.month
+
+.pagination.pagination-centered
+  %ul
+    %li= link_to last_month.strftime("%Y %b"), monthly_report_checkins_path({ year: last_month.year, month: last_month.month })
+    %li.active= link_to @span.strftime("%Y %b"), monthly_report_checkins_path({ year: @span.year, month: @span.month })
+    %li= link_to next_month.strftime("%Y %b"), monthly_report_checkins_path({ year: next_month.year, month: next_month.month })

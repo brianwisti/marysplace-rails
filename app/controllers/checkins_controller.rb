@@ -102,42 +102,47 @@ class CheckinsController < ApplicationController
   end
 
   def today
-    today = Date.today
-    @checkins = Checkin.today
-    @yesterday = today - 1.day
+    @span = Date.today
+    @year = @span.year
+    @rows = Checkin.today
+
+    respond_to do |format|
+      format.html { render 'daily_report' }
+    end
   end
 
-  def report
-    now = Time.now.in_time_zone
-    @year = params[:year] || now.year
-    @year = @year.to_i
+  def annual_report
+    @year = params[:year].to_i
+    @rows = Checkin.per_month_in(@year)
+    @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def monthly_report
+    @year = params[:year].to_i
     @month = params[:month].to_i
-    @day = params[:day].to_i
+    @rows = Checkin.per_day_in(@year, @month)
+    @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
 
-    if @month > 0
-      if @day > 0
-        @span = DateTime.new(@year, @month, @day, 0, 0)
-        @checkins = Checkin.where('checkin_at > ?', @span)
-        @last_day = @span - 1.day
-        @next_day = @span + 1.day
-      else
-        @span = DateTime.new(@year, @month, 1, 0, 0)
-        @rows = Checkin.per_day_in(@year, @month)
-      end
+    @span = DateTime.new(@year, @month, 1, 0, 0)
+    @time_range = @span.strftime("%B %Y")
 
-      @last_month = @span - 1.month
-      @next_month = @span + 1.month
-    else
-      @span = DateTime.new(@year, 1, 1, 0, 0)
-      @rows = Checkin.per_month_in(@year)
+    respond_to do |format|
+      format.html
     end
+  end
 
-    @last_year = @span - 1.year
-    @next_year = @span + 1.year
-
-    if @row
-      @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
-    end
+  def daily_report
+    @year  = params[:year].to_i
+    @month = params[:month].to_i
+    @day   = params[:day].to_i
+    @span = DateTime.new(@year, @month, @day, 0, 0)
+    @time_range = @span.strftime("%A, %B %d %Y")
+    @checkins = Checkin.on(@span)
+    @total_checkins = @checkins.count
 
     respond_to do |format|
       format.html

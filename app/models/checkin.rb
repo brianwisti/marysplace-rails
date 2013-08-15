@@ -20,6 +20,11 @@ class Checkin < ActiveRecord::Base
     to:     :user,
     prefix: true
 
+  # A string description of what time this checkin occurred
+  def say_time
+    self.checkin_at.strftime("%l:%M %P")
+  end
+
   def validate_client
     if self.client.is_blocked?
       self.is_valid = false

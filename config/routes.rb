@@ -40,32 +40,24 @@ Marysplace::Application.routes.draw do
       get 'selfcheck'
       put 'selfcheck_post'
       get 'today'
-      get 'on/:year/:month/:day' => 'checkins#on',
-        constraints: {
-          year: %r/\d{4}/,
-          month: %r/\d\d?/,
-          day: %r/\d\d?/
-        },
-        as: 'on'
-      get 'report/:year/:month/:day' => 'checkins#report',
+      get 'report/:year/:month/:day' => 'checkins#daily_report',
         constraints: {
           year: %r/\d{4}/,
           month: %r/\d\d?/,
           day: %r/\d\d?/
         },
         as: 'daily_report'
-      get 'report/:year/:month' => 'checkins#report',
+      get 'report/:year/:month' => 'checkins#monthly_report',
         constraints: {
           year: %r/\d{4}/,
           month: %r/\d\d?/,
         },
         as: 'monthly_report'
-      get 'report/:year' => 'checkins#report',
+      get 'report/:year' => 'checkins#annual_report',
         constraints: {
           year: %r/\d{4}/,
         },
         as: 'annual_report'
-      get 'report'
     end
   end
 
