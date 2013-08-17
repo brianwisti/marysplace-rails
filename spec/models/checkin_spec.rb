@@ -2,34 +2,14 @@ require 'spec_helper'
 
 describe Checkin do
   before(:all) do
-    @user = User.create do |u|
-      u.login                 = "admin"
-      u.password              = "waffle"
-      u.password_confirmation = "waffle"
-    end
-
-    @client = Client.create do |c|
-      c.current_alias = "Amy A."
-      c.added_by      = @user
-    end
-
-    @at = DateTime.now
-
-    @location = FactoryGirl.create(:location)
-
-    @checkin = Checkin.create do |c|
-      c.user       = @user
-      c.client     = @client
-      c.checkin_at = @at
-      c.location   = @location
-    end
+    @checkin = FactoryGirl.create(:checkin)
   end
 
   it "should be unique per client per day" do
     dupe = Checkin.new do |ch|
-      ch.user       = @user
-      ch.client     = @client
-      ch.checkin_at = @at
+      ch.user       = @checkin.user
+      ch.client     = @checkin.client
+      ch.checkin_at = @checkin.checkin_at
     end
 
     expect(dupe).to have(1).errors_on(:client_id)
@@ -37,9 +17,9 @@ describe Checkin do
 
   it "should have a Location" do
     checkin = Checkin.create do |ch|
-      ch.user       = @user
-      ch.client     = @client
-      ch.checkin_at = @at
+      ch.user       = FactoryGirl.create(:user)
+      ch.client     = FactoryGirl.create(:client)
+      ch.checkin_at = @checkin.checkin_at
     end
 
     expect(checkin).to have(1).errors_on(:location_id)
