@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130817164031) do
+ActiveRecord::Schema.define(:version => 20130817224202) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -45,9 +45,10 @@ ActiveRecord::Schema.define(:version => 20130817164031) do
     t.integer  "user_id"
     t.datetime "checkin_at"
     t.text     "notes"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.boolean  "is_valid"
+    t.integer  "location_id"
   end
 
   add_index "checkins", ["client_id"], :name => "index_checkins_on_client_id"

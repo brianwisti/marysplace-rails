@@ -1,13 +1,16 @@
 class Checkin < ActiveRecord::Base
-  attr_accessible :checkin_at, :notes, :client, :user, :client_id, :user_id, :is_valid
+  attr_accessible :checkin_at, :notes, :client, :user, :client_id, :user_id, :is_valid, :location_id
   belongs_to :client
   belongs_to :user
+  belongs_to :location
 
   validates :client_id,
     presence: true
   validates :user_id,
     presence: true
   validates :checkin_at,
+    presence: true
+  validates :location_id,
     presence: true
   validate :no_checkin_for_client_on_same_day
 
