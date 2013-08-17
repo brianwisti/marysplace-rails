@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130813053438) do
+ActiveRecord::Schema.define(:version => 20130817164031) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -95,6 +95,12 @@ ActiveRecord::Schema.define(:version => 20130813053438) do
   add_index "clients", ["current_alias"], :name => "index_clients_on_current_alias", :unique => true
   add_index "clients", ["last_edited_by_id"], :name => "index_clients_on_last_edited_by_id"
   add_index "clients", ["login_id"], :name => "index_clients_on_login_id"
+
+  create_table "locations", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "messages", :force => true do |t|
     t.text     "content"
