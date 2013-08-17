@@ -3,11 +3,7 @@ require 'spec_helper'
 describe CatalogItem do
 
   before(:all) do
-    @user = User.create do |u|
-      u.login                 = "admin"
-      u.password              = "waffle"
-      u.password_confirmation = "waffle"
-    end
+    @user = create(:user)
   end
 
   context "the name" do

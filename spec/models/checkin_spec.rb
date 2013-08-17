@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Checkin do
   before(:all) do
-    @checkin = FactoryGirl.create(:checkin)
+    @checkin = create(:checkin)
   end
 
   it "should be unique per client per day" do
@@ -17,8 +17,8 @@ describe Checkin do
 
   it "should have a Location" do
     checkin = Checkin.create do |ch|
-      ch.user       = FactoryGirl.create(:user)
-      ch.client     = FactoryGirl.create(:client)
+      ch.user       = create(:user)
+      ch.client     = create(:client)
       ch.checkin_at = @checkin.checkin_at
     end
 

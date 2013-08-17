@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Client do
   before(:all) do
-    @user = FactoryGirl.create :user
-    @client = FactoryGirl.create :client
+    @user = create :user
+    @client = create :client
   end
 
   describe "validation" do
