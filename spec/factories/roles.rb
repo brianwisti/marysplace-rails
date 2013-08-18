@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :role, :class => 'Roles' do
+  factory :role do
     sequence(:name) { |n| "role_#{n}" }
 
     factory :admin_role do
