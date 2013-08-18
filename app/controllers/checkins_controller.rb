@@ -4,6 +4,7 @@ class CheckinsController < ApplicationController
   # GET /checkins
   # GET /checkins.json
   def index
+    authorize! :show, Checkin
     @checkins = Checkin.order('checkin_at DESC').page params[:page]
 
     respond_to do |format|
@@ -15,6 +16,8 @@ class CheckinsController < ApplicationController
   # GET /checkins/1
   # GET /checkins/1.json
   def show
+    authorize! :show, Checkin
+
     @checkin = Checkin.find(params[:id])
 
     respond_to do |format|
@@ -26,6 +29,7 @@ class CheckinsController < ApplicationController
   # GET /checkins/new
   # GET /checkins/new.json
   def new
+    authorize! :create, Checkin
     @checkin = Checkin.new
 
     respond_to do |format|
@@ -36,12 +40,15 @@ class CheckinsController < ApplicationController
 
   # GET /checkins/1/edit
   def edit
+    authorize! :update, Checkin
     @checkin = Checkin.find(params[:id])
   end
 
   # POST /checkins
   # POST /checkins.json
   def create
+    authorize! :create, Checkin
+
     params[:checkin][:user_id] = current_user.id
     @checkin = Checkin.new(params[:checkin])
 
@@ -61,6 +68,8 @@ class CheckinsController < ApplicationController
   # PUT /checkins/1
   # PUT /checkins/1.json
   def update
+    authorize! :update, Checkin
+
     @checkin = Checkin.find(params[:id])
 
     respond_to do |format|
@@ -89,6 +98,8 @@ class CheckinsController < ApplicationController
   end
 
   def today
+    authorize! :show, Checkin
+
     @span = Date.today
     @year = @span.year
     @rows = Checkin.today
@@ -99,6 +110,8 @@ class CheckinsController < ApplicationController
   end
 
   def annual_report
+    authorize! :show, Checkin
+
     @year = params[:year].to_i
     @rows = Checkin.per_month_in(@year)
     @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
@@ -109,6 +122,8 @@ class CheckinsController < ApplicationController
   end
 
   def monthly_report
+    authorize! :show, Checkin
+
     @year = params[:year].to_i
     @month = params[:month].to_i
     @rows = Checkin.per_day_in(@year, @month)
@@ -123,6 +138,8 @@ class CheckinsController < ApplicationController
   end
 
   def daily_report
+    authorize! :show, Checkin
+
     @year  = params[:year].to_i
     @month = params[:month].to_i
     @day   = params[:day].to_i

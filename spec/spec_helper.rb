@@ -56,3 +56,7 @@ end
 def expect_login(response)
   expect(response).to redirect_to(new_user_session_url)
 end
+
+def expect_forbidden(response)
+  expect(response).to redirect_to(root_url)
+end
