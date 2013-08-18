@@ -52,3 +52,7 @@ def login(user)
   session.save
   return session
 end
+
+def expect_login(response)
+  expect(response).to redirect_to(new_user_session_url)
+end

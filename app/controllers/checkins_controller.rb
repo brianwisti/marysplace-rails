@@ -77,6 +77,8 @@ class CheckinsController < ApplicationController
   # DELETE /checkins/1
   # DELETE /checkins/1.json
   def destroy
+    authorize! :destroy, Checkin
+
     @checkin = Checkin.find(params[:id])
     @checkin.destroy
 
@@ -84,21 +86,6 @@ class CheckinsController < ApplicationController
       format.html { redirect_to checkins_url }
       format.json { head :no_content }
     end
-  end
-
-  def on
-    @year = params[:year].to_i
-    @month = params[:month].to_i
-    @day = params[:day].to_i
-    @checkin_date = Date.new(@year, @month, @day)
-    today = Date.today
-
-    if @checkin_date < today
-      @tomorrow = @checkin_date + 1.day
-    end
-
-    @yesterday = @checkin_date - 1.day
-    @checkins = Checkin.on(@checkin_date)
   end
 
   def today
