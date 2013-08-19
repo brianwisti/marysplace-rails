@@ -101,7 +101,7 @@ describe CheckinsController do
   end
 
   describe "Staff user" do
-    let(:staff_user) { create :admin_user }
+    let(:staff_user) { create :staff_user }
 
     before do
       login staff_user
@@ -112,9 +112,19 @@ describe CheckinsController do
       expect(response).to render_template(:index)
     end
 
+    it "sees some checkins on index" do
+      get :index
+      expect(assigns(:checkins)).to_not be_nil
+    end
+
     it "can access show" do
       get :show, id: checkin
       expect(response).to render_template(:show)
+    end
+
+    it "sees a checkin on show" do
+      get :show, id: checkin
+      expect(assigns(:checkin)).to eql(checkin)
     end
 
     it "can access new" do
@@ -125,6 +135,11 @@ describe CheckinsController do
     it "can access edit" do
       get :edit, id: checkin
       expect(response).to render_template(:edit)
+    end
+
+    it "sees a checkin to edit" do
+      get :edit, id: checkin
+      expect(assigns(:checkin)).to eql(checkin)
     end
 
     it "can access create" do
@@ -201,6 +216,16 @@ describe CheckinsController do
         expect {
           post :selfcheck_post, login: badged_client.login_code, location_id: location.id
         }.to change(Checkin, :count).by(1)
+      end
+
+      it "sees a notice after creating a selfcheck Checkin" do
+        post :selfcheck_post, login: badged_client.login_code, location_id: location.id
+        expect(flash[:notice]).to_not be_nil
+      end
+
+      it "gets an error when creating an invalid selfcheck Checkin" do
+        post :selfcheck_post, login: "12345678", location_id: location.id
+        expect(flash[:alert]).to_not be_nil
       end
     end
   end
