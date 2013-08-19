@@ -18,8 +18,9 @@ Marysplace::Application.routes.draw do
   get "store/show/:id" => 'store#show',
     as: 'store/show'
 
-  resources :messages
+  resources :locations
 
+  resources :messages
 
   resources :roles
 
