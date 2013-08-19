@@ -1,0 +1,13 @@
+= form_for(@location) do |f|
+  - if @location.errors.any?
+    .error_explanation
+      %h3= pluralize @location.errors.count, "Error"
+      %ul
+        - @location.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    .control-group
+      = f.label :name
+      = f.text_field :name
+    = f.submit class: "btn"
+

@@ -10,4 +10,14 @@ class LocationsController < ApplicationController
   def show
     @location = Location.find(params[:id])
   end
+
+  # GET /locations/new
+  def new
+    @location = Location.new
+  end
+
+  # GET /locations/1/edit
+  def edit
+    @location = Location.find(params[:id])
+  end
 end

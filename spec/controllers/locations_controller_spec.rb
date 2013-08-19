@@ -75,9 +75,16 @@ describe LocationsController do
       expect(assigns(:location)).to eql(location)
     end
 
-    it "can access new"
+    it "can access new" do
+      get :new
+      expect(response).to render_template(:new)
+    end
 
-    it "can access edit"
+    it "can access edit" do
+      location = create(:location)
+      get :edit, id: location
+      expect(response).to render_template(:edit)
+    end
 
     it "can access create"
 
