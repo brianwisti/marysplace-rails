@@ -112,40 +112,96 @@ describe CheckinsController do
       expect(response).to render_template(:index)
     end
 
-    it "can access show"
+    it "can access show" do
+      get :show, id: checkin
+      expect(response).to render_template(:show)
+    end
 
-    it "can access new"
+    it "can access new" do
+      get :new
+      expect(response).to render_template(:new)
+    end
 
-    it "can access edit"
+    it "can access edit" do
+      get :edit, id: checkin
+      expect(response).to render_template(:edit)
+    end
 
-    it "can access create"
+    it "can access create" do
+      post :create, checkin: build_attributes(:checkin)
+      expect(response).to redirect_to(new_checkin_url)
+    end
 
-    it "can create a Checkin"
+    it "can create a Checkin" do
+      expect {
+        post :create, checkin: build_attributes(:checkin)
+      }.to change(Checkin, :count).by(1)
+    end
 
-    it "can access update"
+    it "can access update" do
+      put :update, id: checkin, checkin: attributes_for(:checkin, notes: "Notes here")
+      expect(response).to redirect_to(checkin)
+    end
 
-    it "can update a Checkin"
+    it "can update a Checkin" do
+      put :update, id: checkin, checkin: attributes_for(:checkin, notes: "Notes here")
+      expect(checkin.reload.notes).to eq("Notes here")
+    end
 
-    it "can access destroy"
+    it "can access destroy" do
+      delete :destroy, id: checkin
+      expect(response).to redirect_to(checkins_url)
+    end
 
-    it "can destroy a Checkin"
+    it "can destroy a Checkin" do
+      # Specify now or checking will be created in the expect block
+      # TODO: Figure out why FactoryGirl does that.
+      checkin = create :checkin
 
-    it "can access today"
+      expect {
+        delete :destroy, id: checkin
+      }.to change(Checkin, :count).by(-1)
+    end
 
-    it "can access annual_report"
+    it "can access today" do
+      get :today
+      expect(response).to render_template(:daily_report)
+    end
 
-    it "can access monthly_report"
+    it "can access annual_report" do
+      get :annual_report, year: today.year
+      expect(response).to render_template(:annual_report)
+    end
 
-    it "can access daily_report"
+    it "can access monthly_report" do
+      get :monthly_report, year: today.year, month: today.month
+      expect(response).to render_template(:monthly_report)
+    end
 
-    it "can access selfcheck"
+    it "can access daily_report" do
+      get :daily_report, year: today.year, month: today.month, day: today.month
+      expect(response).to render_template(:daily_report)
+    end
+
+    it "can access selfcheck" do
+      get :selfcheck
+      expect(response).to render_template(:selfcheck)
+    end
 
     context "selfcheck" do
-      let(:badged_client) { build :client_with_badge }
+      let(:badged_client) { create :client_with_badge }
+      let(:location) { create :location }
 
-      it "can access selfcheck_post"
+      it "can access selfcheck_post" do
+        post :selfcheck_post, login: badged_client.login_code, location_id: location.id
+        expect(response).to redirect_to(selfcheck_checkins_url)
+      end
 
-      it "can create a selfcheck Checkin"
+      it "can create a selfcheck Checkin" do
+        expect {
+          post :selfcheck_post, login: badged_client.login_code, location_id: location.id
+        }.to change(Checkin, :count).by(1)
+      end
     end
   end
 end

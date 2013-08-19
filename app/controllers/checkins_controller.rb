@@ -161,11 +161,18 @@ class CheckinsController < ApplicationController
   def selfcheck_post
     authorize! :create, Checkin
     login_code = params[:login]
+    location   = Location.find(params[:location_id])
     checkin_at = DateTime.now
 
     login = User.find_by_login login_code
     if login and login.client
-      checkin = Checkin.create(client_id: login.client.id, user_id: current_user.id, checkin_at: checkin_at)
+      checkin = Checkin.create! do |c|
+        c.client     = login.client
+        c.user       = current_user
+        c.checkin_at = checkin_at
+        c.location   = location
+      end
+
       if checkin
         flash[:notice] = "Checked in #{login.client.current_alias}"
       else

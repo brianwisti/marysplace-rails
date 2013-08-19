@@ -60,3 +60,9 @@ end
 def expect_forbidden(response)
   expect(response).to redirect_to(root_url)
 end
+
+def build_attributes(*args)
+  FactoryGirl.build(*args).attributes.delete_if do |k, v| 
+    ["id", "created_at", "updated_at"].member?(k)
+  end
+end
