@@ -13,16 +13,22 @@ class LocationsController < ApplicationController
 
   # GET /locations/new
   def new
+    authorize! :create, Location
+
     @location = Location.new
   end
 
   # GET /locations/1/edit
   def edit
+    authorize! :update, Location
+
     @location = Location.find(params[:id])
   end
 
   # POST /locations
   def create
+    authorize! :create, Location
+
     @location = Location.new params[:location]
 
     respond_to do |format|
@@ -36,6 +42,8 @@ class LocationsController < ApplicationController
 
   # PUT /locations/1
   def update
+    authorize! :update, Location
+
     @location = Location.find(params[:id])
 
     if @location.update_attributes(params[:location])
@@ -47,6 +55,8 @@ class LocationsController < ApplicationController
 
   # DELETE /locations/1
   def destroy
+    authorize! :destroy, Location
+
     @location = Location.find(params[:id])
     @location.destroy
 

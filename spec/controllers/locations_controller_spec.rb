@@ -56,23 +56,59 @@ describe LocationsController do
   end
 
   describe "Staff user" do
-    it "can access index"
+    let(:user) { create :staff_user }
 
-    it "can access show"
+    before do
+      login user
+    end
 
-    it "cannot access new"
+    it "can access index" do
+      get :index
+      expect(response).to be_success
+    end
 
-    it "cannot access edit"
+    it "can access show" do
+      get :show, id: location
+      expect(response).to be_success
+    end
 
-    it "cannot access create"
+    it "cannot access new" do
+      get :new
+      expect_forbidden response
+    end
 
-    it "cannot create a Location"
+    it "cannot access edit" do
+      get :edit, id: location
+      expect_forbidden response
+    end
 
-    it "cannot access update"
+    it "cannot access create" do
+      post :create, location: attributes_for(:location)
+      expect_forbidden response
+    end
 
-    it "cannot access destroy"
+    it "cannot create a Location" do
+      expect {
+        post :create, location: attributes_for(:location)
+      }.to change(Location, :count).by(0)
+    end
 
-    it "cannot destroy a Checkin"
+    it "cannot access update" do
+      put :update, id: location, location: attributes_for(:location)
+      expect_forbidden response
+    end
+
+    it "cannot access destroy" do
+      delete :destroy, id: location
+      expect_forbidden response
+    end
+
+    it "cannot destroy a Checkin" do
+      location = create :location
+      expect {
+        delete :destroy, id: location
+      }.to change(Location, :count).by(0)
+    end
   end
 
   describe "Admin user" do
