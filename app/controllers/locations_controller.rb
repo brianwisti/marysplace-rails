@@ -45,6 +45,7 @@ class LocationsController < ApplicationController
     end
   end
 
+  # DELETE /locations/1
   def destroy
     @location = Location.find(params[:id])
     @location.destroy

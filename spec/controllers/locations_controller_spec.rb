@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe LocationsController do
   setup :activate_authlogic
+  let(:location) { create :location }
 
   describe "Anonymous user" do
 
@@ -10,21 +11,48 @@ describe LocationsController do
       expect_login response
     end
 
-    it "cannot access show"
+    it "cannot access show" do
+      get :show, id: location
+      expect_login response
+    end
 
-    it "cannot access new"
+    it "cannot access new" do
+      get :new
+      expect_login response
+    end
 
-    it "cannot access edit"
+    it "cannot access edit" do
+      get :edit, id: location
+      expect_login response
+    end
 
-    it "cannot access create"
+    it "cannot access create" do
+      post :create, location: attributes_for(:location)
+      expect_login response
+    end
 
-    it "cannot create a Location"
+    it "cannot create a Location" do
+      expect {
+        post :create, location: attributes_for(:location)
+      }.to change(Location, :count).by(0)
+    end
 
-    it "cannot access update"
+    it "cannot access update" do
+      put :update, id: location, location: attributes_for(:location)
+      expect_login response
+    end
 
-    it "cannot access destroy"
+    it "cannot access destroy" do
+      delete :destroy, id: location
+      expect_login response
+    end
 
-    it "cannot destroy a Checkin"
+    it "cannot destroy a Checkin" do
+      location = create :location
+      expect {
+        delete :destroy, id: location
+      }.to change(Location, :count).by(0)
+    end
   end
 
   describe "Staff user" do
