@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe Client do
-  before(:all) do
-    @user = create :user
-    @client = create :client
-  end
+  let(:user)   { create :user }
+  let(:client) { create :client }
 
   describe "validation" do
     context "the current alias" do
@@ -14,8 +12,8 @@ describe Client do
       end
 
       it "must be unique" do
-        client = Client.new(current_alias: @client.current_alias)
-        expect(client).to have(1).errors_on(:current_alias)
+        dupe = Client.new(current_alias: client.current_alias)
+        expect(dupe).to have(1).errors_on(:current_alias)
       end
     end
 
@@ -27,87 +25,136 @@ describe Client do
     end
   end
 
+  describe "quicksearch" do
+    before do
+      create :client, current_alias: "Amy A."
+      create :client, current_alias: "Amy B."
+      create :client, current_alias: "S. Amy", other_aliases: "Deborah"
+      create :client, current_alias: "Amy C.", is_active: false
+    end
+
+    it "returns a case-insensitive substring match of active Clients" do
+      results = Client.quicksearch "Amy"
+      expect(results.length).to eql(3)
+    end
+
+    it "finds exact matches against current_alias" do
+      results = Client.quicksearch "Amy A."
+      expect(results.length).to eql(1)
+    end
+
+    it "matches against other_aliases" do
+      results = Client.quicksearch "Deborah"
+      expect(results.length).to eql(1)
+    end
+
+  end
+
   context "automated checkin system" do
     it "creates a user for login" do
-      @client.create_login(password: "1234",
-                           password_confirmation: "1234")
-      expect(@client.login).to be_an_instance_of(User)
+      client.create_login(password: "1234",
+                          password_confirmation: "1234")
+      expect(client.login).to be_an_instance_of(User)
     end
   end
 
   describe "Flag tracking" do
     it "knows when it has unresolved flags" do
       flag = ClientFlag.create do |f|
-        f.created_by = @user
-        f.client     = @client
+        f.created_by = user
+        f.client     = client
         f.can_shop   = false
       end
-      expect(@client.is_flagged?).to be_true
+      expect(client.is_flagged?).to be_true
     end
 
     it "knows when it has no unresolved flags" do
-      expect(@client.is_flagged?).to be_false
+      expect(client.is_flagged?).to be_false
     end
   end
 
-  describe "shopping" do
-    it "is allowed if Client has no flags" do
-      expect(@client.can_shop?).to be_true
+  context "when not shopping" do
+    it "knows it's not shopping" do
+      expect(client.is_shopping?).to be_false
     end
 
+    it "has no cart" do
+      expect(client.cart).to be_nil
+    end
+  end
+
+  context "when shopping" do
+    before do
+      @cart = StoreCart.start(client, user)
+    end
+
+    it "has a cart" do
+      expect(client.cart).to eql(@cart)
+    end
+
+    it "knows it is shoppings" do
+      expect(client.is_shopping?).to be_true
+    end
+  end
+
+  it "can open a Shopping Cart if it has no flags" do
+    expect(client.can_shop?).to be_true
+  end
+
+  describe "Shopping Cart" do
     it "is not allowed if Client has unresolved shop-blocking flags" do
       flag = ClientFlag.create do |f|
-        f.created_by = @user
-        f.client     = @client
+        f.created_by = user
+        f.client     = client
         f.can_shop   = false
       end
-      expect(@client.can_shop?).to be_false
+      expect(client.can_shop?).to be_false
     end
 
     it "is not allowed if Client has already shopped this week" do
-      StoreCart.start(@client, @user).finish
-      expect(@client.can_shop?).to be_false
+      StoreCart.start(client, user).finish
+      expect(client.can_shop?).to be_false
     end
 
     it "knows if the Client has never shopped" do
-      expect(@client.has_shopped?).to be_false
+      expect(client.has_shopped?).to be_false
     end
 
     it "knows if the Client has shopped" do
-      StoreCart.start(@client, @user).finish
-      expect(@client.has_shopped?).to be_true
+      StoreCart.start(client, user).finish
+      expect(client.has_shopped?).to be_true
     end
 
     it "remembers the Client's last shopping session" do
-      cart = StoreCart.start(@client, @user)
+      cart = StoreCart.start(client, @user)
       cart.finish
-      expect(@client.last_shopped_at.to_i).to eql(cart.finished_at.to_i)
+      expect(client.last_shopped_at.to_i).to eql(cart.finished_at.to_i)
     end
 
     context "Purchase PointsEntries" do
       it "count as shopping visits" do
         entry_type = PointsEntryType.create(name: 'Purchase') 
-        entry = @client.points_entries.create! do |entry|
+        entry = client.points_entries.create! do |entry|
           entry.points_entry_type = entry_type
-          entry.added_by          = @user
+          entry.added_by          = user
           entry.points            = -100
           entry.performed_on      = Date.today
         end
-        @client.reload
+        client.reload
 
-        expect(@client.has_shopped?).to be_true
+        expect(client.has_shopped?).to be_true
       end
 
       it "is tracked for last shopping visit" do
         entry_type = PointsEntryType.create(name: 'Purchase') 
-        entry = @client.points_entries.create! do |entry|
+        entry = client.points_entries.create! do |entry|
           entry.points_entry_type = entry_type
-          entry.added_by          = @user
+          entry.added_by          = user
           entry.points            = -100
           entry.performed_on      = Date.today
         end
-        @client.reload
-        expect(@client.last_shopped_at.to_i).to eql(entry.performed_on.to_time.to_i)
+        client.reload
+        expect(client.last_shopped_at.to_i).to eql(entry.performed_on.to_time.to_i)
       end
     end
 
@@ -122,8 +169,8 @@ describe Client do
       end
 
       it "includes Clients who have already shopped this week" do
-        StoreCart.start(@client, @user).finish
-        expect(Client.cannot_shop).to include(@client)
+        StoreCart.start(client, user).finish
+        expect(Client.cannot_shop).to include(client)
       end
 
       it "does not include Clients with simple warning Flags" do
@@ -144,7 +191,7 @@ describe Client do
       end
 
       it "does not include Clients with a clean slate" do
-        expect(Client.cannot_shop).not_to include(@client)
+        expect(Client.cannot_shop).not_to include(client)
       end
     end
   end
