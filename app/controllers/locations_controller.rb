@@ -27,10 +27,21 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.save
-        format.html { redirect_to locations_path, notice: "Location created" }
+        format.html { redirect_to @location, notice: "Location created" }
       else
         format.html { render action: "new" }
       end
+    end
+  end
+
+  # PUT /locations/1
+  def update
+    @location = Location.find(params[:id])
+
+    if @location.update_attributes(params[:location])
+      redirect_to @location, notice: "Location was updated"
+    else
+      render action: "edit"
     end
   end
 end

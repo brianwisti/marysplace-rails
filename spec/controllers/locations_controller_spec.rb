@@ -88,7 +88,7 @@ describe LocationsController do
 
     it "can access create" do
       post :create, location: attributes_for(:location)
-      expect(response).to redirect_to(locations_url)
+      expect(response).to redirect_to(location_url(assigns(:location)))
     end
 
     it "can create a Location" do
@@ -97,7 +97,11 @@ describe LocationsController do
       }.to change(Location, :count).by(1)
     end
 
-    it "can access update"
+    it "can access update" do
+      location = create :location
+      put :update, id: location, location: attributes_for(:location)
+      expect(response).to redirect_to(location_url(location))
+    end
 
     it "can access destroy"
 
