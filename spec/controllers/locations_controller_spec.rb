@@ -86,9 +86,16 @@ describe LocationsController do
       expect(response).to render_template(:edit)
     end
 
-    it "can access create"
+    it "can access create" do
+      post :create, location: attributes_for(:location)
+      expect(response).to redirect_to(locations_url)
+    end
 
-    it "can create a Location"
+    it "can create a Location" do
+      expect {
+        post :create, location: attributes_for(:location)
+      }.to change(Location, :count).by(1)
+    end
 
     it "can access update"
 

@@ -20,4 +20,17 @@ class LocationsController < ApplicationController
   def edit
     @location = Location.find(params[:id])
   end
+
+  # POST /locations
+  def create
+    @location = Location.new params[:location]
+
+    respond_to do |format|
+      if @location.save
+        format.html { redirect_to locations_path, notice: "Location created" }
+      else
+        format.html { render action: "new" }
+      end
+    end
+  end
 end
