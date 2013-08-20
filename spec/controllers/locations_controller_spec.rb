@@ -103,8 +103,17 @@ describe LocationsController do
       expect(response).to redirect_to(location_url(location))
     end
 
-    it "can access destroy"
+    it "can access destroy" do
+      location = create :location
+      delete :destroy, id: location
+      expect(response).to redirect_to(locations_url)
+    end
 
-    it "can destroy a Checkin"
+    it "can destroy a Location" do
+      location = create :location
+      expect {
+        delete :destroy, id: location
+      }.to change(Location, :count).by(-1)
+    end
   end
 end
