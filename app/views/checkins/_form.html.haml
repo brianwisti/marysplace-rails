@@ -18,6 +18,8 @@
             data: { provide: 'typeahead', field: 'checkin_client_id' },
             class: 'client-typeahead'
         = f.hidden_field :client_id
+    .control-group
+      %p A Location is required for checkins
     -unless @checkin.new_record?
       .control-group
         = f.label :checkin_at, class: 'control-label'

@@ -9,6 +9,8 @@ require 'rspec/autorun'
 
 require 'authlogic/test_case'
 
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -43,18 +45,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
-end
 
-def login(user)
-  expect(user).to_not be_nil
-  session = UserSession.create!(user, false)
-  expect(session).to be_valid
-  session.save
-  return session
-end
-
-def expect_login(response)
-  expect(response).to redirect_to(new_user_session_url)
+  config.include LoginMacros
 end
 
 def expect_forbidden(response)
