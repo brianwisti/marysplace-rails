@@ -19,7 +19,11 @@
             class: 'client-typeahead'
         = f.hidden_field :client_id
     .control-group
-      %p A Location is required for checkins
+      = f.label :location_id, class: 'control-label'
+      - if @locations.nil? or @locations.empty?
+        %p A Location is required for checkins
+      - else
+        = f.collection_select(:location_id, @locations, :id, :name)
     -unless @checkin.new_record?
       .control-group
         = f.label :checkin_at, class: 'control-label'
@@ -29,5 +33,6 @@
         = f.label :notes, class: 'control-label'
         .controls
           = f.text_area :notes
-    .form-actions
-      = f.submit class: "btn"
+    - unless @locations.nil? or @locations.empty?
+      .form-actions
+        = f.submit class: "btn"

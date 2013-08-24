@@ -31,6 +31,7 @@ class CheckinsController < ApplicationController
   def new
     authorize! :create, Checkin
     @checkin = Checkin.new
+    @locations = Location.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -51,6 +52,10 @@ class CheckinsController < ApplicationController
 
     params[:checkin][:user_id] = current_user.id
     @checkin = Checkin.new(params[:checkin])
+
+    unless @checkin.client
+      @checkin.client = Client.where(current_alias: params[:current_alias]).first
+    end
 
     @checkin.checkin_at ||= DateTime.now
 
