@@ -33,6 +33,14 @@ class CheckinsController < ApplicationController
     @checkin = Checkin.new
     @locations = Location.all
 
+    last_checkin = current_user.checkins(order: 'created_at DESC').first
+
+    if last_checkin
+      @default_location = last_checkin.location
+    else
+      @default_location = @locations.first
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @checkin }

@@ -23,7 +23,7 @@
       - if @locations.nil? or @locations.empty?
         %p A Location is required for checkins
       - else
-        = f.collection_select(:location_id, @locations, :id, :name)
+        = f.collection_select(:location_id, @locations, :id, :name, selected: @default_location.id )
     -unless @checkin.new_record?
       .control-group
         = f.label :checkin_at, class: 'control-label'
