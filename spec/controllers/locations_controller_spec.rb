@@ -103,7 +103,7 @@ describe LocationsController do
       expect_forbidden response
     end
 
-    it "cannot destroy a Checkin" do
+    it "cannot destroy a Location" do
       location = create :location
       expect {
         delete :destroy, id: location

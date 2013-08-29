@@ -1,6 +1,6 @@
 %ul.nav.nav-list
   - if @location 
-    %li= link_to "Locations", location_path
+    %li= link_to "Locations", locations_path
     - if @location.id and can? :edit, Location
       %li= link_to "Change", edit_location_path(@location)
   - if can? :create, Location

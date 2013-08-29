@@ -89,6 +89,11 @@ class ApplicationController < ActionController::Base
         url: store_path,
         active: params[:controller] == 'store'
       }
+      location_section = {
+        title: "Locations",
+        url: locations_path,
+        active: params[:controller] == 'locations'
+      }
 
       if can? :manage, User
         arr.push user_section
@@ -112,6 +117,10 @@ class ApplicationController < ActionController::Base
 
       if can? :show, StoreCart
         arr.push store_section
+      end
+
+      if can? :show, Location
+        arr.push location_section
       end
 
       return arr

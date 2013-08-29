@@ -169,6 +169,15 @@ class CheckinsController < ApplicationController
   def selfcheck
     authorize! :create, Checkin
     @checkins = Checkin.today.order('checkin_at DESC')
+    @locations = Location.all
+
+    last_checkin = current_user.checkins(order: 'created_at DESC').first
+
+    if last_checkin
+      @default_location = last_checkin.location
+    else
+      @default_location = @locations.first
+    end
   end
 
   def selfcheck_post

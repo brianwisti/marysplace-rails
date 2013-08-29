@@ -4,13 +4,18 @@
 = form_tag(selfcheck_post_checkins_path, method: :put, id: "login-form", class: "form-inline")  do
   %fieldset
     = text_field_tag :login, nil, maxlength: 8, size: 8, class: "input-small", placeholder: "Login"
-    = submit_tag "Checkin", class: "btn"
+    - if @locations.nil? or @locations.empty?
+      %em A Location is required for checkins
+    - else
+      = collection_select(nil, :location_id, @locations, :id, :name, selected: @default_location.id )
+      = submit_tag "Checkin", class: "btn"
 
 %table.table.entries
   %thead
     %tr
-      %th Checkin At
+      %th Time
       %th Client
+      %th Location
       %th Checked In By
       %th Notes
   %tbody

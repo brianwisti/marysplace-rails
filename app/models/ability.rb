@@ -19,6 +19,7 @@ class Ability
       can :manage, ClientFlag
       can :show, Message
       can :manage, StoreCart
+      can :show, Location
     end
 
     if user.role? :admin

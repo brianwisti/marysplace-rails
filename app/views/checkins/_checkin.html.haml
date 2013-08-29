@@ -2,6 +2,7 @@
 %tr{class: row_class}
   %td= l(checkin.checkin_at, format: :long)
   %td= link_to checkin.client_current_alias, checkin.client
+  %td= link_to checkin.location.name, checkin.location
   %td= link_to checkin.user_login, checkin.user
   %td= checkin.notes
   - if can? :edit, checkin
