@@ -33,7 +33,7 @@ class CheckinsController < ApplicationController
     @checkin = Checkin.new
     @locations = Location.all
 
-    last_checkin = current_user.checkins(order: 'created_at DESC').first
+    last_checkin = current_user.checkins.last
 
     if last_checkin
       @default_location = last_checkin.location
@@ -171,7 +171,7 @@ class CheckinsController < ApplicationController
     @checkins = Checkin.today.order('checkin_at DESC')
     @locations = Location.all
 
-    last_checkin = current_user.checkins(order: 'created_at DESC').first
+    last_checkin = current_user.checkins.last
 
     if last_checkin
       @default_location = last_checkin.location
