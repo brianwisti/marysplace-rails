@@ -61,27 +61,27 @@ class ApplicationController < ActionController::Base
       arr = []
       user_section = {
         title: "Users",
-        url: users_path, 
+        url: users_path,
         active: params[:controller] == 'users'
       }
       client_section = {
-        title: "Clients", 
-        url: clients_path, 
+        title: "Clients",
+        url: clients_path,
         active: params[:controller] == 'clients'
       }
       points_entry_section = {
-        title: "Points Log", 
-        url: points_entries_path, 
+        title: "Points Log",
+        url: points_entries_path,
         active: params[:controller] == 'points_entries'
       }
       checkin_section = {
-        title: "Checkins", 
-        url: checkins_path, 
+        title: "Checkins",
+        url: checkins_path,
         active: params[:controller] == 'checkins'
       }
       client_flag_section = {
-        title: "Client Flags", 
-        url: client_flags_path, 
+        title: "Client Flags",
+        url: client_flags_path,
         active: params[:controller] == 'client_flags'
       }
       store_section = {
@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
       if can? :show, PointsEntry
         arr.push points_entry_section
       end
-      
+
       if can? :show, Checkin
         arr.push checkin_section
       end

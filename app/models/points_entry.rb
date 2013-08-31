@@ -18,6 +18,8 @@ class PointsEntry < ActiveRecord::Base
   validates :points,
     presence: true
 
+  default_scope order('performed_on DESC, id DESC')
+  
   delegate :current_alias,
     to:     :client,
     prefix: true
@@ -58,7 +60,12 @@ class PointsEntry < ActiveRecord::Base
 
   def self.report_for_span(start, finish, span)
     return unless %w{month day}.include? span
-    select("date_trunc('#{span}', performed_on) as span, sum(points) as points, count(id) as entries")
+
+    select(%{
+      date_trunc('#{span}', performed_on) as span, 
+      sum(points) as points, 
+      count(id) as entries
+      })
       .where(performed_on: start..finish)
       .group('span')
       .order('span')

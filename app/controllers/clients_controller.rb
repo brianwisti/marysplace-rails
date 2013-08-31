@@ -1,3 +1,4 @@
+# /clients
 class ClientsController < ApplicationController
   before_filter :require_user
   helper_method :sort_column, :sort_direction
@@ -25,8 +26,8 @@ class ClientsController < ApplicationController
     @query = params[:q]
     @clients = Client.quicksearch(@query)
     mapping = @clients.map do |c|
-      { id: c.id, 
-        current_alias: c.current_alias, 
+      { id: c.id,
+        current_alias: c.current_alias,
         other_aliases: c.other_aliases,
         point_balance: c.point_balance,
         is_flagged:    c.is_flagged?,
@@ -36,7 +37,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       format.html # search.html.haml
-      format.json { 
+      format.json {
         render json: mapping
       }
     end
@@ -88,11 +89,17 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
-        format.html { redirect_to @client, notice: 'Client was successfully created.' }
-        format.json { render json: @client, status: :created, location: @client }
+        format.html {
+          redirect_to @client, notice: 'Client was successfully created.'
+        }
+        format.json {
+          render json: @client, status: :created, location: @client
+        }
       else
         format.html { render action: "new" }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+        format.json {
+          render json: @client.errors, status: :unprocessable_entity
+        }
       end
     end
   end
@@ -104,11 +111,15 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.update_attributes(params[:client])
-        format.html { redirect_to @client, notice: 'Client was successfully updated.' }
+        format.html {
+          redirect_to @client, notice: 'Client was successfully updated.'
+      }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+        format.json {
+          render json: @client.errors, status: :unprocessable_entity
+        }
       end
     end
   end
@@ -129,7 +140,7 @@ class ClientsController < ApplicationController
   # GET /clients/1/entries.json
   def entries
     @client = Client.find(params[:id])
-    @entries = @client.points_entries.order('performed_on DESC, id DESC').page params[:page]
+    @entries = @client.points_entries.page params[:page]
 
     respond_to do |format|
       format.html
@@ -168,7 +179,7 @@ class ClientsController < ApplicationController
     password_confirmation = params[:password_confirmation]
 
     if password == password_confirmation
-      @client.create_login(password: password, 
+      @client.create_login(password: password,
                            password_confirmation: password_confirmation)
       if @client.login
         flash[:notice] = "Login created"
@@ -181,7 +192,7 @@ class ClientsController < ApplicationController
     respond_to do |format|
       format.html do
         if @client.login
-          redirect_to @client 
+          redirect_to @client
         else
           render action: :new_login
         end
@@ -222,7 +233,8 @@ class ClientsController < ApplicationController
     default = "current_alias"
     return default unless params[:sort]
 
-    Client.column_names.include?(params[:sort]) ? params[:sort] : "current_alias"
+    Client.column_names.include?(params[:sort]) ?
+      params[:sort] : "current_alias"
   end
 
   def sort_direction

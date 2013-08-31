@@ -62,18 +62,27 @@ class CheckinsController < ApplicationController
     @checkin = Checkin.new(params[:checkin])
 
     unless @checkin.client
-      @checkin.client = Client.where(current_alias: params[:current_alias]).first
+      current_alias = params[:current_alias]
+      @checkin.client = Client.where(current_alias: current_alias).first
     end
 
     @checkin.checkin_at ||= DateTime.now
 
     respond_to do |format|
       if @checkin.save
-        format.html { redirect_to new_checkin_path, notice: "Checkin for #{@checkin.client_current_alias} was successfully created." }
-        format.json { render json: @checkin, status: :created, location: @checkin }
+        format.html {
+          client = @checkin.client_current_alias
+          redirect_to new_checkin_path,
+          notice: "Checkin for #{client} was successfully created."
+        }
+        format.json {
+          render json: @checkin, status: :created, location: @checkin
+        }
       else
         format.html { render action: "new" }
-        format.json { render json: @checkin.errors, status: :unprocessable_entity }
+        format.json {
+          render json: @checkin.errors, status: :unprocessable_entity
+        }
       end
     end
   end
@@ -87,11 +96,15 @@ class CheckinsController < ApplicationController
 
     respond_to do |format|
       if @checkin.update_attributes(params[:checkin])
-        format.html { redirect_to @checkin, notice: 'Checkin was successfully updated.' }
+        format.html {
+          redirect_to @checkin, notice: 'Checkin was successfully updated.'
+        }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @checkin.errors, status: :unprocessable_entity }
+        format.json {
+          render json: @checkin.errors, status: :unprocessable_entity
+        }
       end
     end
   end

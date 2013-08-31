@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Checkin do
   let(:checkin) { create :checkin }
 
-  it "should be unique per client per day" do
+  it "should be unique per client per location per day" do
     dupe = Checkin.new do |ch|
       ch.user       = checkin.user
       ch.client     = checkin.client

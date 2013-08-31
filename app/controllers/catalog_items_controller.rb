@@ -57,11 +57,20 @@ class CatalogItemsController < ApplicationController
 
     respond_to do |format|
       if @catalog_item.save
-        format.html { redirect_to @catalog_item, notice: 'Catalog item was successfully created.' }
-        format.json { render json: @catalog_item, status: :created, location: @catalog_item }
+        format.html {
+          redirect_to @catalog_item,
+            notice: 'Catalog item was successfully created.'
+        }
+        format.json {
+          render json: @catalog_item, status: :created,
+            location: @catalog_item
+        }
       else
         format.html { render action: "new" }
-        format.json { render json: @catalog_item.errors, status: :unprocessable_entity }
+        format.json {
+          render json: @catalog_item.errors,
+            status: :unprocessable_entity
+        }
       end
     end
   end
@@ -74,11 +83,17 @@ class CatalogItemsController < ApplicationController
 
     respond_to do |format|
       if @catalog_item.update_attributes(params[:catalog_item])
-        format.html { redirect_to @catalog_item, notice: 'Catalog item was successfully updated.' }
+        format.html {
+          redirect_to @catalog_item,
+            notice: 'Catalog item was successfully updated.'
+        }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @catalog_item.errors, status: :unprocessable_entity }
+        format.json {
+          render json: @catalog_item.errors,
+            status: :unprocessable_entity
+        }
       end
     end
   end

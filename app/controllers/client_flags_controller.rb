@@ -72,11 +72,19 @@ class ClientFlagsController < ApplicationController
 
     respond_to do |format|
       if @client_flag.save
-        format.html { redirect_to @client_flag, notice: 'Client flag was successfully created.' }
-        format.json { render json: @client_flag, status: :created, location: @client_flag }
+        format.html {
+          redirect_to @client_flag,
+            notice: 'Client flag was successfully created.'
+          }
+        format.json {
+          render json: @client_flag, status: :created,
+            location: @client_flag
+        }
       else
         format.html { render action: "new" }
-        format.json { render json: @client_flag.errors, status: :unprocessable_entity }
+        format.json {
+          render json: @client_flag.errors, status: :unprocessable_entity
+        }
       end
     end
   end
@@ -89,11 +97,17 @@ class ClientFlagsController < ApplicationController
 
     respond_to do |format|
       if @client_flag.update_attributes(params[:client_flag])
-        format.html { redirect_to @client_flag, notice: 'Client flag was successfully updated.' }
+        format.html {
+          redirect_to @client_flag,
+            notice: 'Client flag was successfully updated.'
+          }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @client_flag.errors, status: :unprocessable_entity }
+        format.json {
+          render json: @client_flag.errors,
+            status: :unprocessable_entity
+        }
       end
     end
   end
@@ -125,9 +139,15 @@ class ClientFlagsController < ApplicationController
 
     respond_to do |format|
       if @client_flag.save
-        format.html { redirect_to @client_flag, notice: "Issue was resolved" }
+        format.html {
+          redirect_to @client_flag,
+            notice: "Issue was resolved"
+          }
       else
-        format.html { redirect_to @client_flag, notice: "Unable to resolve issue."  }
+        format.html {
+          redirect_to @client_flag,
+            notice: "Unable to resolve issue."
+        }
       end
     end
   end
