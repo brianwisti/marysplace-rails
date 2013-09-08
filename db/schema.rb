@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130817224202) do
+ActiveRecord::Schema.define(:version => 20130908054852) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -98,9 +98,14 @@ ActiveRecord::Schema.define(:version => 20130817224202) do
   add_index "clients", ["login_id"], :name => "index_clients_on_login_id"
 
   create_table "locations", :force => true do |t|
-    t.string   "name",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "name",         :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "phone_number"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal_code"
   end
 
   create_table "messages", :force => true do |t|
