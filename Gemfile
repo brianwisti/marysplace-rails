@@ -19,6 +19,7 @@ gem 'paperclip'
 gem 'aws-sdk'
 gem 'has_barcode'
 gem 'markdownizer'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'better_errors'

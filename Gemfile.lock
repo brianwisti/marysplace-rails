@@ -120,6 +120,7 @@ GEM
       rdiscount
     mime-types (1.23)
     multi_json (1.7.3)
+    newrelic_rpm (3.6.8.164)
     nokogiri (1.5.9)
     paperclip (3.4.1)
       activemodel (>= 3.0.0)
@@ -230,6 +231,7 @@ DEPENDENCIES
   kaminari
   launchy (~> 2.2.0)
   markdownizer
+  newrelic_rpm
   paperclip
   pg
   rails (= 3.2.12)
