@@ -83,9 +83,14 @@ ActiveRecord::Schema.define(:version => 20131010121354) do
   add_index "clients", ["login_id"], :name => "index_clients_on_login_id"
 
   create_table "locations", :force => true do |t|
-    t.string   "name",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "name",         :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "phone_number"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal_code"
   end
 
   create_table "messages", :force => true do |t|
