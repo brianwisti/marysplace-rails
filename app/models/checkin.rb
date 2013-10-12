@@ -22,6 +22,9 @@ class Checkin < ActiveRecord::Base
   delegate :login,
     to:     :user,
     prefix: true
+  delegate :name,
+    to:     :location,
+    prefix: true
 
   # A string description of what time this checkin occurred
   def say_time

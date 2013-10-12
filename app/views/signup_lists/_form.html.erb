@@ -1,4 +1,4 @@
-<%= form_for(@signup_list) do |f| %>
+<%= form_for @signup_list do |f| %>
   <% if @signup_list.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@signup_list.errors.count, "error") %></h2>
