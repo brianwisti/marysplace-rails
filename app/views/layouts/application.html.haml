@@ -27,13 +27,12 @@
               %p#alert.alert= flash[:alert]
             = yield
       - else
-        .hero-unit
-          .log
-            - if flash[:notice]
-              %p#notice.text-info= flash[:notice]
-            - if flash[:alert]
-              %p#alert.alert= flash[:alert]
-            = yield
+        .log
+          - if flash[:notice]
+            %p#notice.text-info= flash[:notice]
+          - if flash[:alert]
+            %p#alert.alert= flash[:alert]
+          = yield
     %footer.text-center
       %p
         Written by
