@@ -57,42 +57,43 @@ class ApplicationController < ActionController::Base
     end
 
     def sections
+      current_controller = params[:controller]
       # There's *got* to be a prettier way to do this.
       arr = []
       user_section = {
         title: "Users",
         url: users_path,
-        active: params[:controller] == 'users'
+        active: 'users' == current_controller
       }
       client_section = {
         title: "Clients",
         url: clients_path,
-        active: params[:controller] == 'clients'
+        active: 'clients' == current_controller
       }
       points_entry_section = {
         title: "Points Log",
         url: points_entries_path,
-        active: params[:controller] == 'points_entries'
+        active: 'points_entries' == current_controller
       }
       checkin_section = {
         title: "Checkins",
         url: checkins_path,
-        active: params[:controller] == 'checkins'
+        active: 'checkins' == current_controller
       }
       client_flag_section = {
         title: "Client Flags",
         url: client_flags_path,
-        active: params[:controller] == 'client_flags'
+        active: 'client_flags' == current_controller
       }
       store_section = {
         title: "Store",
         url: store_path,
-        active: params[:controller] == 'store'
+        active: 'store' == current_controller
       }
       location_section = {
         title: "Locations",
         url: locations_path,
-        active: params[:controller] == 'locations'
+        active: 'locations' == current_controller
       }
 
       if can? :manage, User
