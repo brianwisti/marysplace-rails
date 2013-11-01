@@ -78,7 +78,7 @@ class CatalogItemsController < ApplicationController
   # PUT /catalog_items/1
   # PUT /catalog_items/1.json
   def update
-    authorize! :update, ClientFlag
+    authorize! :update, CatalogItem
     @catalog_item = CatalogItem.find(params[:id])
 
     respond_to do |format|
