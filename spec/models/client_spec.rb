@@ -132,14 +132,14 @@ describe Client do
     end
 
     context "Purchase PointsEntries" do
+      let(:purchase_type) { create :points_entry_type, name: "Purchase" }
+      let(:location) { create :location }
+
       it "count as shopping visits" do
-        entry_type = PointsEntryType.create(name: 'Purchase') 
-        entry = client.points_entries.create! do |entry|
-          entry.points_entry_type = entry_type
-          entry.added_by          = user
-          entry.points            = -100
-          entry.performed_on      = Date.today
-        end
+       FactoryGirl.create :points_entry, 
+         client: client, 
+         points_entry_type: purchase_type,
+         location: location
         client.reload
 
         expect(client.has_shopped?).to be_true
@@ -152,6 +152,7 @@ describe Client do
           entry.added_by          = user
           entry.points            = -100
           entry.performed_on      = Date.today
+          entry.location          = create(:location)
         end
         client.reload
         expect(client.last_shopped_at.to_i).to eql(entry.performed_on.to_time.to_i)

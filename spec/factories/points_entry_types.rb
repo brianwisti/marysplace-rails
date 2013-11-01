@@ -9,4 +9,5 @@ FactoryGirl.define do
     sequence(:name) { |n| "chore_#{n}" }
     default_points  50
   end
+
 end

@@ -5,6 +5,7 @@ class PointsEntry < ActiveRecord::Base
   belongs_to :points_entry_type
   belongs_to :added_by,
     class_name: "User"
+  belongs_to :location
   attr_accessible :bailed, :performed_on, :points,
     :client_id, :points_entry_type_id, :added_by_id,
     :is_finalized
@@ -14,6 +15,8 @@ class PointsEntry < ActiveRecord::Base
   validates :client_id,
     presence: true
   validates :points_entry_type_id,
+    presence: true
+  validates :location_id,
     presence: true
   validates :points,
     presence: true

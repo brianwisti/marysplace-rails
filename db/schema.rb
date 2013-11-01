@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131010121354) do
+ActiveRecord::Schema.define(:version => 20131101122533) do
 
   create_table "catalog_items", :force => true do |t|
     t.string   "name"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20131010121354) do
   end
 
   add_index "checkins", ["client_id"], :name => "index_checkins_on_client_id"
+  add_index "checkins", ["location_id"], :name => "checkins_location_index"
   add_index "checkins", ["user_id"], :name => "index_checkins_on_user_id"
 
   create_table "client_flags", :force => true do |t|
@@ -113,10 +114,12 @@ ActiveRecord::Schema.define(:version => 20131010121354) do
     t.datetime "updated_at",                              :null => false
     t.integer  "added_by_id"
     t.boolean  "is_finalized",         :default => true
+    t.integer  "location_id"
   end
 
   add_index "points_entries", ["added_by_id"], :name => "index_points_entries_on_added_by_id"
   add_index "points_entries", ["client_id"], :name => "index_points_entries_on_client_id"
+  add_index "points_entries", ["location_id"], :name => "points_entries_location_index"
   add_index "points_entries", ["points_entry_type_id"], :name => "index_points_entries_on_points_entry_type_id"
 
   create_table "points_entry_types", :force => true do |t|
