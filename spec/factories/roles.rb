@@ -4,6 +4,8 @@ FactoryGirl.define do
   factory :role do
     sequence(:name) { |n| "role_#{n}" }
 
+    initialize_with { Role.where(name: name).first_or_create }
+
     factory :admin_role do
       name "admin"
     end

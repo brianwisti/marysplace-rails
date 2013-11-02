@@ -1,5 +1,8 @@
 require 'pp'
 
+# Records a gain or loss of incentive points for a client,
+# along with information about the change
+# (Examples: performed a chore, bailed on a chore, made a purchase)
 class PointsEntry < ActiveRecord::Base
   belongs_to :client
   belongs_to :points_entry_type
@@ -8,7 +11,7 @@ class PointsEntry < ActiveRecord::Base
   belongs_to :location
   attr_accessible :bailed, :performed_on, :points,
     :client_id, :points_entry_type_id, :added_by_id,
-    :is_finalized
+    :is_finalized, :location_id
 
   validates :added_by_id,
     presence: true
@@ -22,7 +25,7 @@ class PointsEntry < ActiveRecord::Base
     presence: true
 
   default_scope order('performed_on DESC, id DESC')
-  
+
   delegate :current_alias,
     to:     :client,
     prefix: true
@@ -33,17 +36,15 @@ class PointsEntry < ActiveRecord::Base
     to:     :client,
     prefix: true
 
-  def summarize
-    "#{self.performed_on} #{self.client.current_alias} #{self.points_entry_type.name} #{self.points}"
-  end
-
   before_create do
     self.performed_on ||= Date.today
 
     if self.bailed == true
+      entry_type = self.points_entry_type.name
+      message = "Bailed on #{entry_type} - #{self.performed_on}"
       flag = ClientFlag.create!(client_id: self.client.id,
                                 created_by_id: self.added_by_id,
-                                description: "Bailed on #{self.points_entry_type.name} - #{self.performed_on}",
+                                description: message,
                                 can_shop: false,
                                 expires_on: Date.today + 2.weeks)
     end
@@ -65,8 +66,8 @@ class PointsEntry < ActiveRecord::Base
     return unless %w{month day}.include? span
 
     select(%{
-      date_trunc('#{span}', performed_on) as span, 
-      sum(points) as points, 
+      date_trunc('#{span}', performed_on) as span,
+      sum(points) as points,
       count(id) as entries
       })
       .where(performed_on: start..finish)

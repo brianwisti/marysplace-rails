@@ -1,3 +1,5 @@
+# Allows users to log incentive points gained by performing chores,
+# or points lost from purchases or bailing on chores.
 class PointsEntriesController < ApplicationController
   before_filter :require_user
 
@@ -54,11 +56,20 @@ class PointsEntriesController < ApplicationController
 
     respond_to do |format|
       if @points_entry.save
-        format.html { redirect_to @points_entry, notice: 'Points entry was successfully created' }
-        format.json { render json: @points_entry, status: :created, location: @points_entry }
+        format.html {
+          redirect_to @points_entry,
+            notice: 'Points entry was successfully created'
+        }
+        format.json {
+          render json: @points_entry,
+            status: :created, location: @points_entry
+        }
       else
-        format.html { render action: "new" }
-        format.json { render json: @points_entry.errors, status: :unprocessable_entity }
+        format.html { render :new }
+        format.json {
+          render json: @points_entry.errors,
+            status: :unprocessable_entity
+        }
       end
     end
   end
@@ -70,11 +81,17 @@ class PointsEntriesController < ApplicationController
 
     respond_to do |format|
       if @points_entry.update_attributes(params[:points_entry])
-        format.html { redirect_to @points_entry, notice: 'Points entry was successfully updated.' }
+        format.html {
+          redirect_to @points_entry,
+            notice: 'Points entry was successfully updated.'
+        }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @points_entry.errors, status: :unprocessable_entity }
+        format.html { render :edit }
+        format.json {
+          render json: @points_entry.errors,
+            status: :unprocessable_entity
+        }
       end
     end
   end
