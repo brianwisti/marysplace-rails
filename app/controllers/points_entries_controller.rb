@@ -15,6 +15,7 @@ class PointsEntriesController < ApplicationController
   # GET /points_entries/1
   # GET /points_entries/1.json
   def show
+    authorize! :show, PointsEntry
     @points_entry = PointsEntry.find(params[:id])
 
     respond_to do |format|
