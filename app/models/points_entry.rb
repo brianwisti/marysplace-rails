@@ -32,6 +32,9 @@ class PointsEntry < ActiveRecord::Base
   delegate :name,
     to:     :points_entry_type,
     prefix: true
+  delegate :name,
+    to:     :location,
+    prefix: true
   delegate :point_balance,
     to:     :client,
     prefix: true

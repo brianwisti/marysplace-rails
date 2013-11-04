@@ -6,7 +6,7 @@ describe PointsEntriesController do
   let(:entry) { create :points_entry }
 
   describe "Anonymous user" do
-    # require_user at top of controller means we don't need to test all 
+    # require_user at top of controller means we don't need to test all
     # routes.
     it "cannot access this section" do
       get :index

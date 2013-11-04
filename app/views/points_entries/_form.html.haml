@@ -1,36 +1,36 @@
-= form_for(@points_entry) do |f|
-  - if @points_entry.errors.any?
+= form_for points_entry do |f|
+  - if points_entry.errors.any?
     #error_explanation
-      %h2= pluralize @points_entry.errors.count, "error"
+      %h2= pluralize points_entry.errors.count, "error"
       %ul
-        - @points_entry.errors.full_messages.each do |msg|
+        - points_entry.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
     .control-group
       = f.label :client_id, class: 'control-label'
       .controls
-        = text_field_tag "current_alias", @client.current_alias,
+        = text_field_tag "current_alias", client.current_alias,
           data: { provide: 'typeahead', field: 'points_entry_client_id', balance: 0 },
           autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
           class: 'client-typeahead'
-        - if @client.is_flagged
+        - if client.is_flagged
           %span.is-flagged
             %i.icon-flag
-            - if !@client.can_shop?
+            - if !client.can_shop?
               %span.label.label-important No Shopping
-            = link_to "flagged", flags_client_path(@client), class: "text-error"
+            = link_to "flagged", flags_client_path(client), class: "text-error"
         - else
           %span.is-flagged{ style: "display: none" }
             %i.icon-flag
             %span.label.label-important.shopping-blocked-label{ style: "display: none" } No Shopping
             = link_to "flagged", '#', class: "text-error"
-        %span.point-balance.text-info= number_with_delimiter @client.point_balance
+        %span.point-balance.text-info= number_with_delimiter client.point_balance
         %small
           %span.help-block= link_to "Add Client", new_client_path
     .control-group
       = f.label :points_entry_type_id, class: 'control-label'
       .controls
-        = text_field_tag "points_entry_type", @points_entry_type.name,
+        = text_field_tag "points_entry_type", points_entry_type.name,
           data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points' },
           autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
           class: 'pointsentrytype-typeahead'
@@ -39,13 +39,19 @@
     .control-group
       = f.label :points, class: 'control-label'
       .controls
-        = f.number_field :points, data: { default: @points_entry_type.default_points }, autocomplete: 'off'
+        = f.number_field :points, data: { default: points_entry_type.default_points }, autocomplete: 'off'
         %span.new-balance.text-info
     .control-group
       = f.label :bailed, class: 'checkbox' do
-        = f.check_box :bailed, data: { field: 'points_entry_points', penalty: @bail_penalty }, class: 'bailed'
+        = f.check_box :bailed, data: { field: 'points_entry_points', penalty: bail_penalty }, class: 'bailed'
         Bailed
-    - unless @points_entry.new_record?
+    .control-group
+      = f.label :location_id, class: 'control-group'
+      - if locations.nil? or locations.empty?
+        %p A Location is required for points entries
+      - else
+        = f.collection_select(:location_id, locations, :id, :name, selected: default_location.id )
+    - unless points_entry.new_record?
       .control-group
         = f.label :performed_on, class: 'control-label'
         .controls

@@ -22,6 +22,8 @@
 %dl
   %dt Client
   %dd= link_to @points_entry.client_current_alias, @points_entry.client
+  %dt Location
+  %dd= link_to @points_entry.location_name, @points_entry.location
   %dt Type
   %dd= link_to @points_entry.points_entry_type_name, @points_entry.points_entry_type
   %dt Performed On

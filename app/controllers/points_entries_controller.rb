@@ -33,6 +33,9 @@ class PointsEntriesController < ApplicationController
     @client = Client.new
     @points_entry_type = PointsEntryType.new
     @bail_penalty = PointsEntry.bail_penalty
+    @locations = Location.all
+
+    @default_location = Location.default_location_for current_user
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,6 +47,7 @@ class PointsEntriesController < ApplicationController
   def edit
     @points_entry = PointsEntry.find(params[:id])
     @client = @points_entry.client
+    @locations = Location.all
     @points_entry_type = @points_entry.points_entry_type
     @bail_penalty = PointsEntry.bail_penalty
   end
@@ -65,6 +69,11 @@ class PointsEntriesController < ApplicationController
             status: :created, location: @points_entry
         }
       else
+        @client = @points_entry.client || Client.new
+        @points_entry_type = @points_entry.points_entry_type ||
+          PointsEntryType.new
+        @locations = Location.all
+        @default_location = Location.default_location_for current_user
         format.html { render :new }
         format.json {
           render json: @points_entry.errors,
@@ -78,21 +87,25 @@ class PointsEntriesController < ApplicationController
   # PUT /points_entries/1.json
   def update
     @points_entry = PointsEntry.find(params[:id])
+    updated = @points_entry.update_attributes params[:points_entry]
 
     respond_to do |format|
-      if @points_entry.update_attributes(params[:points_entry])
-        format.html {
+      format.html {
+        if updated
           redirect_to @points_entry,
-            notice: 'Points entry was successfully updated.'
-        }
-        format.json { head :no_content }
-      else
-        format.html { render :edit }
-        format.json {
+            notice: 'Entry was successfully updated.'
+        else
+          render :edit
+        end
+      }
+      format.json {
+        if updated
+          head :no_content
+        else
           render json: @points_entry.errors,
-            status: :unprocessable_entity
-        }
-      end
+            status:unprocessable_entity
+        end
+      }
     end
   end
 

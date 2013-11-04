@@ -5,4 +5,9 @@
   %ul.nav.nav-list
     %li= link_to 'Show', @points_entry
 
-= render 'form'
+= render 'form', points_entry: @points_entry, 
+  client: @client,
+  points_entry_type: @points_entry_type,
+  locations: @locations,
+  default_location: @default_location,
+  bail_penalty: @bail_penalty
