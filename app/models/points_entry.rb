@@ -29,6 +29,9 @@ class PointsEntry < ActiveRecord::Base
   delegate :current_alias,
     to:     :client,
     prefix: true
+  delegate :login,
+    to:     :added_by,
+    prefix: true
   delegate :name,
     to:     :points_entry_type,
     prefix: true
@@ -43,7 +46,7 @@ class PointsEntry < ActiveRecord::Base
     self.performed_on ||= Date.today
 
     if self.bailed == true
-      entry_type = self.points_entry_type.name
+      entry_type = self.points_entry_type_name
       message = "Bailed on #{entry_type} - #{self.performed_on}"
       flag = ClientFlag.create!(client_id: self.client.id,
                                 created_by_id: self.added_by_id,

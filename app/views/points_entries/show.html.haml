@@ -33,3 +33,5 @@
   - if @points_entry.bailed
     %dd
       %em (Bailed)
+  %dt Added By
+  %dd= link_to @points_entry.added_by_login, @points_entry.added_by

@@ -7,22 +7,26 @@
         %th Client
       - unless hide.include? :points_entry_type
         %th Type
+      %th Location
       %th Points
-      %th Added By
+      - unless hide.include? :added_by
+        %th Added By
       %th Actions
     %tbody
     - points_entries.each do |entry|
       %tr
         %td= entry.performed_on
         - unless hide.include? :client
-          %td= link_to entry.client.current_alias, entry.client
+          %td= link_to entry.client_current_alias, entry.client
         - unless hide.include? :points_entry_type
-          %td= link_to entry.points_entry_type.name, entry.points_entry_type
+          %td= link_to entry.points_entry_type_name, entry.points_entry_type
+        %td= link_to entry.location_name, entry.location
         %td
           - if entry.bailed
             %span.text-error Bailed!
           = entry.points
-        %td= link_to entry.added_by.login, entry.added_by
+        - unless hide.include? :added_by
+          %td= link_to entry.added_by_login, entry.added_by
         %td
           = link_to "View", entry
           - if can? :manage, PointsEntry

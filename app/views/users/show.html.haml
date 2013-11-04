@@ -26,10 +26,10 @@
         = render 'roles-toggler', user: @user, roles: @roles
   %dt Email
   %dd
-    - if @user.email.blank?
-      %em No email
-    -else
+    - if @user.email?
       = mail_to @user.email
+    -else
+      %em No email
   %dt Login Count
   %dd= @user.login_count
   %dt Last Activity

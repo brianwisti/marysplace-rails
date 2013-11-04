@@ -35,7 +35,7 @@ class LocationsController < ApplicationController
       if @location.save
         format.html { redirect_to @location, notice: "Location created" }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
       end
     end
   end
@@ -49,7 +49,7 @@ class LocationsController < ApplicationController
     if @location.update_attributes(params[:location])
       redirect_to @location, notice: "Location was updated"
     else
-      render action: "edit"
+      render :edit
     end
   end
 
