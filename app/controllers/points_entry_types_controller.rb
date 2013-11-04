@@ -66,7 +66,7 @@ class PointsEntryTypesController < ApplicationController
         format.html { redirect_to @points_entry_type, notice: 'Points entry type was successfully created.' }
         format.json { render json: @points_entry_type, status: :created, location: @points_entry_type }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json { render json: @points_entry_type.errors, status: :unprocessable_entity }
       end
     end
@@ -82,7 +82,7 @@ class PointsEntryTypesController < ApplicationController
         format.html { redirect_to @points_entry_type, notice: 'Points entry type was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
         format.json { render json: @points_entry_type.errors, status: :unprocessable_entity }
       end
     end
@@ -176,7 +176,7 @@ class PointsEntryTypesController < ApplicationController
         format.html { redirect_to @signup_list, notice: 'Signup List was successfully created.' }
         format.json { render json: @signup_list, status: :created, location: @signup_list }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json { render json: @signup_list.errors, status: :unprocessable_entity }
       end
     end

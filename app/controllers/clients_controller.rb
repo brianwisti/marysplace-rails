@@ -99,7 +99,7 @@ class ClientsController < ApplicationController
           render json: @client, status: :created, location: @client
         }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json {
           render json: @client.errors, status: :unprocessable_entity
         }
@@ -119,7 +119,7 @@ class ClientsController < ApplicationController
       }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
         format.json {
           render json: @client.errors, status: :unprocessable_entity
         }
@@ -197,7 +197,7 @@ class ClientsController < ApplicationController
         if @client.login
           redirect_to @client
         else
-          render action: :new_login
+          render :new_login
         end
       end
     end

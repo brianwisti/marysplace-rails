@@ -33,7 +33,7 @@ class SignupListsController < ApplicationController
     @signup_list = SignupList.new
     @signup_list.points_entry_type = @points_entry_type
 
-    render action: "new"
+    render :new
   end
 
   def edit
@@ -48,7 +48,7 @@ class SignupListsController < ApplicationController
         format.html { redirect_to @signup_list, notice: 'Signup List created' }
         format.json { render json: @signup_list, status: :created, location: @signup_list }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json { render json: @signup_list.errors, status: :unprocessable_entity }
       end
     end
@@ -62,7 +62,7 @@ class SignupListsController < ApplicationController
         format.html { redirect_to @signup_list, notice: 'Signup List was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
         format.json { render json: @signup_list.errors, status: :unprocessable_entity }
       end
     end

@@ -79,7 +79,7 @@ class CheckinsController < ApplicationController
           render json: @checkin, status: :created, location: @checkin
         }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json {
           render json: @checkin.errors, status: :unprocessable_entity
         }
@@ -101,7 +101,7 @@ class CheckinsController < ApplicationController
         }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
         format.json {
           render json: @checkin.errors, status: :unprocessable_entity
         }

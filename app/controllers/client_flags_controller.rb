@@ -81,7 +81,7 @@ class ClientFlagsController < ApplicationController
             location: @client_flag
         }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json {
           render json: @client_flag.errors, status: :unprocessable_entity
         }
@@ -103,7 +103,7 @@ class ClientFlagsController < ApplicationController
           }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
         format.json {
           render json: @client_flag.errors,
             status: :unprocessable_entity

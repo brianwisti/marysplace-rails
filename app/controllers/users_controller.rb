@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       flash[:notice] = "User created!"
       redirect_to @user
     else
-      render :action => :new
+      render :new
     end
   end
 
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Account updated!"
       redirect_to @user
     else
-      render action: :edit
+      render :edit
     end
   end
 

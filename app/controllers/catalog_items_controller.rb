@@ -66,7 +66,7 @@ class CatalogItemsController < ApplicationController
             location: @catalog_item
         }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json {
           render json: @catalog_item.errors,
             status: :unprocessable_entity
@@ -89,7 +89,7 @@ class CatalogItemsController < ApplicationController
         }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
         format.json {
           render json: @catalog_item.errors,
             status: :unprocessable_entity

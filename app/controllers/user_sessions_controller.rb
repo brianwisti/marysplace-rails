@@ -13,7 +13,7 @@ class UserSessionsController < ApplicationController
       redirect_back_or_default root_path
     else
       flash[:error] = "Login unsuccessful."
-      render :action => :new
+      render :new
     end
   end
 
