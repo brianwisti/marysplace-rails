@@ -81,12 +81,14 @@ class ClientsController < ApplicationController
 
   # GET /clients/1/edit
   def edit
+    authorize! :update, Client
     @client = Client.find(params[:id])
   end
 
   # POST /clients
   # POST /clients.json
   def create
+    authorize! :create, Client
     @client = Client.new(params[:client])
     @client.added_by_id = current_user.id
 
@@ -110,6 +112,7 @@ class ClientsController < ApplicationController
   # PUT /clients/1
   # PUT /clients/1.json
   def update
+    authorize! :update, Client
     @client = Client.find(params[:id])
 
     respond_to do |format|
@@ -130,6 +133,7 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
+    authorize! :destroy, Client
     @client = Client.find(params[:id])
     @client.destroy
 
@@ -152,6 +156,7 @@ class ClientsController < ApplicationController
   end
 
   def checkins
+    authorize! :show, Checkin
     @client = Client.find(params[:id])
     @checkins = @client.checkins.order('checkin_at DESC').page params[:page]
     respond_to do |format|
@@ -161,6 +166,7 @@ class ClientsController < ApplicationController
   end
 
   def flags
+    authorize! :show, ClientFlag
     @client = Client.find(params[:id])
     @flags = @client.client_flags.order('expires_on DESC')
 
