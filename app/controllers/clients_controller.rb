@@ -16,11 +16,6 @@ class ClientsController < ApplicationController
     sort_rule = "#{sort_column} #{sort_direction}"
     @clients = Client.where(is_active: true)
         .order(sort_rule).page params[:page]
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @clients }
-    end
   end
 
   # GET /search
@@ -50,22 +45,12 @@ class ClientsController < ApplicationController
   # GET /clients/1.json
   def show
     @client = Client.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @client }
-    end
   end
 
   # GET /clients/new
   # GET /clients/new.json
   def new
     @client = Client.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @client }
-    end
   end
 
   def entry
@@ -73,10 +58,6 @@ class ClientsController < ApplicationController
     @points_entry = PointsEntry.new
     @points_entry_type = PointsEntryType.new
     @points_entry.client = @client
-
-    respond_to do |format|
-      format.html # entry.html.haml
-    end
   end
 
   # GET /clients/1/edit
@@ -92,20 +73,10 @@ class ClientsController < ApplicationController
     @client = Client.new(params[:client])
     @client.added_by_id = current_user.id
 
-    respond_to do |format|
-      if @client.save
-        format.html {
-          redirect_to @client, notice: 'Client was successfully created.'
-        }
-        format.json {
-          render json: @client, status: :created, location: @client
-        }
-      else
-        format.html { render :new }
-        format.json {
-          render json: @client.errors, status: :unprocessable_entity
-        }
-      end
+    if @client.save
+      redirect_to @client, notice: 'Client was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -115,18 +86,10 @@ class ClientsController < ApplicationController
     authorize! :update, Client
     @client = Client.find(params[:id])
 
-    respond_to do |format|
-      if @client.update_attributes(params[:client])
-        format.html {
-          redirect_to @client, notice: 'Client was successfully updated.'
-      }
-        format.json { head :no_content }
-      else
-        format.html { render :edit }
-        format.json {
-          render json: @client.errors, status: :unprocessable_entity
-        }
-      end
+    if @client.update_attributes(params[:client])
+        redirect_to @client, notice: 'Client was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -137,10 +100,7 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
     @client.destroy
 
-    respond_to do |format|
-      format.html { redirect_to clients_url }
-      format.json { head :no_content }
-    end
+    redirect_to clients_url
   end
 
   # GET /clients/1/entries
@@ -148,32 +108,18 @@ class ClientsController < ApplicationController
   def entries
     @client = Client.find(params[:id])
     @entries = @client.points_entries.page params[:page]
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @entries }
-    end
   end
 
   def checkins
     authorize! :show, Checkin
     @client = Client.find(params[:id])
     @checkins = @client.checkins.order('checkin_at DESC').page params[:page]
-    respond_to do |format|
-      format.html
-      format.json { render json: @entries }
-    end
   end
 
   def flags
     authorize! :show, ClientFlag
     @client = Client.find(params[:id])
     @flags = @client.client_flags.order('expires_on DESC')
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @flags }
-    end
   end
 
   def new_login
@@ -198,14 +144,10 @@ class ClientsController < ApplicationController
     end
 
 
-    respond_to do |format|
-      format.html do
-        if @client.login
-          redirect_to @client
-        else
-          render :new_login
-        end
-      end
+    if @client.login
+      redirect_to @client
+    else
+      render :new_login
     end
   end
 
@@ -229,11 +171,6 @@ class ClientsController < ApplicationController
 
     @client = Client.find(params[:id])
     @carts = @client.purchases
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @carts }
-    end
   end
 
   private
