@@ -1,11 +1,11 @@
 <p>Hello <%= link_to current_user.login, current_user %>!</p>
 
-<%= render 'alerts' %>
+<%= render 'alerts', email_alert_needed: @email_alert_needed %>
 
 <%= render 'clients/search_form' %>
 
-<%= render 'client_flags' %>
+<%= render 'client_flags', client_flags: @client_flags %>
 
-<%= render 'checkins' %>
+<%= render 'checkins', checkin_count: @checkin_count %>
 
 <%= render 'entry_points' %>

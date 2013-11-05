@@ -1,9 +1,0 @@
-- yesterday = @span - 1.day
-- tomorrow = @span + 1.day
-
-.pagination.pagination-small.pagination-centered
-  %ul
-    %li= link_to yesterday.strftime("%Y %b %d"), daily_report_checkins_path({ year: yesterday.year, month: yesterday.month, day: yesterday.day })
-    %li.active= link_to @span.strftime("%Y %b %d"), daily_report_checkins_path({ year: @span.year, month: @span.month, day: @span.day })
-    %li= link_to tomorrow.strftime("%Y %b %d"),
-      daily_report_checkins_path({ year: tomorrow.year, month: tomorrow.month, day: tomorrow.day })

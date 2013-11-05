@@ -1,9 +1,9 @@
-<%= form_for @signup_list do |f| %>
-  <% if @signup_list.errors.any? %>
+<%= form_for signup_list do |f| %>
+  <% if signup_list.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@signup_list.errors.count, "error") %></h2>
+      <h2><%= pluralize(signup_list.errors.count, "error") %></h2>
       <ul>
-        <% @signup_list.errors.full_messages.each do |msg| %>
+        <% signup_list.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
@@ -15,7 +15,7 @@
       <%= f.label :points_entry_type_id, class: 'control-label' %>
       <div class="controls">
         <%= text_field_tag "points_entry_type",
-          @signup_list.points_entry_type_name,
+          signup_list.points_entry_type_name,
           data: { provide: 'typeahead', field: 'signup_list_points_entry_type_id', pointsfield: 'points_entry_points' },
           autocomplete: 'off',
           class: 'pointsentrytype-typeahead' %>

@@ -1,9 +1,9 @@
-= form_for @catalog_item do |f|
-  - if @catalog_item.errors.any?
+= form_for catalog_item do |f|
+  - if catalog_item.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@catalog_item.errors.count, "error")} prohibited this catalog_item from being saved:"
+      %h2= "#{pluralize(catalog_item.errors.count, "error")} prohibited this catalog_item from being saved:"
       %ul
-        - @catalog_item.errors.full_messages.each do |msg|
+        - catalog_item.errors.full_messages.each do |msg|
           %li= msg
 
   .field

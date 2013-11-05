@@ -2,6 +2,9 @@
   New Catalog Item
 
 = content_for(:sidebar) do
-  = render 'sidebar'
+  - if @catalog_item
+    = render 'sidebar', catalog_item: @catalog_item
+  - else
+    = render 'sidebar'
 
-= render 'form'
+= render 'form', catalog_item: @catalog_item

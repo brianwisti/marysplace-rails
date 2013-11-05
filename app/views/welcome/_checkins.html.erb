@@ -1,7 +1,7 @@
 <% if can? :show, Checkin %>
   <div class="row-fluid checkins">
     <div class="span8">
-      <%= link_to @checkin_count, today_checkins_path, class: "checkin-count" %> checkins today
+      <%= link_to checkin_count, today_checkins_path, class: "checkin-count" %> checkins today
     </div>
     <div class="span4">
       <% if can? :create, Checkin %>
