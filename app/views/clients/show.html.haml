@@ -2,7 +2,7 @@
   = @client.current_alias
 
 = content_for(:sidebar) do
-  =render 'sidebar'
+  =render 'sidebar', client: @client
 
 - if @client.login
   = image_tag @client.login.avatar.url(:square)

@@ -2,10 +2,7 @@
   Clients
 
 = content_for(:sidebar) do
-  = render 'search_form', search_query: @query
-  - if can? :create, Client
-    %ul.nav.nav-list
-      %li= link_to 'New Client', new_client_path
+  = render 'sidebar'
 
 %table.table
   %thead

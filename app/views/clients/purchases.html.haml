@@ -2,7 +2,7 @@
   #{@client.current_alias} Purchases
 
 = content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', client: @client
 
 - if @client.is_shopping?
   %p #{@client.current_alias} has an open cart

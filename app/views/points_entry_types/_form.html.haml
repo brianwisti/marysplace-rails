@@ -1,11 +1,11 @@
-= form_for(@points_entry_type) do |f|
-  - if @points_entry_type.errors.any?
+= form_for(points_entry_type) do |f|
+  - if points_entry_type.errors.any?
     #error_explanation
       %h2
-        = pluralize(@points_entry_type.errors.count, "error")
+        = pluralize(points_entry_type.errors.count, "error")
         prevented this category from being created.
       %ul
-        - @points_entry_type.errors.full_messages.each do |msg|
+        - points_entry_type.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
     .control-group

@@ -4,7 +4,7 @@
 
 
 = content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', client: @client
 
 %table.table
   = render @flags

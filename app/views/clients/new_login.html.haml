@@ -2,7 +2,7 @@
   Create Login for #{@client.current_alias}
 
 =content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', client: @client
 
 %p
   Please use the form below to provide a password.

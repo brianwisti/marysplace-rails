@@ -1,9 +1,9 @@
-= form_for(@location) do |f|
-  - if @location.errors.any?
+= form_for(location) do |f|
+  - if location.errors.any?
     .error_explanation
-      %h3= pluralize @location.errors.count, "Error"
+      %h3= pluralize location.errors.count, "Error"
       %ul
-        - @location.errors.full_messages.each do |msg|
+        - location.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
     .control-group

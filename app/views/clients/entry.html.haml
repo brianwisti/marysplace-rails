@@ -3,7 +3,7 @@
   = @client.current_alias
 
 =content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', client: @client
 
 = render 'points_entries/form',
   client: @client, points_entry: @points_entry,
