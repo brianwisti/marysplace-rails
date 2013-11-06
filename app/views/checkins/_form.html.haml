@@ -1,16 +1,16 @@
-= form_for(@checkin, class: "form-inline") do |f|
-  -if @checkin.errors.any?
+= form_for(checkin, class: "form-inline") do |f|
+  -if checkin.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@checkin.errors.count, "error")} prohibited this checkin from being saved:"
+      %h2= "#{pluralize(checkin.errors.count, "error")} prohibited this checkin from being saved:"
       %ul
-        - @checkin.errors.full_messages.each do |msg|
+        - checkin.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
     .control-group
       = f.label :client_id, class: 'control-label'
       .controls
-        - if @checkin.client
-          = text_field_tag "current_alias", @checkin.client_current_alias,
+        - if checkin.client
+          = text_field_tag "current_alias", checkin.client_current_alias,
             data: { provide: 'typeahead', field: 'checkin_client_id' },
             class: 'client-typeahead'
         - else
@@ -20,11 +20,11 @@
         = f.hidden_field :client_id
     .control-group
       = f.label :location_id, class: 'control-label'
-      - if @locations.nil? or @locations.empty?
+      - if locations.nil? or locations.empty?
         %p A Location is required for checkins
       - else
-        = f.collection_select(:location_id, @locations, :id, :name, selected: @default_location.id )
-    -unless @checkin.new_record?
+        = f.collection_select(:location_id, locations, :id, :name, selected: default_location.id )
+    -unless checkin.new_record?
       .control-group
         = f.label :checkin_at, class: 'control-label'
         .controls
@@ -33,6 +33,6 @@
         = f.label :notes, class: 'control-label'
         .controls
           = f.text_area :notes
-    - unless @locations.nil? or @locations.empty?
+    - unless locations.nil? or locations.empty?
       .form-actions
         = f.submit class: "btn"

@@ -11,7 +11,7 @@
   %dt Created
   %dd
     = l(@client_flag.created_at, format: :long)
-    by 
+    by
     = link_to @client_flag.created_by_login, @client_flag.created_by
   %dt Description
   %dd= @client_flag.description || 'None Given'
@@ -39,7 +39,7 @@
     - else
       may not shop while this flag is unresolved.
   - if @client_flag.resolved_on
-    %dt Resolved 
+    %dt Resolved
     %dd
       = l(@client_flag.resolved_on, format: :long)
       by

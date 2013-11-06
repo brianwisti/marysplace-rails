@@ -2,7 +2,7 @@
   User Accounts
 
 = content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', roles: @roles
 
 %table.table
   = render @users

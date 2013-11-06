@@ -27,7 +27,7 @@ class SignupListsController < ApplicationController
       format.json { render json: @signup_list }
     end
   end
-  
+ 
   def new_for
     @points_entry_type = PointsEntryType.find(params[:type_id].to_i)
     @signup_list = SignupList.new

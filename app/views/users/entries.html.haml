@@ -3,7 +3,8 @@
   = @user.login
 
 =content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', user: @user, roles: @roles
+
 = paginate @entries
 
 = render 'points_entries/as_table', points_entries: @entries,

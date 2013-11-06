@@ -1,6 +1,9 @@
 =content_for(:title) do
   New Checkin
 
-= render 'form'
+= render 'form',
+  checkin: @checkin,
+  locations: @locations, 
+  default_location: @default_location
 
 = link_to 'Back', checkins_path

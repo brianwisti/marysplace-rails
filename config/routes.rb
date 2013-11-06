@@ -22,7 +22,7 @@ Marysplace::Application.routes.draw do
 
   resources :messages
 
-  resources :roles
+  resources :roles, only: [ :show ]
 
   resources :client_flags do
     member do
@@ -120,7 +120,7 @@ Marysplace::Application.routes.draw do
   end
 
   get "welcome/index"
-  resources :users do
+  resources :users, except: [ :destroy ] do
     member do
       get  'roles'
       post 'toggle_role'
@@ -128,9 +128,7 @@ Marysplace::Application.routes.draw do
     end
   end
 
-  resources :users
-
-  resource :user_session
+  resource :user_session, only: [ :new, :create, :destroy ]
 
   match 'login' => 'user_sessions#new', as: :login
   match 'logout' => 'user_sessions#destroy', as: :logout

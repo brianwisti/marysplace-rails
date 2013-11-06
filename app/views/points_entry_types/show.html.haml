@@ -2,7 +2,7 @@
   = @points_entry_type.name
 
 = content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', points_entry_type: @points_entry_type
 
 %dl
   %dt Name

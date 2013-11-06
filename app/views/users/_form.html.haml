@@ -1,16 +1,16 @@
-= form_for @user do |f|
-  - if @user.errors.any?
+= form_for user do |f|
+  - if user.errors.any?
     .error_explanation
       %h2
-        = pluralize @user.errors.count, "error"
+        = pluralize user.errors.count, "error"
         prevented this user from being saved:
       %ul
-        - @user.errors.full_messages.each do |msg|
+        - user.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
     %legend Account Details
     .control-group
-      = image_tag @user.avatar.url(:square)
+      = image_tag user.avatar.url(:square)
       = f.label :avatar
       = f.file_field :avatar
     .control-group

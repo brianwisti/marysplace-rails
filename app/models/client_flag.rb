@@ -41,7 +41,7 @@ class ClientFlag < ActiveRecord::Base
   end
 
   after_save do
-    if self.is_resolved? 
+    if self.is_resolved?
       if self.client.is_flagged == true
         self.client.update_attributes is_flagged: false
       end

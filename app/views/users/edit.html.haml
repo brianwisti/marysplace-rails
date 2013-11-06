@@ -3,7 +3,6 @@
   = @user.login
 
 = content_for(:sidebar) do
-  %ul.nav.nav-bar
-    %li= link_to "Show", @user
+  = render 'sidebar', user: @user, roles: @roles
 
-= render 'form'
+= render 'form', user: @user

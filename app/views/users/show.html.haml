@@ -3,7 +3,7 @@
   = @user.login
 
 = content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', user: @user, roles: @roles
 
 = image_tag @user.avatar.url(:square)
 

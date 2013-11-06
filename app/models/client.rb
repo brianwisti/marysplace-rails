@@ -196,7 +196,7 @@ class Client < ActiveRecord::Base
     ends_with   = "%#{query}"
     contains    = "%#{query}%"
     where('(current_alias = ? or current_alias ilike ? or current_alias ilike ? or current_alias ilike ? or other_aliases ilike ? or other_aliases ilike ? or other_aliases ilike ?) and is_active = true',
-          query, starts_with, ends_with, contains, starts_with, ends_with, 
+          query, starts_with, ends_with, contains, starts_with, ends_with,
           contains)
       .order(:current_alias)
   end

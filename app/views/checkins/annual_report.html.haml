@@ -23,7 +23,7 @@
         - entry_date = Date.parse(entry.span)
         %tr
           %td
-            = link_to entry_date.strftime("%Y %B"), 
+            = link_to entry_date.strftime("%Y %B"),
               monthly_report_checkins_path({ year: entry_date.year, month: entry_date.month })
           %td= entry.checkins
       = yield :totals

@@ -1,9 +1,12 @@
 = content_for(:title) do
   Create User
 
+= content_for(:sidebar) do
+  = render 'sidebar', roles: @roles
+
 %p
   Enter details below for a new regular user. You can manage
   roles from the main user listing when done.
 
 
-= render "form"
+= render "form", user: @user

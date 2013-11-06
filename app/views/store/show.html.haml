@@ -30,7 +30,7 @@
         %dd.client-balance{data: { balance: @initial_balance } }= number_with_delimiter @initial_balance
   %span.span6
     %h3 Add Item
-    = render 'store_cart_items/form'
+    = render 'store_cart_items/form', cart: @cart, default_item: @default_item
 
 %table.table.table-striped
   - @cart.items.each do |item|
