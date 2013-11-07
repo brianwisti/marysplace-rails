@@ -45,4 +45,12 @@ class User < ActiveRecord::Base
     self.roles.exists?( name: role.to_s )
   end
 
+  def toggle_role role
+    if self.role? role
+      self.roles.delete role
+    else
+      self.roles.push role
+    end
+  end
+
 end

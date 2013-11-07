@@ -25,7 +25,7 @@
               %p#notice.text-info= flash[:notice]
             - if flash[:alert]
               %p#alert.alert= flash[:alert]
-            = yield
+          = yield
       - else
         .log
           - if flash[:notice]

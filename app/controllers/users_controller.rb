@@ -63,31 +63,17 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     role = Role.find(params[:role_id])
 
-    if user and role
-      if user.roles.include? role
-        if user.roles.delete(role)
-          message = "#{user.login} is no longer #{role.name}"
-        else
-          message = "Unable to remove #{user.login} from #{role.name}"
-        end
-      else
-        if user.roles.push(role)
-          message = "#{user.login} is now #{role.name}"
-        else
-          message = "Unable to make #{user.login} a #{role.name}"
-        end
-      end
+    user.toggle_role role
+    message = "#{role.name} toggled for #{user.login}"
+    flash[:notice] = message
 
-      flash[:notice] = message
+    @result = {
+      result: message
+    }
 
-      @result = {
-        result: message
-      }
-
-      respond_to do |format|
-        format.html { redirect_to users_path }
-        format.json { render json: @result  }
-      end
+    respond_to do |format|
+      format.html { redirect_to users_path }
+      format.json { render json: @result  }
     end
   end
 

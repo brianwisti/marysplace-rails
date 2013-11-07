@@ -8,9 +8,11 @@ $ ->
       post_data =
         role_id: role
         user_id: user
-      url = "/users/#{user}/toggle_role"
+      url = "/users/#{user}/toggle_role.json"
       $.post url, post_data, (response) ->
+        console.log response
         message = response.result
+        console.log message
         $('.log')
           .addClass('alert')
           .text(message)
