@@ -18,8 +18,16 @@ module ApplicationHelper
     report_path = daily_report_checkins_path(
       { year: span.year, month: span.month, day: span.day }
     )
-    link = link_to span.strftime("%Y %b %d"), report_path
-    return link
+
+    link_to span.strftime("%Y %b %d"), report_path
+  end
+
+  def link_to_monthly_checkins_for span
+    report_path = monthly_report_checkins_path(
+      { year: span.year, month: span.month }
+    )
+
+    link_to span.strftime("%Y %b"), report_path
   end
 end
 

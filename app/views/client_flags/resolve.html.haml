@@ -2,7 +2,7 @@
   Resolve Flag
 
 = content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', client_flag: @client_flag
 
 = form_tag(resolve_store_client_flag_path(@client_flag), method: :post, class: "form") do
   .control-group

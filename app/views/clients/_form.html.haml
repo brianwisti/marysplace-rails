@@ -1,9 +1,9 @@
-= form_for(@client) do |f|
-  - if @client.errors.any?
+= form_for client  do |f|
+  - if client.errors.any?
     .error_explanation
-      %h3= pluralize @client.errors.count, "Error"
+      %h3= pluralize client.errors.count, "Error"
       %ul
-        - @client.errors.full_messages.each do |msg|
+        - client.errors.full_messages.each do |msg|
           %li= msg
   .row-fluid
     .span6

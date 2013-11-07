@@ -1,6 +1,8 @@
 = content_for(:title) do
   Add Client Flag
 
-= render 'form'
+= content_for :sidebar do
+  = render 'sidebar'
 
-= link_to 'Back', client_flags_path
+= render 'form', client_flag: @client_flag
+

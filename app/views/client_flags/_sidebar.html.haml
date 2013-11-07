@@ -3,6 +3,6 @@
   %li= link_to "Resolved Flags", resolved_client_flags_path
   %li= link_to "Unresolved Flags", unresolved_client_flags_path
   - if can? :manage, ClientFlag
-    - if @client_flag
-      %li= link_to "Change", edit_client_flag_path(@client_flag)
+    - if defined? client_flag
+      %li= link_to "Change", edit_client_flag_path(client_flag)
     %li= link_to "Add Flag", new_client_flag_path

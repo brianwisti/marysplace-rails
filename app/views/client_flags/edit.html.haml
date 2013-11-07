@@ -1,7 +1,7 @@
-%h1 Editing client_flag
+= content_for :title do
+  Editing Flag
 
-= render 'form'
+= content_for :sidebar do
+  = render 'sidebar', client_flag: @client_flag
 
-= link_to 'Show', @client_flag
-\|
-= link_to 'Back', client_flags_path
+= render 'form', client_flag: @client_flag

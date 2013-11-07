@@ -1,16 +1,16 @@
-= form_for @client_flag do |f|
-  -if @client_flag.errors.any?
+= form_for client_flag do |f|
+  -if client_flag.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@client_flag.errors.count, "error")} prohibited this client_flag from being saved:"
+      %h2= "#{pluralize(client_flag.errors.count, "error")} prohibited this client_flag from being saved:"
       %ul
-        - @client_flag.errors.full_messages.each do |msg|
+        - client_flag.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
     .control-group
       = f.label :client_id
       .controls
-        - if @client_flag.client
-          = text_field_tag "current_alias", @client_flag.client_current_alias,
+        - if client_flag.client
+          = text_field_tag "current_alias", client_flag.client_current_alias,
             data: { provide: 'typeahead', field: 'client_flag_client_id' },
             class: 'client-typeahead'
         - else
