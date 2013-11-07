@@ -19,7 +19,11 @@ class StoreCart < ActiveRecord::Base
     prefix: true
 
   def self.start(shopper, handler)
-    if shopper.purchases.where('finished_at is null').count == 0
+    if shopper.can_shop?
+      if cart = shopper.cart
+        return cart
+      end
+
       return StoreCart.create do |cart|
         cart.shopper    = shopper
         cart.handled_by = handler
