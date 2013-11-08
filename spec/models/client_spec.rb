@@ -136,8 +136,8 @@ describe Client do
       let(:location) { create :location }
 
       it "count as shopping visits" do
-       FactoryGirl.create :points_entry, 
-         client: client, 
+       FactoryGirl.create :points_entry,
+         client: client,
          points_entry_type: purchase_type,
          location: location
         client.reload
@@ -146,7 +146,7 @@ describe Client do
       end
 
       it "is tracked for last shopping visit" do
-        entry_type = PointsEntryType.create(name: 'Purchase') 
+        entry_type = PointsEntryType.create(name: 'Purchase')
         entry = client.points_entries.create! do |entry|
           entry.points_entry_type = entry_type
           entry.added_by          = user
@@ -180,13 +180,13 @@ describe Client do
       end
 
       it "does not include Clients with expired shop-blocking flags" do
-        flag = FactoryGirl.create(:bail_flag, 
+        flag = FactoryGirl.create(:bail_flag,
                                   expires_on: 1.day.ago)
         expect(Client.cannot_shop).not_to include(flag.client)
       end
 
       it "does not include Clients with resolved shop-blocking flags" do
-        flag = FactoryGirl.create(:bail_flag, 
+        flag = FactoryGirl.create(:bail_flag,
                                   resolved_on: 1.day.ago)
         expect(Client.cannot_shop).not_to include(flag.client)
       end

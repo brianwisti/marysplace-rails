@@ -23,15 +23,7 @@ class ClientsController < ApplicationController
   def search
     @query = params[:q]
     @clients = Client.quicksearch(@query)
-    mapping = @clients.map do |c|
-      { id: c.id,
-        current_alias: c.current_alias,
-        other_aliases: c.other_aliases,
-        point_balance: c.point_balance,
-        is_flagged:    c.is_flagged?,
-        can_shop:      c.can_shop?
-      }
-    end
+    mapping = @clients.map { |c| c.to_hash }
 
     respond_to do |format|
       format.html # search.html.haml

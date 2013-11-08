@@ -178,6 +178,16 @@ class Client < ActiveRecord::Base
     end
   end
 
+  def to_hash
+    { id: self.id,
+      current_alias: self.current_alias,
+      other_aliases: self.other_aliases,
+      point_balance: self.point_balance,
+      is_flagged:    self.is_flagged?,
+      can_shop:      self.can_shop?
+    }
+  end
+
   def update_points!
     entries_total = self.points_entries.sum(:points)
     purchase_total = self.purchases.where('finished_at is not null')
@@ -191,13 +201,24 @@ class Client < ActiveRecord::Base
       return []
     end
 
-    query       = query.strip
-    starts_with = "#{query}%"
-    ends_with   = "%#{query}"
-    contains    = "%#{query}%"
-    where('(current_alias = ? or current_alias ilike ? or current_alias ilike ? or current_alias ilike ? or other_aliases ilike ? or other_aliases ilike ? or other_aliases ilike ?) and is_active = true',
-          query, starts_with, ends_with, contains, starts_with, ends_with,
-          contains)
+    query        = query.strip
+    starts_with  = "#{query}%"
+    ends_with    = "%#{query}"
+    contains     = "%#{query}%"
+    sql_fragment = %{
+      (current_alias = ?
+       or current_alias ilike ?
+       or current_alias ilike ?
+       or current_alias ilike ?
+       or other_aliases ilike ?
+       or other_aliases ilike ?
+       or other_aliases ilike ?)
+      and is_active = true
+    }
+
+    where(sql_fragment,
+      query, starts_with, ends_with, contains, starts_with, ends_with,
+      contains)
       .order(:current_alias)
   end
 
