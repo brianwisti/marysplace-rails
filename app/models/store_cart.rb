@@ -10,7 +10,8 @@ class StoreCart < ActiveRecord::Base
     class_name: "User"
 
   has_many :items,
-    class_name: "StoreCartItem"
+    class_name: "StoreCartItem",
+    dependent: :destroy
 
   validates_uniqueness_of :finished_at, scope: :shopper_id
 

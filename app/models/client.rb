@@ -18,12 +18,16 @@ class Client < ActiveRecord::Base
   belongs_to :login,
     class_name: "User"
 
-  has_many :points_entries
-  has_many :checkins
-  has_many :client_flags
+  has_many :points_entries,
+    dependent: :destroy
+  has_many :checkins,
+    dependent: :destroy
+  has_many :client_flags,
+    dependent: :destroy
   has_many :purchases,
     class_name: 'StoreCart',
-    foreign_key: :shopper_id
+    foreign_key: :shopper_id,
+    dependent: :destroy
 
   delegate :login,
     to:     :added_by,

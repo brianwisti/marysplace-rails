@@ -11,18 +11,18 @@ feature "Client Checkins" do
 
   scenario "with no locations is impossible" do
     click_link 'New Checkin'
-    expect(page).to have_content("A Location is required for checkins")
-    expect(page).to have_no_button("Create Checkin")
+    expect(page).to have_content("A Location is required.")
   end
 
   scenario "with one location" do
-    create :location
+    loc = create :location
     click_link 'New Checkin'
     expect(page).to have_no_content("A Location is required for checkins")
 
     expect {
       fill_in 'current_alias', with: @client.current_alias
-      click_button("Create Checkin")
+      click_button "Create Checkin"
+      select loc.name, from: 'Location'
     }.to change(Checkin, :count).by(1)
   end
 

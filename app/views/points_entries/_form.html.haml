@@ -47,10 +47,7 @@
         Bailed
     .control-group
       = f.label :location_id, class: 'control-group'
-      - if locations.nil? or locations.empty?
-        %p A Location is required for points entries
-      - else
-        = f.collection_select(:location_id, locations, :id, :name, selected: default_location.id )
+      = location_select f, location_id, current_user
     - unless points_entry.new_record?
       .control-group
         = f.label :performed_on, class: 'control-label'
