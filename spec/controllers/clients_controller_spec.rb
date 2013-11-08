@@ -173,15 +173,51 @@ describe ClientsController do
       expect(response).to redirect_to(clients_url)
     end
 
-    it "can access entries"
-    it "can access checkins"
-    it "can access flags"
-    it "can access new_login"
-    it "can access create_login"
-    it "can create a login"
+    it "can access entries" do
+      get :entries, id: client
+      expect(response).to render_template(:entries)
+    end
 
-    it "can access card"
+    it "can access checkins" do
+      get :checkins, id: client
+      expect(response).to render_template(:checkins)
+    end
 
-    it "can access purchases"
+    it "can access flags" do
+      get :flags, id: client
+      expect(response).to render_template(:flags)
+    end
+
+    it "can access new_login" do
+      get :new_login, id: client
+    end
+
+    it "can access create_login" do
+      password = "waffle"
+      post :create_login, id: client,
+        password: password,
+        password_confirmation: password
+      expect(response).to redirect_to(client_url(assigns(:client)))
+    end
+
+    it "can create a login" do
+      client = create :client
+      password = "waffle"
+      expect {
+        post :create_login, id: client,
+          password: password,
+          password_confirmation: password
+      }.to change(User, :count).by(1)
+    end
+
+    it "can access card" do
+      get :card, id: client
+      expect(response).to render_template(layout: :card)
+    end
+
+    it "can access purchases" do
+      get :purchases, id: client
+      expect(response).to render_template(:purchases)
+    end
   end
 end
