@@ -51,6 +51,19 @@ class Checkin < ActiveRecord::Base
     end
   end
 
+  # create a Checkin from params with alternatives for empty param fields
+  def self.with_alternatives params, alt
+    checkin = self.new params
+    checkin.user       ||= alt[:user]
+    checkin.checkin_at ||= DateTime.now
+
+    unless checkin.client
+      checkin.client = Client.where(current_alias: alt[:current_alias]).first
+    end
+
+    return checkin
+  end
+
   def self.per_month_in(year)
     start = DateTime.new(year.to_i, 1, 1, 0, 0)
     finish = start.end_of_year
@@ -67,7 +80,7 @@ class Checkin < ActiveRecord::Base
     return unless %w{month day}.include? span
 
     select(%{
-      date_trunc('#{span}', checkin_at) as span, 
+      date_trunc('#{span}', checkin_at) as span,
       count(id) as checkins
       })
       .where(checkin_at: start..finish)
