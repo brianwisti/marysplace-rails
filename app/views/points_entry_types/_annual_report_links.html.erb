@@ -1,0 +1,18 @@
+<div class="pagination pagination-large pagination-centered">
+  <ul>
+    <li>
+      <%= link_to year - 1,
+        annual_report_points_entry_type_path({
+          id: entry_type, year: year - 1 }) %>
+    </li>
+    <li class="active">
+      <%= link_to year,
+        annual_report_points_entry_type_path({
+          id: entry_type, year: year }) %>
+    </li>
+    <li>
+      <%= link_to year + 1,
+        annual_report_points_entry_type_path({
+          id: entry_type, year: year + 1 }) %>
+    </li>
+

@@ -17,11 +17,9 @@
     %td= number_with_delimiter(@total_entries)
     %td= number_with_delimiter(@total_points)
 
-.pagination.pagination-large.pagination-centered
-  %ul
-    %li= link_to @last_year.year, annual_report_points_entry_type_path({ id: @points_entry_type, year: @last_year.year })
-    %li.active= link_to @year, annual_report_points_entry_type_path({ id: @points_entry_type, year: @year })
-    %li= link_to @next_year.year, annual_report_points_entry_type_path({ id: @points_entry_type, year: @next_year.year })
+= render 'annual_report_links',
+  entry_type: @points_entry_type,
+  year: @year.year
 
 - if @month > 0
   .pagination.pagination-centered

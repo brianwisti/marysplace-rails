@@ -145,9 +145,6 @@ class PointsEntryTypesController < ApplicationController
       @rows = @points_entry_type.points_entries.per_month_in(@year)
     end
 
-    @last_year = @span - 1.year
-    @next_year = @span + 1.year
-
     if @rows
       @total_points = @rows.inject(0)  { |sum, row| sum += row.points }
       @total_entries = @rows.inject(0) { |sum, row| sum += row.entries.to_i }
