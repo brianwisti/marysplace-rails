@@ -65,7 +65,11 @@ class Checkin < ActiveRecord::Base
 
   def self.report_for_span(start, finish, span)
     return unless %w{month day}.include? span
-    select("date_trunc('#{span}', checkin_at) as span, count(id) as checkins")
+
+    select(%{
+      date_trunc('#{span}', checkin_at) as span, 
+      count(id) as checkins
+      })
       .where(checkin_at: start..finish)
       .group('span')
       .order('span')

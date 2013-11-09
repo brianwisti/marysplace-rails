@@ -1,6 +1,5 @@
 %ul.nav.nav-list
   - if defined? points_entry_type
-    %li= link_to "#{points_entry_type.name} Report", report_points_entry_type_path(points_entry_type)
     - if can? :edit, points_entry_type
       %li= link_to "Edit #{points_entry_type.name}", edit_points_entry_type_path(points_entry_type)
     - if can? :create, PointsEntry

@@ -56,31 +56,6 @@ class PointsEntry < ActiveRecord::Base
     end
   end
 
-  def self.per_month_in(year)
-    start = Date.new(year.to_i, 1, 1)
-    finish = start.end_of_year
-    self.report_for_span(start, finish, 'month')
-  end
-
-  def self.per_day_in(year, month)
-    start = Date.new(year.to_i, month.to_i, 1)
-    finish = start.end_of_month
-    self.report_for_span(start, finish, 'day')
-  end
-
-  def self.report_for_span(start, finish, span)
-    return unless %w{month day}.include? span
-
-    select(%{
-      date_trunc('#{span}', performed_on) as span,
-      sum(points) as points,
-      count(id) as entries
-      })
-      .where(performed_on: start..finish)
-      .group('span')
-      .order('span')
-  end
-
   # What is the extra points penalty for bailing on a chore?
   # TODO: Make this configurable
   def self.bail_penalty
