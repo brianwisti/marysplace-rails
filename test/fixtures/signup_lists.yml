@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  points_entry_type_id: 1
-  signup_date: 2013-04-30
-
-two:
-  points_entry_type_id: 1
-  signup_date: 2013-04-30
