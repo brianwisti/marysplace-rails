@@ -3,6 +3,8 @@ rvm:
   - "2.0.0"
 env:
   - DB=postgresql
-script: bundle exec rake spec
+script: 
+  - RAILS_ENV=test bundle exec rake db:schema:load
+  - bundle exec rake spec
 before_script:
   - psql -c 'create database marysplace_test' -U postgres
