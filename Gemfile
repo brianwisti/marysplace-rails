@@ -7,7 +7,6 @@ gem 'rails', '3.2.12'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'highline' # Used during db seed
 
 gem 'pg'
 
@@ -22,6 +21,7 @@ gem 'markdownizer'
 gem 'newrelic_rpm'
 
 group :development do
+  gem 'highline' # Used during db seed
   gem 'better_errors'
   gem 'binding_of_caller'
 end
