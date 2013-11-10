@@ -16,12 +16,7 @@
 //= require typeahead
 //= require app
 //= require catalog_items
-//= require checkins
-//= require client_flags
 //= require clients
 //= require points_entries
-//= require points_entry_types
 //= require typeahead
-//= require user_sessions
 //= require users
-//= require welcome
