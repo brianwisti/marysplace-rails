@@ -10,29 +10,17 @@ class CatalogItemsController < ApplicationController
   end
 
   # GET /catalog_items/1
-  # GET /catalog_items/1.json
   def show
     authorize! :show, CatalogItem
 
     @catalog_item = CatalogItem.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @catalog_item }
-    end
   end
 
   # GET /catalog_items/new
-  # GET /catalog_items/new.json
   def new
     authorize! :create, CatalogItem
 
     @catalog_item = CatalogItem.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @catalog_item }
-    end
   end
 
   # GET /catalog_items/1/edit
@@ -50,23 +38,11 @@ class CatalogItemsController < ApplicationController
     @catalog_item = CatalogItem.new(params[:catalog_item])
     @catalog_item.added_by = current_user
 
-    respond_to do |format|
-      if @catalog_item.save
-        format.html {
-          redirect_to @catalog_item,
-            notice: 'Catalog item was successfully created.'
-        }
-        format.json {
-          render json: @catalog_item, status: :created,
-            location: @catalog_item
-        }
-      else
-        format.html { render :new }
-        format.json {
-          render json: @catalog_item.errors,
-            status: :unprocessable_entity
-        }
-      end
+    if @catalog_item.save
+      redirect_to @catalog_item,
+        notice: 'Catalog item was successfully created.'
+    else
+      render :new
     end
   end
 
