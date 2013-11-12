@@ -51,6 +51,20 @@ class Checkin < ActiveRecord::Base
     end
   end
 
+  # A short summary for reporting purposes
+  def receipt
+    receipt = {
+      checkin: {
+        id:         self.id,
+        checkin_at: self.checkin_at,
+        client: {
+          current_alias: self.client_current_alias
+        }
+      }
+    }
+    return receipt
+  end
+
   # create a Checkin from params with alternatives for empty param fields
   def self.with_alternatives params, alt
     checkin = self.new params
