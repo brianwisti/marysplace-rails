@@ -8,5 +8,10 @@ FactoryGirl.define do
     factory :bail_flag do
       can_shop false
     end
+
+    factory :resolved_flag do
+      resolved_on Date.today
+      association :resolved_by, factory: :staff_user
+    end
   end
 end

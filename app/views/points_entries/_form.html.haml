@@ -47,7 +47,7 @@
         Bailed
     .control-group
       = f.label :location_id, class: 'control-group'
-      = location_select f, location_id, current_user
+      = location_select f, :location_id, current_user
     - unless points_entry.new_record?
       .control-group
         = f.label :performed_on, class: 'control-label'
