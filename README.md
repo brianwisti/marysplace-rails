@@ -1,5 +1,7 @@
 # Mary's Place Client Tracker
 
+[![Code Climate](https://codeclimate.com/github/brianwisti/marysplace-rails.png)](https://codeclimate.com/github/brianwisti/marysplace-rails)
+
 [Mary's Place]: http://marysplaceseattle.org
 
 This application was created to help the staff and volunteers of [Mary's Place][] record important client information.
