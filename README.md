@@ -1,6 +1,8 @@
 # Mary's Place Client Tracker
 
 [![Code Climate](https://codeclimate.com/github/brianwisti/marysplace-rails.png)](https://codeclimate.com/github/brianwisti/marysplace-rails)
+[![Build Status](https://travis-ci.org/brianwisti/marysplace-rails.png?branch=master)](https://travis-ci.org/brianwisti/marysplace-rails)
+[![Coverage Status](https://coveralls.io/repos/brianwisti/marysplace-rails/badge.png)](https://coveralls.io/r/brianwisti/marysplace-rails)
 
 [Mary's Place]: http://marysplaceseattle.org
 

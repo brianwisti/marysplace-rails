@@ -20,7 +20,9 @@ gem 'has_barcode'
 gem 'markdownizer'
 gem 'newrelic_rpm'
 
+
 group :development do
+  gem 'coveralls', require: false
   gem 'highline' # Used during db seed
   gem 'better_errors'
   gem 'binding_of_caller'
