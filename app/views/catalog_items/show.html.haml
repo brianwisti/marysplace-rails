@@ -3,7 +3,7 @@
 
 
 = content_for(:sidebar) do
-  = render 'sidebar'
+  = render 'sidebar', catalog_item: @catalog_item
 
 %dl
   %dt Name

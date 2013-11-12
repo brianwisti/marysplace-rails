@@ -7,11 +7,6 @@ class CatalogItemsController < ApplicationController
     authorize! :show, CatalogItem
 
     @catalog_items = CatalogItem.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @catalog_items }
-    end
   end
 
   # GET /catalog_items/1

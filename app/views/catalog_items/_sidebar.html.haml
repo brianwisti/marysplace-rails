@@ -2,7 +2,7 @@
   %li= link_to "Store", store_path
   - if can? :create, CatalogItem
     %li= link_to 'New Item', new_catalog_item_path
-  - if catalog_item
+  - if defined? catalog_item
     %li= link_to 'Back to Catalog', catalog_items_path
     - if catalog_item.id
       - if can? :update, CatalogItem
