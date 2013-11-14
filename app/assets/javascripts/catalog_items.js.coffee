@@ -7,7 +7,7 @@ $itemName = $('.catalog-item-typeahead')
 $clientBalance = $('.client-balance')
 initial_balance = $clientBalance.data('balance')
 
-$.getJSON '/catalog_items.json', (data) ->
+$.getJSON '/api/v0/catalog_items.json', (data) ->
   catalog_items = $.grep(data, (item) -> item.is_available == true)
   items = $.map(catalog_items, (item) -> item.name)
   $itemName
