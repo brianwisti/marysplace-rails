@@ -3,6 +3,7 @@ Marysplace::Application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v0 do
       resources :checkins, only: [ :create ]
+      resources :catalog_items, only: [ :index ]
     end
   end
 

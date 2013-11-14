@@ -37,9 +37,12 @@ describe Location do
 
     context "with two locations and no points entries for the user" do
       it "should be the first location" do
-        first = create :location
-        second = create :location
-        result = Location.default_location_for user
+        # Create a new user to minimize noise from other specds
+        new_user = create :staff_user
+        first    = create :location
+        second   = create :location
+        result   = Location.default_location_for new_user
+
         expect(result).to eq(first)
       end
     end
