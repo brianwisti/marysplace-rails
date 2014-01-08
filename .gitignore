@@ -21,3 +21,4 @@ public/system
 *.dump
 tags
 /.*env
+token

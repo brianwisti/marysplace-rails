@@ -3,7 +3,10 @@ require "spec_helper"
 describe API::V0::CheckinsController do
   setup :activate_authlogic
 
-  it "requires authentication"
+  pending "requires authentication" do
+    get :index
+    expect(response).to_not be_success
+  end
 
   it "requires authorization"
 
