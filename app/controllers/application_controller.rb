@@ -33,11 +33,9 @@ class ApplicationController < ActionController::Base
     end
 
     def require_no_user
-      logger.debug "ApplicationController::require_no_user"
       if current_user
-        store_location
-        flash[:notice] = "You must be logged out to access this page"
-        # redirect_to home_index_path
+        flash[:notice] = "You are already logged in"
+        redirect_to root_url
         return false
       end
     end
