@@ -233,8 +233,8 @@ class Client < ActiveRecord::Base
   def anonymize!
     self.full_name = Faker::Name.name
 
-    if self.points_entries.count > 0
-      self.oriented_on = self.points_entries.order(:performed_on).first.performed_on
+    if self.points_entries.size > 0
+      self.oriented_on = self.points_entries.order(:performed_on).last.performed_on
     end
 
     self.phone_number = Faker::PhoneNumber.phone_number
