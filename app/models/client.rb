@@ -233,6 +233,10 @@ class Client < ActiveRecord::Base
   def anonymize!
     self.full_name = Faker::Name.name
 
+    if self.points_entries.count > 0
+      self.oriented_on = self.points_entries[0].performed_on
+    end
+
     names = self.full_name.split ' '
     usual_pattern = "#{names.shift} " + names.map { |name| "#{name[0]}." }.join(' ')
     if Client.where(current_alias: usual_pattern).count == 0
