@@ -245,6 +245,8 @@ class Client < ActiveRecord::Base
     offset = Random.rand(0..365) # So everyone doesn't magically share the same birthday
     self.birthday = age.years.ago + offset.days
 
+    self.notes = Faker::Lorem.paragraphs(Random.rand(0..3)).join
+
     names = self.full_name.split ' '
     usual_pattern = "#{names.shift} " + names.map { |name| "#{name[0]}." }.join(' ')
     if Client.where(current_alias: usual_pattern).count == 0
