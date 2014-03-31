@@ -50,13 +50,13 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  gem 'faker', '1.3.0'  # for db:anonymize and test factories
   gem 'rspec-rails', '~> 2.13'
   gem 'factory_girl_rails', '~> 4.2.1'
 end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'faker', '~> 1.1.2'
   gem 'capybara', '~> 2.0.2'
   gem 'database_cleaner', '~> 0.9.1'
   gem 'launchy', '~> 2.2.0'
