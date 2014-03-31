@@ -234,8 +234,16 @@ class Client < ActiveRecord::Base
     self.full_name = Faker::Name.name
 
     if self.points_entries.count > 0
-      self.oriented_on = self.points_entries[0].performed_on
+      self.oriented_on = self.points_entries.order(:performed_on).first.performed_on
     end
+
+    self.phone_number = Faker::PhoneNumber.phone_number
+
+    # Reasonable age range is 18-90.
+    # TODO: simulate clients that are children of other clients.
+    age = Random.rand(18..90)
+    offset = Random.rand(0..365) # So everyone doesn't magically share the same birthday
+    self.birthday = age.years.ago + offset.days
 
     names = self.full_name.split ' '
     usual_pattern = "#{names.shift} " + names.map { |name| "#{name[0]}." }.join(' ')
