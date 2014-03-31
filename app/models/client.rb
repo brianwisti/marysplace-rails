@@ -226,4 +226,23 @@ class Client < ActiveRecord::Base
       .order(:current_alias)
   end
 
+  # Fill my identifying fields with fake data
+  # 
+  # Replaces fields in the client but does not save them. That allows the one 
+  # "maybe" production usage: anonymized display of clients.
+  def anonymize!
+    self.full_name = Faker::Name.name
+
+    names = self.full_name.split ' '
+    usual_pattern = "#{names.shift} " + names.map { |name| "#{name[0]}." }.join(' ')
+    if Client.where(current_alias: usual_pattern).count == 0
+      self.current_alias = usual_pattern
+    elsif Client.where(current_alias: self.full_name).count == 0
+      self.current_alias = self.full_name
+    else
+      self.current_alias = "#{self.full_name} #{self.id}"
+    end
+
+  end
+
 end

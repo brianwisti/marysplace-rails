@@ -13,7 +13,8 @@ namespace :db do
 
         Client.all.each do |client|
           print "."
-          client.full_name = Faker::Name.name
+          client.anonymize!
+
           if client.save
             anonymized_count += 1
           else 
@@ -21,7 +22,6 @@ namespace :db do
           end
         end
 
-        puts
         puts "#{anonymized_count} / #{total_count} Clients anonymized."
       else
         p "I will not anonymize the #{Rails.env} environment!"
