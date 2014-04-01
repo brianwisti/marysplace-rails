@@ -231,32 +231,54 @@ class Client < ActiveRecord::Base
   # Replaces fields in the client but does not save them. That allows the one 
   # "maybe" production usage: anonymized display of clients.
   def anonymize!
-    self.full_name = Faker::Name.name
+    self.full_name = self.anonymized_full_name
+    self.oriented_on = self.anonymized_oriented_on
+    self.phone_number = self.anonymized_phone_number
+    self.birthday = self.anonymized_birthday
+    self.notes = self.anonymized_notes
+    self.current_alias = self.anonymized_current_alias
+    self.other_aliases = self.anonymized_other_aliases
+  end
 
+  def anonymized_full_name
+    Faker::Name.name
+  end
+
+  def anonymized_oriented_on
     if self.points_entries.size > 0
-      self.oriented_on = self.points_entries.order(:performed_on).last.performed_on
+      self.points_entries.order(:performed_on).last.performed_on
     end
+  end
 
-    self.phone_number = Faker::PhoneNumber.phone_number
+  def anonymized_phone_number
+    Faker::PhoneNumber.phone_number
+  end
 
+  def anonymized_birthday
     # Reasonable age range is 18-90.
     # TODO: simulate clients that are children of other clients.
     age = Random.rand(18..90)
     offset = Random.rand(0..365) # So everyone doesn't magically share the same birthday
-    self.birthday = age.years.ago + offset.days
+    age.years.ago + offset.days
+  end
 
-    self.notes = Faker::Lorem.paragraphs(Random.rand(0..3)).join
+  def anonymized_notes
+    Faker::Lorem.paragraphs(Random.rand(0..3)).join
+  end
 
+  def anonymized_current_alias
     names = self.full_name.split ' '
     usual_pattern = "#{names.shift} " + names.map { |name| "#{name[0]}." }.join(' ')
     if Client.where(current_alias: usual_pattern).count == 0
-      self.current_alias = usual_pattern
+      usual_pattern
     elsif Client.where(current_alias: self.full_name).count == 0
-      self.current_alias = self.full_name
+      self.full_name
     else
-      self.current_alias = "#{self.full_name} #{self.id}"
+      "#{self.full_name} #{self.id}"
     end
-
   end
 
+  def anonymized_other_aliases
+    ''
+  end
 end
