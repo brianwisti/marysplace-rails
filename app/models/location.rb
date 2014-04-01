@@ -25,4 +25,18 @@ class Location < ActiveRecord::Base
 
     return Location.first
   end
+
+  # Fill my identifying fields with fake data
+  # 
+  # Replaces fields in the client but does not save them. That allows the one 
+  # "maybe" production usage: anonymized display of clients.
+  def anonymize!
+    descriptive = %w{House Center Place}.sample
+    self.name = "#{Faker::Name.first_name} #{descriptive}"
+    self.phone_number = Faker::PhoneNumber.phone_number
+    self.address = Faker::Address.street_address
+    self.city = Faker::Address.city
+    self.state = Faker::Address.state_abbr
+    self.postal_code = Faker::Address.postcode
+  end
 end
