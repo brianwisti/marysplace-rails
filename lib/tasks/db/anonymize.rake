@@ -1,5 +1,26 @@
 require 'progressbar'
 
+# Apply a block to each item in a collection, presenting progress to user on STDOUT
+def show_progress(collection, say="Progress", &block)
+  progress_bar = ProgressBar.new say, collection.count
+
+  collection.each do |thing|
+    block.call thing
+    progress_bar.increment
+  end
+
+  puts # distinguish progress_bar output from other output
+end
+
+# Anonymize an ActiveData record, using the record instance's 'anonymize!' method
+def anonymize_collection collection
+  say = collection.first.class.to_s.pluralize
+  show_progress collection, say do |record|
+    record.anonymize!
+    record.save!
+  end
+end
+
 task :ensure_dev do
   unless Rails.env.development?
     puts "Not in development environment!"
@@ -10,46 +31,21 @@ end
 namespace :db do
 
   namespace :anonymize do
+    dev_env = [ :environment, :ensure_dev ]
+
     desc "Anonymize clients"
-    task clients: [ :environment, :ensure_dev ] do
-      clients = Client.all
-      progress_bar = ProgressBar.new("Clients", clients.count)
-
-      clients.each do |client|
-        client.anonymize!
-        client.save!
-        progress_bar.increment
-      end
-
-      puts "Done"
+    task clients: dev_env do
+      anonymize_collection Client.all
     end
 
     desc "Anonymize locations"
-    task locations: [ :environment, :ensure_dev ] do
-      locations = Location.all
-      progress_bar = ProgressBar.new("Locations", locations.count)
-
-      locations.each do |location|
-        location.anonymize!
-        location.save!
-        progress_bar.increment
-      end
-
-      puts "Done"
+    task locations: dev_env do
+      anonymize_collection Location.all
     end
 
     desc "Anonymize users (except id 1)"
-    task users: [ :environment, :ensure_dev ] do
-      users = User.where('id > 1').all
-      progress_bar = ProgressBar.new("Users", users.count)
-
-      users.each do |user|
-        user.anonymize!
-        user.save!
-        progress_bar.increment
-      end
-
-      puts "Done"
+    task users: dev_env do
+      anonymize_collection User.all
     end
   end
 
@@ -57,5 +53,6 @@ namespace :db do
   task anonymize: %w{
     db:anonymize:clients
     db:anonymize:locations
+    db:anonymize:users
   }
 end
