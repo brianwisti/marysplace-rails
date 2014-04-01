@@ -22,7 +22,16 @@ describe Anonymizable do
 
     it { should respond_to(:anonymize!) }
 
-    context "with no anonymization hooks"
+    context "with no anonymization hooks" do
+      it "should not change fields" do
+        thing = AnonymizableThing.new
+        value = "fnord"
+        thing.my_data = value
+        thing.anonymize!
+
+        expect(thing.my_data).to eql(value)
+      end
+    end
 
     context "with anonymization hooks"
 
