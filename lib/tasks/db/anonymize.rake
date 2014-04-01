@@ -37,6 +37,20 @@ namespace :db do
 
       puts "Done"
     end
+
+    desc "Anonymize users (except id 1)"
+    task users: [ :environment, :ensure_dev ] do
+      users = User.where('id > 1').all
+      progress_bar = ProgressBar.new("Users", users.count)
+
+      users.each do |user|
+        user.anonymize!
+        user.save!
+        progress_bar.increment
+      end
+
+      puts "Done"
+    end
   end
 
   desc "Anonymize significant data"

@@ -53,4 +53,63 @@ class User < ActiveRecord::Base
     end
   end
 
+  def anonymize!
+    self.name = self.anonymized_name
+    self.email = self.anonymized_email
+    self.login = self.anonymized_login
+    self.last_login_ip = self.anonymized_last_login_ip
+    self.current_login_ip = self.anonymized_current_login_ip
+
+    # These affect multiple fields, so they get special methods.
+    self.anonymize_password!
+    self.anonymize_avatar!
+  end
+
+  # Names are obvious PII
+  def anonymized_name
+    Faker::Name.name
+  end
+
+  # Emails are obvious PII
+  def anonymized_email
+    Faker::Internet.email self.name
+  end
+
+  # Login names are strong candidates for PII
+  def anonymized_login
+    if self.client
+      self.client.generate_login_code
+    else
+      Faker::Internet.user_name self.name
+    end
+  end
+
+  # IP addresses are potential PII
+  def anonymized_last_login_ip
+    if self.login_count > 0
+      Faker::Internet.ip_v4_address
+    end
+  end
+
+  # IP addresses are potential PII
+  def anonymized_current_login_ip
+    if self.login_count > 0
+      Faker::Internet.ip_v4_address
+    end
+  end
+
+  # User avatars are strong candidates for PII
+  # (Depending on organization policy they may be obvious PII)
+  #
+  # NOTE: Initial anonymization version just deletes avatar
+  def anonymize_avatar!
+    self.avatar = nil
+  end
+
+  # Simplify password for demo and anonymize to complicate
+  # cracking real passwords.
+  def anonymize_password!
+    self.password = self.password_confirmation = '1234'
+  end
+
 end
