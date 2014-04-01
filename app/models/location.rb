@@ -31,12 +31,36 @@ class Location < ActiveRecord::Base
   # Replaces fields in the client but does not save them. That allows the one 
   # "maybe" production usage: anonymized display of clients.
   def anonymize!
+    self.name = self.anonymized_name
+    self.phone_number = self.anonymized_phone_number
+    self.address = self.anonymized_address
+    self.city = self.anonymized_city
+    self.state = self.anonymized_state
+    self.postal_code = self.anonymized_postal_code
+  end
+
+  def anonymized_name
     descriptive = %w{House Center Place}.sample
-    self.name = "#{Faker::Name.first_name} #{descriptive}"
-    self.phone_number = Faker::PhoneNumber.phone_number
-    self.address = Faker::Address.street_address
-    self.city = Faker::Address.city
-    self.state = Faker::Address.state_abbr
-    self.postal_code = Faker::Address.postcode
+    "#{Faker::Name.first_name} #{descriptive}"
+  end
+
+  def anonymized_phone_number
+    Faker::PhoneNumber.phone_number
+  end
+
+  def anonymized_address
+    Faker::Address.street_address
+  end
+
+  def anonymized_city
+    Faker::Address.city
+  end
+
+  def anonymized_state
+    Faker::Address.state_abbr
+  end
+
+  def anonymized_postal_code
+    Faker::Address.postcode
   end
 end
