@@ -11,6 +11,8 @@ describe Anonymizable do
 
   describe ".anonymizes" do
     it { should respond_to(:anonymizes) }
+
+    it "accepts (:field, block)"
   end
 
   describe ".anonymization_rules" do

@@ -7,7 +7,7 @@ module Anonymizable
 
   module Rules
     # Defines a rule for anonymizing a specific field in an instance
-    def anonymizes
+    def anonymizes field, &block
     end
 
     # Returns my current rules for anonymizing an instance
