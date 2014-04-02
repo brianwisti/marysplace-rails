@@ -3,41 +3,33 @@ require 'anonymizable'
 class AnonymizableThing
   include Anonymizable
 
-  attr_accessor :my_data
+  attr_reader :w, :x, :y, :z
+
+  def initialize
+    @x = "aardvark"
+    @y = "banana"
+    @z = "crepe"
+  end
+
+  anonymizes(:x) { "fnord" }
+
+  anonymizes :y do |thing|
+    thing.y.upcase 
+  end
 end
 
 describe Anonymizable do
   subject { AnonymizableThing }
 
-  describe ".anonymizes" do
-    it { should respond_to(:anonymizes) }
-
-    it "accepts (:field, block)"
-  end
-
-  describe ".anonymization_rules" do
-    it { should respond_to(:anonymization_rules) }
-  end
-
   describe "#anonymize!" do
-    subject { AnonymizableThing.new }
+    let(:thing)      { AnonymizableThing.new }
+    let(:anonymized) { AnonymizableThing.new.anonymize! }
 
-    it { should respond_to(:anonymize!) }
-
-    context "with no anonymization hooks" do
-      it "should not change fields" do
-        thing = AnonymizableThing.new
-        value = "fnord"
-        thing.my_data = value
-        thing.anonymize!
-
-        expect(thing.my_data).to eql(value)
+    context "field with no anonymization rule" do
+      it "should be unchanged" do
+        expect(anonymized.z).to eq(thing.z)
       end
     end
-
-    context "with anonymization hooks"
-
-    context "with anonymization order specified"
   end
 
 end
