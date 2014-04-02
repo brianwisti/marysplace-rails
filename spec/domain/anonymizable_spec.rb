@@ -106,6 +106,13 @@ describe Anonymizable do
     end
   end
 
+  describe ".anonymization_rule" do
+    subject(:aliased) { anonymizable.method(:anonymization_rule) }
+    it {
+      should eq(anonymizable.method(:define_anonymization_rule))
+    }
+  end
+
   describe ".anonymize!" do
     subject { anonymizable }
     it      { should respond_to(:anonymize!) }

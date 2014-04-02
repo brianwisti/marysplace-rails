@@ -42,9 +42,13 @@ module Anonymizable
   # NOTE: This is the primitive version. It assumes you know what
   # you're talking about. Any errors from applying rule +rule_name+
   # to your objects are between you and your code.
+  #
+  # +anonymization_rule+ is an alias.
   def define_anonymization_rule rule_name, &rule
     self.anonymization_rules[rule_name] = rule
   end
+
+  alias_method :anonymization_rule, :define_anonymization_rule
 
   # Apply anonymization rule +rule_name+ to +instance+
   def apply_rule rule_name, instance
@@ -71,7 +75,6 @@ module Anonymizable
   def get_anonymization_rule rule_name
     self.anonymization_rules[rule_name]
   end
-
 
   # Apply all of my rules to +object+
   #
