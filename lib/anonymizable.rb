@@ -1,4 +1,31 @@
 # Simplifies definition of anonymization rules for a class
+#
+#   require 'anonymizable'
+#   require 'faker' # Handy for this specific example
+#
+#   class ImportantThing
+#     extend Anonymizable
+#     attr_accessor :name
+#
+#     define_anonymization_rule(:rule) do |thing|
+#       thing.name = Faker::Name.name
+#     end
+#   end
+#
+#   thing = ImportantThing.new
+#   # Load important things into your ImportantThing
+#   thing.name = "President Hasselhoff"
+#
+#   # ... when suddenly you must anonymize! ...
+#   ImportantThing.anonymize! thing
+#
+#   # or if you only care about a specific rule
+#   ImportantThing.apply_rule :rule, thing
+#   thing.name # => "Kayla Wehner"
+#
+# +anonymize!+ just invokes blocks. Ideally those blocks only
+# directly touch the instance objects handed to them, but I will not
+# enforce your coding habits from over here.
 module Anonymizable
   def self.extended base
     class << base
@@ -43,5 +70,15 @@ module Anonymizable
   # Returns nil if the rule is not defined.
   def get_anonymization_rule rule_name
     self.anonymization_rules[rule_name]
+  end
+
+
+  # Apply all of my rules to +object+
+  #
+  # Order of rule application is not defined!
+  def anonymize! object
+    self.anonymization_rules.keys.each do |rule_name|
+      self.apply_rule rule_name, object
+    end
   end
 end

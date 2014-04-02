@@ -5,6 +5,8 @@ describe Anonymizable do
     Struct.new(:x, :y, :z) { extend Anonymizable }
   end
 
+  let(:replacement) { "fnord" }
+
   describe ".define_anonymization_rule rule_name { rule }" do
     subject { anonymizable }
 
@@ -67,7 +69,6 @@ describe Anonymizable do
 
   describe ".forget_anonymization_rule rule_name" do
     subject { anonymizable }
-
     it { should respond_to(:forget_anonymization_rule) }
 
     context "existence of a deleted rule" do
@@ -89,7 +90,6 @@ describe Anonymizable do
     it { should respond_to(:apply_rule) }
 
     context "with a rule defined" do
-      let(:replacement) { "fnord" }
 
       before do
         anonymizable.define_anonymization_rule :change_x do |a|
@@ -103,6 +103,23 @@ describe Anonymizable do
         subject      { thingy }
         its(:x)      { should eq(replacement) }
       end
+    end
+  end
+
+  describe ".anonymize!" do
+    subject { anonymizable }
+    it      { should respond_to(:anonymize!) }
+
+    before do
+      anonymizable.define_anonymization_rule :change_x do |a|
+        a.x = replacement
+      end
+    end
+
+    context "applied to an Anonymizable" do
+      subject(:thingy) { anonymizable.new }
+      before           { anonymizable.anonymize! thingy }
+      its(:x)          { should eq(replacement) }
     end
   end
 end
