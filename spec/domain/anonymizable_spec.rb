@@ -70,18 +70,39 @@ describe Anonymizable do
 
     it { should respond_to(:forget_anonymization_rule) }
 
-    context "when rule exists" do
+    context "existence of a deleted rule" do
       let(:rule) { :my_rule }
 
-      before :each do
+      before do
         anonymizable.define_anonymization_rule(rule) { "fnord" }
+        anonymizable.forget_anonymization_rule rule
       end
 
-      it "removes the rule" do
-        anonymizable.forget_anonymization_rule(rule)
-        expect(anonymizable.has_anonymization_rule?(rule)).to be_false
-      end
+      subject { anonymizable.has_anonymization_rule? rule }
+      it      { should be_false }
     end
   end
 
+  describe ".apply_rule rule_name" do
+    subject { anonymizable }
+
+    it { should respond_to(:apply_rule) }
+
+    context "with a rule defined" do
+      let(:replacement) { "fnord" }
+
+      before do
+        anonymizable.define_anonymization_rule :change_x do |a|
+          a.x = replacement
+        end
+      end
+
+      context "applied to an Anonymizable" do
+        let(:thingy) { anonymizable.new }
+        before       { anonymizable.apply_rule :change_x, thingy }
+        subject      { thingy }
+        its(:x)      { should eq(replacement) }
+      end
+    end
+  end
 end
