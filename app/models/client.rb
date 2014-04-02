@@ -1,6 +1,9 @@
+require 'anonymizable'
 require 'zlib' # TODO: Is there a better place to require this?
 
 class Client < ActiveRecord::Base
+  extend Anonymizable
+
   attr_accessible :added_by, :added_by_id, :birthday, :current_alias,
     :full_name, :last_edited_by, :last_edited_by_id, :notes, :oriented_on,
     :other_aliases, :phone_number, :point_balance, :is_active, :is_flagged
@@ -230,31 +233,17 @@ class Client < ActiveRecord::Base
   # 
   # Replaces fields in the client but does not save them. That allows the one 
   # "maybe" production usage: anonymized display of clients.
-  def anonymize!
-    self.full_name = self.anonymized_full_name
-    self.oriented_on = self.anonymized_oriented_on
-    self.phone_number = self.anonymized_phone_number
-    self.birthday = self.anonymized_birthday
-    self.notes = self.anonymized_notes
-    self.current_alias = self.anonymized_current_alias
-    self.other_aliases = self.anonymized_other_aliases
-  end
+  anonymizes(:full_name) { Faker::Name.name }
 
-  def anonymized_full_name
-    Faker::Name.name
-  end
-
-  def anonymized_oriented_on
-    if self.points_entries.size > 0
-      self.points_entries.order(:performed_on).last.performed_on
+  anonymizes :oriented_on do |client|
+    if client.points_entries.size > 0
+      client.points_entries.order(:performed_on).last.performed_on
     end
   end
 
-  def anonymized_phone_number
-    Faker::PhoneNumber.phone_number
-  end
-
-  def anonymized_birthday
+  anonymizes(:phone_number) { Faker::PhoneNumber.phone_number }
+  
+  anonymizes :birthday do 
     # Reasonable age range is 18-90.
     # TODO: simulate clients that are children of other clients.
     age = Random.rand(18..90)
@@ -262,23 +251,19 @@ class Client < ActiveRecord::Base
     age.years.ago + offset.days
   end
 
-  def anonymized_notes
-    Faker::Lorem.paragraphs(Random.rand(0..3)).join
-  end
+  anonymizes(:notes) { Faker::Lorem.paragraphs(Random.rand(0..3)).join }
 
-  def anonymized_current_alias
-    names = self.full_name.split ' '
+  anonymizes :current_alias  do |client|
+    names = client.full_name.split ' '
     usual_pattern = "#{names.shift} " + names.map { |name| "#{name[0]}." }.join(' ')
     if Client.where(current_alias: usual_pattern).count == 0
       usual_pattern
-    elsif Client.where(current_alias: self.full_name).count == 0
-      self.full_name
+    elsif Client.where(current_alias: client.full_name).count == 0
+      client.full_name
     else
-      "#{self.full_name} #{self.id}"
+      "#{client.full_name} #{client.id}"
     end
   end
 
-  def anonymized_other_aliases
-    ''
-  end
+  anonymizes(:other_aliases) { '' }
 end

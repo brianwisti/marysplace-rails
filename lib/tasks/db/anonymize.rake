@@ -16,7 +16,12 @@ end
 def anonymize_collection collection
   say = collection.first.class.to_s.pluralize
   show_progress collection, say do |record|
-    record.anonymize!
+    if record.class.respond_to? :anonymize!
+      record.class.anonymize! record
+    elsif record.respond_to :anonymize!
+      record.anonymize!
+    end
+
     record.save!
   end
 end

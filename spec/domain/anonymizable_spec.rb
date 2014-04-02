@@ -119,7 +119,7 @@ describe Anonymizable do
 
     context "for an existing field" do
       let(:field)      { :x }
-      let(:rule)       { Proc.new { |obj| replacement } }
+      let(:rule)       { Proc.new { replacement } }
 
       before do
         anonymizable.anonymizes field, &rule
