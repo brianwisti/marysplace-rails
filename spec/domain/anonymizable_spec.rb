@@ -113,6 +113,29 @@ describe Anonymizable do
     }
   end
 
+  describe ".anonymizes(:field) { rule }" do
+    subject { anonymizable }
+    it      { should respond_to(:anonymizes) }
+
+    context "for an existing field" do
+      let(:field)      { :x }
+      let(:rule)       { Proc.new { |obj| replacement } }
+
+      before do
+        anonymizable.anonymizes field, &rule
+      end
+
+      subject(:return) { anonymizable.anonymizes(field, &rule) }
+      it               { should be_an_instance_of Proc }
+
+      context "when applied" do
+        subject(:thing) { anonymizable.new }
+        before          { anonymizable.anonymize! thing }
+        its(:x)         { should eq(replacement) }
+      end
+    end
+  end
+
   describe ".anonymize!" do
     subject { anonymizable }
     it      { should respond_to(:anonymize!) }

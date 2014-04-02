@@ -50,6 +50,16 @@ module Anonymizable
 
   alias_method :anonymization_rule, :define_anonymization_rule
 
+  # Create a rule for anonymizing specific fields
+  def anonymizes field_name, &rule
+    self.define_anonymization_rule field_name do |instance|
+      value    = rule.call instance
+      accessor = "#{field_name.to_s}="
+
+      instance.method(accessor).call value
+    end 
+  end
+
   # Apply anonymization rule +rule_name+ to +instance+
   def apply_rule rule_name, instance
     rule = self.get_anonymization_rule rule_name
