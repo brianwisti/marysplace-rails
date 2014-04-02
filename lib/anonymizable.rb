@@ -1,30 +1,37 @@
 # Simplifies definition of anonymization rules for a class
 module Anonymizable
-  def self.included base
+  def self.extended base
     class << base
-      @@anonymization_rules = Hash.new
+      attr_accessor :anonymization_rules
     end
 
-    base.send :include, Messages
-    base.extend Rules
-  end 
-
-  module Rules
-    # Defines a rule for anonymizing a specific field in an instance
-    def anonymizes field, &block
-
-      if block_given?
-        # who cares?
-      end
-
-      return field
-    end
+    base.anonymization_rules = Hash.new
   end
 
-  module Messages
-    # Anonymizes my fields in accordance to my `anonymizes` rules
-    def anonymize!
-      return self
-    end
+  # Set a rule for anonymizing some information
+  #
+  # Will create a rule, or replace an existing rule.
+  def define_anonymization_rule rule_name, &rule
+    self.anonymization_rules[rule_name] = rule
+  end
+
+  # Remove an anonymization rule
+  #
+  # Removing a nonexistent rule is your business. This method
+  # only cares that the rule does not exist when it's done.
+  def forget_anonymization_rule rule_name
+    self.anonymization_rules.delete rule_name
+  end
+
+  # Check for existence of a rule
+  def has_anonymization_rule? rule_name
+    self.anonymization_rules.has_key? rule_name
+  end
+
+  # Fetch a rule block by name
+  #
+  # Returns nil if the rule is not defined.
+  def get_anonymization_rule rule_name
+    self.anonymization_rules[rule_name]
   end
 end
