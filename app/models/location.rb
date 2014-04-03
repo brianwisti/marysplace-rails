@@ -1,4 +1,8 @@
+require 'anonymizable'
+
 class Location < ActiveRecord::Base
+  extend Anonymizable
+
   attr_accessible :name, :phone_number, :address, :city, :state, :postal_code
 
   validates :name,
@@ -26,41 +30,28 @@ class Location < ActiveRecord::Base
     return Location.first
   end
 
-  # Fill my identifying fields with fake data
-  # 
-  # Replaces fields in the client but does not save them. That allows the one 
-  # "maybe" production usage: anonymized display of clients.
-  def anonymize!
-    self.name = self.anonymized_name
-    self.phone_number = self.anonymized_phone_number
-    self.address = self.anonymized_address
-    self.city = self.anonymized_city
-    self.state = self.anonymized_state
-    self.postal_code = self.anonymized_postal_code
-  end
-
-  def anonymized_name
+  anonymizes :name do
     descriptive = %w{House Center Place}.sample
     "#{Faker::Name.first_name} #{descriptive}"
   end
 
-  def anonymized_phone_number
+  anonymizes :phone_number do
     Faker::PhoneNumber.phone_number
   end
 
-  def anonymized_address
+  anonymizes :address do
     Faker::Address.street_address
   end
 
-  def anonymized_city
+  anonymizes :city do
     Faker::Address.city
   end
 
-  def anonymized_state
+  anonymizes :state do
     Faker::Address.state_abbr
   end
 
-  def anonymized_postal_code
+  anonymizes :postal_code do
     Faker::Address.postcode
   end
 end

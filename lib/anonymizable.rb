@@ -1,15 +1,13 @@
 # Simplifies definition of anonymization rules for a class
 #
 #   require 'anonymizable'
-#   require 'faker' # Handy for this specific example
+#   require 'faker' # Handy for generating fake data
 #
 #   class ImportantThing
 #     extend Anonymizable
 #     attr_accessor :name
 #
-#     define_anonymization_rule(:rule) do |thing|
-#       thing.name = Faker::Name.name
-#     end
+#     anonymizes(:name) { Faker::Name.name }
 #   end
 #
 #   thing = ImportantThing.new
@@ -54,8 +52,7 @@ module Anonymizable
   def anonymizes field_name, &rule
     self.define_anonymization_rule field_name do |instance|
       value    = rule.call instance
-      accessor = "#{field_name.to_s}="
-
+      accessor = field_name.to_s + "="
       instance.method(accessor).call value
     end 
   end
