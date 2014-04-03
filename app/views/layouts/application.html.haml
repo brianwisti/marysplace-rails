@@ -14,12 +14,9 @@
     - if current_user
       = render partial: "layouts/site-navbar"
     .container-fluid
-      - if content_for? :title
-        .row-fluid
-          %h2= yield :title
-      .span3
-        .well.sidebar-nav
-          %ul.nav
+      .row
+        .col-sm-3.col-md-2.sidebar
+          %ul.nav.nav-sidebar
             - sections.each do |section|
               - if section[:active]
                 %li.active= link_to section[:title], section[:url]
@@ -27,13 +24,15 @@
                 %li= link_to section[:title], section[:url]
           - if content_for? :sidebar
             = yield :sidebar
-      .span9
-        .log
-          - if flash[:notice]
-            %p#notice.text-info= flash[:notice]
-          - if flash[:alert]
-            %p#alert.alert= flash[:alert]
-        = yield
+        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+          - if content_for? :title
+            %h1.page-header= yield :title
+          .log
+            - if flash[:notice]
+              %p#notice.text-info= flash[:notice]
+            - if flash[:alert]
+              %p#notice.alert= flash[:alert]
+          = yield 
     %footer.text-center
       %p
         Written by

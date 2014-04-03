@@ -1,32 +1,20 @@
-<div class="container">
-  <div class="jumbotron">
-    <h1>Mary's Place</h1>
-    <div class="lead centered-pills">
-      <ul class="nav nav-pills nav-justified">
-        <li>
-          <a href="http://marysplaceseattle.org">Our Blog</a>
-        </li>
-        <li>
-          <a href="https://twitter.com/MarysPlaceWA/">Twitter</a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/marysplacedaycenter">Facebook</a>
-        </li>
-      </ul>
+<%= content_for(:title) do %>Dashboard<% end %>
+<div class="container-fluid">
+  <div class="row">
+    <div>
       <%= render 'alerts', email_alert_needed: @email_alert_needed %>
       <%= render 'clients/search_form' %>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-xs-6 col-sm-3">
       <%= render 'client_flags', client_flags: @client_flags %>
     </div>
-
-    <div class="col-lg-4">
+    <div class="col-xs-6 col-sm-3">
       <%= render 'checkins', checkin_count: @checkin_count %>
     </div>
-    <div class="col-lg-4">
+    <div class="col-xs-6 col-sm-3">
       <%= render 'entry_points' %>
     </div>
   </div>
