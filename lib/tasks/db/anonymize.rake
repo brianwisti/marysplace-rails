@@ -45,7 +45,12 @@ namespace :db do
 
     desc "Anonymize users (except id 1)"
     task users: dev_env do
-      anonymize_collection User.all
+      anonymize_collection User.where('id > 1').all
+    end
+
+    desc "Anonymize client flags"
+    task client_flags: dev_env do
+      anonymize_collection ClientFlag.all
     end
   end
 
@@ -54,5 +59,6 @@ namespace :db do
     db:anonymize:clients
     db:anonymize:locations
     db:anonymize:users
+    db:anonymize:client_flags
   }
 end

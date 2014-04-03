@@ -1,4 +1,6 @@
 class Checkin < ActiveRecord::Base
+  extend Anonymizable
+
   attr_accessible :checkin_at, :notes, :client, :user, :client_id, :user_id, :is_valid, :location_id
   belongs_to :client
   belongs_to :user
@@ -112,4 +114,5 @@ class Checkin < ActiveRecord::Base
     today = Date.today
     self.on(today)
   end
+
 end

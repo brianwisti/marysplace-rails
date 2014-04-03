@@ -1,4 +1,8 @@
+require 'anonymizable'
+
 class ClientFlag < ActiveRecord::Base
+  extend Anonymizable
+
   attr_accessible :action_required, :consequence, :client_id, :created_by, :created_by_id,
     :description, :expires_on, :is_blocking, :resolved_by_id, :resolved_on, :can_shop
 
@@ -50,6 +54,18 @@ class ClientFlag < ActiveRecord::Base
       if self.client.is_flagged == false
         self.client.update_attributes is_flagged: true
       end
+    end
+  end
+
+  anonymizes(:consequence)     { Faker::Lorem.paragraph }
+  anonymizes(:action_required) { Faker::Lorem.paragraph }
+
+  anonymizes :description do |flag|
+    # Let some automatically generated descriptions pass.
+    if flag.description =~ /^Bailed on .+ ([-\d]+)$/
+      "Bailed on chore #{$1}"
+    else
+      Faker::Lorem.paragraph
     end
   end
 end
