@@ -1,11 +1,33 @@
-<p>Hello <%= link_to current_user.login, current_user %>!</p>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Mary's Place</h1>
+    <div class="lead centered-pills">
+      <ul class="nav nav-pills nav-justified">
+        <li>
+          <a href="http://marysplaceseattle.org">Our Blog</a>
+        </li>
+        <li>
+          <a href="https://twitter.com/MarysPlaceWA/">Twitter</a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/marysplacedaycenter">Facebook</a>
+        </li>
+      </ul>
+      <%= render 'alerts', email_alert_needed: @email_alert_needed %>
+      <%= render 'clients/search_form' %>
+    </div>
+  </div>
 
-<%= render 'alerts', email_alert_needed: @email_alert_needed %>
+  <div class="row">
+    <div class="col-lg-4">
+      <%= render 'client_flags', client_flags: @client_flags %>
+    </div>
 
-<%= render 'clients/search_form' %>
-
-<%= render 'client_flags', client_flags: @client_flags %>
-
-<%= render 'checkins', checkin_count: @checkin_count %>
-
-<%= render 'entry_points' %>
+    <div class="col-lg-4">
+      <%= render 'checkins', checkin_count: @checkin_count %>
+    </div>
+    <div class="col-lg-4">
+      <%= render 'entry_points' %>
+    </div>
+  </div>
+</div>

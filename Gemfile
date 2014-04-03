@@ -32,13 +32,14 @@ group :production do
   gem 'rails_12factor'
 end
 
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'bootstrap-sass', '~> 2.3.1.0'
   #gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'bootstrap-sass', '~> 3.1.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby

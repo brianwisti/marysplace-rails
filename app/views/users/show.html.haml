@@ -7,6 +7,10 @@
 
 = image_tag @user.avatar.url(:square)
 
+- if @user == current_user
+  %p 
+    This is you!
+    = link_to "Sign Out", logout_url, method: :delete
 
 %dl
   %dt Login

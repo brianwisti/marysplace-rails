@@ -13,7 +13,7 @@
  */
 
 @import "bootstrap";
-@import "bootstrap-responsive";
+@import "bootstrap/theme";
 
 td.numeric {
   text-align: right;
@@ -42,6 +42,28 @@ th .current {
   }
 }
 
+.jumbotron {
+  text-align: center;
+}
+
+.centered-pills {
+  text-align: center;
+
+  ul.nav-pills {
+    display: inline-block;
+
+    li {
+      display: inline;
+    }
+
+    a {
+      float: left;
+    }
+  }
+}
+
+
+/* 
 @media 
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px) {
@@ -60,7 +82,7 @@ only screen and (max-width: 760px),
   }
 
   td {
-    /* Behave like a "row" */
+    // Behave like a "row"
     border: none;
     border-bottom: 1px solid #eee;
     position: relative;
@@ -68,3 +90,4 @@ only screen and (max-width: 760px),
   }
 
 }
+*/

@@ -1,38 +1,39 @@
 !!! 5
-%html
+%html{lang: "en"}
   %head
     %meta{charset: "utf-8"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     %title
       Mary's Place
       - if content_for? :title
         \: #{yield :title}
-    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
     = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tags
-  %body
-    = render partial: "layouts/site-navbar"
+  %body{role: "document"}
+    - if current_user
+      = render partial: "layouts/site-navbar"
     .container-fluid
       - if content_for? :title
         .row-fluid
           %h2= yield :title
-      - if content_for? :sidebar
-        .span3
-          .well.sidebar-nav
+      .span3
+        .well.sidebar-nav
+          %ul.nav
+            - sections.each do |section|
+              - if section[:active]
+                %li.active= link_to section[:title], section[:url]
+              - else
+                %li= link_to section[:title], section[:url]
+          - if content_for? :sidebar
             = yield :sidebar
-        .span9
-          .log
-            - if flash[:notice]
-              %p#notice.text-info= flash[:notice]
-            - if flash[:alert]
-              %p#alert.alert= flash[:alert]
-          = yield
-      - else
+      .span9
         .log
           - if flash[:notice]
             %p#notice.text-info= flash[:notice]
           - if flash[:alert]
             %p#alert.alert= flash[:alert]
-          = yield
+        = yield
     %footer.text-center
       %p
         Written by

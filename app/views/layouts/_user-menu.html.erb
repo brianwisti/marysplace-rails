@@ -1,0 +1,21 @@
+<a href="#" class="button dropdown-toggle" data-toggle="dropdown">
+  <span class="icon-user"></span>
+  <% if message_count > 0 -%>
+    <span class="badge badge-important"><%= message_count %></span>
+  <% end -%>
+  <span class="hidden-phone"><%= user.login %></span>
+  <span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+  <li><%= link_to user.login, user %></li>
+  <li>
+    <% if message_count > 0 %>
+      <%= link_to "#{message_count} News #{'Item'.pluralize message_count}",
+          messages_path, 
+          class: "badge badge-important" %>
+    <% else %>
+      <%= link_to "News", messages_path %>
+    <% end %>
+  </li>
+  <li><%= link_to "Sign Out", logout_url, method: :delete %></li>
+</ul>

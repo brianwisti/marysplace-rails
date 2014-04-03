@@ -24,6 +24,7 @@
 /.c9revisions
 coverage
 public/system
+public/assets
 *.dump
 tags
 /.*env
