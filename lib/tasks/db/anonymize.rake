@@ -16,7 +16,9 @@ end
 def anonymize_collection collection
   say = collection.first.class.to_s.pluralize
   show_progress collection, say do |record|
-    record.class.anonymize! record
+    begin
+      record.class.anonymize! record
+    end until record.valid?
     record.save!
   end
 end
@@ -52,6 +54,11 @@ namespace :db do
     task client_flags: dev_env do
       anonymize_collection ClientFlag.all
     end
+
+    desc "Anonymize points entry types"
+    task points_entry_types: dev_env do
+      anonymize_collection PointsEntryType.where("name not in ('Purchase', 'Add-On Points', 'Adjustment', 'Adjustment-Penalty')").all
+    end
   end
 
   desc "Anonymize significant data"
@@ -60,5 +67,6 @@ namespace :db do
     db:anonymize:locations
     db:anonymize:users
     db:anonymize:client_flags
+    db:anonymize:points_entry_types
   }
 end

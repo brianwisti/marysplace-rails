@@ -1,3 +1,5 @@
+require 'anonymizable'
+
 class Checkin < ActiveRecord::Base
   extend Anonymizable
 
