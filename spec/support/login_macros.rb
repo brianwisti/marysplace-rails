@@ -14,6 +14,6 @@ module LoginMacros
     visit root_path
     fill_in "Login",    with: user.login
     fill_in "Password", with: user.password
-    click_button "Login"
+    click_button "Sign In"
   end
 end

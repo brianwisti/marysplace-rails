@@ -8,7 +8,7 @@ feature 'User Management' do
     visit root_path
     fill_in "Login",    with: admin.login
     fill_in "Password", with: admin.password
-    click_button "Login"
+    click_button "Sign In"
 
     visit root_path
     expect {

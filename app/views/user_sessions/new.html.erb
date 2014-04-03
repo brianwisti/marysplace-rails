@@ -1,13 +1,4 @@
-<%= content_for :title do %>Sign In<% end %>
-
-<%= content_for :sidebar do %>
-  <ul class="nav nav-list">
-    <li class="nav-header">No Account?</li>
-    <li><%= link_to "Sign Up", new_user_path %></li>
-  </ul>
-<% end %>
-
-<%= form_for @user_session, url: user_session_path do |f| %>
+<%= form_for @user_session, url: user_session_path, html: { class: "form-signin", role: "form" } do |f| %>
   <% if @user_session.errors.any? %>
     <div id="error_explanation">
       <ul>
@@ -19,29 +10,21 @@
   <% end %>
 
   <fieldset>
-    <legend>Sign In</legend>
-
-    <div class="control-group">
-      <%= f.label :login %>
-      <div class="controls">
-        <%= f.text_field :login %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= f.label :password %>
-      <div class="controls">
-        <%= f.password_field :password %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= f.label :remember_me, class: "checkbox" do %>
-        <%= f.check_box :remember_me %>
-        Remember Me
-      <% end %>
-    </div>
-
-    <%= f.submit "Login", class: "btn" %>
+    <legend>Please Sign In</legend>
+    <%= f.label :login %>
+    <%= f.text_field :login, class: "form-control", placeholder: "login", require: true, autofocus: true %>
+    <%= f.label :password %>
+    <%= f.password_field :password, class: "form-control", placeholder: "password", required: true %>
+    <%= f.label :remember_me, class: "checkbox" do %>
+      <%= f.check_box :remember_me %>
+      Remember Me
+    <% end %>
   </fieldset>
+
+  <%= f.submit "Sign In", class: "btn btn-primary btn-block" %>
+  <p class="small">
+    No Account?
+    <%= link_to "Sign Up", new_user_path %>
+  </p>
 <% end %>
+

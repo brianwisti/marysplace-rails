@@ -9,9 +9,6 @@
       %li=link_to "New", new_points_entry_path
 
 - if notice
-  %p#notice
-    %span.label Notice
-    = notice
   %p
     %span.label.label-info Info
     = @points_entry.client_current_alias
