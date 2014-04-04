@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby "2.1.0"
+ruby "2.1.1"
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.17'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -65,6 +65,11 @@ end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
+
+# Presumably security-related stuff. Couldn't get rake tasks to run
+# without these installed by Bundler.
+gem 'bcrypt'
+gem 'scrypt'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

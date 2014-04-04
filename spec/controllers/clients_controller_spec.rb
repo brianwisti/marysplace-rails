@@ -210,10 +210,28 @@ describe ClientsController do
       }.to change(User, :count).by(1)
     end
 
-    it "can access card" do
-      get :card, id: client
-      expect(response).to render_template(layout: :card)
+    context "user who just created a client login" do
+      let(:client) { create :client }
+      let(:password) { "waffle" }
+      
+      before do
+        post :create_login, id: client,
+          password: password,
+          password_confirmation: password
+      end
+
+      it "can access card" do
+        get :card, id: client
+        expect(response).to render_template(layout: :card)
+      end
+
+      it "does not flash an error" do
+        get :card, id: client
+        expect(flash[:error]).to be_nil
+      end
     end
+
+
 
     it "can access purchases" do
       get :purchases, id: client
