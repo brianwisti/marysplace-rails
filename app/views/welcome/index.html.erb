@@ -8,14 +8,20 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-6 col-sm-3">
-      <%= render 'client_flags', client_flags: @client_flags %>
+    <div class="col-xs-12 col-sm-4 text-center">
+      <div class="panel panel-default">
+        <%= render 'entry_points' %>
+      </div>
     </div>
-    <div class="col-xs-6 col-sm-3">
-      <%= render 'checkins', checkin_count: @checkin_count %>
+    <div class="col-xs-12 col-sm-4 text-center">
+      <div class="panel panel-default">
+        <%= render 'client_flags', client_flags: @client_flags %>
+      </div>
     </div>
-    <div class="col-xs-6 col-sm-3">
-      <%= render 'entry_points' %>
+    <div class="col-xs-12 col-sm-4 text-center">
+      <div class="panel panel-default">
+        <%= render 'checkins', checkin_count: @checkin_count %>
+      </div>
     </div>
   </div>
 </div>

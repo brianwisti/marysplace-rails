@@ -6,7 +6,7 @@ feature "Client Checkins" do
     @client = create :client
     sign_in @admin
     visit root_path
-    click_link 'Checkins'
+    click_link 'Show Checkins'
   end
 
   scenario "with no locations is impossible" do
@@ -38,7 +38,7 @@ feature "Client Checkins" do
     click_button "Create Checkin"
 
     visit root_path
-    click_link 'Checkins'
+    click_link 'Show Checkins'
     click_link 'New Checkin'
     expect(find_field('checkin[location_id]').find('option[selected]').text).to eql(loc_2.name)
   end
@@ -51,7 +51,7 @@ feature "Self Checkin" do
     @client = create :client_with_badge
     sign_in @admin
     visit root_path
-    click_link 'Checkins'
+    click_link 'Show Checkins'
   end
 
   scenario "selfcheck with no locations is impossible" do
@@ -83,7 +83,7 @@ feature "Self Checkin" do
     click_button("Checkin")
 
     visit root_path
-    click_link 'Checkins'
+    click_link 'Show Checkins'
     click_link 'Start Self Checkins'
     expect(find_field('_location_id').find('option[selected]').text).to eql(loc_2.name)
   end

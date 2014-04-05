@@ -1,12 +1,17 @@
 <% search_query = nil if local_assigns[:search_query].nil? %>
 
-<%= form_tag(search_clients_path, method: :get, class: "form-search") do %>
-  <div class="form-group">
-    <%= label_tag 'q', 'Client Name', class: "sr-only" %>
-    <%= text_field_tag 'q', search_query, 
-      placeholder: "Search for a client...", 
-      class: "form-control input-medium search-query" %>
-  </div>
+<div class="panel panel-default">
+  <div class="panel-heading">Find a Client</div>
+  <div class="panel-body">
+    <%= form_tag(search_clients_path, method: :get, role: "form") do %>
+      <div class="form-group">
+        <%= label_tag 'q', 'Client Name', class: 'sr-only' %>
+        <%= text_field_tag 'q', search_query, 
+          placeholder: "Client name...", 
+          class: "form-control input-medium search-query" %>
+      </div>
 
-  <%= button_tag "Search", type: "submit", class: "btn btn-default" %>
-<% end %>
+      <%= button_tag "Find", type: "submit", class: "btn btn-default btn-block" %>
+    <% end %>
+  </div>
+</div>

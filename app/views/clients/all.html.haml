@@ -4,6 +4,8 @@
 = content_for(:sidebar) do
   = render 'sidebar'
 
+= render 'clients/search_form', search_query: @query
+
 = page_entries_info @clients
 
 = paginate @clients

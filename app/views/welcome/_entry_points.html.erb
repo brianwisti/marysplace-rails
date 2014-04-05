@@ -1,5 +1,10 @@
-<% if can? :create, PointsEntry %>
-  <div class="summary">
-    <%= link_to "Log Points", new_points_entry_path, class: "btn btn-block" %>
-  </div>
+<% if can? :show, PointsEntry %>
+  <h1><%= 0 %></h1>
+  <p class="small">Points entries logged</p>
+  <ul class="nav nav-pills nav-stacked">
+    <li><%= link_to "Show Points Log", points_entries_path %></li>
+    <% if can? :create, PointsEntry %>
+      <li><%= link_to "Enter Points", new_points_entry_path %></li>
+    <% end %>
+  </ul>
 <% end %>

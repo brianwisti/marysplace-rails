@@ -1,13 +1,10 @@
 <% if can? :show, ClientFlag %>
-  <div class="row-fluid flags">
-    <div class="span8">
-      <%= link_to client_flags.count, client_flags_path %>
-      Client Flags
-    </div>
-    <div class="span4">
+  <h1><%= client_flags.count %></h1>
+  <p class="small">Active Flags</p>
+  <ul class="nav nav-pills nav-stacked">
+    <li><%= link_to "Show Flags", client_flags_path %></li>
     <% if can? :create, ClientFlag %>
-      <%= link_to "Add Flag", new_client_flag_path, class: "btn btn-block" %>
+      <li><%= link_to "Add Flag", new_client_flag_path %></li>
     <% end %>
-  </div>
-  </div>
+  </ul>
 <% end %>
