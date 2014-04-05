@@ -10,10 +10,10 @@ module LoginMacros
   end
 
   # A session starter that interacts with the site interface.
-  def sign_in(user)
+  def sign_in(user, password: 'waffle')
     visit root_path
     fill_in "Login",    with: user.login
-    fill_in "Password", with: user.password
+    fill_in "Password", with: password
     click_button "Sign In"
   end
 end
