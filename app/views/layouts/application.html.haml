@@ -22,11 +22,11 @@
                 %li.active= link_to section[:title], section[:url]
               - else
                 %li= link_to section[:title], section[:url]
-          - if content_for? :sidebar
-            = yield :sidebar
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
           - if content_for? :title
             %h1.page-header= yield :title
+          - if content_for? :sidebar
+            = yield :sidebar
           .log
             - if flash[:notice]
               %p#notice.text-info= flash[:notice]
