@@ -75,6 +75,13 @@ body {
   }
 }
 
+.navbar-inverse .nav-pills a {
+  color: white;
+  &:hover {
+    color: black;
+  }
+}
+
 .nav-sidebar {
   margin-right: -21px;
   margin-bottom: 20px;
