@@ -58,8 +58,10 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'capybara', '~> 2.0.2'
-  gem 'database_cleaner', '~> 0.9.1'
+  gem 'selenium-webdriver', '~> 2.0'
+  gem 'capybara-webkit'
+  gem 'capybara', '~> 2.2.1'
+  gem 'database_cleaner', '~> 1.2.0'
   gem 'launchy', '~> 2.2.0'
 end
 

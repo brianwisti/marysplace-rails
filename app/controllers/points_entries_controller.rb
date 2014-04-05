@@ -35,6 +35,12 @@ class PointsEntriesController < ApplicationController
     params[:points_entry][:added_by_id] = current_user.id
     @points_entry = PointsEntry.new(params[:points_entry])
 
+    unless @points_entry.client_id
+      submitted_alias = params[:current_alias]
+      client = Client.where('current_alias = ?', submitted_alias).first
+      @points_entry.client = client if client
+    end
+
     if @points_entry.save
       redirect_to @points_entry,
         notice: 'Points entry was successfully created'

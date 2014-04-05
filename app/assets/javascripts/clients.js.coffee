@@ -24,8 +24,7 @@ if $clientTypeahead.length > 0
   .typeahead(ajax: typeahead_options)
   .change () ->
     selected_alias = $(this).val()
-    selected = $.grep(clients, (client, i) ->
-      client.current_alias == selected_alias)[0]
+    selected = $.grep(clients, (client, i) -> client.current_alias == selected_alias)[0]
     if selected
       selected_id = selected.id
       if selected_id
