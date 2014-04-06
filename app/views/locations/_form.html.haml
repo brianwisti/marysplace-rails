@@ -6,23 +6,23 @@
         - location.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
-    .control-group
+    .form-group
       = f.label :name
-      = f.text_field :name
-    .control-group
+      = f.text_field :name, class: 'form-control'
+    .form-group
       = f.label :phone_number
-      = f.text_field :phone_number
-    .control-group
+      = f.text_field :phone_number, class: 'form-control'
+    .form-group
       = f.label :address
-      = f.text_field :address
-    .control-group
+      = f.text_field :address, class: 'form-control'
+    .form-group
       = f.label :city
-      = f.text_field :city
-    .control-group
+      = f.text_field :city, class: 'form-control'
+    .form-group
       = f.label :state
-      = f.text_field :state
-    .control-group
+      = f.text_field :state, class: 'form-control'
+    .form-group
       = f.label :postal_code
-      = f.text_field :postal_code
-    = f.submit class: "btn"
+      = f.text_field :postal_code, class: 'form-control'
+    = f.submit class: "btn btn-primary btn-block"
 
