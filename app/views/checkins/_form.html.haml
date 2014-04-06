@@ -1,4 +1,4 @@
-= form_for(checkin, class: "form-inline") do |f|
+= form_for checkin, class: "form-inline", role: 'form' do |f|
   -if checkin.errors.any?
     #error_explanation
       %h2= "#{pluralize(checkin.errors.count, "error")} prohibited this checkin from being saved:"
@@ -6,29 +6,31 @@
         - checkin.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
-    .control-group
+    .form-group
       = f.label :client_id, class: 'control-label'
-      .controls
-        - if checkin.client
-          = text_field_tag "current_alias", checkin.client_current_alias,
-            data: { provide: 'typeahead', field: 'checkin_client_id' },
-            class: 'client-typeahead'
-        - else
-          = text_field_tag "current_alias", nil,
-            data: { provide: 'typeahead', field: 'checkin_client_id' },
-            class: 'client-typeahead'
-        = f.hidden_field :client_id
-    .control-group
+      - if checkin.client
+        = text_field_tag "current_alias", checkin.client_current_alias,
+          data: { provide: 'typeahead', field: 'checkin_client_id' },
+          class: 'client-typeahead form-control'
+      - else
+        = text_field_tag "current_alias", nil,
+          data: { provide: 'typeahead', field: 'checkin_client_id' },
+          class: 'client-typeahead form-control'
+      = f.hidden_field :client_id
+    .form-group
       = f.label :location_id, class: 'control-label'
       = location_select f, :location_id, current_user
     -unless checkin.new_record?
-      .control-group
+      .form-group
         = f.label :checkin_at, class: 'control-label'
         .controls
-          = f.datetime_select :checkin_at
-      .control-group
+          = f.datetime_select :checkin_at, class: 'form-control'
+      .form-group
         = f.label :notes, class: 'control-label'
-        .controls
-          = f.text_area :notes
-    .form-actions
-      = f.submit class: "btn"
+        = f.text_area :notes, class: 'form-control'
+    .form-group
+      = f.submit class: "btn btn-primary btn-block"
+      - if checkin.new_record?
+        = link_to "Cancel", checkins_path, class: "btn btn-default btn-block"
+      - else
+        = link_to "Cancel", checkin, class: "btn btn-default btn-block"

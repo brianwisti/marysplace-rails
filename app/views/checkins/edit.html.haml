@@ -1,8 +1,5 @@
-%h1 Editing checkin
+= content_for :title do
+  Editing Checkin
 
 = render 'form',
   checkin: @checkin
-
-= link_to 'Show', @checkin
-\|
-= link_to 'Back', checkins_path
