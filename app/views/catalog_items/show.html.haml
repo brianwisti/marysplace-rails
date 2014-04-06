@@ -2,8 +2,8 @@
   Catalog: #{@catalog_item.name}
 
 
-= content_for(:sidebar) do
-  = render 'sidebar', catalog_item: @catalog_item
+= content_for(:context_navigation) do
+  = render 'context_navigation', catalog_item: @catalog_item
 
 %dl
   %dt Name

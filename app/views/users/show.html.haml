@@ -2,8 +2,8 @@
   User
   = @user.login
 
-= content_for(:sidebar) do
-  = render 'sidebar', user: @user, roles: @roles
+= content_for(:context_navigation) do
+  = render 'context_navigation', user: @user, roles: @roles
 
 = image_tag @user.avatar.url(:square)
 

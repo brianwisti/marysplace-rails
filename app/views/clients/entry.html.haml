@@ -2,8 +2,8 @@
   Log Points for
   = @client.current_alias
 
-=content_for(:sidebar) do
-  = render 'sidebar', client: @client
+=content_for(:context_navigation) do
+  = render 'context_navigation', client: @client
 
 = render 'points_entries/form',
   client: @client, points_entry: @points_entry,

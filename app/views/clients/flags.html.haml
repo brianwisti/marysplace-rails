@@ -3,8 +3,8 @@
   = @client.current_alias
 
 
-= content_for(:sidebar) do
-  = render 'sidebar', client: @client
+= content_for(:context_navigation) do
+  = render 'context_navigation', client: @client
 
 %table.table
   = render @flags

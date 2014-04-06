@@ -1,8 +1,9 @@
 = content_for(:title) do
   Edit Checkin
 
-= content_for(:sidebar) do
-  = render 'sidebar'
+= content_for(:context_navigation) do
+  = render 'context_navigation'
+
 - if @checkin.client.is_blocked?
   %div.label.label-danger
     = @checkin.client_current_alias

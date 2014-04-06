@@ -1,8 +1,8 @@
 = content_for(:title) do
   Resolve Flag
 
-= content_for(:sidebar) do
-  = render 'sidebar', client_flag: @client_flag
+= content_for(:context_navigation) do
+  = render 'context_navigation', client_flag: @client_flag
 
 = form_tag(resolve_store_client_flag_path(@client_flag), method: :post, class: "form") do
   .control-group

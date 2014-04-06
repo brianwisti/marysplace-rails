@@ -1,10 +1,7 @@
 = content_for(:title) do
   New Catalog Item
 
-= content_for(:sidebar) do
-  - if @catalog_item
-    = render 'sidebar', catalog_item: @catalog_item
-  - else
-    = render 'sidebar'
+= content_for(:context_navigation) do
+  = render 'context_navigation'
 
 = render 'form', catalog_item: @catalog_item

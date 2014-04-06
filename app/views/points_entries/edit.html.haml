@@ -1,8 +1,8 @@
 = content_for(:title) do
   Editing Log Entry
 
-= content_for(:sidebar) do
-  = render 'sidebar', points_entry: @points_entry
+= content_for(:context_navigation) do
+  = render 'context_navigation', points_entry: @points_entry
 
 = render 'form', points_entry: @points_entry,
   client: @client,

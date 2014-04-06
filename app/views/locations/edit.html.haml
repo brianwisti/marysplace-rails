@@ -1,7 +1,7 @@
 = content_for(:title) do
   Edit Location
 
-= content_for(:sidebar) do
-  = render 'sidebar', location: @location
+= content_for(:context_navigation) do
+  = render 'context_navigation', location: @location
 
 = render 'form', location: @location
