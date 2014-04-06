@@ -1,0 +1,5 @@
+- if actions
+  %ul.nav.nav-tabs.nav-justified
+    - actions.each do |title, path|
+      %li
+        = link_to title, path

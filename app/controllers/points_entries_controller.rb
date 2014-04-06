@@ -3,15 +3,30 @@
 class PointsEntriesController < ApplicationController
   before_filter :require_user
 
+  def default_actions entry=nil
+    actions = {
+      "New Entry" => new_points_entry_url,
+    }
+
+    if entry
+      actions["Change"] = edit_points_entry_url(entry)
+    end
+
+    return actions
+  end
+
   # GET /points_entries
   def index
     @points_entries = PointsEntry.order("id DESC").page params[:page]
+    @actions = default_actions
+    @actions["Entry Types"] = points_entry_types_path
   end
 
   # GET /points_entries/1
   def show
     authorize! :show, PointsEntry
     @points_entry = PointsEntry.find(params[:id])
+    @actions = default_actions(@points_entry)
   end
 
   # GET /points_entries/new
@@ -39,6 +54,12 @@ class PointsEntriesController < ApplicationController
       submitted_alias = params[:current_alias]
       client = Client.where('current_alias = ?', submitted_alias).first
       @points_entry.client = client if client
+    end
+
+    unless @points_entry.points_entry_type_id
+      submitted_entry_type = params[:points_entry_type]
+      entry_type = PointsEntryType.where(name: submitted_entry_type).first
+      @points_entry.points_entry_type = entry_type if entry_type
     end
 
     if @points_entry.save

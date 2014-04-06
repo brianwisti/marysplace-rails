@@ -28,7 +28,6 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   Capybara.default_wait_time = 5
-  Capybara.javascript_driver = :webkit
 
   # ## Mock Framework
   #

@@ -1,13 +1,6 @@
 = content_for(:title) do
   Showing Entry
 
-= content_for(:sidebar) do
-  %ul.nav.nav-list
-    - if can? :edit, @points_entry
-      %li= link_to "Edit", edit_points_entry_path(@points_entry)
-    - if can? :create, PointsEntry
-      %li=link_to "New", new_points_entry_path
-
 - if notice
   %p
     %span.label.label-info Info
