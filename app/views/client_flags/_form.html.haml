@@ -5,38 +5,43 @@
       %ul
         - client_flag.errors.full_messages.each do |msg|
           %li= msg
-  %fieldset
-    .control-group
-      = f.label :client_id
-      .controls
+  .row
+    .col-md-4
+      .form-group
+        = f.label :client_id
         - if client_flag.client
           = text_field_tag "current_alias", client_flag.client_current_alias,
             data: { provide: 'typeahead', field: 'client_flag_client_id' },
-            class: 'client-typeahead'
+            class: 'client-typeahead form-control'
         - else
           = text_field_tag "current_alias", nil,
             data: { provide: 'typeahead', field: 'client_flag_client_id' },
-            class: 'client-typeahead'
+            class: 'client-typeahead form-control'
         = f.hidden_field :client_id
-    #flag-description-control.control-group
-      = f.label :description
-      .controls
-        = f.text_area :description
-    #flag-consequence-control.control-group
-      = f.label :consequence
-      .controls
-        = f.text_area :consequence
-    #flag-action-required-control.control-group
-      = f.label :action_required
-      .controls
-        = f.text_area :action_required
-    .control-group
-      = f.label :is_blocking, class: 'label'
-      = f.check_box :is_blocking
-      = f.label :can_shop, class: 'label'
-      = f.check_box :can_shop
-    .control-group
-      = f.label :expires_on
-      .controls
+    .col-md-4
+      .checkbox
+        = f.label :is_blocking do
+          = f.check_box :is_blocking
+          Should not enter?
+      .checkbox
+        = f.label :can_shop do
+          = f.check_box :can_shop
+          Still allowed to shop?
+    .col-md-4
+      .form-group
+        = f.label :expires_on
         = f.date_select :expires_on, include_blank: true
-    = f.submit 'Save'
+  .row
+    .col-md-4
+      #flag-description-control.form-group
+        = f.label :description
+        = f.text_area :description, class: 'form-control'
+    .col-md-4
+      #flag-consequence-control.form-group
+        = f.label :consequence
+        = f.text_area :consequence, class: 'form-control'
+    .col-md-4
+      #flag-action-required-control.form-group
+        = f.label :action_required
+        = f.text_area :action_required, class: 'form-control'
+  = f.submit 'Save', class: 'btn btn-primary btn-block'
