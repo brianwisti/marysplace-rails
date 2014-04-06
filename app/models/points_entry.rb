@@ -56,6 +56,11 @@ class PointsEntry < ActiveRecord::Base
     end
   end
 
+  # how many PointsEntry objects  were +performed_on+ today?
+  def self.daily_count
+    PointsEntry.where('performed_on = ?', Date.today).count
+  end
+
   # What is the extra points penalty for bailing on a chore?
   # TODO: Make this configurable
   def self.bail_penalty

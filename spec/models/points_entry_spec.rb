@@ -26,4 +26,20 @@ describe PointsEntry do
 
     expect(entry).to have(1).errors_on(:location_id)
   end
+
+  context "daily_count" do
+    subject { PointsEntry }
+
+    it { should respond_to(:daily_count) }
+
+    context "starts at zero" do
+
+      its(:daily_count) { should eq(0) }
+    end
+
+    context "registers new PointsEntry" do
+      before { create :points_entry }
+      its(:daily_count) { should eq(1) }
+    end
+  end
 end
