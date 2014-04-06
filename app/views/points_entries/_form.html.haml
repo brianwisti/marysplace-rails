@@ -23,7 +23,6 @@
           %i.icon-flag
           %span.label.label-important.shopping-blocked-label{ style: "display: none" } No Shopping
           = link_to "flagged", '#', class: "text-error"
-      %span.point-balance.text-info= number_with_delimiter client.point_balance
       %small.pull-right
         = link_to "Add Client", new_client_path
   .form-group
@@ -32,21 +31,24 @@
       data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points' },
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
       class: 'pointsentrytype-typeahead form-control'
-    %span.help-block
-      %span.summary
-        %span.point-total.text-info
-  .form-group
-    = f.label :points, class: 'control-label'
-    = f.number_field :points, data: { default: points_entry_type.default_points }, 
-      autocomplete: 'off', class: 'form-control'
-    %span.help-block
-      %span.new-balance.text-info
   .checkbox
     = f.label :bailed do
       = f.check_box :bailed, 
         data: { field: 'points_entry_points', penalty: bail_penalty }, 
         class: 'bailed'
       Bailed
+  .form-group
+    .col-xs-2.well
+      %span.point-balance.text-info= number_with_delimiter client.point_balance
+      +
+    .col-xs-8
+      = f.label :points, class: 'control-label'
+      = f.number_field :points, 
+        data: { default: points_entry_type.default_points }, 
+        autocomplete: 'off', class: 'form-control'
+    .col-xs-2.well
+      \=
+      %span.new-balance.text-info
   .form-group
     = f.label :location_id
     = location_select f, :location_id, current_user
