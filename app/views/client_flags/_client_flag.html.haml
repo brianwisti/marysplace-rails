@@ -6,8 +6,21 @@
           Resolved by #{client_flag.resolved_by_login}
         - elsif client_flag.expires_on
           Expired on #{client_flag.expires_on}
+    - elsif client_flag.is_blocking
+      %span.label.label-danger
+        - if client_flag.expires_on
+          No entry until #{client_flag.expires_on}
+        - else
+          No entry
+    - elsif client_flag.can_shop
+      %span.label.label-default
+        Expires on #{client_flag.expires_on}
     - elsif client_flag.expires_on
-      Expires on #{client_flag.expires_on}
+      %span.label.label-warning
+        - if client_flag.expires_on
+          No shopping until #{client_flag.expires_on}
+        - else
+          No shopping
   %td= client_flag.client_current_alias
   %td #{client_flag.created_at.to_date} by #{client_flag.created_by_login}
   %td= link_to "Show", client_flag

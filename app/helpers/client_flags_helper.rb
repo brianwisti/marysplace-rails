@@ -6,7 +6,7 @@ module ClientFlagsHelper
     if client_flag.is_resolved?
       row_class = "success"
     elsif client_flag.is_blocking
-      row_class = "error"
+      row_class = "danger"
     end
 
     if row_class
