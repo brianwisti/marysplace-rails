@@ -2,11 +2,7 @@
   Showing Entry
 
 = content_for(:sidebar) do
-  %ul.nav.nav-list
-    - if can? :edit, @points_entry
-      %li= link_to "Edit", edit_points_entry_path(@points_entry)
-    - if can? :create, PointsEntry
-      %li=link_to "New", new_points_entry_path
+  = render 'sidebar', points_entry: @points_entry
 
 - if notice
   %p

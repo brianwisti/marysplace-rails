@@ -3,7 +3,7 @@
   = @points_entry_type.name
 
 = content_for(:sidebar) do
-  %ul.nav.nav-list
+  %ul.nav.nav-tabs
     %li= link_to 'Show', @points_entry_type
 
 = render 'form', points_entry_type: @points_entry_type

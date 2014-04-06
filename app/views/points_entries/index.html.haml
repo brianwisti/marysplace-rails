@@ -2,11 +2,7 @@
   Points Log
 
 = content_for(:sidebar) do
-  %ul.nav.nav-list
-    - if can? :show, PointsEntryType
-      %li= link_to 'Entry Types', points_entry_types_path
-    - if can? :create, PointsEntry
-      %li= link_to 'New Entry', new_points_entry_path
+  = render 'sidebar'
 
 = paginate @points_entries
 

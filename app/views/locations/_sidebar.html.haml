@@ -1,4 +1,4 @@
-%ul.nav.nav-list
+%ul.nav.nav-tabs
   - if defined? location
     %li= link_to "Locations", locations_path
     - if location.id and can? :edit, Location

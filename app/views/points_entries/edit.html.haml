@@ -2,8 +2,7 @@
   Editing Log Entry
 
 = content_for(:sidebar) do
-  %ul.nav.nav-list
-    %li= link_to 'Show', @points_entry
+  = render 'sidebar', points_entry: @points_entry
 
 = render 'form', points_entry: @points_entry,
   client: @client,

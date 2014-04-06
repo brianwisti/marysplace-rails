@@ -1,4 +1,4 @@
-%ul.nav.nav-list
+%ul.nav.nav-tabs
   - if defined? user
     %li= link_to "Show #{user.login}", user
     - if can? :edit, user

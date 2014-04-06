@@ -3,7 +3,7 @@
 
 - if can? :create, Message
   = content_for(:sidebar) do
-    %ul.nav.nav-list
+    %ul.nav.nav-tabs
       %li= link_to 'New Message', new_message_path
 
 = render @messages

@@ -1,0 +1,9 @@
+%ul.nav.nav-tabs
+  - if can? :show, PointsEntryType
+    %li= link_to 'Entry Types', points_entry_types_path
+  - if can? :create, PointsEntry
+    %li= link_to 'New Entry', new_points_entry_path
+  - if defined? points_entry
+    %li= link_to 'Show', @points_entry
+    - if can? :edit, points_entry
+      %li= link_to "Edit", edit_points_entry_path(points_entry)

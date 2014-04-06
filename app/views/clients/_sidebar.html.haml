@@ -1,4 +1,4 @@
-%ul.nav.nav-list
+%ul.nav.nav-tabs
   - if defined?(client) and client.id
     - if can? :show, PointsEntry
       %li= link_to "Points Log", entries_client_path(client)
