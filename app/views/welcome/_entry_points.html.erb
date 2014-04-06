@@ -1,6 +1,6 @@
 <% if can? :show, PointsEntry %>
-  <h1><%= 0 %></h1>
-  <p class="small">Points entries logged</p>
+  <h1><%= @entry_count %></h1>
+  <p class="small">Points entries logged today</p>
   <ul class="nav nav-pills nav-stacked">
     <li><%= link_to "Show Points Log", points_entries_path %></li>
     <% if can? :create, PointsEntry %>
