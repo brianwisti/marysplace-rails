@@ -16,12 +16,12 @@
         %span.is-flagged
           %i.icon-flag
           - if !client.can_shop?
-            %span.label.label-important No Shopping
+            %span.label.label-danger No Shopping
           = link_to "flagged", flags_client_path(client), class: "text-error"
       - else
         %span.is-flagged{ style: "display: none" }
           %i.icon-flag
-          %span.label.label-important.shopping-blocked-label{ style: "display: none" } No Shopping
+          %span.label.label-danger.shopping-blocked-label{ style: "display: none" } No Shopping
           = link_to "flagged", '#', class: "text-error"
       %small.pull-right
         = link_to "Add Client", new_client_path

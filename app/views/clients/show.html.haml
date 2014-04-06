@@ -12,7 +12,7 @@
     - unless @client.is_active
       %span.label.label-info Inactive
     - if @client.is_blocked?
-      %span.label.label-important Blocked
+      %span.label.label-danger Blocked
     = @client.current_alias
   %dt Login Code
   %dd

@@ -4,7 +4,7 @@
 = content_for(:sidebar) do
   = render 'sidebar'
 - if @checkin.client.is_blocked?
-  %div.label.label-important
+  %div.label.label-danger
     = @checkin.client_current_alias
     may not enter. Please speak with a staff member
 %p
