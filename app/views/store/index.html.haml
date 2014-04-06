@@ -4,17 +4,18 @@
 = content_for(:sidebar) do
   = render 'sidebar'
 
-= form_tag(store_start_path, method: :put, class: "form-inline") do
-  .control-group
-    .controls
-      = text_field_tag "current_alias", nil,
-        data: { provide: 'typeahead', field: 'shopper_id', balance: 0 },
-        autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
-        class: 'client-typeahead'
-      %span.summary
-        %span.point-total.text-info
-      = button_tag "Start Shopping!", class: "btn"
-      = hidden_field_tag :shopper_id
+= form_tag(store_start_path, method: :put, class: "form-inline", role: 'form') do
+  .form-group
+    = label_tag "current_alias", "Client Name", class: "sr-only"
+    = text_field_tag "current_alias", nil,
+      data: { provide: 'typeahead', field: 'shopper_id', balance: 0 },
+      autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
+      placeholder: 'Client name',
+      class: 'client-typeahead form-control'
+    %span.summary
+      %span.point-total.text-info
+    = button_tag "Start Shopping!", class: "btn btn-default"
+    = hidden_field_tag :shopper_id
 
 %table.table
   = render @carts
