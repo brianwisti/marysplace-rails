@@ -31,6 +31,10 @@ class ClientFlag < ActiveRecord::Base
     to:     :resolved_by,
     prefix: true
 
+  def self.active_count
+    unresolved.count
+  end
+
   def is_resolved?
     today = Date.today
 
