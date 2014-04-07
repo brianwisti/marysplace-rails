@@ -10,26 +10,28 @@
     = text_field_tag "current_alias", client.current_alias,
       data: { provide: 'typeahead', field: 'points_entry_client_id', balance: 0 },
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
+      placeholder: 'The name they go by...',
       class: 'client-typeahead form-control'
-    %span.help-block
+    %span.hint
       - if client.is_flagged
         %span.is-flagged
-          %i.icon-flag
+          %span.icon-flag
           - if !client.can_shop?
             %span.label.label-danger No Shopping
           = link_to "flagged", flags_client_path(client), class: "text-error"
       - else
         %span.is-flagged{ style: "display: none" }
-          %i.icon-flag
+          %span.icon-flag
           %span.label.label-danger.shopping-blocked-label{ style: "display: none" } No Shopping
           = link_to "flagged", '#', class: "text-error"
-      %small.pull-right
+      %span.pull-right
         = link_to "Add Client", new_client_path
   .form-group
     = f.label :points_entry_type_id, class: 'control-label'
     = text_field_tag "points_entry_type", points_entry_type.name,
       data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points' },
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
+      placeholder: 'What they did...',
       class: 'pointsentrytype-typeahead form-control'
   .checkbox
     = f.label :bailed do
@@ -45,6 +47,7 @@
       = f.label :points, class: 'control-label'
       = f.number_field :points, 
         data: { default: points_entry_type.default_points }, 
+        placeholder: 'How many points gained or spent...',
         autocomplete: 'off', class: 'form-control'
     .col-xs-2.well
       \=

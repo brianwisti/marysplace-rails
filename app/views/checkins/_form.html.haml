@@ -15,6 +15,7 @@
       - else
         = text_field_tag "current_alias", nil,
           data: { provide: 'typeahead', field: 'checkin_client_id' },
+          placeholder: 'The name they go by...',
           class: 'client-typeahead form-control'
       = f.hidden_field :client_id
     .form-group

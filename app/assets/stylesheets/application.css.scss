@@ -15,6 +15,11 @@
 @import "bootstrap";
 @import "bootstrap/theme";
 
+.hint {
+  @extend .help-block;
+  @extend .small;
+}
+
 td.numeric {
   text-align: right;
   font-family: monospace;
