@@ -1,5 +1,5 @@
 <% if can? :show, ClientFlag %>
-  <h1><%= client_flags.count %></h1>
+  <h1><%= active_flag_count %></h1>
   <p class="small">Active Flags</p>
   <ul class="nav nav-pills nav-stacked">
     <li><%= link_to "Show Flags", client_flags_path %></li>

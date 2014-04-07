@@ -2,7 +2,7 @@ class WelcomeController < ApplicationController
   before_filter :require_user
 
   def index
-    @client_flags  = ClientFlag.order('created_at').limit(5)
+    @active_flag_count = ClientFlag.active_count
     @checkin_count = Checkin.today.count
     @entry_count   = PointsEntry.daily_count
 
