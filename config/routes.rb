@@ -135,6 +135,8 @@ Marysplace::Application.routes.draw do
     end
   end
 
+  resource :password_resets
+
   resource :user_session, only: [ :new, :create, :destroy ]
 
   match 'login' => 'user_sessions#new', as: :login

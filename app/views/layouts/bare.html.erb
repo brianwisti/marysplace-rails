@@ -4,14 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mary's Place
+      <% if content_for? :title %> : <%= yield :title %><% end %>
+    </title>
     <%= stylesheet_link_tag "application", media: "all" %>
     <%= csrf_meta_tags %>
   </head>
   <body class="bare">
   <div class="container">
-    <% if content_for :title %>
-      <h1><%= yield :title %></h1>
-    <% end %>
+    <div class="log">
+      <% if flash[:notice] -%>
+        <p class="alert alert-success"><%= flash[:notice] %></p>
+      <% end -%>
+      <% if flash[:alert] -%>
+        <p class="alert alert-warning"><%= flash[:alert] %></p>
+      <% end %>
+    </div>
     <%= yield %>
   </div>
   </body>

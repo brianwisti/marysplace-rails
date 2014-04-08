@@ -1,3 +1,6 @@
+<%= content_for :title do %>
+  Please Sign In
+<% end %>
 <%= form_for @user_session, url: user_session_path, html: { class: "form-signin", role: "form" } do |f| %>
   <% if @user_session.errors.any? %>
     <div id="error_explanation">
@@ -10,11 +13,14 @@
   <% end %>
 
   <fieldset>
-    <legend>Please Sign In</legend>
+    <legend><%= yield :title %></legend>
     <%= f.label :login %>
     <%= f.text_field :login, class: "form-control", placeholder: "login", require: true, autofocus: true %>
     <%= f.label :password %>
     <%= f.password_field :password, class: "form-control", placeholder: "password", required: true %>
+    <span class="hint">
+      <%= link_to "Request a password reset", new_password_resets_url %>
+    </span>
     <%= f.label :remember_me, class: "checkbox" do %>
       <%= f.check_box :remember_me %>
       Remember Me

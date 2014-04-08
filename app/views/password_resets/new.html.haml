@@ -1,0 +1,22 @@
+= content_for :title do
+  Request Password Reset
+
+- if @token
+  %p.alert.alert-success
+    = link_to "Click here to reset", edit_password_resets_url(@token)
+
+= form_tag password_resets_path, method: :post, class: 'form-signin', role: "form" do
+  %fieldset
+    %legend
+      = yield :title
+    .form-group
+      = label_tag 'login', 'Login'
+      = text_field_tag 'login', '', class: 'form-control'
+    .form-group
+      = label_tag 'email', 'Email'
+      = text_field_tag 'email', '', class: 'form-control'
+      %span.hint Provide either login or email, whichever you remember.
+    .form-group
+      = button_tag "Reset My Password", type: "submit", class: "btn btn-primary btn-block"
+      = link_to "Back To Login Form", login_url, class: "btn btn-block"
+
