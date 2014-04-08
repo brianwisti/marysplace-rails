@@ -135,7 +135,8 @@ Marysplace::Application.routes.draw do
     end
   end
 
-  resource :password_resets
+  resources :password_resets,
+    except: [ :destroy ]
 
   resource :user_session, only: [ :new, :create, :destroy ]
 

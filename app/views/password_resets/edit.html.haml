@@ -1,0 +1,18 @@
+= content_for :title do
+  Change My Password
+
+= form_for @user, url: password_resets_path, method: :put, 
+  class: 'form-signin', role: 'form' do
+  = f.error_messages
+  %fieldset
+    %legend
+      = yield :title
+    .form-group
+      = f.label :password
+      = f.password_field :password, class: 'form-control'
+    .form-group
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation, class: 'form-control'
+    .form-group
+      = button_tag "Change my password and log me in", type: "submit",
+        class: "btn btn-primary btn-block"

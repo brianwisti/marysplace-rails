@@ -41,6 +41,12 @@ class PointsEntriesController < ApplicationController
       @points_entry.client = client if client
     end
 
+    unless @points_entry.points_entry_type_id
+      submitted_entry_type = params[:points_entry_type]
+      entry_type = PointsEntryType.where(name: submitted_entry_type).first
+      @points_entry.points_entry_type = entry_type if entry_type
+    end
+
     if @points_entry.save
       redirect_to @points_entry,
         notice: 'Points entry was successfully created'

@@ -3,7 +3,7 @@
 
 - if @token
   %p.alert.alert-success
-    = link_to "Click here to reset", edit_password_resets_url(@token)
+    = link_to "Click here to reset", edit_password_resets_path(@token)
 
 = form_tag password_resets_path, method: :post, class: 'form-signin', role: "form" do
   %fieldset

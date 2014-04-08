@@ -61,10 +61,39 @@ describe PointsEntriesController do
       expect(response).to redirect_to(assigns(:points_entry))
     end
 
-    it "can create a PointsEntry" do
-      expect {
-        post :create, points_entry: build_attributes(:points_entry)
-      }.to change(PointsEntry, :count).by(1)
+    context "creating a PointsEntry" do
+      let(:submission) { build_attributes :points_entry }
+
+      context "with client ID & entry-type ID" do
+        it "creates a PointsEntry" do
+          expect {
+            post :create, points_entry: submission
+          }.to change(PointsEntry, :count).by(1)
+        end
+      end
+
+      context "with client name & entry-type ID" do
+        let(:client) { create :client }
+
+        it "creates a PointsEntry" do
+          submission.delete :client_id
+
+          expect {
+            post :create, points_entry: submission, current_alias: client.current_alias
+          }.to change(PointsEntry, :count).by(1)
+        end
+      end
+
+      context "with client ID & entry-type name" do
+        let(:entry_type) { create :points_entry_type }
+
+        it "creates a PointsEntry" do
+          submission.delete :points_entry_type_id
+          post :create, points_entry: submission, 
+            points_entry_type: entry_type.name
+          expect(flash[:notice]).to have_content("Points entry was successfully created")
+        end
+      end
     end
 
     it "can access update" do

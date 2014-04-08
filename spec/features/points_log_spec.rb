@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Points Log', js: true do
+feature 'Points Log' do
   background do
     @admin      = create :admin_user
     @location   = create :location
