@@ -19,7 +19,8 @@ gem 'aws-sdk'
 gem 'has_barcode'
 gem 'markdownizer'
 gem 'newrelic_rpm'
-
+gem 'mandrill-api'
+gem 'excon'
 
 group :development do
   gem 'coveralls', require: false

@@ -85,6 +85,7 @@ GEM
     docile (1.1.3)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    excon (0.32.1)
     execjs (2.0.2)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -126,6 +127,9 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mandrill-api (1.0.51)
+      excon (>= 0.16.0, < 1.0)
+      json (>= 1.7.7, < 2.0)
     markdownizer (0.3.7)
       activerecord (>= 3.0.3)
       coderay
@@ -254,6 +258,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   coveralls
   database_cleaner (~> 1.2.0)
+  excon
   factory_girl_rails (~> 4.2.1)
   faker (= 1.3.0)
   haml-rails
@@ -262,6 +267,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   launchy (~> 2.2.0)
+  mandrill-api
   markdownizer
   newrelic_rpm
   paperclip

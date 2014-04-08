@@ -57,6 +57,14 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  config.before :all do
+    Excon.defaults[:mock] = true
+    Excon.stub({}, {
+      body:   '{}',
+      status: 200
+    })
+  end
+
   config.include LoginMacros
 end
 
