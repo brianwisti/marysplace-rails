@@ -30,7 +30,7 @@ Marysplace::Application.configure do
   config.action_mailer.delivery_method = :test
 
   # Assume localhost:3000 for mailer deliveries
-  config.action_mailer.default_url_options = { host: '127.0.0.1', port: '3000' }
+  config.action_mailer.default_url_options = { host: ENV['APP_HOSTNAME'] }
 
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict

@@ -42,6 +42,7 @@ describe UserMailer do
 
     context "body" do
       its(:body) { should include(user.perishable_token) }
+      its(:body) { should include(ENV['APP_HOSTNAME']) }
     end
   end
 
