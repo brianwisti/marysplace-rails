@@ -27,7 +27,7 @@ class Location < ActiveRecord::Base
       return last_checkin.location
     end
 
-    return Location.first
+    return Location.order(:id).first
   end
 
   anonymizes :name do
