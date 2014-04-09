@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 ruby "2.1.1"
 
+# Load ENV variables from .env
+gem 'dotenv-rails', groups: [ :development ]
+
 gem 'rails', '3.2.17'
 
 # Bundle edge Rails instead:

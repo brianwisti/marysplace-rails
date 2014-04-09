@@ -20,19 +20,32 @@ This application was created to help the staff and volunteers of [Mary's Place][
 
 ## Requirements
 
-* Ruby 1.9.3+
+* Ruby 2.1.0
 * NodeJS for JS runtime 
+
+### Assumed Environment Variables
 
 Much of the configuration assumes deployment to a Heroku instance, with 
 external resources being hosted on Amazon Web Services. The following settings
 are stored as environment variables.
 
-* `AWS_ACCESS_KEY_ID`
-* `AWS_BUCKET`
-* `AWS_PAPERCLIP_ROOT`
-* `AWS_SECRET_ACCESS_KEY`
-* `SECRET_TOKEN`
-* `TZ`
+* `ADMIN_` is a holding area for information about this deployment
+  * `ADMIN_ORG_APP_NAME`: The name of the organization or application
+  * `ADMIN_EMAIL`: Email of the primary contact tech person for this deployment
+  * `ADMIN_NAME`: Name used by the primary contact tech person for this deployment
+* Amazon Web Service carries profile images
+  * `AWS_ACCESS_KEY_ID`
+  * `AWS_BUCKET`
+  * `AWS_PAPERCLIP_ROOT`
+  * `AWS_SECRET_ACCESS_KEY`
+* Mandrill for notification emails.
+  * `MANDRILL_USERNAME`
+  * `MANDRILL_APIKEY`
+* New Relic for some statistics
+  * `NEW_RELIC_LICENSE_KEY`
+* Rails configuration stuff that's very deployment-specific
+  * `SECRET_TOKEN`
+  * `TZ`
 
 ## Author
 

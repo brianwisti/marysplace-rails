@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
 
   def deliver_password_reset_instructions!
     reset_perishable_token!
+    UserMailer.password_reset_notification(self).deliver
   end
 
   # Names are obvious PII

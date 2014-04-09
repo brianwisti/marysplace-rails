@@ -4,6 +4,10 @@ class PasswordResetsController < ApplicationController
   before_filter :load_user_using_perishable_token, 
     only: [ :edit, :update ]
 
+  def index
+    redirect_to action: :new
+  end
+
   # GET /password_resets/new
   def new
     render layout: 'bare'
@@ -22,13 +26,13 @@ class PasswordResetsController < ApplicationController
 
     if @user
       @user.deliver_password_reset_instructions!
-      @token = @user.perishable_token
-      flash[:notice] = "reset token generated"
+      flash[:notice] = "Check your email for a link to reset your password."
+      redirect_to login_url
     else
       flash[:alert] = "Unable to find a user with that login or email"
+      render :new, layout: 'bare'
     end
 
-    render :new, layout: 'bare'
   end
 
   def edit

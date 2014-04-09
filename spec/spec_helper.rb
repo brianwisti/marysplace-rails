@@ -10,7 +10,11 @@ require 'simplecov'
 SimpleCov.start 'rails'
 #Coveralls.wear!
 
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_ENV"]   ||= 'test'
+ENV["ADMIN_NAME"]  ||= "Testy McTesterson"
+ENV["ADMIN_EMAIL"] ||= 'test@example.com'
+ENV["ADMIN_ORG_APP_NAME"] ||= "The Test Place"
+
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'

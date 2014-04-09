@@ -50,6 +50,17 @@ Marysplace::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
+  
+  # Hook mailer up to Mandrill
+  config.action_mailer.smtp_settings = {
+    port:           '587',
+    address:        'smtp.mandrillapp.com',
+    user_name:      ENV['MANDRILL_USERNAME'],
+    password:       ENV['MANDRILL_APIKEY'],
+    domain:         'heroku.com',
+    authentication: :plain
+  }
+  config.action_mailer.delivery_method = :smtp
 
   # Enable threaded mode
   # config.threadsafe!
@@ -76,4 +87,5 @@ Marysplace::Application.configure do
     url: ':s3_domain_url',
     path: "#{ENV['AWS_PAPERCLIP_ROOT']}/:attachment/:style/:id.:extension"
   }
+
 end

@@ -1,17 +1,23 @@
 class UserMailer < ActionMailer::Base
-  default from: ENV['MANDRILL_USERNAME']
+  default from: "#{ENV['ADMIN_NAME']} <#{ENV['ADMIN_EMAIL']}>"
 
-  def password_reset_email user
-    @user = user
-    token = user.perishable_token
-    @reset_url = edit_password_resets_url token
-    @org_app_name = "Mary's Place"
-    @user_login = user.login
-    @subject = "Password Reset Request Made For #{@user.login}"
-    @sender_name = "Brian Wisti"
-    @sender_email = "brian.wisti@gmail.com"
-    subject_line = "[#{org_app_name}] #{@subject}"
+  # Hey, somebody requested a password reset for your account.
+  def password_reset_notification user
+    @user         = user
+    token         = user.perishable_token
+    @reset_url    = url_for controller: :password_resets, action: :edit, id: token, only_path: false
+    @org_app_name = ENV['ADMIN_ORG_APP_NAME']
+    @user_login   = user.login
+    @subject      = "Password Reset Request Made For #{@user.login}"
+    @sender_name  = ENV['ADMIN_NAME']
+    @sender_email = ENV['ADMIN_EMAIL']
+    recipient     = "#{user.login} <#{user.email}>"
+    sender        = "#{@sender_name} <#{@sender_email}>"
+    subject_line  = "[#{@org_app_name}] #{@subject}"
 
-    mail to: user.email, subject: subject_line
+    mail to: recipient, 
+      subject:     subject_line, 
+      from:        sender, 
+      return_path: @sender_email
   end
 end

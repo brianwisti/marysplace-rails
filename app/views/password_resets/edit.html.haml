@@ -1,9 +1,8 @@
 = content_for :title do
   Change My Password
 
-= form_for @user, url: password_resets_path, method: :put, 
-  class: 'form-signin', role: 'form' do
-  = f.error_messages
+= form_for @user, url: password_reset_path, method: :put, 
+  class: 'form-signin', role: 'form' do |f|
   %fieldset
     %legend
       = yield :title

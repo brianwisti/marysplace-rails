@@ -18,15 +18,11 @@ describe PasswordResetsController do
       end
 
       it "succeeds" do
-        expect(response.status).to eq(200)
+        expect(response.status).to redirect_to(login_url)
       end
 
       it "loads a user" do
         expect(assigns(:user)).to_not be_nil
-      end
-
-      it "assigns a perishable token" do
-        expect(assigns(:token)).to_not be_nil
       end
     end
 

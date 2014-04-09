@@ -72,5 +72,9 @@ module Marysplace
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Don't enforce locales unless & until I have a better understanding of *how* 
+    # locales are managed by Rails.
+    config.i18n.enforce_available_locales = false
   end
 end
