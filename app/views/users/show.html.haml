@@ -1,48 +1,52 @@
 = content_for(:title) do
-  User
   = @user.login
 
 = content_for(:context_navigation) do
   = render 'context_navigation', user: @user, roles: @roles
 
-= image_tag @user.avatar.url(:square)
-
-- if @user == current_user
-  %p 
-    This is you!
-    = link_to "Sign Out", logout_url, method: :delete
-
-%dl
-  %dt Login
-  %dd= @user.login
-  %dt Name
-  %dd= @user.name
-  - if @user.client and can? :show, Client
-    %dt For Client
-    %dd= link_to @user.client_current_alias, @user.client
-  %dt Roles
-  %dd
-    - if @user != current_user and can? :manage, User
-      .btn-group.roles-toggler{ data: { toggler: "buttons-checkbox" } }
-        = render 'roles-toggler', user: @user, roles: @roles
-    - else
-      .btn-group{ data: { toggler: "buttons-checkbox" } }
-        = render 'roles-toggler', user: @user, roles: @roles
-  %dt Email
-  %dd
-    - if @user.email?
-      = mail_to @user.email
-    -else
-      %em No email
-  %dt Login Count
-  %dd= @user.login_count
-  %dt Last Activity
-  %dd= @user.last_request_at
-  %dt Last Login
-  %dd= @user.last_login_at
-  %dt Current Login
-  %dd= @user.current_login_at
-  %dt Last Login Address
-  %dd= @user.last_login_ip
-  %dt Current Login Address
-  %dd= @user.current_login_ip
+.row
+  .col-sm-6
+    - if @user == current_user
+      .alert.alert-info.text-center
+        This is you!
+        = link_to "Sign Out", logout_url, method: :delete,
+          confirm: "Really log out?",
+          class: "btn btn-default btn-block"
+    %dl.dl-horizontal
+      %dt Login
+      %dd= @user.login
+      %dt Name
+      %dd= @user.name
+      - if @user.client and can? :show, Client
+        %dt For Client
+        %dd= link_to @user.client_current_alias, @user.client
+      - else
+        %dt Roles
+        %dd
+          - if @user != current_user and can? :manage, User
+            .btn-group.roles-toggler{ data: { toggler: "buttons-checkbox" } }
+              = render 'roles-toggler', user: @user, roles: @roles
+          - else
+            .btn-group{ data: { toggler: "buttons-checkbox" } }
+              = render 'roles-toggler', user: @user, roles: @roles
+      %dt Email
+      %dd
+        - if @user.email?
+          = mail_to @user.email
+        -else
+          %em No email
+      %dt Login Count
+      %dd= @user.login_count
+      - if @user.login_count > 0
+        %dt Last Activity
+        %dd= @user.last_request_at.to_formatted_s :long_ordinal
+        %dt Last Login
+        %dd= @user.last_login_at.to_formatted_s :long_ordinal
+        %dt Current Login
+        %dd= @user.current_login_at.to_formatted_s :long_ordinal
+        %dt Last Login Address
+        %dd= @user.last_login_ip
+        %dt Current Login Address
+        %dd= @user.current_login_ip
+  .col-sm-6
+    = image_tag @user.avatar.url(:square)

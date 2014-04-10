@@ -4,43 +4,54 @@
 = content_for(:context_navigation) do
   =render 'context_navigation', client: @client
 
-- if @client.login
-  = image_tag @client.login.avatar.url(:square)
-%dl
-  %dt Current Alias
-  %dd
-    - unless @client.is_active
-      %span.label.label-info Inactive
-    - if @client.is_blocked?
-      %span.label.label-danger Blocked
-    = @client.current_alias
-  %dt Login Code
-  %dd
+.row
+  .col-sm-6
+    %dl.dl-horizontal
+      %dt Current Alias
+      %dd
+        - unless @client.is_active
+          %span.label.label-info Inactive
+        - if @client.is_blocked?
+          %span.label.label-danger Blocked
+        = @client.current_alias
+      %dt Point Balance
+      %dd= number_with_delimiter @client.point_balance
+      %dt Login Code
+      %dd
+        - if @client.login
+          - if can? :show, User
+            = link_to @client.login_code, @client.login
+          - else
+            = @client.login_code
+        - else
+          %span.label.label-info None
+          - if can? :manage, User
+            = link_to "Create One", new_login_client_path(@client)
+      - if can? :manage, @client
+        %dt Full Name
+        %dd= @client.full_name
+        %dt Oriented On
+        %dd
+          - if @client.oriented_on
+            = @client.oriented_on.to_formatted_s(:long_ordinal)
+          - else
+            Not oriented
+        %dt Birthday
+        %dd
+          - if @client.birthday
+            = @client.birthday.to_formatted_s(:long_ordinal)
+          - else
+            Not given
+        %dt Phone Number
+        %dd= @client.phone_number
+        - if @client.notes
+          %dt Notes
+          %dd= simple_format @client.notes
+        %dt Added By
+        %dd= link_to @client.added_by_login, @client.added_by
+        - if @client.last_edited_by
+          %dt Last Edited By
+          %dd= link_to @client.last_edited_by_login, @client.last_edited_by
+  .col-sm-6
     - if @client.login
-      - if can? :show, User
-        = link_to @client.login_code, @client.login
-      - else
-        = @client.login_code
-    - else
-      %span.label.label-info None
-      - if can? :manage, User
-        = link_to "Create One", new_login_client_path(@client)
-  - if can? :manage, @client
-    %dt Full Name
-    %dd= @client.full_name
-    %dt Oriented On
-    %dd= @client.oriented_on
-    %dt Point Balance
-    %dd= number_with_delimiter @client.point_balance
-    %dt Birthday
-    %dd= @client.birthday
-    %dt Phone Number
-    %dd= @client.phone_number
-    %dt Notes
-    %dd= @client.notes
-    %dt Added By
-    %dd= link_to @client.added_by_login, @client.added_by
-    - if @client.last_edited_by
-      %dt Last Edited By
-      %dd= link_to @client.last_edited_by_login, @client.last_edited_by
-
+      = image_tag @client.login.avatar.url(:square)
