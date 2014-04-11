@@ -1,5 +1,8 @@
 Marysplace::Application.routes.draw do
 
+  resources :client_notes
+
+
   namespace :api, defaults: { format: :json } do
     namespace :v0 do
       resources :checkins, only: [ :create ]

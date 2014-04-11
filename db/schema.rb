@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131101122533) do
+ActiveRecord::Schema.define(:version => 20140411015533) do
 
   create_table "catalog_items", :force => true do |t|
     t.string   "name"
@@ -60,6 +60,18 @@ ActiveRecord::Schema.define(:version => 20131101122533) do
   add_index "client_flags", ["created_by_id"], :name => "index_client_flags_on_created_by_id"
   add_index "client_flags", ["resolved_by_id"], :name => "index_client_flags_on_resolved_by_id"
 
+  create_table "client_notes", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "client_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "client_notes", ["client_id"], :name => "index_client_notes_on_client_id"
+  add_index "client_notes", ["user_id"], :name => "index_client_notes_on_user_id"
+
   create_table "clients", :force => true do |t|
     t.string   "current_alias",                        :null => false
     t.string   "full_name"
@@ -100,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20131101122533) do
     t.integer  "author_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.string   "title"
   end
 
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"

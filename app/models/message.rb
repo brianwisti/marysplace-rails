@@ -1,6 +1,6 @@
 class Message < ActiveRecord::Base
   markdownize! :content
-  attr_accessible :content, :author_id
+  attr_accessible :content, :author_id, :title
 
   validates :content,
     presence: true

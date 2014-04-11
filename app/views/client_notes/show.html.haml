@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @client_note.title
+%p
+  %b Content:
+  = @client_note.content
+%p
+  %b Client:
+  = @client_note.client
+%p
+  %b User:
+  = @client_note.user
+
+= link_to 'Edit', edit_client_note_path(@client_note)
+\|
+= link_to 'Back', client_notes_path

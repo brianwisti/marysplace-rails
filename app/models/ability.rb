@@ -17,6 +17,8 @@ class Ability
       can :manage, PointsEntry
       can :manage, Checkin
       can :manage, ClientFlag
+      can [ :show, :create ], ClientNote
+      can [ :edit, :delete ], ClientNote, user_id: user.id
       can :show, Message
       can :manage, StoreCart
       can :show, Location

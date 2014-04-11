@@ -1,8 +1,11 @@
 = content_for(:title) do
-  Message
-  = @message.created_at.to_date
-  by
-  = @message.author_login
+  - if @message.title
+    = @message.title
+  - else
+    Message
+    = @message.created_at.to_formatted_s :long_ordinal
+    by
+    = @message.author_login
 
 = content_for(:context_navigation) do
   %ul.nav.nav-tabs

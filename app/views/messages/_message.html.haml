@@ -1,8 +1,10 @@
-%div.alert.alert-info
-  %p
-    Written
-    = link_to message.created_at.to_date, message
+%div.panel.panel-default
+  .panel-heading
+    - if message.title
+      %h1.panel-title= message.title
+    = link_to message.created_at.to_formatted_s(:long_ordinal), message
     by
     %em
       = link_to message.author_login, message.author
-  != message.rendered_content
+  .panel-body
+    != message.rendered_content
