@@ -1,5 +1,7 @@
-%h1 New client_note
+= content_for(:title) do
+  Add a Client Note
 
-= render 'form'
+= content_for(:context_navigation) do
+  = render 'context_navigation'
 
-= link_to 'Back', client_notes_path
+= render 'form', note: @client_note
