@@ -21,5 +21,11 @@ FactoryGirl.define do
         user.roles << create(:staff_role)
       end
     end
+
+    factory :front_desk_user do
+      after(:create) do |user|
+        user.roles << create(:front_desk_role)
+      end
+    end
   end
 end

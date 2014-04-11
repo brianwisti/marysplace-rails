@@ -49,68 +49,55 @@ class ApplicationController < ActionController::Base
       current_controller = params[:controller]
       # There's *got* to be a prettier way to do this.
       arr = []
-      user_section = {
-        title: "Users",
-        url: users_path,
-        active: 'users' == current_controller
-      }
-      client_section = {
-        title: "Clients",
-        url: clients_path,
-        active: 'clients' == current_controller
-      }
-      points_entry_section = {
-        title: "Points Log",
-        url: points_entries_path,
-        active: 'points_entries' == current_controller
-      }
-      checkin_section = {
-        title: "Checkins",
-        url: checkins_path,
-        active: 'checkins' == current_controller
-      }
-      client_flag_section = {
-        title: "Client Flags",
-        url: client_flags_path,
-        active: 'client_flags' == current_controller
-      }
-      store_section = {
-        title: "Store",
-        url: store_path,
-        active: 'store' == current_controller
-      }
-      location_section = {
-        title: "Locations",
-        url: locations_path,
-        active: 'locations' == current_controller
+      sections = {
+        User => {
+          title: "Users",
+          url: users_path,
+          permission: :manage,
+          active: 'users' == current_controller
+        },
+        Client => {
+          title: "Clients",
+          url: clients_path,
+          active: 'clients' == current_controller
+        },
+        PointsEntry => {
+          title: "Points Log",
+          url: points_entries_path,
+          active: 'points_entries' == current_controller
+        },
+        Checkin => {
+          title: "Checkins",
+          url: checkins_path,
+          active: 'checkins' == current_controller
+        },
+        ClientFlag => {
+          title: "Client Flags",
+          url: client_flags_path,
+          active: 'client_flags' == current_controller
+        },
+        StoreCart => {
+          title: "Store",
+          url: store_path,
+          active: 'store' == current_controller
+        },
+        Location => {
+          title: "Locations",
+          url: locations_path,
+          active: 'locations' == current_controller
+        },
+        ClientNote => {
+          title: "Client Notes",
+          url: client_notes_path,
+          active: 'client_notes' == current_controller
+        }
       }
 
-      if can? :manage, User
-        arr.push user_section
-      end
-
-      if can? :show, Client
-        arr.push client_section
-      end
-
-      if can? :show, PointsEntry
-        arr.push points_entry_section
-      end
-
-      if can? :show, Checkin
-        arr.push checkin_section
-      end
-
-      if can? :show, ClientFlag
-        arr.push client_flag_section
-      end
-
-      if can? :show, StoreCart
-        arr.push store_section
-      end
-
-      if can? :show, Location
-        arr.push location_section
+      sections.each do |model, details|
+        permission = details[:permission] || :show
+        if can? permission, model
+          arr.push details
+        end
       end
 
       return arr

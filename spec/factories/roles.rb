@@ -13,5 +13,9 @@ FactoryGirl.define do
     factory :staff_role do
       name "staff"
     end
+
+    factory :front_desk_role do
+      name "front_desk"
+    end
   end
 end
