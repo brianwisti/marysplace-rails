@@ -7,11 +7,12 @@
   = render 'context_navigation'
 
 %dl.dl-horizontal
-  %dt Title
-  %dd= @client_note.title
   %dt Client
-  %dd= @client_note.client.current_alias
+  %dd= link_to @client_note.client.current_alias, @client_note.client
   %dt User
-  %dd= @client_note.user.login
+  %dd= link_to @client_note.user.login, @client_note.user
+  %dt Created At
+  %dd= @client_note.created_at
   %dt Content
-  %dd= @client_note.content
+  %dd
+    != @client_note.rendered_content
