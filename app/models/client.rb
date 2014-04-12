@@ -1,5 +1,5 @@
 require 'anonymizable'
-require 'zlib' # TODO: Is there a better place to require this?
+require 'zlib' 
 
 class Client < ActiveRecord::Base
   extend Anonymizable
@@ -30,6 +30,9 @@ class Client < ActiveRecord::Base
   has_many :purchases,
     class_name: 'StoreCart',
     foreign_key: :shopper_id,
+    dependent: :destroy
+  has_many :staff_notes,
+    class_name: 'ClientNote',
     dependent: :destroy
 
   delegate :login,

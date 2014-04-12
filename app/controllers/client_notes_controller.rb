@@ -5,7 +5,7 @@ class ClientNotesController < ApplicationController
   # GET /client_notes.json
   def index
     authorize! :show, ClientNote
-    @client_notes = ClientNote.all
+    @client_notes = ClientNote.page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb

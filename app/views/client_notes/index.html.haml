@@ -4,32 +4,8 @@
 = content_for(:context_navigation) do
   = render 'context_navigation'
 
-=# paginate @client_notes
+= paginate @client_notes
 
 = render 'as_table', client_notes: @client_notes
 
-=# paginate @client_notes
-
-%table
-  %tr
-    %th Title
-    %th Content
-    %th Client
-    %th User
-    %th
-    %th
-    %th
-
-  - @client_notes.each do |client_note|
-    %tr
-      %td= client_note.title
-      %td= client_note.content
-      %td= client_note.client
-      %td= client_note.user
-      %td= link_to 'Show', client_note
-      %td= link_to 'Edit', edit_client_note_path(client_note)
-      %td= link_to 'Destroy', client_note, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Client note', new_client_note_path
+= paginate @client_notes
