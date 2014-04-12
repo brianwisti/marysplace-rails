@@ -39,11 +39,11 @@
       %dd= @user.login_count
       - if @user.login_count > 0
         %dt Last Activity
-        %dd= @user.last_request_at.to_formatted_s :long_ordinal
+        %dd= @user.last_request_at
         %dt Last Login
-        %dd= @user.last_login_at.to_formatted_s :long_ordinal
+        %dd= @user.last_login_at
         %dt Current Login
-        %dd= @user.current_login_at.to_formatted_s :long_ordinal
+        %dd= @user.current_login_at
         %dt Last Login Address
         %dd= @user.last_login_ip
         %dt Current Login Address

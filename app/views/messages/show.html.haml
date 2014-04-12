@@ -3,7 +3,7 @@
     = @message.title
   - else
     Message
-    = @message.created_at.to_formatted_s :long_ordinal
+    = @message.created_at
     by
     = @message.author_login
 

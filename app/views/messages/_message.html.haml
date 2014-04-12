@@ -2,7 +2,7 @@
   .panel-heading
     - if message.title
       %h1.panel-title= message.title
-    = link_to message.created_at.to_formatted_s(:long_ordinal), message
+    = link_to message.created_at, message
     by
     %em
       = link_to message.author_login, message.author

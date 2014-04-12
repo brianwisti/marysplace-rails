@@ -33,13 +33,13 @@
         %dt Oriented On
         %dd
           - if @client.oriented_on
-            = @client.oriented_on.to_formatted_s(:long_ordinal)
+            = @client.oriented_on
           - else
             Not oriented
         %dt Birthday
         %dd
           - if @client.birthday
-            = @client.birthday.to_formatted_s(:long_ordinal)
+            = @client.birthday
           - else
             Not given
         %dt Phone Number
