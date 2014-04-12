@@ -1,0 +1,19 @@
+%table.table
+  %thead
+    %tr
+      %th Title
+      %th About
+      %th Added 
+  %tbody
+    - client_notes.each do |note|
+      %tr
+        %td
+          - if note.title
+            = link_to note.title, note
+          -else
+            = link_to "Untitled", note
+        %td= note.client.current_alias
+        %td
+          = note.created_at
+          By
+          = note.user.login

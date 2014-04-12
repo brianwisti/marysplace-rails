@@ -1,6 +1,11 @@
 %ul.nav.nav-tabs
   - if @client_note
     %li= link_to "All Notes", client_notes_path
+    - if can? :edit, @client_note
+      %li= link_to "Edit", edit_client_note_path(@client_note)
+    - if can? :destroy, @client_note
+      %li= link_to "Remove", @client_note,
+        method: :delete, data: { confirm: "Are you sure?" }
   - else
     - if can? :create, PointsEntry
       %li= link_to "Add an Entry", new_client_note_path

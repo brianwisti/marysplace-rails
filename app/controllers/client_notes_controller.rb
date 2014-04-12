@@ -42,6 +42,7 @@ class ClientNotesController < ApplicationController
   def edit
     authorize! :edit, ClientNote
     @client_note = ClientNote.find(params[:id])
+    @client = @client_note.client
   end
 
   # POST /client_notes
