@@ -1,18 +1,17 @@
-%p#notice= notice
+= content_for(:title) do
+  - if @client_note.title
+    = @client_note.title
+  - else
+    Note
+= content_for(:context_navigation) do
+  = render 'context_navigation'
 
-%p
-  %b Title:
-  = @client_note.title
-%p
-  %b Content:
-  = @client_note.content
-%p
-  %b Client:
-  = @client_note.client
-%p
-  %b User:
-  = @client_note.user
-
-= link_to 'Edit', edit_client_note_path(@client_note)
-\|
-= link_to 'Back', client_notes_path
+%dl.dl-horizontal
+  %dt Title
+  %dd= @client_note.title
+  %dt Client
+  %dd= @client_note.client.current_alias
+  %dt User
+  %dd= @client_note.user.login
+  %dt Content
+  %dd= @client_note.content

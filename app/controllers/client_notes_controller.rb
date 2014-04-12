@@ -1,7 +1,10 @@
 class ClientNotesController < ApplicationController
+  before_filter :require_user
+
   # GET /client_notes
   # GET /client_notes.json
   def index
+    authorize! :show, ClientNote
     @client_notes = ClientNote.all
 
     respond_to do |format|
@@ -13,6 +16,7 @@ class ClientNotesController < ApplicationController
   # GET /client_notes/1
   # GET /client_notes/1.json
   def show
+    authorize! :show, ClientNote
     @client_note = ClientNote.find(params[:id])
 
     respond_to do |format|
@@ -24,7 +28,9 @@ class ClientNotesController < ApplicationController
   # GET /client_notes/new
   # GET /client_notes/new.json
   def new
+    authorize! :create, ClientNote
     @client_note = ClientNote.new
+    @client = Client.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +40,16 @@ class ClientNotesController < ApplicationController
 
   # GET /client_notes/1/edit
   def edit
+    authorize! :edit, ClientNote
     @client_note = ClientNote.find(params[:id])
   end
 
   # POST /client_notes
   # POST /client_notes.json
   def create
+    authorize! :create, ClientNote
     @client_note = ClientNote.new(params[:client_note])
+    @client_note.user = current_user
 
     respond_to do |format|
       if @client_note.save
@@ -56,6 +65,7 @@ class ClientNotesController < ApplicationController
   # PUT /client_notes/1
   # PUT /client_notes/1.json
   def update
+    authorize! :edit, ClientNote
     @client_note = ClientNote.find(params[:id])
 
     respond_to do |format|
@@ -72,6 +82,7 @@ class ClientNotesController < ApplicationController
   # DELETE /client_notes/1
   # DELETE /client_notes/1.json
   def destroy
+    authorize! :destroy, ClientNote
     @client_note = ClientNote.find(params[:id])
     @client_note.destroy
 

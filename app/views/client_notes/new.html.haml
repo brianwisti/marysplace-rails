@@ -4,4 +4,6 @@
 = content_for(:context_navigation) do
   = render 'context_navigation'
 
-= render 'form', note: @client_note
+= render 'form', 
+  client_note: @client_note,
+  client: @client

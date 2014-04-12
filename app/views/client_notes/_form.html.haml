@@ -1,13 +1,16 @@
-= form_for @client_note do |f|
+= form_for client_note do |f|
   - if @client_note.errors.any?
     #error_explanation
       %h2= "#{pluralize(@client_note.errors.count, "error")} prohibited this client_note from being saved:"
       %ul
-        - @client_note.errors.full_messages.each do |msg|
+        - client_note.errors.full_messages.each do |msg|
           %li= msg
   .form-group
     = f.label :client
-    = f.text_field :client, class: 'form-control'
+    = text_field_tag "current_alias", client.current_alias,
+      data: { provide: 'typeahead', field: 'client_note_client_id' },
+      autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
+      class: 'client-typeahead form-control'
   .form-group
     = f.label :title
     = f.text_field :title, class: 'form-control'
@@ -16,4 +19,5 @@
     = f.text_area :content, class: 'form-control'
   .form-group
     = f.hidden_field :user_id
+    = f.hidden_field :client_id
     = f.submit 'Save', class: "btn btn-primary btn-block"

@@ -1,7 +1,10 @@
-%h1 Editing client_note
+= content_for(:title) do
+  Editing Note
 
-= render 'form'
+= content_for(:context_navigation) do
+  = render 'context_navigation', 
+    client_note: @client_note,
 
-= link_to 'Show', @client_note
-\|
-= link_to 'Back', client_notes_path
+= render 'form', 
+  client_note: @client_note,
+  client: @client
