@@ -16,7 +16,7 @@ feature "Client Notes" do
     sign_in @staff_amy
     visit root_path
     click_link "Client Notes"
-    expect(page).to have_link("Add an Entry")
+    expect(page).to have_link("Add a Note")
   end
 
   scenario "Front desk user sees no Client Notes link" do
