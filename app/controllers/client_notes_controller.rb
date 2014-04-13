@@ -30,7 +30,13 @@ class ClientNotesController < ApplicationController
   def new
     authorize! :create, ClientNote
     @client_note = ClientNote.new
-    @client = Client.new
+
+    if params[:client]
+      @client = Client.find params[:client]
+    end
+
+    @client ||= Client.new
+    @client_note.client = @client
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,9 +46,11 @@ class ClientNotesController < ApplicationController
 
   # GET /client_notes/1/edit
   def edit
-    authorize! :edit, ClientNote
     @client_note = ClientNote.find(params[:id])
-    @client = @client_note.client
+    if @client_note
+      authorize! :edit, @client_note
+      @client = @client_note.client
+    end
   end
 
   # POST /client_notes
@@ -66,8 +74,8 @@ class ClientNotesController < ApplicationController
   # PUT /client_notes/1
   # PUT /client_notes/1.json
   def update
-    authorize! :edit, ClientNote
     @client_note = ClientNote.find(params[:id])
+    authorize! :edit, @client_note
 
     respond_to do |format|
       if @client_note.update_attributes(params[:client_note])
@@ -83,8 +91,8 @@ class ClientNotesController < ApplicationController
   # DELETE /client_notes/1
   # DELETE /client_notes/1.json
   def destroy
-    authorize! :destroy, ClientNote
     @client_note = ClientNote.find(params[:id])
+    authorize! :destroy, @client_note
     @client_note.destroy
 
     respond_to do |format|

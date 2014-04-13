@@ -14,9 +14,12 @@
   .form-group
     = f.label :title
     = f.text_field :title, class: 'form-control'
+    %span.hint (Optional)
   .form-group
     = f.label :content
-    = f.text_area :content, class: 'form-control'
+    = f.text_area :content, rows: 10, class: 'form-control'
+    %span.hint
+      = link_to_markdown_tips
   .form-group
     = f.hidden_field :user_id
     = f.hidden_field :client_id

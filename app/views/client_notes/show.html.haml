@@ -6,13 +6,15 @@
 = content_for(:context_navigation) do
   = render 'context_navigation'
 
-%dl.dl-horizontal
-  %dt Client
-  %dd= link_to @client_note.client.current_alias, @client_note.client
-  %dt User
-  %dd= link_to @client_note.user.login, @client_note.user
-  %dt Created At
-  %dd= @client_note.created_at
-  %dt Content
-  %dd
+.panel.panel-default
+  .panel-heading
+    .row
+      .col-sm-6
+        = link_to @client_note.client.current_alias, @client_note.client
+      .col-sm-6
+        Added
+        = @client_note.created_at
+        by
+        = link_to @client_note.user.login, @client_note.user
+  .panel-body
     != @client_note.rendered_content

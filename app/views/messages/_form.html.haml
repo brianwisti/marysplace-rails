@@ -12,5 +12,7 @@
   .form-group
     = f.label :content
     = f.text_area :content, class: 'form-control'
+    %span.hint
+      = link_to_markdown_tips
   .form-group
     = f.submit 'Save', class: 'btn btn-primary btn-block'

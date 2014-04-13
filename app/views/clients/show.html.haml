@@ -51,11 +51,14 @@
         %dd= link_to @client.added_by_login, @client.added_by
         - if can? :show, ClientNote
           %dt Staff Notes
-          - if @client.staff_notes
-            - @client.staff_notes.each do |note|
-              %dd= link_to note.title, note
-          - else
-            %dd None
+          %dd
+            %ul.list-group
+              - if @client.staff_notes
+                - @client.staff_notes.each do |note|
+                  %li.list-group-item= link_to note.title, note
+              %li.list-group-item
+                = link_to "Add Note", new_client_note_url(client: @client),
+                  class: "btn btn-default btn-block"
         - if @client.last_edited_by
           %dt Last Edited By
           %dd= link_to @client.last_edited_by_login, @client.last_edited_by
