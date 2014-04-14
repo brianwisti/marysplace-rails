@@ -24,5 +24,6 @@
     .form-group
       = f.label :postal_code
       = f.text_field :postal_code, class: 'form-control'
-    = f.submit class: "btn btn-primary btn-block"
-
+    .form-group
+      = f.submit class: "btn btn-primary btn-block"
+      = cancel_button

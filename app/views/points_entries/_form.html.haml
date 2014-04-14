@@ -64,7 +64,4 @@
     = f.hidden_field :client_id
     = f.hidden_field :points_entry_type_id
     = f.submit class: "btn btn-block btn-primary"
-    - if points_entry.new_record?
-      = link_to "Cancel", points_entries_path, class: "btn btn-default btn-block"
-    - else
-      = link_to "Cancel", points_entry, class: "btn btn-default btn-block"
+    = cancel_button

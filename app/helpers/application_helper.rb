@@ -36,5 +36,9 @@ module ApplicationHelper
 
     link_to span.strftime("%Y %b"), report_path
   end
+
+  def cancel_button message="Cancel"
+    link_to message, :back, class: 'btn btn-default btn-block'
+  end
 end
 

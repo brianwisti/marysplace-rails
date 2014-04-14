@@ -31,7 +31,4 @@
         = f.text_area :notes, class: 'form-control'
     .form-group
       = f.submit class: "btn btn-primary btn-block"
-      - if checkin.new_record?
-        = link_to "Cancel", checkins_path, class: "btn btn-default btn-block"
-      - else
-        = link_to "Cancel", checkin, class: "btn btn-default btn-block"
+      = cancel_button
