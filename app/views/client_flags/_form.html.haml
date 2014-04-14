@@ -1,4 +1,4 @@
-= form_for client_flag do |f|
+= form_for client_flag, role: 'form'  do |f|
   -if client_flag.errors.any?
     #error_explanation
       %h2= "#{pluralize(client_flag.errors.count, "error")} prohibited this client_flag from being saved:"
