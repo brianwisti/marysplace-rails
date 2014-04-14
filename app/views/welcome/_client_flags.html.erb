@@ -2,7 +2,7 @@
   <h1><%= active_flag_count %></h1>
   <p class="small">Active Flags</p>
   <ul class="nav nav-pills nav-stacked">
-    <li><%= link_to "Show Flags", client_flags_path %></li>
+    <li><%= link_to "Show Active Flags", unresolved_client_flags_path %></li>
     <% if can? :create, ClientFlag %>
       <li><%= link_to "Add Flag", new_client_flag_path %></li>
     <% end %>

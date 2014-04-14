@@ -1,7 +1,7 @@
 %ul.nav.nav-tabs
   %li= link_to "All Flags", client_flags_path
+  %li= link_to "Active Flags", unresolved_client_flags_path
   %li= link_to "Resolved Flags", resolved_client_flags_path
-  %li= link_to "Unresolved Flags", unresolved_client_flags_path
   - if can? :manage, ClientFlag
     - if defined? client_flag
       %li= link_to "Change", edit_client_flag_path(client_flag)

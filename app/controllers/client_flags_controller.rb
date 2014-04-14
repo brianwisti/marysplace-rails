@@ -4,18 +4,18 @@ class ClientFlagsController < ApplicationController
   # GET /client_flags
   def index
     authorize! :show, ClientFlag
-    @client_flags = ClientFlag.all
+    @client_flags = ClientFlag.page params[:page]
   end
 
   # GET /client_flags/resolved
   def resolved
     authorize! :show, ClientFlag
-    @client_flags = ClientFlag.resolved
+    @client_flags = ClientFlag.resolved.page params[:page]
   end
 
   def unresolved
     authorize! :show, ClientFlag
-    @client_flags = ClientFlag.unresolved
+    @client_flags = ClientFlag.unresolved.page params[:page]
   end
 
   # GET /client_flags/1
