@@ -18,6 +18,21 @@ describe PointsEntryType do
     expect(dupe).to have(1).errors_on(:name)
   end
 
+  context "active scope" do
+    subject { PointsEntryType }
+
+    it { should respond_to(:active) }
+
+    context "membership" do
+      subject { PointsEntryType.active }
+      let(:active) { create :points_entry_type, is_active: true }
+      let(:inactive) { create :points_entry_type, is_active: false }
+
+      it { should include(active) }
+      it { should_not include(inactive) }
+    end
+  end
+
   context "quicksearch" do
     before do
       create :points_entry_type, name: "AM Bathroom"

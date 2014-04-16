@@ -1,4 +1,6 @@
 %ul.nav.nav-tabs
+  %li= link_to "Active", points_entry_types_path
+  %li= link_to "All", all_points_entry_types_path
   - if defined? points_entry_type
     - if can? :edit, points_entry_type
       %li= link_to "Edit #{points_entry_type.name}", edit_points_entry_type_path(points_entry_type)
@@ -6,5 +8,4 @@
       %li= link_to "Log #{points_entry_type.name} Activity", entry_points_entry_type_path(points_entry_type)
   - if can? :create, PointsEntryType
     %li= link_to "New Points Entry Type", new_points_entry_type_path
-  - if can? :show, PointsEntry
-    %li= link_to "Main Points Log"
+  %li.pull-right= link_to "Main Points Log", points_entries_path

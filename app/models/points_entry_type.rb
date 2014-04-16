@@ -12,6 +12,8 @@ class PointsEntryType < ActiveRecord::Base
   has_many :points_entries
   has_many :signup_lists
 
+  scope :active, ->{ where(:is_active => true) }
+
   def self.quicksearch(query)
     starts_with = "#{query}%"
     ends_with = "%#{query}"

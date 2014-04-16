@@ -3,7 +3,6 @@
   = @points_entry_type.name
 
 = content_for(:context_navigation) do
-  %ul.nav.nav-tabs
-    %li= link_to 'Show', @points_entry_type
+  = render 'context_navigation'
 
 = render 'form', points_entry_type: @points_entry_type

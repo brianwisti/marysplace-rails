@@ -1,4 +1,4 @@
-= form_for(points_entry_type) do |f|
+= form_for points_entry_type, role: 'form' do |f|
   - if points_entry_type.errors.any?
     #error_explanation
       %h2
@@ -7,18 +7,19 @@
       %ul
         - points_entry_type.errors.full_messages.each do |msg|
           %li= msg
-  %fieldset
-    .control-group
-      = f.label :name
-      = f.text_field :name
-    .control-group
-      = f.label :description
-      = f.text_field :description
-    .control-group
-      = f.label :default_points
-      = f.number_field :default_points
-    .control-group
-      = f.label :is_active, { class: "checkbox" } do
-        = f.check_box :is_active, class: "checkbox"
-        Is Active?
-    = f.submit class: "btn"
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :description
+    = f.text_field :description, class: 'form-control'
+  .form-group
+    = f.label :default_points
+    = f.number_field :default_points, class: 'form-control'
+  .checkbox
+    = f.label :is_active do
+      = f.check_box :is_active
+      Is Active?
+  .form-group
+    = f.submit class: "btn btn-primary btn-block"
+    = cancel_button

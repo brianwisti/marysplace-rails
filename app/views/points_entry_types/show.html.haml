@@ -4,9 +4,12 @@
 = content_for(:context_navigation) do
   = render 'context_navigation', points_entry_type: @points_entry_type
 
-%dl
+%dl.dl-horizontal
   %dt Name
-  %dd= @points_entry_type.name
+  %dd
+    = @points_entry_type.name
+    - unless @points_entry_type.is_active
+      %span.label.label-default Inactive
   %dt Description
   %dd= @points_entry_type.description
   %dt Default Points

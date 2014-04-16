@@ -82,6 +82,7 @@ Marysplace::Application.routes.draw do
   resources :points_entry_types do
     collection do
       get 'search'
+      get 'all'
     end
 
     member do
