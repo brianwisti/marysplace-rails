@@ -9,7 +9,7 @@ class PointsEntryTypesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @points_entry_type = @points_entry_types.page params[:page]
+        @points_entry_types = @points_entry_types.page params[:page]
       end
 
       format.json { render json: @points_entry_types }
