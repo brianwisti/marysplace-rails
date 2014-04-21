@@ -5,10 +5,13 @@ class PointsEntryTypesController < ApplicationController
   # GET /points_entry_types.json
   def index
     authorize! :show, PointsEntryType
-    @points_entry_types = PointsEntryType.active.order('name').page params[:page]
+    @points_entry_types = PointsEntryType.active.order('name')
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html do
+        @points_entry_type = @points_entry_types.page params[:page]
+      end
+
       format.json { render json: @points_entry_types }
     end
   end
