@@ -42,6 +42,7 @@ end
 group :assets do
   #gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass', '~> 3.2.13' # Specify to prevent cache errors on heroku
   gem 'sass-rails',   '~> 3.2.3'
   gem 'bootstrap-sass', '~> 3.1.1'
 
