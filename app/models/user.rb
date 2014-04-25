@@ -44,8 +44,9 @@ class User < ActiveRecord::Base
     self.reload
   end
 
-  def role?(role)
-    self.roles.exists?( name: role.to_s )
+  # True if user has accepted a role named role_name
+  def role? role_name
+    self.roles.exists? name: role_name.to_s
   end
 
   def toggle_role role
