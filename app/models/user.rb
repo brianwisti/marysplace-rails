@@ -54,6 +54,11 @@ class User < ActiveRecord::Base
     self.roles.push role
   end
 
+  # Ask the user to stop acting as a role
+  def withdraw_role role
+    self.roles.delete role
+  end
+
   def toggle_role role
     if self.role? role
       self.roles.delete role

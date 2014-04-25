@@ -48,7 +48,17 @@ describe User do
       it { should be(true) }
     end
 
-    pending "Withdrawing" do
+    it { should respond_to(:withdraw_role) }
+
+    context "Withdrawing" do
+      let(:user) { create :user }
+      before { user.accept_role role }
+
+      it "removes the role" do
+        user.withdraw_role role
+        has_role = user.role? role.name
+        expect(has_role).to be(false)
+      end
     end
 
     pending "Establishing all roles" do
