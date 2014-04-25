@@ -3,15 +3,21 @@ require 'spec_helper'
 describe User do
 
   context "validation" do
-    it "does not allow an empty login" do
-      u = User.new
-      expect(u.errors[:login]).not_to be(:empty?)
-    end
+    let(:user) { User.new }
 
-    it "requires a unique login" do
-      user = FactoryGirl.create(:user)
-      dupe = FactoryGirl.build(:user, login: user.login)
-      expect(dupe.errors[:login]).not_to be(:empty?)
+    context "login" do
+      subject { user.errors[:login] }
+
+      context "cannot be empty" do
+        it { should_not be(:empty?) }
+      end
+
+      context "must be unique" do
+        let(:first) { create :user }
+        let(:dupe) { build :user, login: user.login }
+        subject { first.errors[:login] }
+        it { should_not be(:empty?) }
+      end
     end
   end
 end
