@@ -59,6 +59,11 @@ class User < ActiveRecord::Base
     self.roles.delete role
   end
 
+  # Accept a collection of roles, withdrawing any not present
+  def establish_roles specified_roles
+    self.roles = specified_roles
+  end
+
   def toggle_role role
     if self.role? role
       self.roles.delete role
