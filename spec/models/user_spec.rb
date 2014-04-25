@@ -38,7 +38,14 @@ describe User do
       end
     end
 
-    pending "Accepting" do
+    it { should respond_to(:accept_role) }
+
+    context "Accepting" do
+      let(:user) { create :user }
+      before { user.accept_role role }
+
+      subject { user.role? role.name }
+      it { should be(true) }
     end
 
     pending "Withdrawing" do

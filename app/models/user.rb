@@ -49,6 +49,11 @@ class User < ActiveRecord::Base
     self.roles.exists? name: role_name.to_s
   end
 
+  # Ask the user to take on a new role.
+  def accept_role role
+    self.roles.push role
+  end
+
   def toggle_role role
     if self.role? role
       self.roles.delete role
