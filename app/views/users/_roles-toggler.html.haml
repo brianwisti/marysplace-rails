@@ -1,7 +1,0 @@
-- roles.each do |role|
-  - if user.roles.include? role
-    %button.btn.btn-default.btn-sm.active{ data: { toggle: "button", user: user.id, role: role.id } }
-      = role.name.titleize
-  -else
-    %button.btn.btn-default.btn-sm{ data: { toggle: "button", user: user.id, role: role.id } }
-      = role.name.titleize

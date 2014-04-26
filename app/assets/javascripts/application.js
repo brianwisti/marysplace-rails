@@ -19,4 +19,3 @@
 //= require clients
 //= require points_entries
 //= require typeahead
-//= require users

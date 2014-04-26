@@ -70,25 +70,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def toggle_role
-    authorize! :manage, User
-    user = User.find(params[:id])
-    role = Role.find(params[:role_id])
-
-    user.toggle_role role
-    message = "#{role.name} toggled for #{user.login}"
-    flash[:notice] = message
-
-    @result = {
-      result: message
-    }
-
-    respond_to do |format|
-      format.html { redirect_to users_path }
-      format.json { render json: @result  }
-    end
-  end
-
   def entries
     @user = User.find(params[:id])
 

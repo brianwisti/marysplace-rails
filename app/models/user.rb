@@ -67,14 +67,6 @@ class User < ActiveRecord::Base
     self.roles = specified_roles
   end
 
-  def toggle_role role
-    if self.role? role
-      self.roles.delete role
-    else
-      self.roles.push role
-    end
-  end
-
   def deliver_password_reset_instructions!
     reset_perishable_token!
     UserMailer.password_reset_notification(self).deliver
