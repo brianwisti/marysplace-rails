@@ -134,8 +134,6 @@ Marysplace::Application.routes.draw do
   get "welcome/index"
   resources :users, except: [ :destroy ] do
     member do
-      get  'roles'
-      post 'toggle_role'
       get  'entries'
     end
   end

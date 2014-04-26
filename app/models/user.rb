@@ -61,6 +61,9 @@ class User < ActiveRecord::Base
 
   # Accept a collection of roles, withdrawing any not present
   def establish_roles specified_roles
+    # TODO: Separate cleanup method / script to take care of duplicate 
+    #       User<->Role connections rather than `delete_all` here.
+    self.roles.delete_all
     self.roles = specified_roles
   end
 

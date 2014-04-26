@@ -23,12 +23,8 @@
       - else
         %dt Roles
         %dd
-          - if @user != current_user and can? :manage, User
-            .btn-group.roles-toggler{ data: { toggler: "buttons-checkbox" } }
-              = render 'roles-toggler', user: @user, roles: @roles
-          - else
-            .btn-group{ data: { toggler: "buttons-checkbox" } }
-              = render 'roles-toggler', user: @user, roles: @roles
+          - @user.roles.each do |role|
+            %span.label.label-info= role.name
       %dt Email
       %dd
         - if @user.email?

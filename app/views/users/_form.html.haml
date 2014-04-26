@@ -1,3 +1,5 @@
+- available_roles = [] if available_roles.nil?
+
 = form_for user, role: 'form' do |f|
   - if user.errors.any?
     .error_explanation
@@ -31,6 +33,16 @@
         = f.label :avatar
         = f.file_field :avatar, class: 'form-control'
         = image_tag user.avatar.url(:square)
+      - if available_roles
+        %fieldset
+          %legend Roles
+          .form-group
+            - available_roles.each do |role|
+              - input_id = "role_ids_#{role.id}"
+              .checkbox-inline
+                %label{ for: input_id }
+                  %input{ type: "checkbox", id: input_id, name: "role_ids[]", value: role.id, checked: user.roles.include?(role) }
+                  = role.name.titleize
   .form-group
     = f.submit class: "btn btn-primary btn-block"
     = cancel_button

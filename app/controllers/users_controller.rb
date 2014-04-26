@@ -40,14 +40,26 @@ class UsersController < ApplicationController
 
     if @user != @current_user
       authorize! :manage, User
+      @roles = Role.all
     end
   end
 
+  # The U in CRUD
+  #
+  # User forms include a list of roles that this user has accepted
   def update
     @user = User.find(params[:id])
 
     if @user != @current_user
       authorize! :manage, User
+      roles = []
+      role_ids = params[:role_ids]
+
+      if role_ids
+        roles = Role.find role_ids
+      end
+
+      @user.establish_roles roles
     end
 
     if @user.update_attributes(params[:user])

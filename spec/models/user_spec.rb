@@ -98,6 +98,7 @@ describe User do
           expect(is_front_desk).to be(true)
         end
       end
+
     end
   end
 end
