@@ -73,12 +73,21 @@ RSpec.configure do |config|
   config.include LoginMacros
 end
 
-def expect_forbidden(response)
-  expect(response).to redirect_to(root_url)
-end
-
 def build_attributes(*args)
   FactoryGirl.build(*args).attributes.delete_if do |k, v|
     ["id", "created_at", "updated_at"].member?(k)
   end
+end
+
+# response should indicate no access
+def expect_forbidden(response)
+  expect(response).to redirect_to(root_url)
+end
+
+# save the model to database and reload it in one swoop.
+# 
+# Throws an exception if save fails.
+def save_and_reload! model
+  model.save!
+  model.reload
 end

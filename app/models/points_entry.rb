@@ -11,7 +11,7 @@ class PointsEntry < ActiveRecord::Base
   belongs_to :location
   attr_accessible :bailed, :performed_on, :points,
     :client_id, :points_entry_type_id, :added_by_id,
-    :is_finalized, :location_id
+    :is_finalized, :location_id, :multiple, :points_entered
 
   validates :added_by_id,
     presence: true
@@ -23,6 +23,16 @@ class PointsEntry < ActiveRecord::Base
     presence: true
   validates :points,
     presence: true
+  validates :multiple,
+    numericality: { 
+      equal_to: 1,
+      message: "does not apply to negative point entries"
+    },
+    if:  Proc.new { |entry| entry.points_entered < 0 }
+  validates :multiple,
+    numericality: {
+      greater_than: 0
+    }
 
   default_scope order('performed_on DESC, id DESC')
 
@@ -42,9 +52,15 @@ class PointsEntry < ActiveRecord::Base
     to:     :client,
     prefix: true
 
-  before_create do
+  before_validation do
     self.performed_on ||= Date.today
 
+    if self.points.nil? or self.points == 0
+      self.points = self.points_entered * self.multiple
+    end
+  end
+
+  before_create do
     if self.bailed == true
       entry_type = self.points_entry_type_name
       message = "Bailed on #{entry_type} - #{self.performed_on}"
