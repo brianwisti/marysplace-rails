@@ -39,12 +39,11 @@ describe PointsEntry do
         let(:points) { 100 }
 
         before do
-          entry.points_entered = 0
+          entry.points_entered = nil
           entry.points = points
-          save_and_reload! entry
         end
         
-        its(:points) { should eq(points) }
+        it { should have(1).errors_on(:points_entered) }
       end
 
       context "when user sets points_entered" do
@@ -53,7 +52,7 @@ describe PointsEntry do
         before do
           entry.points_entered = points
           entry.points = 0
-          save_and_reload! entry
+          entry.save
         end
 
         its(:points) { should eq(points) }
@@ -65,8 +64,8 @@ describe PointsEntry do
         let(:points) { points_entered * multiple }
 
         before do
-          entry.update_attributes points: 0, multiple: 2, points_entered: 50
-          save_and_reload! entry
+          entry.update_attributes multiple: 2, points_entered: 50
+          entry.save
         end
         
         its(:points) { should eq(points) }
@@ -91,33 +90,39 @@ describe PointsEntry do
     end
 
     context "updating an existing entry" do
-      subject(:entry) { create :points_entry, points: 50 }
+      let(:points) { 50 }
+      let(:multiple) { 2 }
+      let(:new_points) { multiple * points }
+      subject(:entry) { create :points_entry, points: points }
       
       context "Changing the multiple" do
-        subject(:entry) { create :points_entry }
-
-        context "without confirmation" do
-          before { entry.multiple = 2 }
-          it { should have(1).errors_on(:multiple) }
+        before do
+          entry.multiple = multiple
+          entry.save
         end
+
+        its(:points) { should eq(new_points) }
       end
       
-      pending "Changing the points entered"
-      
-      context "Changing total points" do
+      context "Changing points entered" do
         context "with default multiple" do
-          let(:new_points) { 100 }
-
           before do
-            entry.points = new_points
-            save_and_reload! entry
+            entry.points_entered  = new_points
+            entry.save
           end
           
           its(:points) { should eq(new_points)}
           its(:points_entered) { should eq(new_points) }
         end
 
-        pending "with non-default multiple"
+        context "with non-default multiple" do
+          before do
+            entry.multiple = multiple
+            entry.save
+          end
+
+          its(:points) { should eq(new_points) }
+        end
       end
     end
   end

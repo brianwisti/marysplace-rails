@@ -21,14 +21,14 @@ class PointsEntry < ActiveRecord::Base
     presence: true
   validates :location_id,
     presence: true
-  validates :points,
+  validates :points_entered,
     presence: true
   validates :multiple,
     numericality: { 
       equal_to: 1,
       message: "does not apply to negative point entries"
     },
-    if:  Proc.new { |entry| entry.points_entered < 0 }
+    if:  Proc.new { |entry| entry.points_entered && entry.points_entered < 0 }
   validates :multiple,
     numericality: {
       greater_than: 0
@@ -52,14 +52,19 @@ class PointsEntry < ActiveRecord::Base
     to:     :client,
     prefix: true
 
-  before_validation do
-    self.performed_on ||= Date.today
-
-    if self.points.nil? or self.points == 0
-      self.points = self.points_entered * self.multiple
-    elsif self.points_entered.nil? or self.points_entered = 0
+  # Many PointsEntries were created before 'points_entered' was a thing.
+  after_find do
+    if self.points_entered.nil? or self.points_entered = 0
       self.points_entered = self.points / self.multiple
     end
+  end
+
+  before_validation do
+    self.performed_on ||= Date.today
+  end
+  
+  before_save do
+    self.points = self.points_entered * self.multiple
   end
 
   before_create do
