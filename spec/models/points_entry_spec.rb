@@ -87,6 +87,38 @@ describe PointsEntry do
 
         it { should have(1).errors_on(:multiple) }
       end
+      
+    end
+
+    context "updating an existing entry" do
+      subject(:entry) { create :points_entry, points: 50 }
+      
+      context "Changing the multiple" do
+        subject(:entry) { create :points_entry }
+
+        context "without confirmation" do
+          before { entry.multiple = 2 }
+          it { should have(1).errors_on(:multiple) }
+        end
+      end
+      
+      pending "Changing the points entered"
+      
+      context "Changing total points" do
+        context "with default multiple" do
+          let(:new_points) { 100 }
+
+          before do
+            entry.points = new_points
+            save_and_reload! entry
+          end
+          
+          its(:points) { should eq(new_points)}
+          its(:points_entered) { should eq(new_points) }
+        end
+
+        pending "with non-default multiple"
+      end
     end
   end
     

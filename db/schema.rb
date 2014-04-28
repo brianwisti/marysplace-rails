@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140427143002) do
+ActiveRecord::Schema.define(:version => 20140412150413) do
 
   create_table "catalog_items", :force => true do |t|
     t.string   "name"
@@ -129,8 +129,6 @@ ActiveRecord::Schema.define(:version => 20140427143002) do
     t.integer  "added_by_id"
     t.boolean  "is_finalized",         :default => true
     t.integer  "location_id"
-    t.integer  "multiple",             :default => 1
-    t.integer  "points_entered",       :default => 0
   end
 
   add_index "points_entries", ["added_by_id"], :name => "index_points_entries_on_added_by_id"

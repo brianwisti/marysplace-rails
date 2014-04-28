@@ -57,6 +57,8 @@ class PointsEntry < ActiveRecord::Base
 
     if self.points.nil? or self.points == 0
       self.points = self.points_entered * self.multiple
+    elsif self.points_entered.nil? or self.points_entered = 0
+      self.points_entered = self.points / self.multiple
     end
   end
 
