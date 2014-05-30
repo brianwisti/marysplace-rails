@@ -72,6 +72,29 @@ describe PointsEntriesController do
         end
       end
 
+      context "with client ID & entry-type ID & multiple" do
+        let(:multiple)       { 3 }
+        let(:points_entered) { 100 }
+        let(:expected)       { points_entered * multiple }
+
+        before do 
+          submission[:multiple] = multiple
+          submission[:points_entered] = points_entered
+        end
+
+        it "creates a PointsEntry" do
+          expect {
+            post :create, points_entry: submission
+          }.to change(PointsEntry, :count).by(1)
+        end
+
+        it "applies the multiple" do
+          post :create, points_entry: submission
+          new_entry = assigns(:points_entry)
+          new_entry.points { should eq(expected) }
+        end
+      end
+
       context "with client name & entry-type ID" do
         let(:client) { create :client }
 

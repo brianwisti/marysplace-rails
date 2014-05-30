@@ -29,25 +29,31 @@
   .form-group
     = f.label :points_entry_type_id, class: 'control-label'
     = text_field_tag "points_entry_type", points_entry_type.name,
-      data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points' },
+      data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points_entered' },
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
       placeholder: 'What they did...',
       class: 'pointsentrytype-typeahead form-control'
   .checkbox
     = f.label :bailed do
       = f.check_box :bailed, 
-        data: { field: 'points_entry_points', penalty: bail_penalty }, 
+        data: { field: 'points_entry_points_entered', penalty: bail_penalty }, 
         class: 'bailed'
       Bailed
   .form-group
     .col-xs-2.well
       %span.point-balance.text-info= number_with_delimiter client.point_balance
       +
-    .col-xs-8
+    .col-xs-4
       = f.label :points, class: 'control-label'
-      = f.number_field :points, 
+      = f.number_field :points_entered, 
         data: { default: points_entry_type.default_points }, 
         placeholder: 'How many points gained or spent...',
+        autocomplete: 'off', class: 'form-control'
+    .col-xs-4
+      x
+      = f.label :multiple, class: 'control-label'
+      = f.number_field :multiple,
+        data: { default: 1 },
         autocomplete: 'off', class: 'form-control'
     .col-xs-2.well
       \=

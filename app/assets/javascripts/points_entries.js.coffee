@@ -33,8 +33,15 @@ $.getJSON '/points_entry_types.json', (data) ->
         default_points = $(field).data 'default'
         $(field).val default_points
       $(field).change()
-    $('#points_entry_points').change () ->
+    $('#points_entry_points_entered').change () ->
       entry_value = parseInt $(this).val()
+      multiple = parseInt $('#points_entry_multiple').val()
       initial_balance = parseInt $('.point-balance').html().digits()
-      new_total = entry_value + initial_balance
+      new_total = (entry_value * multiple) + initial_balance
+      $('.new-balance').html new_total.commafy()
+    $('#points_entry_multiple').change () ->
+      multiple = parseInt $(this).val()
+      points_entered = parseInt $('#points_entry_points_entered').val()
+      initial_balance = parseInt $('.point-balance').html().digits()
+      new_total = (points_entered * multiple) + initial_balance
       $('.new-balance').html new_total.commafy()
