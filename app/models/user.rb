@@ -30,6 +30,11 @@ class User < ActiveRecord::Base
     },
     default_url: "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/:style/blank.png"
 
+  validates_attachment :avatar,
+    content_type: {
+      content_type: %w( image/jpeg image/png image/gif )
+    }
+
   has_barcode :barcode,
     outputter: :svg,
     type: Barby::Code128B,
