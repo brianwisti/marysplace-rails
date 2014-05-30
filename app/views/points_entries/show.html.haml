@@ -12,7 +12,7 @@
     = number_with_delimiter(@points_entry.client_point_balance)
     points
 
-%dl
+%dl.dl-horizontal
   %dt Client
   %dd= link_to @points_entry.client_current_alias, @points_entry.client
   %dt Location
@@ -22,7 +22,13 @@
   %dt Performed On
   %dd= @points_entry.performed_on
   %dt Points
-  %dd= @points_entry.points
+  %dd
+    - if @points_entry.multiple != 1
+      = @points_entry.points_entered
+      x
+      = @points_entry.multiple
+      \=
+    = @points_entry.points
   - if @points_entry.bailed
     %dd
       %em (Bailed)
