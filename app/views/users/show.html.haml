@@ -20,7 +20,7 @@
       - if @user.client and can? :show, Client
         %dt For Client
         %dd= link_to @user.client_current_alias, @user.client
-      - else
+      - unless @user.roles.empty?
         %dt Roles
         %dd
           - @user.roles.each do |role|
