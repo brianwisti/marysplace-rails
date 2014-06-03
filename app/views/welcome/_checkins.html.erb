@@ -5,7 +5,7 @@
     <li><%= link_to "Show Checkins", today_checkins_path %></li>
     <% if can? :create, Checkin %>
       <li>
-      <%= link_to "Record Checkin", new_checkin_path %>
+      <%= link_to "Start Selfcheck", selfcheck_checkins_path %>
       </li>
     <% end %>
   </ul>

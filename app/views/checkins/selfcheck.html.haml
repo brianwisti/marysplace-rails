@@ -1,14 +1,14 @@
 = content_for(:title) do
   Client Selfcheck
 
-= form_tag(selfcheck_post_checkins_path, method: :put, id: "login-form", class: "form-inline")  do
-  %fieldset
-    = text_field_tag :login, nil, maxlength: 8, size: 8, class: "input-small", placeholder: "Login"
+= form_tag(selfcheck_post_checkins_path, method: :put, id: "login-form", class: "form-inline", role: "form")  do
+  .form-group
+    = text_field_tag :login, nil, maxlength: 8, size: 8, class: "form-control", placeholder: "Login"
     - if @locations.nil? or @locations.empty?
       %em A Location is required for checkins
     - else
-      = collection_select(nil, :location_id, @locations, :id, :name, selected: @default_location.id )
-      = submit_tag "Checkin", class: "btn"
+      = collection_select(nil, :location_id, @locations, :id, :name, { selected: @default_location.id }, { class: "form-control" } )
+      = submit_tag "Checkin", class: "btn btn-default"
 
 %table.table.entries
   %thead
