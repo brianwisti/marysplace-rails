@@ -227,6 +227,12 @@ describe CheckinsController do
         post :selfcheck_post, login: "12345678", location_id: location.id
         expect(flash[:alert]).to_not be_nil
       end
+
+      it "gets an error when duplicating a selfcheck" do
+        post :selfcheck_post, login: badged_client.login_code, location_id: location.id
+        post :selfcheck_post, login: badged_client.login_code, location_id: location.id
+        expect(flash[:notice]).to_not be_nil
+      end
     end
   end
 end
