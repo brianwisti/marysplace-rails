@@ -5,9 +5,10 @@
 = content_for(:context_navigation) do
   = render 'context_navigation'
 
-= render 'annual_report_links', year: @year
-= render 'monthly_report_links', span: @span
-= render 'daily_report_links', span: @span
+.container
+  =# render 'annual_report_links', year: @year
+  =# render 'monthly_report_links', span: @span
+  = render 'daily_report_links', span: @span
 
 %p
   %span.checkin-count= @total_checkins

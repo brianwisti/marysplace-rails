@@ -3,10 +3,8 @@
   next_month = span + 1.month
 -%>
 
-<div class="pagination pagination-centered">
-  <ul>
-    <li><%= link_to_monthly_checkins_for last_month %></li>
-    <li class="active"><%= link_to_monthly_checkins_for span %></li>
-    <li><%= link_to_monthly_checkins_for next_month %></li>
-  </ul>
-</div>
+<ul class="pagination pagination-sm">
+  <li><%= link_to_monthly_checkins_for last_month %></li>
+  <li class="active"><%= link_to_monthly_checkins_for span %></li>
+  <li><%= link_to_monthly_checkins_for next_month %></li>
+</ul>
