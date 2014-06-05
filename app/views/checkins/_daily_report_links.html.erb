@@ -3,12 +3,9 @@
   tomorrow = span + 1.day
 %>
 
-<div class="pagination pagination-small pagination-centered">
-  <ul>
-    <li><%= link_to_daily_checkins_for yesterday %></li>
-    </li>
-    <li class="active"><%= link_to_daily_checkins_for span %></li>
-    <li><%= link_to_daily_checkins_for tomorrow %></li>
-  </ul>
-</div>
-
+<ul class="pagination pagination-sm">
+  <li><%= link_to_daily_checkins_for yesterday %></li>
+  </li>
+  <li class="active"><%= link_to_daily_checkins_for span %></li>
+  <li><%= link_to_daily_checkins_for tomorrow %></li>
+</ul>

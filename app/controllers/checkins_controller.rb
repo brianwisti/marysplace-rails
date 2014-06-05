@@ -139,7 +139,7 @@ class CheckinsController < ApplicationController
 
     login = User.find_by_login login_code
     if login and login.client
-      checkin = Checkin.create! do |c|
+      checkin = Checkin.create do |c|
         c.client     = login.client
         c.user       = current_user
         c.checkin_at = checkin_at
