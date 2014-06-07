@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :organization do
-    name "MyString"
-    creator_id 1
+    sequence(:name) { |n| "organization #{n}" }
+    association :creator, factory: :site_admin_user
   end
 end

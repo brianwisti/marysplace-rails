@@ -6,6 +6,10 @@ FactoryGirl.define do
 
     initialize_with { Role.where(name: name).first_or_create }
 
+    factory :site_admin_role do
+      name "site_admin"
+    end
+
     factory :admin_role do
       name "admin"
     end

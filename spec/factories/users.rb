@@ -10,6 +10,12 @@ FactoryGirl.define do
   #     single_access_token: <%= Authlogic::Random.friendly_token %>
   #     perishable_token: <%= Authlogic::Random.friendly_token %>
 
+    factory :site_admin_user do
+      after(:build) do |user|
+        user.roles << build(:site_admin_role)
+      end
+    end
+
     factory :admin_user do
       after(:build) do |user|
         user.roles << build(:admin_role)

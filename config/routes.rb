@@ -1,5 +1,7 @@
 Marysplace::Application.routes.draw do
 
+  resources :organizations
+
   resources :client_notes
 
 
