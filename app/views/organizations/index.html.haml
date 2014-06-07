@@ -1,4 +1,12 @@
 = content_for(:title) do
   Organizations
 
-Organizations
+= content_for(:context_navigation) do
+  = render 'context_navigation'
+
+%table.table 
+  %thead
+    %tr
+      %th Name
+  %tbody
+    = render @organizations

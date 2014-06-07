@@ -1,0 +1,5 @@
+%ul.nav.nav-tabs
+  - if can? :create, Organization
+    %li= link_to 'New Organization', new_organization_path
+  - if defined? organization
+    %li= link_to "Edit", edit_organization_path(organization)

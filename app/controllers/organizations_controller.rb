@@ -16,7 +16,13 @@ class OrganizationsController < ApplicationController
 
   def create
     @organization = Organization.new params[:organization]
-    redirect_to organizations_url
+    @organization.creator = current_user
+
+    if @organization.save
+      redirect_to @organization
+    else
+      render :new
+    end
   end
 
   def edit
@@ -25,11 +31,17 @@ class OrganizationsController < ApplicationController
 
   def update
     @organization = Organization.find params[:id]
-    redirect_to organizations_url
+    
+    if @organization.update_attributes params[:organization]
+      redirect_to @organization, notice: 'Organization updated'
+    else
+      render :edit
+    end
   end
 
   def destroy
     @organization = Organization.find params[:id]
+    @organization.destroy
     redirect_to organizations_url
   end
 end
