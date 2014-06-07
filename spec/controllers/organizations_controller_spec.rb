@@ -17,8 +17,6 @@ describe OrganizationsController do
       it "is accessible" do
         expect(response).to be_success
       end
-
-      pending "shows the Organizations"
     end
 
     context "GET show" do
@@ -27,8 +25,6 @@ describe OrganizationsController do
       it "is accessible" do
         expect(response).to be_success
       end
-
-      pending "shows the Organization"
     end
 
     context "GET new" do
@@ -45,7 +41,11 @@ describe OrganizationsController do
         expect(response).to be_redirect
       end
 
-      pending "creates an Organization"
+      it "creates an Organization" do
+        expect {
+          post :create, organization: attributes_for(:organization)
+        }.to change(Organization, :count).by(1)
+      end
     end
 
     context "GET edit" do
@@ -61,20 +61,22 @@ describe OrganizationsController do
     context "PUT update" do
       it "is accessible" do
         put :update, id: organization, organization: attributes_for(:organization)
-        expect(response).to be_redirect
+        expect(response).to redirect_to(organization)
       end
-
-      pending "updates the organization"
     end
 
     context "DELETE destroy" do
-      before { delete :destroy, id: organization }
 
       it "is accessible" do
+        delete :destroy, id: organization
         expect(response).to redirect_to(organizations_url)
       end
 
-      pending "destroys the organization"
+      it "destroys the organization" do
+        expect {
+          delete :destroy, id: organization
+        }.to change(Organization, :count).by(-1)
+      end
     end
   end
 
