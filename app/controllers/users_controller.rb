@@ -40,7 +40,12 @@ class UsersController < ApplicationController
 
     if @user != @current_user
       authorize! :manage, User
-      @roles = Role.all
+      site_admin_role = 'site_admin'
+      @roles = if current_user.role? site_admin_role
+                 Role.all
+               else
+                 Role.where 'name != ?', site_admin_role
+               end
     end
   end
 

@@ -2,8 +2,11 @@
   <div class="container-fluid">
     <div class="navbar-header pull-left">
       <a href="<%= root_url %>" class="navbar-brand">
-        <%= image_tag 'marys-place-icon.png' %>
-        Mary's Place
+	<% if current_user.organization %>
+	  <%= current_user.organization_name %>
+	<% else -%>
+	  MPF
+	<% end -%>
       </a>
     </div>
     <div class="navbar-header pull-right">

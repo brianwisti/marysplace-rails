@@ -19,18 +19,21 @@ FactoryGirl.define do
     factory :admin_user do
       after(:build) do |user|
         user.roles << build(:admin_role)
+        user.organization = build :organization
       end
     end
 
     factory :staff_user do
       after(:create) do |user|
         user.roles << create(:staff_role)
+        user.organization = build :organization
       end
     end
 
     factory :front_desk_user do
       after(:create) do |user|
         user.roles << create(:front_desk_role)
+        user.organization = build :organization
       end
     end
   end

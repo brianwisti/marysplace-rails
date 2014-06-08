@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140605214342) do
+ActiveRecord::Schema.define(:version => 20140608042536) do
 
   create_table "catalog_items", :force => true do |t|
     t.string   "name"
@@ -257,6 +257,9 @@ ActiveRecord::Schema.define(:version => 20140605214342) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.datetime "last_message_check"
+    t.integer  "organization_id"
   end
+
+  add_index "users", ["organization_id"], :name => "index_users_on_organization_id"
 
 end

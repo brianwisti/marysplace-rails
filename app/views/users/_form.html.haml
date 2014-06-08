@@ -33,6 +33,10 @@
         = f.label :avatar
         = f.file_field :avatar, class: 'form-control'
         = image_tag user.avatar.url(:square)
+      - if can? :manage, Organization
+        .form-group
+          = f.label :organization
+          = f.collection_select :organization_id, Organization.all, :id, :name, { prompt: true }, { class: 'form-control' }
       - if available_roles
         %fieldset
           %legend Roles

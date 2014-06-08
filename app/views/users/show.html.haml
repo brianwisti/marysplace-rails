@@ -31,6 +31,15 @@
           = mail_to @user.email
         -else
           %em No email
+      %dt Organization
+      %dd
+        - if @user.organization
+          - if can? :show, Organization
+            = link_to @user.organization_name, @user.organization
+          - else
+            = @user.organization_name
+        - else
+          %em None
       %dt Login Count
       %dd= @user.login_count
       - if @user.login_count > 0
