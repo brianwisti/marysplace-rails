@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140608064239) do
+ActiveRecord::Schema.define(:version => 20140608183459) do
 
   create_table "catalog_items", :force => true do |t|
     t.string   "name"
@@ -89,12 +89,14 @@ ActiveRecord::Schema.define(:version => 20140608064239) do
     t.boolean  "is_active",         :default => true
     t.integer  "login_id"
     t.boolean  "is_flagged",        :default => false
+    t.integer  "organization_id"
   end
 
   add_index "clients", ["added_by_id"], :name => "index_clients_on_added_by_id"
   add_index "clients", ["current_alias"], :name => "index_clients_on_current_alias", :unique => true
   add_index "clients", ["last_edited_by_id"], :name => "index_clients_on_last_edited_by_id"
   add_index "clients", ["login_id"], :name => "index_clients_on_login_id"
+  add_index "clients", ["organization_id"], :name => "index_clients_on_organization_id"
 
   create_table "locations", :force => true do |t|
     t.string   "name",         :null => false
@@ -119,14 +121,18 @@ ActiveRecord::Schema.define(:version => 20140608064239) do
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
 
   create_table "organizations", :force => true do |t|
-    t.string   "name",              :null => false
-    t.integer  "creator_id",        :null => false
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.string   "name",                       :null => false
+    t.integer  "creator_id",                 :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.string   "logo_file_name"
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.string   "card_template_file_name"
+    t.string   "card_template_content_type"
+    t.integer  "card_template_file_size"
+    t.datetime "card_template_updated_at"
   end
 
   create_table "points_entries", :force => true do |t|

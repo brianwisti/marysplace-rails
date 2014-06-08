@@ -21,6 +21,8 @@ class Client < ActiveRecord::Base
   belongs_to :login,
     class_name: "User"
 
+  belongs_to :organization
+
   has_many :points_entries,
     dependent: :destroy
   has_many :checkins,
@@ -92,6 +94,12 @@ class Client < ActiveRecord::Base
 
   before_save do
     self.point_balance ||= 0
+
+    unless self.organization
+      if self.added_by.organization
+        self.organization = self.added_by.organization
+      end
+    end
   end
 
   def create_login(opts = {})

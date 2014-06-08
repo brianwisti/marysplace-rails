@@ -8,7 +8,7 @@ describe OrganizationsController do
     let(:user) { create :site_admin_user }
 
     before do
-      UserSession.create user
+      login user
     end
 
     context "GET index" do

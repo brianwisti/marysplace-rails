@@ -14,6 +14,21 @@
       .form-group
         = f.label :logo
         = f.file_field :logo, class: 'form-control'
+        %p.help-block
+          - if organization.logo_file_name
+            Currently
+            %em= organization.logo_file_name
+          - else
+            %em None
+      .form-group
+        = f.label :card_template
+        = f.file_field :card_template, class: 'form-control'
+        %p.help-block
+          - if organization.card_template_file_name
+            Currently
+            %em= organization.card_template_file_name
+          - else
+            %em None
     .col-md-6
       .form-group
         = f.submit class: 'btn btn-primary btn-block'

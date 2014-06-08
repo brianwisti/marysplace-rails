@@ -1,6 +1,7 @@
 # /clients
 class ClientsController < ApplicationController
   before_filter :require_user
+  authorize_resource
   helper_method :sort_column, :sort_direction
 
   # GET /all

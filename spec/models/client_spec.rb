@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Client do
-  let(:user)   { create :user }
-  let(:client) { create :client }
+  let(:user)   { create :staff_user }
+  let(:client) { create :client, added_by: user }
 
   describe "validation" do
     context "the current alias" do
@@ -21,6 +21,14 @@ describe Client do
       it "must be specified" do
         client = Client.new
         expect(client).to have(1).errors_on(:added_by_id)
+      end
+    end
+
+    context "organization" do
+      it "matches added_by org if available" do
+        client.save!
+        client.reload
+        expect(client.organization).to eql(user.organization)
       end
     end
   end
