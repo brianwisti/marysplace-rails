@@ -1,4 +1,10 @@
-<%= content_for(:title) do %>Dashboard<% end %>
+<% if current_user.organization %>
+  <% if current_user.organization.logo %>
+    <div class="well">
+      <%= image_tag current_user.organization.logo, class: "img-responsive" %>
+    </div>
+  <% end %>
+<% end %>
 <div class="container-fluid">
   <div class="row">
     <div>

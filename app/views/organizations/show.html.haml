@@ -4,6 +4,8 @@
 = content_for(:context_navigation) do
   = render 'context_navigation', organization: @organization
 
+- if @organization.logo
+  = image_tag @organization.logo
 .row
   .col-sm-6
     %dl.dl-horizontal

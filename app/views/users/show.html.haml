@@ -40,18 +40,19 @@
             = @user.organization_name
         - else
           %em None
-      %dt Login Count
-      %dd= @user.login_count
-      - if @user.login_count > 0
-        %dt Last Activity
-        %dd= @user.last_request_at
-        %dt Last Login
-        %dd= @user.last_login_at
-        %dt Current Login
-        %dd= @user.current_login_at
-        %dt Last Login Address
-        %dd= @user.last_login_ip
-        %dt Current Login Address
-        %dd= @user.current_login_ip
+      - if can? :manage, @user
+        %dt Login Count
+        %dd= @user.login_count
+        - if @user.login_count > 0
+          %dt Last Activity
+          %dd= @user.last_request_at
+          %dt Last Login
+          %dd= @user.last_login_at
+          %dt Current Login
+          %dd= @user.current_login_at
+          %dt Last Login Address
+          %dd= @user.last_login_ip
+          %dt Current Login Address
+          %dd= @user.current_login_ip
   .col-sm-6
     = image_tag @user.avatar.url(:square)
