@@ -12,42 +12,40 @@ div.id-card {
     margin: 0;
     width: 3in;
     height: 2in;
-}
 
-h1, h2, h3 {
-    background: white;
-    color: black;
-    padding-bottom: 1px;
-    border-bottom: 1px solid gray;
-}
-
-div.main {
-    display: table;
-    width: 100%;
-    margin: 0;
-    div {
-	margin: 0;
+    h1, h2, h3 {
+	background: white;
+	color: black;
+	padding-bottom: 1px;
+	border-bottom: 1px solid gray;
     }
-}
 
-div.text {
-    vertical-align: top;
-    display: table-cell;
-    width: 50%;
-    text-align: center;
-}
+    div.main {
+	display: table;
+	width: 100%;
+	margin: 0;
 
-div.text p {
-    margin: 0 auto 0 auto;
-}
+	div {
+	    margin: 0;
+	}
 
-div.pic {
-    display: table-cell;
-    width: 50%;
-    text-align: right;
-}
+	div.text {
+	    vertical-align: top;
+	    display: table-cell;
+	    width: 50%;
+	    text-align: center;
 
-img.avatar {
-    height: 30mm;
-    width: 30mm;
+	    p {
+		margin: 0 auto 0 auto;
+	    }
+	}
+
+
+	div.pic {
+	    display: table-cell;
+	    width: 50%;
+	    text-align: right;
+	}
+    }
+
 }
