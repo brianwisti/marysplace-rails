@@ -40,12 +40,17 @@ div.id-card {
 	    }
 	}
 
-
 	div.pic {
 	    display: table-cell;
 	    width: 50%;
 	    text-align: right;
+
+	    img.avatar {
+		height: 30mm;
+		width: 30mm;
+	    }
 	}
     }
 
 }
+
