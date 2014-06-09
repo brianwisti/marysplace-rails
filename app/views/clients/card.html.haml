@@ -1,7 +1,6 @@
 %div.id-card
   %h1
-    = image_tag 'marys-place-icon.png'
-    Mary's Place
+    = image_tag @client.organization.logo, style: 'max-width: 100%; margin: auto'
 
   %div.main
     %div.text
