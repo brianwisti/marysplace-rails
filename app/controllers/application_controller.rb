@@ -90,6 +90,11 @@ class ApplicationController < ActionController::Base
           title: "Client Notes",
           url: client_notes_path,
           active: 'client_notes' == current_controller
+        },
+        Organization => {
+          title: "Organizations",
+          url:   organizations_path,
+          active: 'organizations' == current_controller
         }
       }
 

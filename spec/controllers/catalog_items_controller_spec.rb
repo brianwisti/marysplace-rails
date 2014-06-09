@@ -16,7 +16,7 @@ describe CatalogItemsController do
     let(:admin_user) { create :admin_user }
 
     before do
-      login admin_user
+      UserSession.create admin_user
     end
 
     describe "index" do

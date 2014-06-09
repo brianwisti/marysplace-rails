@@ -1,5 +1,7 @@
 Marysplace::Application.routes.draw do
 
+  resources :organizations
+
   resources :client_notes
 
 
@@ -119,6 +121,7 @@ Marysplace::Application.routes.draw do
     end
 
     member do
+      get 'barcode'
       get 'card'
       get 'checkins'
       get 'entries'

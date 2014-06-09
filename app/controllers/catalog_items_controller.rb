@@ -1,40 +1,31 @@
 class CatalogItemsController < ApplicationController
   before_filter :require_user
+  authorize_resource
 
   # GET /catalog_items
   # GET /catalog_items.json
   def index
-    authorize! :show, CatalogItem
-
     @catalog_items = CatalogItem.all
   end
 
   # GET /catalog_items/1
   def show
-    authorize! :show, CatalogItem
-
     @catalog_item = CatalogItem.find(params[:id])
   end
 
   # GET /catalog_items/new
   def new
-    authorize! :create, CatalogItem
-
     @catalog_item = CatalogItem.new
   end
 
   # GET /catalog_items/1/edit
   def edit
-    authorize! :edit, CatalogItem
-
     @catalog_item = CatalogItem.find(params[:id])
   end
 
   # POST /catalog_items
   # POST /catalog_items.json
   def create
-    authorize! :create, CatalogItem
-
     @catalog_item = CatalogItem.new(params[:catalog_item])
     @catalog_item.added_by = current_user
 
@@ -49,7 +40,6 @@ class CatalogItemsController < ApplicationController
   # PUT /catalog_items/1
   # PUT /catalog_items/1.json
   def update
-    authorize! :update, CatalogItem
     @catalog_item = CatalogItem.find(params[:id])
 
     respond_to do |format|
@@ -72,8 +62,6 @@ class CatalogItemsController < ApplicationController
   # DELETE /catalog_items/1
   # DELETE /catalog_items/1.json
   def destroy
-    authorize! :destroy, CatalogItem
-
     @catalog_item = CatalogItem.find(params[:id])
     @catalog_item.destroy
 

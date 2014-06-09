@@ -9,6 +9,13 @@ module LoginMacros
     return session
   end
 
+  def logout user
+    expect(user).to_not be_nil
+    session = UserSession.find
+    expect(session).to be_valid
+    session.destroy
+  end
+
   # A session starter that interacts with the site interface.
   def sign_in(user, password: 'waffle')
     visit root_path

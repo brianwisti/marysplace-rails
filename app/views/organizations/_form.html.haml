@@ -1,0 +1,35 @@
+= form_for organization, role: 'form' do |f|
+  - if organization.errors.any?
+    .error_explanation
+      %h3= pluralize organization.errors.count, "Error"
+      %ul
+        - organization.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .col-md-6
+      = f.hidden_field :creator_id
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control'
+      .form-group
+        = f.label :logo
+        = f.file_field :logo, class: 'form-control'
+        %p.help-block
+          - if organization.logo_file_name
+            Currently
+            %em= organization.logo_file_name
+          - else
+            %em None
+      .form-group
+        = f.label :card_template
+        = f.file_field :card_template, class: 'form-control'
+        %p.help-block
+          - if organization.card_template_file_name
+            Currently
+            %em= organization.card_template_file_name
+          - else
+            %em None
+    .col-md-6
+      .form-group
+        = f.submit class: 'btn btn-primary btn-block'
+        = cancel_button

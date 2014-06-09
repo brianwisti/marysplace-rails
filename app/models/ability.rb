@@ -5,9 +5,9 @@ class Ability
     user ||= User.new
 
     if user.role? :front_desk
-      can :show, Client
       can :create, Checkin
       can :show, Checkin
+      can :show, Client
     end
 
     if user.role? :staff
@@ -25,6 +25,21 @@ class Ability
     end
 
     if user.role? :admin
+      can :manage, CatalogItem
+      can :manage, Client
+      can :manage, User
+      can :manage, PointsEntryType
+      can :manage, PointsEntry
+      can :manage, Checkin
+      can :manage, ClientFlag
+      can :manage, ClientNote
+      can :manage, ClientNote, user_id: user.id
+      can :manage, Message
+      can :manage, StoreCart
+      can :manage, Location
+    end
+
+    if user.role? :site_admin
       can :manage, :all
     end
 

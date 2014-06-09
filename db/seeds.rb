@@ -11,11 +11,12 @@ require 'highline/import'
 require 'pp'
 
 puts "Creating core users..."
+site_admin_role = Role.create! name: 'site_admin'
 admin_role = Role.create! name: 'admin'
 staff_role = Role.create! name: 'staff'
 front_desk_role = Role.create! name: 'front_desk'
 
-puts "Creating admin user..."
+puts "Creating site admin user..."
 print "Enter an email address: "
 email = ask("Enter an email address: ")
 passwd = ask("Enter a password: ") { |q| q.echo = "x" }
@@ -25,7 +26,7 @@ admin = User.create!(login: 'admin',
                      email: email,
                      password: passwd,
                      password_confirmation: confirm)
-admin.roles << admin_role
+admin.roles << site_admin_role
 
 data_dir = "./seed"
 

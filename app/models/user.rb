@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   extend Anonymizable
   include HasBarcode
 
-  attr_accessible :login, :name, :email, :password, :password_confirmation, :avatar, :avatar_file_name, :last_message_check
+  attr_accessible :login, :name, :email, :password, :password_confirmation, :avatar, :avatar_file_name, :last_message_check, :organization_id
   attr_accessor :avatar
 
   acts_as_authentic do |c|
@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   end
 
   has_and_belongs_to_many :roles
+  belongs_to :organization
   has_many :checkins
   has_many :points_entries,
     foreign_key: :added_by_id
@@ -42,6 +43,9 @@ class User < ActiveRecord::Base
 
   delegate :current_alias,
     to:     :client,
+    prefix: true
+  delegate :name,
+    to:     :organization,
     prefix: true
 
   def messages_checked!

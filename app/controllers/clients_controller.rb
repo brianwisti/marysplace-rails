@@ -1,6 +1,9 @@
+require 'open-uri'
+
 # /clients
 class ClientsController < ApplicationController
   before_filter :require_user
+  authorize_resource
   helper_method :sort_column, :sort_direction
 
   # GET /all
@@ -143,12 +146,19 @@ class ClientsController < ApplicationController
     end
   end
 
+  def barcode
+    @client = Client.find params[:id]
+  end
+
   def card
     authorize! :manage, Client
 
     @client = Client.find(params[:id].to_i)
+    # open(@client.organization.card_template.url) { |io| content = io.read }
+
     respond_to do |format|
       if @client.login
+        format.svg
         format.html { render layout: 'card' }
       else
         flash[:error] = "#{@client.current_alias} has no login yet."
