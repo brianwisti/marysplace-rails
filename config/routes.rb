@@ -121,6 +121,7 @@ Marysplace::Application.routes.draw do
     end
 
     member do
+      get 'barcode'
       get 'card'
       get 'checkins'
       get 'entries'

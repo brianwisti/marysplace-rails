@@ -13,6 +13,6 @@
     - if can? :edit, client
       %li= link_to "Edit #{client.current_alias}", edit_client_path(client)
     - if client.login and can? :show, User
-      %li= link_to "ID Card for #{client.current_alias}", card_client_path(client)
+      %li= link_to "ID Card for #{client.current_alias}", card_client_path(client, format: :svg)
   - if can? :create, Client
     %li= link_to "Create New Client", new_client_path
