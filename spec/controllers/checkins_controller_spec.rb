@@ -84,9 +84,17 @@ describe CheckinsController do
       }.to change(Checkin, :count).by(-1)
     end
 
-    it "can access today" do
-      get :today
-      expect(response).to render_template(:daily_report)
+    context ":today" do
+      it "is accessible" do
+        get :today
+        expect(response).to render_template(:daily_report)
+      end
+
+      it "shows today's checkins" do
+        post :create, checkin: build_attributes(:checkin)
+        get :today
+        expect(assigns(:rows)).to include(checkin)
+      end
     end
 
     it "can access annual_report" do

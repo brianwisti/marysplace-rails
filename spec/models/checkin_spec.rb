@@ -22,4 +22,17 @@ describe Checkin do
 
     expect(placeless).to have(1).errors_on(:location_id)
   end
+
+  context "today" do
+    it "should start at zero" do
+      count = Checkin.today.count
+      expect(count).to eql(0)
+    end
+    
+    it "should note checkins made today" do
+      create :checkin, checkin_at: DateTime.now
+      count = Checkin.today.count
+      expect(count).to eql(1)
+    end
+  end
 end

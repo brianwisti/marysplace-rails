@@ -113,7 +113,7 @@ class Checkin < ActiveRecord::Base
   end
 
   def self.today
-    today = Date.today
+    today = Date.today.to_time
     self.on(today)
   end
 
