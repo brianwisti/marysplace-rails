@@ -80,7 +80,8 @@ class CheckinsController < ApplicationController
 
     @span = Date.today
     @year = @span.year
-    @rows = Checkin.today
+    @time_range = @span.strftime("%A, %B %d %Y")
+    @checkins = Checkin.today
 
     render :daily_report
   end
@@ -101,7 +102,7 @@ class CheckinsController < ApplicationController
     @rows = Checkin.per_day_in(@year, @month)
     @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
 
-    @span = DateTime.new(@year, @month, 1, 0, 0)
+    @span = Time.zone.local(@year, @month, 1, 0, 0)
     @time_range = @span.strftime("%B %Y")
   end
 
@@ -111,7 +112,7 @@ class CheckinsController < ApplicationController
     @year  = params[:year].to_i
     @month = params[:month].to_i
     @day   = params[:day].to_i
-    @span = DateTime.new(@year, @month, @day, 0, 0)
+    @span = Time.zone.local(@year, @month, @day, 0, 0)
     @time_range = @span.strftime("%A, %B %d %Y")
     @checkins = Checkin.on(@span)
     @total_checkins = @checkins.count
@@ -135,19 +136,22 @@ class CheckinsController < ApplicationController
     authorize! :create, Checkin
     login_code = params[:login]
     location   = Location.find(params[:location_id])
-    checkin_at = DateTime.now
+    checkin_at = Time.zone.now
 
     login = User.find_by_login login_code
     if login and login.client
-      checkin = Checkin.create do |c|
+      checkin = Checkin.new do |c|
         c.client     = login.client
         c.user       = current_user
         c.checkin_at = checkin_at
         c.location   = location
       end
 
-      if checkin
+      if checkin.valid?
+        checkin.save
         flash[:notice] = "Checked in #{login.client.current_alias}"
+      elsif checkin.errors[:client_id]
+        flash[:alert] = "#{login.client.current_alias} #{checkin.errors[:client_id].join(', ')}"
       else
         flash[:alert] = "Unable to checkin #{login.client.current_alias}"
       end

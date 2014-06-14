@@ -14,18 +14,13 @@
   %span.checkin-count= @total_checkins
   = "checkin".pluralize(@total_checkins)
 
-%table.table
+%table.table.entries
   %thead
     %tr
-      %th Checkin At
+      %th Time
       %th Client
+      %th Location
       %th Checked In By
+      %th Notes
   %tbody
-    = yield :totals
-    - if @checkins
-      - @checkins.each do |entry|
-        %tr
-          %td= link_to entry.say_time, entry
-          %td= link_to entry.client_current_alias, entry.client
-          %td= link_to entry.user_login, entry.user
-      = yield :totals
+    = render @checkins

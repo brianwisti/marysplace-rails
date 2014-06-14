@@ -29,9 +29,9 @@
             = yield :context_navigation
           .log
             - if flash[:notice]
-              %p#notice.text-info= flash[:notice]
+              %p#notice.alert.alert-success= flash[:notice]
             - if flash[:alert]
-              %p#notice.alert= flash[:alert]
+              %p#notice.alert.alert-danger= flash[:alert]
           = yield 
     %footer.small.text-center
       %p

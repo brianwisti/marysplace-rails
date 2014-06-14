@@ -73,7 +73,7 @@ class Checkin < ActiveRecord::Base
   def self.with_alternatives params, alt
     checkin = self.new params
     checkin.user       ||= alt[:user]
-    checkin.checkin_at ||= DateTime.now
+    checkin.checkin_at ||= Time.zone.now
 
     unless checkin.client
       checkin.client = Client.where(current_alias: alt[:current_alias]).first
@@ -113,8 +113,7 @@ class Checkin < ActiveRecord::Base
   end
 
   def self.today
-    today = Date.today.to_time
-    self.on(today)
+    self.on Time.zone.now
   end
 
 end

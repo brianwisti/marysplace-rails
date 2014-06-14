@@ -93,7 +93,7 @@ describe CheckinsController do
       it "shows today's checkins" do
         post :create, checkin: build_attributes(:checkin)
         get :today
-        expect(assigns(:rows)).to include(checkin)
+        expect(assigns(:checkins)).to include(checkin)
       end
     end
 
