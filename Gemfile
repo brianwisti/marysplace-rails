@@ -5,26 +5,42 @@ ruby "2.1.2"
 # Load ENV variables from .env
 gem 'dotenv-rails', groups: [ :development ]
 
-gem 'rails', '3.2.18'
+gem 'rails', '4.0.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 
-gem 'pg'
+gem 'rails4_upgrade'
 
+gem 'actionpack-action_caching', '~>1.0.0'
+gem 'actionpack-page_caching', '~>1.0.0'
+gem 'actionpack-xml_parser', '~>1.0.0'
+gem 'actionview-encoded_mail_to', '~>1.0.4'
+gem 'activerecord-session_store', '~>0.0.1'
+gem 'activeresource', '~>4.0.0.beta1'
 gem 'authlogic'
-gem 'cancan'
-gem 'kaminari'
-gem 'haml-rails'
-gem 'paperclip'
 gem 'aws-sdk'
-gem 'has_barcode'
-gem 'markdownizer'
-gem 'rmagick'
-gem 'newrelic_rpm'
-gem 'mandrill-api'
+gem 'bootstrap-sass','~> 3.1.1'
+gem 'cancan'
+gem 'coffee-rails', '~> 4.0.1'
 gem 'excon'
+gem 'haml-rails'
+gem 'has_barcode'
+gem 'jquery-rails'
+gem 'kaminari'
+gem 'mandrill-api'
+gem 'markdownizer'
+gem 'newrelic_rpm'
+gem 'paperclip'
+gem 'pg'
+gem 'protected_attributes', '~>1.0.1'
+gem 'rails-observers', '~>0.1.1'
+gem 'rails-perftest', '~>0.0.2'
+gem 'rmagick'
+gem 'sass', '~> 3.2.13' # Specify to prevent cache errors on heroku
+gem 'sass-rails',   '~> 4.0.3'
+gem 'uglifier', '>= 1.3.0'
 
 group :development do
   gem 'coveralls', require: false
@@ -36,25 +52,6 @@ end
 group :production do
   gem 'rails_12factor'
 end
-
-
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  #gem 'compass-rails'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'sass', '~> 3.2.13' # Specify to prevent cache errors on heroku
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'bootstrap-sass', '~> 3.1.1'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platforms => :ruby
-  gem 'therubyrhino', platforms: :jruby
-
-  gem 'uglifier', '>= 1.0.3'
-end
-
-gem 'jquery-rails'
 
 group :development, :test do
   gem 'faker', '1.3.0'  # for db:anonymize and test factories
