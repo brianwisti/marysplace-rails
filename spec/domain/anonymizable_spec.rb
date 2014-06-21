@@ -29,7 +29,7 @@ describe Anonymizable do
     context "for nonexistent rule" do
       subject { anonymizable.has_anonymization_rule? :no_such_rule }
 
-      it { should be_false }
+      it { should be_falsey }
     end
 
     context "for existing rule" do
@@ -40,7 +40,7 @@ describe Anonymizable do
       end
 
       subject { anonymizable.has_anonymization_rule? rule_name }
-      it { should be_true }
+      it { should be_truthy }
     end
   end
 
@@ -80,7 +80,7 @@ describe Anonymizable do
       end
 
       subject { anonymizable.has_anonymization_rule? rule }
-      it      { should be_false }
+      it      { should be_falsey }
     end
   end
 
@@ -100,8 +100,10 @@ describe Anonymizable do
       context "applied to an Anonymizable" do
         let(:thingy) { anonymizable.new }
         before       { anonymizable.apply_rule :change_x, thingy }
-        subject      { thingy }
-        its(:x)      { should eq(replacement) }
+        
+        it "performs expected replacements" do
+          expect(thingy.x).to eq(replacement)
+        end
       end
     end
   end
@@ -129,9 +131,12 @@ describe Anonymizable do
       it               { should be_an_instance_of Proc }
 
       context "when applied" do
-        subject(:thing) { anonymizable.new }
+        let(:thing) { anonymizable.new }
         before          { anonymizable.anonymize! thing }
-        its(:x)         { should eq(replacement) }
+        
+        it "performs expected replacements" do
+          expect(thing.x).to eq(replacement)
+        end
       end
     end
   end
@@ -147,9 +152,12 @@ describe Anonymizable do
     end
 
     context "applied to an Anonymizable" do
-      subject(:thingy) { anonymizable.new }
+      let(:thingy) { anonymizable.new }
       before           { anonymizable.anonymize! thingy }
-      its(:x)          { should eq(replacement) }
+      
+      it "performs expected replacements" do
+        expect(thingy.x).to eq(replacement)
+      end
     end
   end
 end

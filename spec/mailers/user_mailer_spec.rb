@@ -19,30 +19,32 @@ describe UserMailer do
   end
 
   context "the email delivery" do
-    subject { ActionMailer::Base.deliveries }
-    its(:count) { should eq(1) }
+    it "is counted" do
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+    end
   end
 
   context "the email message" do
-    subject { ActionMailer::Base.deliveries.first }
+    let(:msg) { ActionMailer::Base.deliveries.first }
 
-    context "recipient" do
-      its(:to) { should include(user.email) }
+    it "remembers the recipient" do
+      expect(msg.to).to include(user.email)
     end
 
-    context "sender" do
-      its(:from) { should include(ENV['ADMIN_EMAIL']) }
+    it "remembers the sender" do
+      expect(msg.from).to include(ENV['ADMIN_EMAIL'])
     end
 
-    context "subject" do
-      # let(:org_app_name) { "Mary's Place" }
-      let(:org_app_name) { ENV['ADMIN_ORG_APP_NAME'] }
-      its(:subject) { should eq(%{[#{org_app_name}] Password Reset Request Made For #{user.login}}) }
+    it "remembers the subject" do
+      app_name = ENV['ADMIN_ORG_APP_NAME']
+      login    = user.login
+      subject  = %{[#{app_name}] Password Reset Request Made For #{login}}
+      expect(msg.subject).to eq(subject)
     end
 
-    context "body" do
-      its(:body) { should include(user.perishable_token) }
-      its(:body) { should include(ENV['APP_HOSTNAME']) }
+    it "remembers the body" do
+      expect(msg.body).to include(user.perishable_token)
+      expect(msg.body).to include(ENV['APP_HOSTNAME'])
     end
   end
 
