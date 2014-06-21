@@ -146,8 +146,8 @@ Marysplace::Application.routes.draw do
 
   resource :user_session, only: [ :new, :create, :destroy ]
 
-  match 'login' => 'user_sessions#new', as: :login
-  match 'logout' => 'user_sessions#destroy', as: :logout
+  get 'login' => 'user_sessions#new', as: :login
+  delete 'logout' => 'user_sessions#destroy', as: :logout
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
