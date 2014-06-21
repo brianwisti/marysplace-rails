@@ -1,10 +1,11 @@
 require 'spec_helper'
 
-describe Location do
+describe Location, type: :model do
   describe "Name" do
     it "is required" do
       location = Location.new
-      expect(location).to have(1).errors_on(:name)
+      location.valid?
+      expect(location.errors[:name].size).to eq(1)
     end
 
     it "must be unique" do
@@ -13,7 +14,8 @@ describe Location do
         location.name = first.name
       end
 
-      expect(second).to have(1).errors_on(:name)
+      second.valid?
+      expect(second.errors[:name].size).to eq(1)
     end
   end
 

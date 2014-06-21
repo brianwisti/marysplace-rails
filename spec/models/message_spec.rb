@@ -1,20 +1,11 @@
 require 'spec_helper'
 
-describe Message do
-  subject(:message) { create :message }
-
+describe Message, type: :model do
   context "content" do
-    it { should respond_to(:content) }
-
-    context "presence" do
-      before { message.content = nil }
-      subject(:no_content) { Message.new }
-
-      it { should have(1).errors_on(:content) }
+    it "must be present" do
+      empty_msg = Message.new
+      empty_msg.valid?
+      expect(empty_msg.errors[:content].size).to eq(1)
     end
   end
-
-  context "title" do
-  end
-
 end

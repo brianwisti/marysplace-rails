@@ -1,28 +1,22 @@
 require 'spec_helper'
 
-describe ClientFlag do
+describe ClientFlag, type: :model do
   let(:user) { create :admin_user }
   let(:client) { create :client }
 
-  describe "count unresolved flags" do
-    subject { ClientFlag }
-    it { should respond_to(:active_count) }
-
-    context "with no flags" do
-      its(:active_count) { should eq(0) }
+  describe "active count" do
+    it "starts at zero" do
+      expect(ClientFlag.active_count).to eq(0)
     end
 
-    context "with unresolved flags" do
-      before { create :client_flag }
-      its(:active_count) { should eq(1) }
+    it "counts unresolved flags" do
+      create :client_flag
+      expect(ClientFlag.active_count).to eq(1)
     end
 
-    context "with resolved flags" do
-      before do
-        flag = create :resolved_flag
-      end
-
-      its(:active_count) { should eq(0) }
+    it "doesn't count resolved flags" do
+      flag = create :resolved_flag
+      expect(ClientFlag.active_count).to eq(0)
     end
   end
 end

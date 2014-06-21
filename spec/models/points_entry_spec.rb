@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'pp'
 
-describe PointsEntry do
+describe PointsEntry, type: :model do
   let (:points_entry) { create :points_entry }
 
   it "should have been added by a User" do
@@ -12,7 +12,7 @@ describe PointsEntry do
       entry.performed_on      = points_entry.performed_on
     end
 
-    expect(entry).to have(1).errors_on(:added_by_id)
+    expect(entry.errors[:added_by_id].size).to eq(1)
   end
 
   it "should have a Location" do
@@ -24,84 +24,68 @@ describe PointsEntry do
       entry.performed_on      = points_entry.performed_on
     end
 
-    expect(entry).to have(1).errors_on(:location_id)
+    expect(entry.errors[:location_id].size).to eq(1)
   end
 
   context "points multiple" do
-    subject(:entry) { create :points_entry }
-    it { should respond_to(:multiple) }
-    it { should respond_to(:points_entered) }
+    let(:entry) { create :points_entry }
 
     context "applied to a new entry" do
-      subject(:entry) { build :points_entry }
       
-      context  "when user ignores points_entered" do
-        let(:points) { 100 }
+      it "requires points_entered" do
+        points = 100
 
-        before do
-          entry.points_entered = nil
-          entry.points = points
-        end
+        entry.points_entered = nil
+        entry.points = points
+        entry.valid?
         
-        it { should have(1).errors_on(:points_entered) }
+        expect(entry.errors[:points_entered].size).to eq(1)
       end
 
-      context "when user sets points_entered" do
-        let(:points) { 75 }
+      it "saves if points_entered is provided" do
+        points = 75
         
-        before do
-          entry.points_entered = points
-          entry.points = 0
-          entry.save
-        end
+        entry.points_entered = points
+        entry.points = 0
+        entry.save
 
-        its(:points) { should eq(points) }
+        expect(entry.points).to eq(points)
       end
       
-      context "when multiple is set" do
-        let(:points_entered) { 50 }
-        let(:multiple) { 2 }
-        let(:points) { points_entered * multiple }
+      it "allows multiple to be set" do
+        points_entered = 50
+        multiple = 2
+        points = points_entered * multiple
 
-        before do
-          entry.update_attributes multiple: 2, points_entered: 50
-          entry.save
-        end
+        entry.update_attributes multiple: 2, points_entered: 50
+        entry.save
         
-        its(:points) { should eq(points) }
+        expect(entry.points).to eq(points)
       end
 
-      context  "when user sets negative points_entered" do
-        before do
-          entry.update_attributes points: 0, multiple: 2, points_entered: -50
-        end
-        
-        it { should have(1).errors_on(:multiple) }
+      it "cannot be applied to negative entered points" do
+        entry.update_attributes points: 0, multiple: 2, points_entered: -50
+        expect(entry.errors[:multiple].size).to eq(1)
       end
       
-      context "negative multiples are not allowed" do
-        before do
-          entry.update_attributes points: 0, multiple: -2, points_entered: 50
-        end
-
-        it { should have(1).errors_on(:multiple) }
+      it "cannot be negative" do
+        entry.update_attributes points: 0, multiple: -2, points_entered: 50
+        expect(entry.errors[:multiple].size).to eq(1)
       end
       
     end
 
     context "updating an existing entry" do
-      let(:points) { 50 }
-      let(:multiple) { 2 }
+      let(:points)     { 50 }
+      let(:multiple)   { 2 }
       let(:new_points) { multiple * points }
-      subject(:entry) { create :points_entry, points: points }
+      let(:entry)      { create :points_entry, points: points }
       
-      context "Changing the multiple" do
-        before do
-          entry.multiple = multiple
-          entry.save
-        end
+      it "can change the multiple" do
+        entry.multiple = multiple
+        entry.save
 
-        its(:points) { should eq(new_points) }
+        expect(entry.points).to eq(new_points)
       end
       
       context "Changing points entered" do
@@ -110,9 +94,14 @@ describe PointsEntry do
             entry.points_entered  = new_points
             entry.save
           end
-          
-          its(:points) { should eq(new_points)}
-          its(:points_entered) { should eq(new_points) }
+
+          it "updates points" do
+            expect(entry.points).to eq(new_points)
+          end
+
+          it "updates points_entered" do
+            expect(entry.points_entered).to eq(new_points)
+          end
         end
 
         context "with non-default multiple" do
@@ -121,25 +110,22 @@ describe PointsEntry do
             entry.save
           end
 
-          its(:points) { should eq(new_points) }
+          it "updateds points" do
+            expect(entry.points).to eq(new_points)
+          end
         end
       end
     end
   end
     
   context "daily_count" do
-    subject { PointsEntry }
-
-    it { should respond_to(:daily_count) }
-
-    context "starts at zero" do
-
-      its(:daily_count) { should eq(0) }
+    it "starts at zero" do
+      expect(PointsEntry.daily_count).to eq(0)
     end
 
-    context "registers new PointsEntry" do
-      before { create :points_entry }
-      its(:daily_count) { should eq(1) }
+    it "registers new PointsEntry" do
+      create :points_entry
+      expect(PointsEntry.daily_count).to eq(1)
     end
   end
 end

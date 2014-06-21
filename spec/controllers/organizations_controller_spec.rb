@@ -55,7 +55,7 @@ describe OrganizationsController do
         expect(response).to be_success
       end
 
-      pending "loads the organization"
+      skip "loads the organization"
     end
 
     context "PUT update" do
@@ -72,7 +72,7 @@ describe OrganizationsController do
         expect(response).to redirect_to(organizations_url)
       end
 
-      pending "destroys the organization" do
+      skip "destroys the organization" do
         expect {
           delete :destroy, id: organization
         }.to change(Organization, :count).by(-1)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PointsEntryType do
+describe PointsEntryType, type: :model do
   let (:entry_type) { create :points_entry_type }
 
   it "requires a name" do
@@ -8,14 +8,17 @@ describe PointsEntryType do
       entry_type.is_active = true
       entry_type.default_points = 0
     end
-    expect(unnamed).to have(1).errors_on(:name)
+    unnamed.valid?
+    expect(unnamed.errors[:name].size).to eq(1)
   end
 
   it "requires a unique name" do
+    entry_type = create :points_entry_type
     dupe = PointsEntryType.new do |e|
       e.name = entry_type.name
     end
-    expect(dupe).to have(1).errors_on(:name)
+    dupe.valid?
+    expect(dupe.errors[:name].size).to eq(1)
   end
 
   context "active scope" do

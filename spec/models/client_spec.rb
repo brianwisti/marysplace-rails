@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Client do
+describe Client, type: :model do
   let(:user)   { create :staff_user }
   let(:client) { create :client, added_by: user }
 
@@ -8,19 +8,22 @@ describe Client do
     context "the current alias" do
       it "must be present" do
         client = Client.new
-        expect(client).to have(1).errors_on(:current_alias)
+        client.valid?
+        expect(client.errors[:current_alias].size).to eq(1)
       end
 
       it "must be unique" do
         dupe = Client.new(current_alias: client.current_alias)
-        expect(dupe).to have(1).errors_on(:current_alias)
+        dupe.valid?
+        expect(dupe.errors[:current_alias].size).to eq(1)
       end
     end
 
     context "the user adding the client" do
       it "must be specified" do
         client = Client.new
-        expect(client).to have(1).errors_on(:added_by_id)
+        client.valid?
+        expect(client.errors[:added_by_id].size).to eq(1)
       end
     end
 
@@ -73,17 +76,17 @@ describe Client do
         f.client     = client
         f.can_shop   = false
       end
-      expect(client.is_flagged?).to be_true
+      expect(client.is_flagged?).to be_truthy
     end
 
     it "knows when it has no unresolved flags" do
-      expect(client.is_flagged?).to be_false
+      expect(client.is_flagged?).to be_falsey
     end
   end
 
   context "when not shopping" do
     it "knows it's not shopping" do
-      expect(client.is_shopping?).to be_false
+      expect(client.is_shopping?).to be_falsey
     end
 
     it "has no cart" do
@@ -101,12 +104,12 @@ describe Client do
     end
 
     it "knows it is shoppings" do
-      expect(client.is_shopping?).to be_true
+      expect(client.is_shopping?).to be_truthy
     end
   end
 
   it "can open a Shopping Cart if it has no flags" do
-    expect(client.can_shop?).to be_true
+    expect(client.can_shop?).to be_truthy
   end
 
   describe "Shopping Cart" do
@@ -116,21 +119,21 @@ describe Client do
         f.client     = client
         f.can_shop   = false
       end
-      expect(client.can_shop?).to be_false
+      expect(client.can_shop?).to be_falsey
     end
 
     it "is not allowed if Client has already shopped this week" do
       StoreCart.start(client, user).finish
-      expect(client.can_shop?).to be_false
+      expect(client.can_shop?).to be_falsey
     end
 
     it "knows if the Client has never shopped" do
-      expect(client.has_shopped?).to be_false
+      expect(client.has_shopped?).to be_falsey
     end
 
     it "knows if the Client has shopped" do
       StoreCart.start(client, user).finish
-      expect(client.has_shopped?).to be_true
+      expect(client.has_shopped?).to be_truthy
     end
 
     it "remembers the Client's last shopping session" do
@@ -150,7 +153,7 @@ describe Client do
          location: location
         client.reload
 
-        expect(client.has_shopped?).to be_true
+        expect(client.has_shopped?).to be_truthy
       end
 
       it "is tracked for last shopping visit" do

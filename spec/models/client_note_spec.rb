@@ -1,43 +1,42 @@
 require 'spec_helper'
 
-describe ClientNote do
+describe ClientNote, type: :model do
   let(:user) { create :user }
   let(:client) { create :client }
 
   describe "fields" do
-    subject(:note) { ClientNote.new }
-    before { note.save }
+    let(:note) { ClientNote.new }
 
     describe "content" do
-      context "empty" do
-        it { should have(1).errors_on(:content) }
-      end
-
-      context "with content" do
-        before { note.content = "Stuff and things" }
-        it { should have(0).errors_on(:content) }
+      it "must be present" do
+        note = ClientNote.new
+        note.valid?
+        expect(note.errors[:content].size).to eq(1)
+        note.content = "Stuff and things"
+        note.valid?
+        expect(note.errors[:content].size).to eq(0)
       end
     end
 
     describe "user" do
-      context "empty" do
-        it { should have(1).errors_on(:user) }
-      end
+      it "must be present" do
+        note.valid?
+        expect(note.errors[:user].size).to eq(1)
 
-      context "with user" do
-        before { note.user = user }
-        it { should have(0).errors_on(:user) }
+        note.user = user
+        note.valid?
+        expect(note.errors[:user].size).to eq(0)
       end
     end
 
     describe "client" do
-      context "empty" do
-        it { should have(1).errors_on(:client) }
-      end
+      it "must be present" do
+        note.valid?
+        expect(note.errors[:client].size).to eq(1)
 
-      context "with client" do
-        before { note.client = client }
-        it { should have(0).errors_on(:client) }
+        note.client = client
+        note.valid?
+        expect(note.errors[:client].size).to eq(0)
       end
     end
   end

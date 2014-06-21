@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CatalogItem do
+describe CatalogItem, type: :model do
 
   before(:all) do
     @user = create(:user)
@@ -8,7 +8,9 @@ describe CatalogItem do
 
   context "the name" do
     it "must be present" do
-      expect(CatalogItem.new).to have(1).errors_on(:name)
+      item = CatalogItem.new
+      item.valid?
+      expect(item.errors[:name].size).to eq(1)
     end
 
     it "must be unique" do
@@ -18,17 +20,23 @@ describe CatalogItem do
         i.added_by = @user
       end
 
-      expect(CatalogItem.new(name: "General")).to have(1).errors_on(:name)
+      dupe = CatalogItem.new name: "General"
+      dupe.valid?
+      expect(dupe.errors[:name].size).to eq(1)
     end
   end
 
   context "the cost" do
     it "must be present" do
-      expect(CatalogItem.new).to have(2).errors_on(:cost)
+      item = CatalogItem.new
+      item.valid?
+      expect(item.errors[:cost].size).to eq(2)
     end
 
     it "must be an integer" do
-      expect(CatalogItem.new(cost: 5.5)).to have(1).errors_on(:cost)
+      item = CatalogItem.new cost: 5.5
+      item.valid?
+      expect(item.errors[:cost].size).to eq(1)
     end
   end
 

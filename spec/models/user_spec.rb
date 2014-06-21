@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe User do
+describe User, type: :model do
   context "login" do
     let(:user) { User.new }
     subject { user.errors[:login] }

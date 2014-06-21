@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Checkin do
+describe Checkin, type: :model do
   let(:checkin) { create :checkin }
 
   it "should be unique per client per location per day" do
@@ -10,7 +10,8 @@ describe Checkin do
       ch.checkin_at = checkin.checkin_at
     end
 
-    expect(dupe).to have(1).errors_on(:client_id)
+    dupe.valid?
+    expect(dupe.errors[:client_id].size).to eq(1)
   end
 
   it "should have a Location" do
@@ -20,7 +21,8 @@ describe Checkin do
       ch.checkin_at = checkin.checkin_at
     end
 
-    expect(placeless).to have(1).errors_on(:location_id)
+    placeless.valid?
+    expect(placeless.errors[:location_id].size).to eq(1)
   end
 
   context "today" do

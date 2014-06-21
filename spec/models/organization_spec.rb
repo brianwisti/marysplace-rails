@@ -1,25 +1,28 @@
 require 'spec_helper'
 
-describe Organization do
+describe Organization, type: :model do
   let(:site_admin) { create :user }
   let(:first) { Organization.create name: "First", creator_id: 1 }
 
   context "name" do
     it "must be present" do
       org = Organization.new
-      expect(org).to have(1).errors_on(:name)
+      org.valid?
+      expect(org.errors[:name].size).to eq(1)
     end
     
     it "must be unique" do
       org = Organization.new name: first.name
-      expect(org).to have(1).errors_on(:name)
+      org.valid?
+      expect(org.errors[:name].size).to eq(1)
     end
   end
   
   context "creator" do
     it "must be present" do
       org = Organization.new
-      expect(org).to have(1).errors_on(:creator_id)
+      org.valid?
+      expect(org.errors[:creator_id].size).to eq(1)
     end
   end
 end
