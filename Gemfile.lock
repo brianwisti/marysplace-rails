@@ -283,7 +283,7 @@ DEPENDENCIES
   rails (= 3.2.18)
   rails_12factor
   rmagick
-  rspec-rails (~> 2.13)
+  rspec-rails (= 2.99.0)
   sass (~> 3.2.13)
   sass-rails (~> 3.2.3)
   scrypt

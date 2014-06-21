@@ -58,7 +58,7 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'faker', '1.3.0'  # for db:anonymize and test factories
-  gem 'rspec-rails', '~> 2.13'
+  gem 'rspec-rails', '2.99.0' # until deprecations fully resolved
   gem 'factory_girl_rails', '~> 4.2.1'
 end
 
