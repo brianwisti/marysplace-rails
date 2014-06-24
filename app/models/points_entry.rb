@@ -34,7 +34,7 @@ class PointsEntry < ActiveRecord::Base
       greater_than: 0
     }
 
-  default_scope order('performed_on DESC, id DESC')
+  default_scope { order 'performed_on DESC, id DESC' }
 
   delegate :current_alias,
     to:     :client,

@@ -78,3 +78,5 @@ module Marysplace
     config.i18n.enforce_available_locales = false
   end
 end
+
+ActiveRecord::SessionStore::Session.attr_accessible :data, :session_id
