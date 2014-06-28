@@ -6,4 +6,6 @@ class Role < ActiveRecord::Base
     uniqueness: true
 
   has_and_belongs_to_many :users
+
+  scope :org_roles, -> { where 'name != ?', 'site_admin' }
 end

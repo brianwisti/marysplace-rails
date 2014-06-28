@@ -37,7 +37,7 @@
         .form-group
           = f.label :organization
           = f.collection_select :organization_id, Organization.all, :id, :name, { prompt: true }, { class: 'form-control' }
-      - if available_roles
+      - unless available_roles.empty?
         %fieldset
           %legend Roles
           .form-group
