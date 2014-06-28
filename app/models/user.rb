@@ -1,4 +1,6 @@
 require 'anonymizable'
+require 'barby'
+require 'barby/outputter/svg_outputter'
 require 'barby/barcode/code_128'
 
 class User < ActiveRecord::Base
@@ -40,6 +42,17 @@ class User < ActiveRecord::Base
     outputter: :svg,
     type: Barby::Code128B,
     value: Proc.new { |u| u.login }
+
+  def bare_barcode
+    barcode = Barby::Code128B.new( self.login )
+    svg_options = {
+      height: 30,
+      ymargin: 72,
+      xmargin: 5
+    }
+
+    barcode.bars_to_path svg_options
+  end
 
   delegate :current_alias,
     to:     :client,

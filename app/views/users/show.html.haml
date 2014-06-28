@@ -10,7 +10,7 @@
       .alert.alert-info.text-center
         This is you!
         = link_to "Sign Out", logout_url, method: :delete,
-          confirm: "Really log out?",
+          data: { confirm: "Really log out?" },
           class: "btn btn-default btn-block"
     %dl.dl-horizontal
       %dt Login
