@@ -43,13 +43,31 @@
           - else
             Not given
         %dt Phone Number
-        %dd= @client.phone_number
+        %dd
+          - if @client.phone_number
+            = @client.phone_number
+          - else
+            %em Not given
+        %dt Email
+        %dd
+          - if @client.email_address
+            = mail_to @client.email_address
+          - else
+            %em Not given
         - if @client.notes
           %dt Notes
           %dd= simple_format @client.notes
         %dt Added By
         %dd= link_to @client.added_by_login, @client.added_by
         - if can? :show, ClientNote
+          %dt Case Manager Info
+          %dd= @client.case_manager_info
+          %dt Family Info
+          %dd= @client.family_info
+          %dt Community Goal
+          %dd= @client.community_goal
+          %dt Personal Goal
+          %dd= @client.personal_goal
           %dt Staff Notes
           %dd
             %ul.list-group
