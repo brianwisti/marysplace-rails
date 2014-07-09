@@ -15,6 +15,7 @@
 
 # Generated reports
 *.xlsx
+*.xls
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
