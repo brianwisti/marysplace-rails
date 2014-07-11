@@ -5,30 +5,104 @@
       %ul
         - client.errors.full_messages.each do |msg|
           %li= msg
+  %fieldset
+    %legend General
+    .row
+      .col-md-6
+        = f.hidden_field :added_by_id
+        = f.hidden_field :last_edited_by_id
+        .form-group
+          = f.label :current_alias
+          = f.text_field :current_alias, class: 'form-control'
+      .col-md-6
+        .form-group
+          = f.label :full_name
+          = f.text_field :full_name, class: 'form-control'
+    .row
+      .col-md-6
+        .form-group
+          = f.label :other_aliases
+          = f.text_field :other_aliases, class: 'form-control'
+      .col-md-6
+        .checkbox
+          = f.label :is_active do
+            = f.check_box :is_active
+            Is currently active?
+        .checkbox
+          = f.label :signed_covenant do
+            = f.check_box :signed_covenant
+            Signed covenant?
+    .row
+      .col-md-6
+        .form-group
+          = f.label :oriented_on
+          = f.date_field :oriented_on, class: 'form-control'
+      .col-md-6
+        .form-group
+          = f.label :birthday
+          = f.date_field :birthday, class: 'form-control'
+  %fieldset
+    %legend Personal
+    .row
+      .col-md-6
+        .form-group
+          = f.label :phone_number
+          = f.text_field :phone_number, class: 'form-control'
+      .col-md-6
+        .form-group
+          = f.label :email_address
+          = f.text_field :email_address, class: 'form-control'
+    .row
+      .col-md-6
+        .form-group
+          = f.label :emergency_contact
+          = f.text_field :emergency_contact, class: 'form-control'
+      .col-md-6
+        .form-group
+          = f.label :case_manager_info
+          = f.text_field :case_manager_info, class: 'form-control'
+    .row
+      .col-md-6
+        .form-group
+          = f.label :family_info
+          = f.text_area :family_info, class: 'form-control'
+      .col-md-6
+        .form-group
+          = f.label :medical_info
+          = f.text_area :medical_info, class: 'form-control'
+    .row
+      .col-md-6
+        .form-group
+          = f.label :staying_at
+          = f.text_area :staying_at, class: 'form-control'
+      .col-md-6
+        .form-group
+          = f.label :mailing_list_address
+          = f.text_area :mailing_list_address, class: 'form-control'
+        .checkbox
+          = f.label :on_mailing_list do
+            = f.check_box :on_mailing_list
+            On mailing list?
+  %fieldset
+    %legend Goals
+    .row
+      .col-md-6
+        .form-group
+          = f.label :personal_goal
+          = f.text_area :personal_goal, class: 'form-control'
+      .col-md-6
+        .form-group
+          = f.label :community_goal
+          = f.text_area :community_goal, class: 'form-control'
+  %fieldset
+    %legend Notes
+    .row
+      .col-md-12
+        .form-group
+          = f.label :notes
+          = f.text_area :notes, class: 'form-control'
   .row
-    .col-md-6
-      = f.hidden_field :added_by_id
-      = f.hidden_field :last_edited_by_id
+    .col-md-12
       .form-group
-        = f.label :current_alias
-        = f.text_field :current_alias, class: 'form-control'
-      .form-group
-        = f.label :full_name
-        = f.text_field :full_name, class: 'form-control'
-      .form-group
-        = f.label :phone_number
-        = f.text_field :phone_number, class: 'form-control'
-      .form-group
-        = f.label :other_aliases
-        = f.text_field :other_aliases, class: 'form-control'
-      .checkbox
-        = f.label :is_active do
-          = f.check_box :is_active
-          Is currently active?
-    .col-md-6
-      .form-group
-        = f.label :notes
-        = f.text_area :notes, class: 'form-control'
-    .form-group
-      = f.submit class: "btn btn-primary btn-block"
-      = cancel_button
+        = f.submit class: "btn btn-primary btn-block"
+        = cancel_button
