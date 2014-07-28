@@ -123,6 +123,7 @@ Marysplace::Application.routes.draw do
     member do
       get 'barcode'
       get 'card'
+      post 'checkin_code'
       get 'checkins'
       get 'entries'
       get 'entry'

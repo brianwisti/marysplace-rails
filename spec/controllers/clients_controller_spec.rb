@@ -91,6 +91,10 @@ describe ClientsController do
       get :new_login, id: client
     end
 
+    it "can POST checkin_code" do
+      post :checkin_code, id: client
+    end
+
     it "can access create_login" do
       password = "waffle"
       post :create_login, id: client,

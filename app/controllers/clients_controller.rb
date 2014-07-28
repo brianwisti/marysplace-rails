@@ -88,6 +88,13 @@ class ClientsController < ApplicationController
     end
   end
 
+  def checkin_code
+    authorize! :manage, Client
+    @client = Client.find params[:id]
+    @client.update_checkin_code!
+    redirect_to @client
+  end
+
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
