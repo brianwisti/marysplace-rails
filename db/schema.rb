@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140705195855) do
+ActiveRecord::Schema.define(version: 20140728052045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,11 @@ ActiveRecord::Schema.define(version: 20140705195855) do
     t.boolean  "signed_covenant",      default: false
     t.text     "staying_at"
     t.boolean  "on_mailing_list",      default: false
+    t.string   "checkin_code"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   add_index "clients", ["added_by_id"], name: "index_clients_on_added_by_id", using: :btree

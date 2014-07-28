@@ -62,6 +62,10 @@ describe Client, type: :model do
   end
 
   context "automated checkin system" do
+    it "starts uninitialized for each client" do
+      expect(client.checkin_code).to be_nil
+    end
+
     it "creates a user for login" do
       client.create_login(password: "1234",
                           password_confirmation: "1234")

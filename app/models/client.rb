@@ -125,6 +125,9 @@ class Client < ActiveRecord::Base
     return login_code
   end
 
+  # part of deprecation process for client logins
+  alias_method :generate_checkin_code, :generate_login_code
+
   # Does this client have unresolved flags?
   def is_flagged?
     return self.flags.unresolved.count > 0
