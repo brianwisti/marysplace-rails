@@ -3,6 +3,16 @@ require 'spec_helper'
 describe Preference do
   let(:user) { create :user }
 
+  context "user association" do
+    it "is required" do
+      pref = Preference.new
+      pref.valid?
+      expect(pref.errors[:user_id].size).to eq(1)
+    end
+
+    skip "respects defaults when not set for user"
+  end
+
   context "client_fields" do
     context "default" do
       let(:default) { Preference.default_for :client_fields }
