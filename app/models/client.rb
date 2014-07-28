@@ -1,15 +1,51 @@
 require 'anonymizable'
 require 'zlib' 
+require 'barby'
+require 'barby/outputter/svg_outputter'
+require 'barby/barcode/code_128'
 
 class Client < ActiveRecord::Base
   extend Anonymizable
+  include HasBarcode
 
   attr_accessible :added_by, :added_by_id, :birthday, :current_alias,
     :full_name, :last_edited_by, :last_edited_by_id, :notes, :oriented_on,
     :other_aliases, :phone_number, :point_balance, :is_active, :is_flagged,
     :signed_covenant, :email_address, :emergency_contact, :case_manager_info,
     :family_info, :medical_info, :staying_at, :mailing_list_address, 
-    :on_mailing_list, :personal_goal, :community_goal, :checkin_code
+    :on_mailing_list, :personal_goal, :community_goal, :checkin_code,
+    :picture, :picture_file_name
+
+  attr_accessor :picture
+
+  has_attached_file :picture,
+    styles: {
+      thumb:  '100x100>',
+      square: '200x200#',
+      medium: '300x300>'
+    },
+    default_url: "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/pictures/:style/blank.png"
+
+  validates_attachment :picture,
+    content_type: {
+      content_type: %w( image/jpeg image/png image/gif )
+    }
+
+  has_barcode :barcode,
+    outputter: :svg,
+    type: Barby::Code128B,
+    value: Proc.new { |c| c.checkin_code }
+
+  def bare_barcode
+    barcode = Barby::Code128B.new( self.checkin_code )
+    svg_options = {
+      height: 30,
+      ymargin: 72,
+      xmargin: 5
+    }
+
+    barcode.bars_to_path svg_options
+  end
 
   validates :current_alias,
     presence: true,

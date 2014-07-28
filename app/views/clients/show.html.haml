@@ -8,8 +8,8 @@
   .panel-body
     .row
       .col-xs-12.col-sm-4.text-center
-        - if @client.login
-          = image_tag @client.login.avatar.url(:square)
+        - if @client.picture_file_name
+          = image_tag @client.picture.url(:square)
         - else
           = image_tag "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/square/blank.png"
       .col-xs-12.col-sm-8

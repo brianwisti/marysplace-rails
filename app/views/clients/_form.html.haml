@@ -18,6 +18,9 @@
     %li#notes
       %a{href: '#client-notes', role: "tab", data: { toggle: "tab" } }
         Notes
+    %li#picture
+      %a{href: '#client-picture', role: "tab", data: { toggle: "tab" } }
+        Picture
   .tab-content
     #client-general.tab-pane.active
       .row
@@ -111,6 +114,16 @@
           .form-group
             = f.label :notes
             = f.text_area :notes, class: 'form-control'
+    #client-picture.tab-pane
+      .row
+        .col-md-12
+          .form-group
+            = f.label :picture
+            = f.file_field :picture, class: 'form-control'
+            - if client.picture_file_name
+              = image_tag client.picture.url(:square)
+            - else
+              = image_tag "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/square/blank.png"
   .row
     .col-md-12
       .form-group

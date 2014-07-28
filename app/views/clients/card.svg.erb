@@ -194,12 +194,12 @@
 <text id="name-used"
   transform="matrix(1 0 0 1 31.0535 66.523)"
   font-family="'MyriadPro-Regular'" font-size="14"><%= @client.current_alias %></text>
-  <%= @client.login.bare_barcode.html_safe %>
+  <%= @client.bare_barcode.html_safe %>
 <text id="card-code"
   transform="matrix(1 0 0 1 46.9208 115.8112)"
-  font-family="'MyriadPro-Regular'" font-size="10"><%= @client.login_code %></text>
+  font-family="'MyriadPro-Regular'" font-size="10"><%= @client.checkin_code %></text>
 <image id="photo"
   x="136.8" y="56.5" width="76.9" height="76.9"
-  xlink:href="<%= @client.login.avatar.url(:square) %>" />
+  xlink:href="<%= @client.picture.url(:square) %>" />
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="0" y1="43.3" x2="216.1" y2="43.3"/>
 </svg>

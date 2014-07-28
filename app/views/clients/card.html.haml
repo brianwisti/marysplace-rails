@@ -6,6 +6,6 @@
     %div.text
       %p.text= @client.current_alias
       %p= @client.barcode(height: 40, margin: 5).html_safe
-      %p.text= @client.login_code
+      %p.text= @client.checkin_code
     %div.pic
-      = image_tag @client.login.avatar.url(:square), class: "avatar"
+      = image_tag @client.picture.url(:square), class: "avatar"
