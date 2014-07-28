@@ -67,7 +67,7 @@ feature "Self Checkin" do
     expect(page).to have_no_content("A Location is required for checkins")
 
     expect {
-      fill_in 'login', with: @client.login_code
+      fill_in 'login', with: @client.checkin_code
       click_button("Checkin")
     }.to change(Checkin, :count).by(1)
   end
@@ -78,7 +78,7 @@ feature "Self Checkin" do
     loc_3 = create :location
     click_link 'Start Self Checkins'
 
-    fill_in 'login', with: @client.login_code
+    fill_in 'login', with: @client.checkin_code
     select loc_2.name, from: '_location_id'
     click_button("Checkin")
 

@@ -5,7 +5,7 @@ FactoryGirl.define do
 
     factory :client_with_badge do
       after(:build) do |client|
-        client.create_login
+        client.update_checkin_code!
       end
     end
   end

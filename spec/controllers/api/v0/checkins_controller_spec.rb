@@ -21,7 +21,7 @@ describe API::V0::CheckinsController do
 
     it "can be accessed by staff" do
       post :create, format: :json,
-        login: client.login_code,
+        login: client.checkin_code,
         location_id: location.id
       expect(response).to be_success
     end
@@ -29,14 +29,14 @@ describe API::V0::CheckinsController do
     it "creates a Checkin" do
       expect {
         post :create, format: :json,
-          login: client.login_code,
+          login: client.checkin_code,
           location_id: location.id
       }.to change(Checkin, :count).by(1)
     end
 
     it "returns the checkin as JSON" do
       post :create, format: :json,
-        login: client.login_code,
+        login: client.checkin_code,
         location_id: location.id
       expect(assigns(:checkin)).to_not be_nil
       checkin = assigns(:checkin)

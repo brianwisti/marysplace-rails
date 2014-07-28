@@ -134,14 +134,14 @@ class CheckinsController < ApplicationController
 
   def selfcheck_post
     authorize! :create, Checkin
-    login_code = params[:login]
+    checkin_code = params[:login]
     location   = Location.find(params[:location_id])
     checkin_at = Time.zone.now
 
-    login = User.find_by_login login_code
-    if login and login.client
+    client = Client.where(checkin_code: checkin_code).first
+    if client
       checkin = Checkin.new do |c|
-        c.client     = login.client
+        c.client     = client
         c.user       = current_user
         c.checkin_at = checkin_at
         c.location   = location
@@ -149,14 +149,14 @@ class CheckinsController < ApplicationController
 
       if checkin.valid?
         checkin.save
-        flash[:notice] = "Checked in #{login.client.current_alias}"
+        flash[:notice] = "Checked in #{client.current_alias}"
       elsif checkin.errors[:client_id]
-        flash[:alert] = "#{login.client.current_alias} #{checkin.errors[:client_id].join(', ')}"
+        flash[:alert] = "#{client.current_alias} #{checkin.errors[:client_id].join(', ')}"
       else
-        flash[:alert] = "Unable to checkin #{login.client.current_alias}"
+        flash[:alert] = "Unable to checkin #{client.current_alias}"
       end
     else
-      flash[:alert] = "No client found for #{login_code}"
+      flash[:alert] = "No client found for #{checkin_code}"
     end
 
     flash.keep

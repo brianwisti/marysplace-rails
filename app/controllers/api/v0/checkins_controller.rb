@@ -10,10 +10,11 @@ module API
 
       # POST /api/v0/checkins/create.json
       def create
-        login = User.find_by_login params[:login]
+        checkin_code = params[:login]
+        client = Client.where(checkin_code: checkin_code).first
 
         @checkin = Checkin.create do |checkin|
-          checkin.client     = login.client
+          checkin.client     = client
           checkin.user       = current_user
           checkin.checkin_at = DateTime.now
           checkin.location   = Location.find params[:location_id]

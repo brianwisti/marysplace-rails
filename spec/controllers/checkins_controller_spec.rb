@@ -122,18 +122,18 @@ describe CheckinsController do
       let(:location) { create :location }
 
       it "can access selfcheck_post" do
-        post :selfcheck_post, login: badged_client.login_code, location_id: location.id
+        post :selfcheck_post, login: badged_client.checkin_code, location_id: location.id
         expect(response).to redirect_to(selfcheck_checkins_url)
       end
 
       it "can create a selfcheck Checkin" do
         expect {
-          post :selfcheck_post, login: badged_client.login_code, location_id: location.id
+          post :selfcheck_post, login: badged_client.checkin_code, location_id: location.id
         }.to change(Checkin, :count).by(1)
       end
 
       it "sees a notice after creating a selfcheck Checkin" do
-        post :selfcheck_post, login: badged_client.login_code, location_id: location.id
+        post :selfcheck_post, login: badged_client.checkin_code, location_id: location.id
         expect(flash[:notice]).to_not be_nil
       end
 
@@ -143,8 +143,8 @@ describe CheckinsController do
       end
 
       it "gets an error when duplicating a selfcheck" do
-        post :selfcheck_post, login: badged_client.login_code, location_id: location.id
-        post :selfcheck_post, login: badged_client.login_code, location_id: location.id
+        post :selfcheck_post, login: badged_client.checkin_code, location_id: location.id
+        post :selfcheck_post, login: badged_client.checkin_code, location_id: location.id
         expect(flash[:notice]).to_not be_nil
       end
     end
