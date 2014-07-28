@@ -32,6 +32,8 @@ RSpec.configure do |config|
   include Authlogic::TestCase
   config.include FactoryGirl::Syntax::Methods
 
+  config.infer_spec_type_from_file_location!
+
   Capybara.default_wait_time = 5
   Capybara.javascript_driver = :webkit
 

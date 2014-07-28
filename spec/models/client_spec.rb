@@ -70,12 +70,6 @@ describe Client, type: :model do
       client.update_checkin_code!
       expect(client.checkin_code).to_not be_nil
     end
-
-    it "creates a user for login" do
-      client.create_login(password: "1234",
-                          password_confirmation: "1234")
-      expect(client.login).to be_an_instance_of(User)
-    end
   end
 
   describe "Flag tracking" do

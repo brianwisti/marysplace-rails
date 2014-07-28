@@ -141,17 +141,7 @@ class Client < ActiveRecord::Base
     end
   end
 
-  def create_login(opts = {})
-    password     = opts[:password]              || '1234'
-    confirmation = opts[:password_confirmation] || password
-    username     = self.generate_login_code
-    self.login   = User.create(login: username,
-                               password: password,
-                               password_confirmation: confirmation)
-    self.save
-  end
-
-  # Generate a sufficiently unique login code
+  # Generate a sufficiently unique checkin code
   #
   # short enough to type, but not just straight current_alias
   # (which can change)
