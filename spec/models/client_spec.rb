@@ -66,6 +66,11 @@ describe Client, type: :model do
       expect(client.checkin_code).to be_nil
     end
 
+    it "is automatically set on request" do
+      client.update_checkin_code!
+      expect(client.checkin_code).to_not be_nil
+    end
+
     it "creates a user for login" do
       client.create_login(password: "1234",
                           password_confirmation: "1234")

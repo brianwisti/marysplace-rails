@@ -9,7 +9,7 @@ class Client < ActiveRecord::Base
     :other_aliases, :phone_number, :point_balance, :is_active, :is_flagged,
     :signed_covenant, :email_address, :emergency_contact, :case_manager_info,
     :family_info, :medical_info, :staying_at, :mailing_list_address, 
-    :on_mailing_list, :personal_goal, :community_goal
+    :on_mailing_list, :personal_goal, :community_goal, :checkin_code
 
   validates :current_alias,
     presence: true,
@@ -123,6 +123,10 @@ class Client < ActiveRecord::Base
     source = "RE|#{self.current_alias}|#{Time.now.to_i}"
     login_code = sprintf "%08x", Zlib.crc32(source)
     return login_code
+  end
+
+  def update_checkin_code!
+    self.update_attributes checkin_code: self.generate_login_code
   end
 
   # part of deprecation process for client logins
