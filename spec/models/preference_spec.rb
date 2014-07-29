@@ -29,6 +29,20 @@ describe Preference do
 
     end
 
-    skip "setting"
+    context "setting" do
+      let(:pref) { Preference.new(user: user) }
+
+      it "accepts an array" do
+        pref.client_fields = %w{ current_alias point_balance }
+        pref.valid?
+        expect(pref.errors[:client_fields].size).to eq(0)
+      end
+
+      it "requires valid client attributes" do
+        pref.client_fields = %w{ waffle_house }
+        pref.valid?
+        expect(pref.errors[:client_fields].size).to eq(1)
+      end
+    end
   end
 end

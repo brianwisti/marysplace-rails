@@ -184,8 +184,8 @@ ActiveRecord::Schema.define(version: 20140728211829) do
   end
 
   create_table "preferences", force: true do |t|
-    t.integer  "user_id",       null: false
-    t.string   "client_fields"
+    t.integer  "user_id",                    null: false
+    t.string   "client_fields", default: [], null: false, array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
