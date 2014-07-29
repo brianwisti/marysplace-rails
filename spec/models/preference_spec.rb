@@ -9,8 +9,6 @@ describe Preference do
       pref.valid?
       expect(pref.errors[:user_id].size).to eq(1)
     end
-
-    skip "respects defaults when not set for user"
   end
 
   context "client_fields" do

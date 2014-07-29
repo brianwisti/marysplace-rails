@@ -101,4 +101,19 @@ describe User, type: :model do
 
     end
   end
+
+  context "preference" do
+    let(:user) { User.new }
+
+    it "is accessed via preference_for" do
+      expect(user).to respond_to(:preference_for)
+    end
+
+    it "uses defaults if not set" do
+      setting = :client_fields
+      prefs = user.preference_for setting
+      defaults = Preference.default_for setting
+      expect(defaults).to eql(prefs)
+    end
+  end
 end

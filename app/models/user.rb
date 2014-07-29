@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   has_many :points_entries,
     foreign_key: :added_by_id
 
+  has_one :preference
+
   # Some users are also clients
   has_one :client,
     foreign_key: :login_id
@@ -87,6 +89,11 @@ class User < ActiveRecord::Base
     #       User<->Role connections rather than `delete_all` here.
     self.roles.delete_all
     self.roles = specified_roles
+  end
+
+  # Get user preference for setting, or default if not set.
+  def preference_for setting
+    return Preference.default_for setting
   end
 
   def deliver_password_reset_instructions!
