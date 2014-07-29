@@ -1,0 +1,20 @@
+<% content_for(:title) do %>Active Clients<% end %>
+
+<% content_for(:context_navigation) do %><%= render 'context_navigation' %><% end %>
+
+<%= render 'clients/search_form', search_query: @query %>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 text-left">
+    <p><%= page_entries_info @clients %></p>
+    <%= paginate @clients %>
+  </div>
+  <div class="col-xs-12 col-sm-6 text-right">
+    <%= link_to "Include inactive", all_clients_path, class: "btn btn-sm btn-default" %>
+    <%= render 'preferences', prefs: @prefs %>
+  </div>
+</div>
+
+<%= render 'as_table', clients: @clients %>
+
+<%= paginate @clients %>

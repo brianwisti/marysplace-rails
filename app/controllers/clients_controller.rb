@@ -11,6 +11,7 @@ class ClientsController < ApplicationController
   def all
     sort_rule = "#{sort_column} #{sort_direction}"
     @clients = Client.order(sort_rule).page params[:page]
+    @prefs = current_user.preference_for :client_fields
   end
 
   # GET /clients
@@ -19,6 +20,7 @@ class ClientsController < ApplicationController
     sort_rule = "#{sort_column} #{sort_direction}"
     @clients = Client.where(is_active: true)
         .order(sort_rule).page params[:page]
+    @prefs = current_user.preference_for :client_fields
   end
 
   # GET /search

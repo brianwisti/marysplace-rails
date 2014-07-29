@@ -1,8 +1,8 @@
-<button class="btn btn-primary" data-toggle="modal" data-target="#prefs-dialog">Prefs</button>
+<button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#prefs-dialog">Choose Fields</button>
 
 <div class="modal" id="prefs-dialog" tabindex="-1" role="dialog" aria-labelledby="prefs-modal-title">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content text-left">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">
           <span aria-hidden="true">&times;</span>
@@ -11,6 +11,9 @@
         <h4 class="modal-title" id="prefs-modal-title">Preferences</h4>
       </div>
       <div class="modal-body">
+        <div class="panel">
+          Choose which fields to display when viewing client listings.
+        </div>
         <%= form_tag( preference_user_path(current_user), id: 'client-field-prefs', role: 'form' ) do %>
           <input type="hidden" name="section" value="client_fields">
           <%= render 'checkbox', field: :picture, prefs: prefs %>
