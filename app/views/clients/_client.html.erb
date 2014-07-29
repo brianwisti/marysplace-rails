@@ -8,6 +8,11 @@
     <% end %>
   </td>
   <% if can? :manage, Client %>
+    <% if prefs.include? "full_name" %>
+      <td>
+        <%= client.full_name %>
+      </td>
+    <% end %>
     <% if prefs.include? "point_balance" %>
       <td>
         <%= number_with_delimiter client.point_balance %> Points

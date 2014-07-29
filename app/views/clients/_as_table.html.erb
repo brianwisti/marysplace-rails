@@ -7,6 +7,9 @@
     <tr>
       <th><%= sortable "current_alias" %></th>
       <% if can? :manage, Client %>
+        <% if prefs.include? "full_name" %>
+          <th><%= sortable "full_name" %></th>
+        <% end %>
         <% if prefs.include? "point_balance" %>
           <th><%= sortable "point_balance" %></td>
         <% end %>
