@@ -115,5 +115,18 @@ describe User, type: :model do
       defaults = Preference.default_for setting
       expect(defaults).to eql(prefs)
     end
+
+    it "remembers preferences with remember_preference" do
+      expect(user).to respond_to(:remember_preference)
+    end
+
+    it "uses saved values if set" do
+      user = create :user
+      user.remember_preference client_fields: %w{ current_alias point_balance }
+      prefs = user.preference_for :client_fields
+      expect(prefs).to include('current_alias')
+      expect(prefs).to include('point_balance')
+      expect(prefs).to_not include('created_at')
+    end
   end
 end

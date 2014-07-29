@@ -93,7 +93,21 @@ class User < ActiveRecord::Base
 
   # Get user preference for setting, or default if not set.
   def preference_for setting
-    return Preference.default_for setting
+    default = Preference.default_for setting
+
+    return default unless self.preference
+
+    pref = self.preference.attributes[setting.to_s]
+
+    return pref unless pref.empty?
+
+    Preference.default_for setting
+  end
+
+  # Store user preference hash for later access
+  def remember_preference settings
+    self.preference = Preference.find_or_create_by user_id: self
+    self.preference.update settings
   end
 
   def deliver_password_reset_instructions!

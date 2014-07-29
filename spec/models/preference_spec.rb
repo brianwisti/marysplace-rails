@@ -33,7 +33,7 @@ describe Preference do
       let(:pref) { Preference.new(user: user) }
 
       it "accepts an array" do
-        pref.client_fields = %w{ current_alias point_balance }
+        pref.client_fields = [ 'current_alias', 'point_balance' ]
         pref.valid?
         expect(pref.errors[:client_fields].size).to eq(0)
       end

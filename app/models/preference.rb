@@ -13,7 +13,8 @@ class Preference < ActiveRecord::Base
   attr_accessible :user, :user_id, :client_fields
 
   validates :user_id,
-    presence: true
+    presence: true,
+    uniqueness: true
 
   validates_with PreferencesValidator
   belongs_to  :user
