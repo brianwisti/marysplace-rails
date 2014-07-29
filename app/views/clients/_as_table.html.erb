@@ -1,0 +1,20 @@
+<% prefs = current_user.preference_for(:client_fields) %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= sortable "current_alias" %></th>
+      <% if can? :manage, Client %>
+        <% if prefs.include? "point_balance" %>
+          <th><%= sortable "point_balance" %></td>
+        <% end %>
+        <% if prefs.include? "created_at" %>
+          <th><%= sortable "created_at" %></th>
+        <% end %>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render clients, prefs: prefs %>
+  </tbody>
+</table>

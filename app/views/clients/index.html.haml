@@ -12,14 +12,6 @@
 
 %p= link_to "Include inactive", all_clients_path
 
-%table.table
-  %thead
-    %tr
-      %th= sortable "current_alias"
-      - if can? :manage, Client
-        %th= sortable "point_balance"
-        %th= sortable "created_at"
-  %tbody
-    = render @clients
+= render 'as_table', clients: @clients
 
 = paginate @clients
