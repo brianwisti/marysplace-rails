@@ -1,6 +1,6 @@
-<button class="btn btn-primary" data-toggle="modal" data-target="#prefs-modal">Prefs</button>
+<button class="btn btn-primary" data-toggle="modal" data-target="#prefs-dialog">Prefs</button>
 
-<div class="modal" id="prefs-modal" tabindex="-1" role="dialog" aria-labelledby="prefs-modal-title">
+<div class="modal" id="prefs-dialog" tabindex="-1" role="dialog" aria-labelledby="prefs-modal-title">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -11,11 +11,15 @@
         <h4 class="modal-title" id="prefs-modal-title">Preferences</h4>
       </div>
       <div class="modal-body">
-        <p>Prefs go here.</p>
+        <%= form_tag( preference_user_path(current_user), id: 'client-field-prefs', role: 'form' ) do %>
+          <input type="hidden" name="section" value="client_fields">
+          <%= render 'checkbox', field: :created_at, prefs: prefs %>
+          <%= render 'checkbox', field: :point_balance, prefs: prefs %>
+        <% end %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" id="dialog-submitter" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

@@ -139,6 +139,7 @@ Marysplace::Application.routes.draw do
   resources :users, except: [ :destroy ] do
     member do
       get  'entries'
+      post 'preference'
     end
   end
 

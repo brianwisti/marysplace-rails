@@ -1,0 +1,6 @@
+<div class="checkbox">
+  <label>
+    <input type="checkbox" name="group[<%= field %>]"<% if prefs.include? field.to_s %> checked<% end %>>
+    <%= field.to_s.titleize %>
+  </label>
+</div>

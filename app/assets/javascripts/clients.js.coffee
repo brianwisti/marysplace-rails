@@ -43,3 +43,8 @@ if $clientTypeahead.length > 0
             console.log "Shopping is verboten"
         else
           $('.is-flagged').hide()
+
+$dialogSubmitter = $('#dialog-submitter')
+$dialogSubmitter.click () ->
+  console.log "I been clicked!"
+  $('#client-field-prefs').submit()

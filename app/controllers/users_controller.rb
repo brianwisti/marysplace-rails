@@ -91,4 +91,18 @@ class UsersController < ApplicationController
 
     @entries = @user.points_entries.order('performed_on DESC, id DESC').page params[:page]
   end
+
+  def preference
+    @user = User.find(params[:id])
+    group = params[:section]
+    submitted = params[:group]
+    settings = submitted.find_all { |k,v| v == "on" }.map { |i| i[0] }
+    if @user.remember_preference( group => settings )
+      flash[:notice] = "Preference updated!"
+    else
+      flash[:error] = "Unable to update preference!"
+    end
+
+    redirect_to clients_path
+  end
 end
