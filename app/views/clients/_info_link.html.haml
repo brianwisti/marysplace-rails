@@ -1,9 +1,0 @@
-%span
-  - unless client.is_active
-    %span.label.label-info Inactive
-  - if client.is_flagged?
-    - if client.is_blocked?
-      %span.label.label-danger Blocked
-    - else
-      %span.label.label-warning Flagged
-  = link_to client.current_alias, client

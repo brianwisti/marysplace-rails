@@ -13,6 +13,7 @@
       <div class="modal-body">
         <%= form_tag( preference_user_path(current_user), id: 'client-field-prefs', role: 'form' ) do %>
           <input type="hidden" name="section" value="client_fields">
+          <%= render 'checkbox', field: :picture, prefs: prefs %>
           <%= render 'checkbox', field: :created_at, prefs: prefs %>
           <%= render 'checkbox', field: :point_balance, prefs: prefs %>
         <% end %>

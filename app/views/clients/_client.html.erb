@@ -1,0 +1,20 @@
+<tr>
+  <td>
+    <%= render '/clients/info_link', client: client, picture: prefs.include?("picture") %>
+    <% if prefs.include? "other_aliases" %>
+      <% if client.other_aliases %>
+        <em><%= client.other_aliases %></em>
+      <% end %>
+    <% end %>
+  </td>
+  <% if can? :manage, Client %>
+    <% if prefs.include? "point_balance" %>
+      <td>
+        <%= number_with_delimiter client.point_balance %> Points
+      </td>
+    <% end %>
+    <% if prefs.include? "created_at" %>
+      <td><%= client.created_at.to_date %></td>
+    <% end %>
+  <% end %>
+</tr>
