@@ -16,6 +16,9 @@
         <% if prefs.include? "created_at" %>
           <th><%= sortable "created_at" %></th>
         <% end %>
+        <% if prefs.include? "oriented_on" %>
+          <th><%= sortable "oriented_on" %></th>
+        <% end %>
       <% end %>
     </tr>
   </thead>

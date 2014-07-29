@@ -21,5 +21,14 @@
     <% if prefs.include? "created_at" %>
       <td><%= client.created_at.to_date %></td>
     <% end %>
+    <% if prefs.include? "oriented_on" %>
+      <td>
+        <% if client.oriented_on %>
+          <%= client.oriented_on.to_date %>
+        <% else %>
+          <em>Not oriented</em>
+        <% end %>
+      </td>
+    <% end %>
   <% end %>
 </tr>
