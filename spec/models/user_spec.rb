@@ -122,9 +122,8 @@ describe User, type: :model do
 
     it "uses saved values if set" do
       user = create :user
-      user.remember_preference client_fields: %w{ current_alias point_balance }
+      user.remember_preference client_fields: %w{ point_balance }
       prefs = user.preference_for :client_fields
-      expect(prefs).to include('current_alias')
       expect(prefs).to include('point_balance')
       expect(prefs).to_not include('created_at')
     end

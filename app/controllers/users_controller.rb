@@ -97,6 +97,7 @@ class UsersController < ApplicationController
     group = params[:section]
     submitted = params[:group]
     settings = submitted.find_all { |k,v| v == "on" }.map { |i| i[0] }
+
     if @user.remember_preference( group => settings )
       flash[:notice] = "Preference updated!"
     else

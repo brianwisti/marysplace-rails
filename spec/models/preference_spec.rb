@@ -15,10 +15,6 @@ describe Preference do
     context "default" do
       let(:default) { Preference.default_for :client_fields }
 
-      it "contains current_alias" do
-        expect(default).to include('current_alias')
-      end
-
       it "contains point_balance" do
         expect(default).to include('point_balance')
       end
@@ -33,7 +29,7 @@ describe Preference do
       let(:pref) { Preference.new(user: user) }
 
       it "accepts an array" do
-        pref.client_fields = [ 'current_alias', 'point_balance' ]
+        pref.client_fields = [ 'point_balance' ]
         pref.valid?
         expect(pref.errors[:client_fields].size).to eq(0)
       end
