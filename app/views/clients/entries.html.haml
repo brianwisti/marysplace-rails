@@ -11,7 +11,7 @@
 
 = paginate @entries
 
-= render 'points_entries/as_table', points_entries: @entries,
+= render 'points_entries/as_table', points_entries: @entries, prefs: @prefs,
   hide: [ :client ]
 
 = paginate @entries

@@ -1,3 +1,4 @@
+<% prefs = current_user.preference_for :client_fields %>
 <tr>
   <td>
     <%= render '/clients/info_link', client: client, picture: prefs.include?("picture") %>

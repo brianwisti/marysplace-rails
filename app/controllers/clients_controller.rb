@@ -112,6 +112,7 @@ class ClientsController < ApplicationController
   def entries
     @client = Client.find(params[:id])
     @entries = @client.points_entries.page params[:page]
+    @prefs = current_user.preference_for :client_fields
   end
 
   def checkins
