@@ -1,0 +1,13 @@
+<% content_for :title do -%>
+  Points Logged by <%= @user.login %>
+<% end -%>
+
+<% content_for :context_navigation do -%>
+  <%= render 'context_navigation', user: @user, roles: @roles %>
+<% end -%>
+
+<%= paginate @entries %>
+
+<%= render 'points_entries/as_table', points_entries: @entries, hide: [ :added_by ] %>
+
+<%= paginate @entries %>

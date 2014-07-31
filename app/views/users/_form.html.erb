@@ -1,0 +1,77 @@
+<% available_roles = [] if available_roles.nil? -%>
+
+<%= form_for user, role: 'form' do |f| %>
+  <% if user.errors.any? -%>
+    <div class="error_explanation">
+      <h2><%= pluralize user.errors.count, "error" %> prevented this user 
+        from being saved:</h2>
+      <ul>
+        <% user.errors.full_messages.each do |msg| -%>
+          <li><%= msg %></li>
+        <% end -%>
+      </ul>
+    </div>
+  <% end -%>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :login %>
+        <%= f.text_field :login, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.text_field :email, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <% if f.object.new_record? -%>
+          <%= f.label :password %>
+        <% else -%>
+          <%= f.label :password, "Change password" -%>
+        <% end -%>
+        <%= f.password_field :password, class: "form-control" %>
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :avatar %>
+        <%= f.file_field :avatar, class: "form-control" %>
+        <%= image_tag user.avatar.url(:square) %>
+      </div>
+      <% if can? :manage, Organization -%>
+        <div class="form-group">
+          <%= f.label :organization %>
+          <%= f.collection_select :organization_id, Organization.all, :id, :name, 
+            { prompt: true }, { class: "form-control" } %>
+        </div>
+      <% end -%>
+      <% unless available_roles.empty? -%>
+        <fieldset>
+          <legend>Roles</legend>
+          <div class="form-group">
+            <% available_roles.each do |role| -%>
+              <% input_id = "role_ids_#{role.id}" -%>
+              <div class="checkbox-inline">
+                <label for="<%= input_id %>">
+                  <%= check_box_tag "role_ids[]", role.id, 
+                    user.roles.include?(role), id: input_id %>
+                  <%= role.name.titleize %>
+                </label>
+              </div>
+            <% end -%>
+          </div>
+        </fieldset>
+      <% end -%>
+    </div>
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary btn-block" %>
+      <%= cancel_button %>
+    </div>
+  </div>
+<% end -%>

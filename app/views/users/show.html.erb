@@ -1,0 +1,71 @@
+<% content_for :title do %><%= @user.login %><% end -%>
+
+<% content_for :context_navigation do -%>
+  <%= render 'context_navigation', user: @user, roles: @roles %>
+<% end -%>
+
+<div class="row">
+  <div class="col-sm-6">
+    <% if @user == current_user -%>
+      <div class="alert alert-info text-center">
+        This is you!
+        <%= link_to "Sign Out", logout_url, method: :delete,
+            data: { confirm: "Really log out?" },
+            class: "btn btn-default btn-block" -%>
+      </div>
+    <% end -%>
+    <dl class="dl-horizontal">
+      <dt>Login</dt>
+      <dd><%= @user.login %></dd>
+      <dt>Name</dt>
+      <dd><%= @user.name %></dd>
+      <dt>Roles</dt>
+      <dd>
+        <% if @user.roles.empty? -%>
+          <em>None</em>
+        <% else -%>
+          <% @user.roles.each do |role| -%>
+            <span class="label label-info"><%= role.name %></span>
+          <% end -%>
+        <% end -%>
+      </dd>
+      <dt>Email</dt>
+      <dd>
+      <% if @user.email? -%>
+        <%= mail_to @user.email %>
+      <% else -%>
+        <em>None</em>
+      <% end -%>
+      </dd>
+      <dt>Organization</dt>
+      <dd>
+        <% if @user.organization -%>
+          <% if can? :show, @user.organization -%>
+            <%= link_to @user.organization_name, @user.organization %>
+          <% else -%>
+            <%= @user.organization_name -%>
+          <% end -%>
+        <% end -%>
+      </dd>
+      <% if can? :manage, @user -%>
+        <dt>Login Count</dt>
+        <dd><%= @user.login_count %></dd>
+        <% if @user.login_count > 0 -%>
+          <dt>Last Activity</dt>
+          <dd><%= @user.last_request_at -%></dd>
+          <dt>Last Login</dt>
+          <dd><%= @user.last_login_at %></dd>
+          <dt>Current Login</dt>
+          <dd><%= @user.current_login_at %></dd>
+          <dt>Last Login Address</dt>
+          <dd><%= @user.last_login_ip %></dd>
+          <dt>Current Login Address</dt>
+          <dd><%= @user.current_login_ip %></dd>
+        <% end -%>
+      <% end -%>
+    </div>
+    <div class="col-sm-6">
+      <%= image_tag @user.avatar.url(:square) %>
+    </div>
+  </div>
+</div>

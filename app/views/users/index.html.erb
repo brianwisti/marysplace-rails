@@ -1,0 +1,9 @@
+<% content_for :title do %>User Accounts<% end -%>
+
+<% content_for :context_navigation do -%>
+  <%= render 'context_navigation', roles: @roles -%>
+<% end -%>
+
+<table class="table">
+  <%= render @users %>
+</table>

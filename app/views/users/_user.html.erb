@@ -1,0 +1,37 @@
+<tr>
+  <td>
+    <%= image_tag user.avatar.url :thumb %>
+  </td>
+  <td>
+    <%= link_to user.login, user %>
+    <% if user == current_user -%>
+      <em>That's you!</em>
+    <% end %>
+    <% if user.client -%>
+      <em><%= link_to user.client_current_alias, user.client %></em>
+    <% end -%>
+  </td>
+  <td>
+    <% user.roles.each do |role| -%>
+      <span class="label label-info"><%= role.name %></span>
+    <% end -%>
+  </td>
+  <% if can? :show, Organization -%>
+    <td>
+      <% if user.organization -%>
+        <%= link_to user.organization_name, user.organization %>
+      <% else -%>
+        <em>No organization</em>
+      <% end -%>
+    </td>
+  <% end -%>
+  <% if can? :manage, user -%>
+    <td>
+      <% if user.email.empty? -%>
+        <em>No email</em>
+      <% else -%>
+        <%= mail_to user.email -%>
+      <% end -%>
+    </td>
+  <% end -%>
+</tr>

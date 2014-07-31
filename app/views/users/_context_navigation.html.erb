@@ -1,0 +1,24 @@
+<ul class="nav nav-tabs">
+  <% if defined? user -%>
+    <li><%= link_to "Show #{user.login}", user %></li>
+    <% if can? :edit, user -%>
+      <li>
+        <%= link_to "Change #{user.login} Details", edit_user_path(user) %>
+      </li>
+    <% end -%>
+    <% if can? :show, PointsEntry -%>
+      <li>
+        <%= link_to "Points Logged by #{user.login}", 
+          entries_user_path(user) %>
+      </li>
+    <% end -%>
+  <% end -%>
+  <% if can? :create, User %>
+    <li><%= link_to "Create User", new_user_path %></li>
+  <% end -%>
+  <% if roles -%>
+    <% roles.each do |role| -%>
+      <li><%= link_to role.name.titleize, role %></li>
+    <% end -%>
+  <% end -%>
+</ul>

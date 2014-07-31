@@ -1,0 +1,9 @@
+<% content_for :title do -%>
+  Editing <%= @user.login %>
+<% end -%>
+
+<% content_for :context_navigation do -%>
+  <%= render 'context_navigation', user: @user, roles: @roles %>
+<% end -%>
+
+<%= render 'form', user: @user, available_roles: @roles %>

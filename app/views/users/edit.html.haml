@@ -1,8 +1,0 @@
-= content_for(:title) do
-  Editing
-  = @user.login
-
-= content_for(:context_navigation) do
-  = render 'context_navigation', user: @user, roles: @roles
-
-= render 'form', user: @user, available_roles: @roles
