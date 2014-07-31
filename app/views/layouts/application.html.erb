@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MPF
+      <% if content_for? :title %>: <%= yield :title %><% end -%>
+    </title>
+    <%= stylesheet_link_tag "application", media: "all" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body role="document">
+    <% if current_user -%>
+      <%= render partial: "layouts/site_navbar" %>
+    <% end -%>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <% sections.each do |section| -%>
+              <% if section[:active] -%>
+                <li class="active">
+                  <%= link_to section[:title], section[:url] %>
+                </li>
+              <% else -%>
+                <li>
+                  <%= link_to section[:title], section[:url] %>
+                </li>
+              <% end -%>
+            <% end -%>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <% if content_for? :title -%>
+            <h1 class="page-header"><%= yield :title %></h1>
+          <% end -%>
+          <% if content_for? :context_navigation -%>
+            <%= yield :context_navigation -%>
+          <% end -%>
+          <div class="log">
+            <% if flash[:notice] -%>
+              <p id="notice" class="alert alert-success"><%= flash[:notice] %></p>
+            <% end -%>
+            <% if flash[:alert] -%>
+              <p id="notice" class="alert alert-danger"><%= flash[:alert] %></p>
+            <% end -%>
+          </div>
+          <%= yield %>
+        </div>
+        <footer class="small text-center">
+          <p>
+            Written by
+            <a href="http://randomgeekery.org">Brian Wisti</a>
+            in 2012-2014 for
+            <a href="http://marysplaceseattle.org">Mary's Place Seattle</a>
+          </p>
+          <p>
+            <a href="https://github.com/brianwisti/marysplace-rails">Source code available on Github</a>
+          </p>
+        </footer>
+      </div>
+    </div>
+    <%= javascript_include_tag :application, defer: true, async: true -%>
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-41439864-2', 'evening-retreat-2690.herokuapp.com');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
