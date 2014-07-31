@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user = User.new
     site_admin_role = 'site_admin'
     @roles = if current_user.role? site_admin_role
-               Role.load.to_a
+               Role.all.load.to_a
              else
                Role.org_roles.load.to_a
              end
