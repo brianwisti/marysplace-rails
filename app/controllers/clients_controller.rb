@@ -165,9 +165,14 @@ class ClientsController < ApplicationController
 
     @client = Client.find(params[:id].to_i)
     # open(@client.organization.card_template.url) { |io| content = io.read }
+    @picture_url = if @client.picture_file_name 
+                     @client.picture.url(:square)
+                   else
+                      "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/thumb/blank.png" 
+                   end
 
     respond_to do |format|
-      if @client.login
+      if @client.checkin_code
         format.svg
         format.html { render layout: 'card' }
       else

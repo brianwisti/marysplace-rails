@@ -89,7 +89,7 @@ class Client < ActiveRecord::Base
 
   # The generated barcode used for automated checkin
   def barcode(args={})
-    self.login.barcode_data(args)
+    self.bare_barcode
   end
 
   # The generated code used for automated checkin
