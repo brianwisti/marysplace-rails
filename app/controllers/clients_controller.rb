@@ -9,17 +9,14 @@ class ClientsController < ApplicationController
   # GET /all
   # GET /all.json
   def all
-    sort_rule = "#{sort_column} #{sort_direction}"
-    @clients = Client.order(sort_rule).page params[:page]
+    load_clients
     @prefs = current_user.preference_for :client_fields
   end
 
   # GET /clients
   # GET /clients.json
   def index
-    sort_rule = "#{sort_column} #{sort_direction}"
-    @clients = Client.where(is_active: true)
-        .order(sort_rule).page params[:page]
+    load_clients is_active: true
     @prefs = current_user.preference_for :client_fields
   end
 
@@ -191,6 +188,12 @@ class ClientsController < ApplicationController
   end
 
   private
+
+  def load_clients filters={}
+    sort_rule = "#{sort_column} #{sort_direction}"
+    @clients = Client.where(filters)
+        .order(sort_rule).page params[:page]
+  end
 
   def sort_column
     default = "current_alias"
