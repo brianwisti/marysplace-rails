@@ -46,5 +46,8 @@ if $clientTypeahead.length > 0
 
 $dialogSubmitter = $('#dialog-submitter')
 $dialogSubmitter.click () ->
-  console.log "I been clicked!"
   $('#client-field-prefs').submit()
+$filterSubmitter = $('#filter-submitter')
+$filterSubmitter.click () ->
+  $('#client-filter').submit()
+

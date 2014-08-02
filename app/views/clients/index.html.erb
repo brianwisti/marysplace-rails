@@ -10,7 +10,7 @@
     <%= paginate @clients %>
   </div>
   <div class="col-xs-12 col-sm-6 text-right">
-    <%= link_to "Include inactive", all_clients_path, class: "btn btn-sm btn-default" %>
+    <%= render 'filters', filters: @filters %>
     <%= render 'preferences', prefs: @prefs %>
   </div>
 </div>

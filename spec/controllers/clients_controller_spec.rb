@@ -3,9 +3,9 @@ require 'spec_helper'
 describe ClientsController do
   setup :activate_authlogic
   let(:client) { create :client }
+  let(:staff_user) { create :staff_user }
 
   describe "staff user" do
-    let(:staff_user) { create :staff_user }
 
     before do
       login staff_user

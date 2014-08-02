@@ -16,7 +16,7 @@ class ClientsController < ApplicationController
   # GET /clients
   # GET /clients.json
   def index
-    load_clients is_active: true
+    load_clients
     @prefs = current_user.preference_for :client_fields
   end
 
@@ -189,10 +189,32 @@ class ClientsController < ApplicationController
 
   private
 
-  def load_clients filters={}
+  def load_clients 
     sort_rule = "#{sort_column} #{sort_direction}"
-    @clients = Client.where(filters)
+    @clients = load_filtered_clients
         .order(sort_rule).page params[:page]
+  end
+
+  def load_filtered_clients
+    filtered = Client
+
+    requested = params[:filters]
+
+    if is_active = requested[:is_active]
+      filtered = filtered.where(is_active: is_active)
+    else
+      filtered = filtered.where(is_active: true)
+    end
+
+    if has_picture = requested[:has_picture]
+      if has_picture == "true"
+        filtered = filtered.where('picture_file_name is not null')
+      elsif has_picture == "false"
+        filtered = filtered.where('picture_file_name is null')
+      end
+    end
+
+    return filtered
   end
 
   def sort_column
