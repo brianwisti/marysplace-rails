@@ -250,6 +250,29 @@ class Client < ActiveRecord::Base
     self.update_attributes(point_balance: new_balance)
   end
 
+  def self.filtered_by filters
+    if filters.nil? 
+      filters = { is_active: true }
+    end
+
+    filtered = self
+    if is_active = filters[:is_active]
+      filtered = filtered.where(is_active: is_active)
+    else
+      filtered = filtered.where(is_active: true)
+    end
+
+    if has_picture = filters[:has_picture]
+      if has_picture == "true"
+        filtered = filtered.where('picture_file_name is not null')
+      elsif has_picture == "false"
+        filtered = filtered.where('picture_file_name is null')
+      end
+    end
+
+    return filtered
+  end
+
   def self.quicksearch(query)
     unless query
       return []

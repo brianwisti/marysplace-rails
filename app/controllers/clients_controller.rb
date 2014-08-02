@@ -191,30 +191,8 @@ class ClientsController < ApplicationController
 
   def load_clients 
     sort_rule = "#{sort_column} #{sort_direction}"
-    @clients = load_filtered_clients
+    @clients = Client.filtered_by(params[:filters])
         .order(sort_rule).page params[:page]
-  end
-
-  def load_filtered_clients
-    filtered = Client
-
-    requested = params[:filters]
-
-    if is_active = requested[:is_active]
-      filtered = filtered.where(is_active: is_active)
-    else
-      filtered = filtered.where(is_active: true)
-    end
-
-    if has_picture = requested[:has_picture]
-      if has_picture == "true"
-        filtered = filtered.where('picture_file_name is not null')
-      elsif has_picture == "false"
-        filtered = filtered.where('picture_file_name is null')
-      end
-    end
-
-    return filtered
   end
 
   def sort_column
