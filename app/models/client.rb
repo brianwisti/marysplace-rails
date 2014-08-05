@@ -251,6 +251,8 @@ class Client < ActiveRecord::Base
   end
 
   def self.filtered_by filters
+    filters.delete_if { |k,v| v.empty? }
+
     if filters.nil? 
       filters = { is_active: true }
     end
