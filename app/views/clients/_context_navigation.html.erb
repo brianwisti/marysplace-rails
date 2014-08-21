@@ -16,7 +16,7 @@
       <li><%= link_to "Log Points for #{client.current_alias}", entry_client_path(client) %></li>
     <% end -%>
     <% if can? :edit, client -%>
-      <li><%= link_to "Edit #{client.current_alias}", entry_client_path(client) %></li>
+      <li><%= link_to "Edit #{client.current_alias}", edit_client_path(client) %></li>
     <% end -%>
     <% if client.checkin_code -%>
       <li><%= link_to "ID Card for #{client.current_alias}", card_client_path(client, format: :svg) %></li>
