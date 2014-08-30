@@ -77,7 +77,7 @@ describe PointsEntriesController do
         let(:points_entered) { 100 }
         let(:expected)       { points_entered * multiple }
 
-        before do 
+        before do
           submission[:multiple] = multiple
           submission[:points_entered] = points_entered
         end
@@ -112,7 +112,7 @@ describe PointsEntriesController do
 
         it "creates a PointsEntry" do
           submission.delete :points_entry_type_id
-          post :create, points_entry: submission, 
+          post :create, points_entry: submission,
             points_entry_type: entry_type.name
           expect(flash[:notice]).to have_content("Points entry was successfully created")
         end

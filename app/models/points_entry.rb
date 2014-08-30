@@ -24,7 +24,7 @@ class PointsEntry < ActiveRecord::Base
   validates :points_entered,
     presence: true
   validates :multiple,
-    numericality: { 
+    numericality: {
       equal_to: 1,
       message: "does not apply to negative point entries"
     },
@@ -62,7 +62,7 @@ class PointsEntry < ActiveRecord::Base
   before_validation do
     self.performed_on ||= Date.today
   end
-  
+
   before_save do
     self.points = self.points_entered * self.multiple
   end

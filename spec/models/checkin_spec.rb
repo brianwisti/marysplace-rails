@@ -30,7 +30,7 @@ describe Checkin, type: :model do
       count = Checkin.today.count
       expect(count).to eql(0)
     end
-    
+
     it "should note checkins made today" do
       create :checkin, checkin_at: DateTime.now
       count = Checkin.today.count

@@ -15,9 +15,9 @@ class UserMailer < ActionMailer::Base
     sender        = "#{@sender_name} <#{@sender_email}>"
     subject_line  = "[#{@org_app_name}] #{@subject}"
 
-    mail to: recipient, 
-      subject:     subject_line, 
-      from:        sender, 
+    mail to: recipient,
+      subject:     subject_line,
+      from:        sender,
       return_path: @sender_email
   end
 end

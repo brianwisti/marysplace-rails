@@ -162,10 +162,11 @@ class ClientsController < ApplicationController
 
     @client = Client.find(params[:id].to_i)
     # open(@client.organization.card_template.url) { |io| content = io.read }
-    @picture_url = if @client.picture_file_name 
+    @picture_url = if @client.picture_file_name
                      @client.picture.url(:square)
                    else
-                      "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/thumb/blank.png" 
+                      "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/" +
+                      "marys-place/avatars/thumb/blank.png"
                    end
 
     respond_to do |format|
@@ -189,7 +190,7 @@ class ClientsController < ApplicationController
 
   private
 
-  def load_clients 
+  def load_clients
     sort_rule = "#{sort_column} #{sort_direction}"
     @clients = Client.filtered_by(params[:filters])
         .order(sort_rule).page params[:page]

@@ -31,7 +31,7 @@ class OrganizationsController < ApplicationController
 
   def update
     @organization = Organization.find params[:id]
-    
+
     if @organization.update_attributes params[:organization]
       redirect_to @organization, notice: 'Organization updated'
     else

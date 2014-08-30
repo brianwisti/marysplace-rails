@@ -1,5 +1,5 @@
 require 'anonymizable'
-require 'zlib' 
+require 'zlib'
 require 'barby'
 require 'barby/outputter/svg_outputter'
 require 'barby/barcode/code_128'
@@ -12,7 +12,7 @@ class Client < ActiveRecord::Base
     :full_name, :last_edited_by, :last_edited_by_id, :notes, :oriented_on,
     :other_aliases, :phone_number, :point_balance, :is_active, :is_flagged,
     :signed_covenant, :email_address, :emergency_contact, :case_manager_info,
-    :family_info, :medical_info, :staying_at, :mailing_list_address, 
+    :family_info, :medical_info, :staying_at, :mailing_list_address,
     :on_mailing_list, :personal_goal, :community_goal, :checkin_code,
     :picture, :picture_file_name
 
@@ -24,7 +24,9 @@ class Client < ActiveRecord::Base
       square: '200x200#',
       medium: '300x300>'
     },
-    default_url: "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/pictures/:style/blank.png"
+    default_url: "https://s3.amazonaws.com/" +
+                 "elasticbeanstalk-us-east-1-820256515611/" +
+                 "marys-place/pictures/:style/blank.png"
 
   validates_attachment :picture,
     content_type: {
@@ -252,7 +254,7 @@ class Client < ActiveRecord::Base
 
   def self.filtered_by filters
 
-    if filters.nil? 
+    if filters.nil?
       filters = { is_active: true }
     else
       filters.delete_if { |k,v| v.empty? }
@@ -303,8 +305,8 @@ class Client < ActiveRecord::Base
   end
 
   # Fill my identifying fields with fake data
-  # 
-  # Replaces fields in the client but does not save them. That allows the one 
+  #
+  # Replaces fields in the client but does not save them. That allows the one
   # "maybe" production usage: anonymized display of clients.
   anonymizes(:full_name) { Faker::Name.name }
 
@@ -315,8 +317,8 @@ class Client < ActiveRecord::Base
   end
 
   anonymizes(:phone_number) { Faker::PhoneNumber.phone_number }
-  
-  anonymizes :birthday do 
+
+  anonymizes :birthday do
     # Reasonable age range is 18-90.
     # TODO: simulate clients that are children of other clients.
     age = Random.rand(18..90)

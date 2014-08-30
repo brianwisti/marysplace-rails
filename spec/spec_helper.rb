@@ -87,7 +87,7 @@ def expect_forbidden(response)
 end
 
 # save the model to database and reload it in one swoop.
-# 
+#
 # Throws an exception if save fails.
 def save_and_reload! model
   model.save!

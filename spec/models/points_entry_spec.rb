@@ -31,27 +31,27 @@ describe PointsEntry, type: :model do
     let(:entry) { create :points_entry }
 
     context "applied to a new entry" do
-      
+
       it "requires points_entered" do
         points = 100
 
         entry.points_entered = nil
         entry.points = points
         entry.valid?
-        
+
         expect(entry.errors[:points_entered].size).to eq(1)
       end
 
       it "saves if points_entered is provided" do
         points = 75
-        
+
         entry.points_entered = points
         entry.points = 0
         entry.save
 
         expect(entry.points).to eq(points)
       end
-      
+
       it "allows multiple to be set" do
         points_entered = 50
         multiple = 2
@@ -59,7 +59,7 @@ describe PointsEntry, type: :model do
 
         entry.update_attributes multiple: 2, points_entered: 50
         entry.save
-        
+
         expect(entry.points).to eq(points)
       end
 
@@ -67,12 +67,12 @@ describe PointsEntry, type: :model do
         entry.update_attributes points: 0, multiple: 2, points_entered: -50
         expect(entry.errors[:multiple].size).to eq(1)
       end
-      
+
       it "cannot be negative" do
         entry.update_attributes points: 0, multiple: -2, points_entered: 50
         expect(entry.errors[:multiple].size).to eq(1)
       end
-      
+
     end
 
     context "updating an existing entry" do
@@ -80,14 +80,14 @@ describe PointsEntry, type: :model do
       let(:multiple)   { 2 }
       let(:new_points) { multiple * points }
       let(:entry)      { create :points_entry, points: points }
-      
+
       it "can change the multiple" do
         entry.multiple = multiple
         entry.save
 
         expect(entry.points).to eq(new_points)
       end
-      
+
       context "Changing points entered" do
         context "with default multiple" do
           before do
@@ -117,7 +117,7 @@ describe PointsEntry, type: :model do
       end
     end
   end
-    
+
   context "daily_count" do
     it "starts at zero" do
       expect(PointsEntry.daily_count).to eq(0)

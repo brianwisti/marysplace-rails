@@ -7,7 +7,10 @@ class User < ActiveRecord::Base
   extend Anonymizable
   include HasBarcode
 
-  attr_accessible :login, :name, :email, :password, :password_confirmation, :avatar, :avatar_file_name, :last_message_check, :organization_id
+  attr_accessible :login, :name, :email,
+    :password, :password_confirmation,
+    :avatar, :avatar_file_name,
+    :last_message_check, :organization_id
   attr_accessor :avatar
 
   acts_as_authentic do |c|
@@ -33,7 +36,9 @@ class User < ActiveRecord::Base
       square: '200x200#',
       medium: '300x300>'
     },
-    default_url: "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/:style/blank.png"
+    default_url: "https://s3.amazonaws.com/" +
+                 "elasticbeanstalk-us-east-1-820256515611/" +
+                 "marys-place/avatars/:style/blank.png"
 
   validates_attachment :avatar,
     content_type: {
@@ -85,7 +90,7 @@ class User < ActiveRecord::Base
 
   # Accept a collection of roles, withdrawing any not present
   def establish_roles specified_roles
-    # TODO: Separate cleanup method / script to take care of duplicate 
+    # TODO: Separate cleanup method / script to take care of duplicate
     #       User<->Role connections rather than `delete_all` here.
     self.roles.delete_all
     self.roles = specified_roles

@@ -54,7 +54,7 @@ module Anonymizable
       value    = rule.call instance
       accessor = field_name.to_s + "="
       instance.method(accessor).call value
-    end 
+    end
   end
 
   # Apply anonymization rule +rule_name+ to +instance+

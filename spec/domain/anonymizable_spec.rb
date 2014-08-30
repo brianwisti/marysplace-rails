@@ -15,7 +15,7 @@ describe Anonymizable do
     context "creating" do
       let(:rule_name) { :fnorder }
       let(:rule)      { Proc.new { "fnord" } }
-      subject { anonymizable.define_anonymization_rule(rule_name, &rule) } 
+      subject { anonymizable.define_anonymization_rule(rule_name, &rule) }
 
       it { should eq(rule) }
     end
@@ -100,7 +100,7 @@ describe Anonymizable do
       context "applied to an Anonymizable" do
         let(:thingy) { anonymizable.new }
         before       { anonymizable.apply_rule :change_x, thingy }
-        
+
         it "performs expected replacements" do
           expect(thingy.x).to eq(replacement)
         end
@@ -133,7 +133,7 @@ describe Anonymizable do
       context "when applied" do
         let(:thing) { anonymizable.new }
         before          { anonymizable.anonymize! thing }
-        
+
         it "performs expected replacements" do
           expect(thing.x).to eq(replacement)
         end
@@ -154,7 +154,7 @@ describe Anonymizable do
     context "applied to an Anonymizable" do
       let(:thingy) { anonymizable.new }
       before           { anonymizable.anonymize! thingy }
-      
+
       it "performs expected replacements" do
         expect(thingy.x).to eq(replacement)
       end

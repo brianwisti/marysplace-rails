@@ -9,7 +9,7 @@ module LocationsHelper
       end
     else
       form.collection_select field, all_locations, :id, :name,
-        { selected: default.id }, 
+        { selected: default.id },
         { class: 'form-control' }
     end
   end
