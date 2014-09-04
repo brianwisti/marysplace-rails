@@ -57,7 +57,6 @@ end
 group :development, :test do
   gem 'faker', '1.3.0'  # for db:anonymize and test factories
   gem 'rspec-rails', '2.99.0' # until deprecations fully resolved
-  gem 'factory_girl_rails', '~> 4.2.1'
 end
 
 group :test do
@@ -65,7 +64,6 @@ group :test do
   gem 'selenium-webdriver', '~> 2.0'
   gem 'capybara-webkit'
   gem 'capybara', '~> 2.2.1'
-  gem 'database_cleaner', '~> 1.2.0'
   gem 'launchy', '~> 2.2.0'
 end
 

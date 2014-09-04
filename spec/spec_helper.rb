@@ -30,7 +30,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   include Authlogic::TestCase
-  config.include FactoryGirl::Syntax::Methods
 
   config.infer_spec_type_from_file_location!
 
@@ -73,12 +72,6 @@ RSpec.configure do |config|
   end
 
   config.include LoginMacros
-end
-
-def build_attributes(*args)
-  FactoryGirl.build(*args).attributes.delete_if do |k, v|
-    ["id", "created_at", "updated_at"].member?(k)
-  end
 end
 
 # response should indicate no access
