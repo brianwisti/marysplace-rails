@@ -7,3 +7,7 @@ bailing_client:
 warned_client:
   current_alias: "Warned Client"
   added_by: staff_user
+badged_client:
+  current_alias: "Badged Client"
+  added_by: staff_user
+  checkin_code: <%= sprintf("%08x", Zlib.crc32("RE|Badged Client|#{Time.now.to_i}")) %>
