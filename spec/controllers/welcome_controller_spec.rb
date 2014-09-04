@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe WelcomeController do
+  fixtures :users
   setup :activate_authlogic
 
   context "Anonymous access" do
@@ -11,7 +12,7 @@ describe WelcomeController do
   end
 
   context "Admin Access" do
-    let(:user) { create :admin_user }
+    let(:user) { users :admin_user }
 
     before do
       login user
