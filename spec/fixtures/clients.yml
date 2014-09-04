@@ -1,0 +1,6 @@
+bailing_client:
+  current_alias: "Bailing Client"
+  added_by: staff_user
+warned_client:
+  current_alias: "Warned Client"
+  added_by: staff_user

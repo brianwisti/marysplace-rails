@@ -1,0 +1,7 @@
+bail_flag:
+  client: bailing_client
+  created_by: staff_user
+  can_shop: false
+warning_flag:
+  client: warned_client
+  created_by: staff_user
