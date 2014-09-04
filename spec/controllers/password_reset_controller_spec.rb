@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe PasswordResetsController do
+  fixtures :users
   setup :activate_authlogic
-  let(:user) { create :user }
+  let(:user) { users :basic_user }
 
   context "Anonymous user" do
     context ":new" do
