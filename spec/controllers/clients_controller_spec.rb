@@ -1,9 +1,13 @@
 require 'spec_helper'
 
 describe ClientsController do
+  fixtures :users, :clients
   setup :activate_authlogic
-  let(:client) { create :client }
-  let(:staff_user) { create :staff_user }
+  let(:client) { clients :normal_client }
+  let(:staff_user) { users :staff_user }
+  let(:attributes) do 
+    Hash.new.tap { |h| h[:current_alias] = "an alias" }
+  end
 
   describe "staff user" do
 
@@ -46,19 +50,18 @@ describe ClientsController do
     end
 
     it "can access create" do
-      post :create, client: attributes_for(:client)
+      post :create, client: attributes
       expect(response).to redirect_to(client_url(assigns(:client)))
     end
 
     it "can create a client" do
       expect {
-        post :create, client: attributes_for(:client)
+        post :create, client: attributes
       }.to change(Client, :count).by(1)
     end
 
     it "can access update" do
-      client = create :client
-      post :update, id: client, client: attributes_for(:client)
+      post :update, id: client, client: attributes
     end
 
     it "can access edit" do
@@ -67,7 +70,6 @@ describe ClientsController do
     end
 
     it "can access destroy" do
-      client = create :client
       delete :destroy, id: client
       expect(response).to redirect_to(clients_url)
     end

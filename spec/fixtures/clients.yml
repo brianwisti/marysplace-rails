@@ -1,3 +1,6 @@
+normal_client:
+  current_alias: "Normal Client"
+  added_by: staff_user
 bailing_client:
   current_alias: "Bailing Client"
   added_by: staff_user
