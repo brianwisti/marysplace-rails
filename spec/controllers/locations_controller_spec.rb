@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe LocationsController do
+  fixtures :locations, :users
   setup :activate_authlogic
-  let(:location) { create :location }
+  let(:location) { locations :prime }
+  let(:attributes) { Hash.new.tap { |h| h[:name] = "Secundus" } }
 
   describe "Anonymous user" do
 
@@ -27,18 +29,18 @@ describe LocationsController do
     end
 
     it "cannot access create" do
-      post :create, location: attributes_for(:location)
+      post :create, location: attributes
       expect_login response
     end
 
     it "cannot create a Location" do
       expect {
-        post :create, location: attributes_for(:location)
+        post :create, location: attributes
       }.to change(Location, :count).by(0)
     end
 
     it "cannot access update" do
-      put :update, id: location, location: attributes_for(:location)
+      put :update, id: location, location: attributes
       expect_login response
     end
 
@@ -48,7 +50,7 @@ describe LocationsController do
     end
 
     it "cannot destroy a Checkin" do
-      location = create :location
+      location = locations :prime
       expect {
         delete :destroy, id: location
       }.to change(Location, :count).by(0)
@@ -56,7 +58,7 @@ describe LocationsController do
   end
 
   describe "Staff user" do
-    let(:user) { create :staff_user }
+    let(:user) { users :staff_user }
 
     before do
       login user
@@ -83,18 +85,18 @@ describe LocationsController do
     end
 
     it "cannot access create" do
-      post :create, location: attributes_for(:location)
+      post :create, location: attributes
       expect_forbidden response
     end
 
     it "cannot create a Location" do
       expect {
-        post :create, location: attributes_for(:location)
+        post :create, location: attributes
       }.to change(Location, :count).by(0)
     end
 
     it "cannot access update" do
-      put :update, id: location, location: attributes_for(:location)
+      put :update, id: location, location: attributes
       expect_forbidden response
     end
 
@@ -104,7 +106,7 @@ describe LocationsController do
     end
 
     it "cannot destroy a Location" do
-      location = create :location
+      location = locations :prime
       expect {
         delete :destroy, id: location
       }.to change(Location, :count).by(0)
@@ -112,7 +114,7 @@ describe LocationsController do
   end
 
   describe "Admin user" do
-    let(:admin_user) { create :admin_user }
+    let(:admin_user) { users :admin_user }
 
     before do
       login admin_user
@@ -129,12 +131,12 @@ describe LocationsController do
     end
 
     it "can access show" do
-      get :show, id: create(:location)
+      get :show, id: locations(:prime)
       expect(response).to render_template(:show)
     end
 
     it "sees a Location to show" do
-      location = create(:location)
+      location = locations :prime
       get :show, id: location
       expect(assigns(:location)).to eql(location)
     end
@@ -145,36 +147,36 @@ describe LocationsController do
     end
 
     it "can access edit" do
-      location = create(:location)
+      location = locations :prime
       get :edit, id: location
       expect(response).to render_template(:edit)
     end
 
     it "can access create" do
-      post :create, location: attributes_for(:location)
+      post :create, location: attributes
       expect(response).to redirect_to(location_url(assigns(:location)))
     end
 
     it "can create a Location" do
       expect {
-        post :create, location: attributes_for(:location)
+        post :create, location: attributes
       }.to change(Location, :count).by(1)
     end
 
     it "can access update" do
-      location = create :location
-      put :update, id: location, location: attributes_for(:location)
+      location = locations :prime
+      put :update, id: location, location: attributes
       expect(response).to redirect_to(location_url(location))
     end
 
     it "can access destroy" do
-      location = create :location
+      location = locations :prime
       delete :destroy, id: location
       expect(response).to redirect_to(locations_url)
     end
 
     it "can destroy a Location" do
-      location = create :location
+      location = locations :prime
       expect {
         delete :destroy, id: location
       }.to change(Location, :count).by(-1)

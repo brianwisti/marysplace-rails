@@ -20,4 +20,4 @@ staff_user:
   persistence_token: <%= Authlogic::Random.hex_token %>
   single_access_token: <%= Authlogic::Random.friendly_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
-  roles: admin
+  roles: staff
