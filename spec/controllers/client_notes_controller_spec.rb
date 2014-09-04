@@ -1,10 +1,17 @@
 require 'spec_helper'
 
 describe ClientNotesController do
+  fixtures :users, :clients
   setup :activate_authlogic
 
-  let(:admin_user) { create :admin_user }
-  let(:valid_attributes) { build_attributes :client_note }
+  let(:admin_user) { users :admin_user }
+  let(:valid_attributes) do
+    Hash.new.tap do |h|
+      h[:client_id] = clients(:normal_client).id
+      h[:content]   = "foo"
+      h[:user_id]   = admin_user.id
+    end
+  end
 
   before { login admin_user }
 
