@@ -1,3 +1,11 @@
+site_admin_user:
+  login: "site_admin_user"
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("site_admin_user" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
+  roles: site_admin
 basic_user:
   login: "basic_user"
   password_salt: <%= salt = Authlogic::Random.hex_token %>
