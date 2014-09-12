@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby "2.1.2"
 
 # Load ENV variables from .env
-gem 'dotenv-rails', groups: [ :development ]
+gem 'dotenv-rails', groups: [ :development, :test ]
 
 gem 'rails', '4.0.5'
 
