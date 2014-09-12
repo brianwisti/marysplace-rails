@@ -21,6 +21,7 @@ admin_user:
   single_access_token: <%= Authlogic::Random.friendly_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
   roles: admin
+  organization: prime
 staff_user:
   login: "staff_user"
   password_salt: <%= salt = Authlogic::Random.hex_token %>
@@ -29,3 +30,4 @@ staff_user:
   single_access_token: <%= Authlogic::Random.friendly_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
   roles: staff
+  organization: prime

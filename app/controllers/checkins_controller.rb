@@ -82,7 +82,6 @@ class CheckinsController < ApplicationController
     @year = @span.year
     @time_range = @span.strftime("%A, %B %d %Y")
     @checkins = Checkin.today
-    require 'pp'; p @checkins
 
     render :daily_report
   end

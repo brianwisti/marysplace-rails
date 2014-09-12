@@ -28,7 +28,7 @@ describe PointsEntriesController do
     let(:staff_user) { users :staff_user }
 
     before do
-      login staff_user
+      UserSession.create staff_user
     end
 
     it "can access index" do

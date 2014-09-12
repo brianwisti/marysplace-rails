@@ -10,7 +10,6 @@ describe OrganizationsController do
   let(:attributes) do
     attributes = Hash.new.tap do |h|
       h[:name] = "second"
-      h[:creator] = users :site_admin_user
     end
   end
 
@@ -25,7 +24,6 @@ describe OrganizationsController do
       it "is accessible" do
         admin = users :site_admin_user
         session = login admin
-        p session
         get :index
         expect(response).to be_success
       end
