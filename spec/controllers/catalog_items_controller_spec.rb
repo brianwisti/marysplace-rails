@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe CatalogItemsController do
+  fixtures :users
   setup :activate_authlogic
 
   context "anonymous access" do
@@ -13,7 +14,7 @@ describe CatalogItemsController do
   end
 
   context "admin access" do
-    let(:admin_user) { create :admin_user }
+    let(:admin_user) { users :admin_user }
 
     before do
       UserSession.create admin_user
