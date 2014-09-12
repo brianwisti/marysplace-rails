@@ -13,7 +13,7 @@ describe API::V0::CheckinsController do
 
   describe "POST /api/v0/checkins/create" do
     let(:staff_user) { users :staff_user }
-    let(:client)     { clients :client_with_badge }
+    let(:client)     { clients :badged_client }
     let(:location)   { locations :prime }
 
     before do

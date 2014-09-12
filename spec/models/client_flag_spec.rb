@@ -12,12 +12,12 @@ describe ClientFlag, type: :model do
     end
 
     it "counts unresolved flags" do
-      expect(ClientFlag.active_count).to eq(2)
+      expect(ClientFlag.active_count).to eq(3)
     end
 
     it "doesn't count resolved flags" do
       client_flags(:bail_flag).update_attributes resolved_on: Date.today, resolved_by_id: user.id
-      expect(ClientFlag.active_count).to eq(1)
+      expect(ClientFlag.active_count).to eq(2)
     end
   end
 end

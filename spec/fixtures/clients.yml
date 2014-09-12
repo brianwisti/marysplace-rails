@@ -7,6 +7,12 @@ bailing_client:
 warned_client:
   current_alias: "Warned Client"
   added_by: staff_user
+blocked_client:
+  current_alias: "Blocked Client"
+  added_by: staff_user
+reformed_client:
+  current_alias: "Reformed Client"
+  added_by: staff_user
 badged_client:
   current_alias: "Badged Client"
   added_by: staff_user
