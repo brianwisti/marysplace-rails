@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 feature "Client Checkins" do
+  fixtures :clients, :users
+
   background do
-    @admin = create :admin_user
-    @client = create :client
+    Location.destroy_all
+    @admin = users :admin_user
+    @client = clients :normal_client
     sign_in @admin
     visit root_path
     click_link 'Show Checkins'
@@ -15,7 +18,8 @@ feature "Client Checkins" do
   end
 
   scenario "with one location" do
-    loc = create :location
+    loc = Location.create! name: "temp"
+
     click_link 'New Checkin'
     expect(page).to have_no_content("A Location is required for checkins")
 
@@ -28,9 +32,9 @@ feature "Client Checkins" do
 
 
   scenario "with multiple locations" do
-    loc_1 = create :location
-    loc_2 = create :location
-    loc_3 = create :location
+    loc_1 = Location.create! name: "prime"
+    loc_2 = Location.create! name: "second"
+    loc_3 = Location.create! name: "third"
 
     click_link 'New Checkin'
     fill_in 'current_alias', with: @client.current_alias
@@ -46,9 +50,12 @@ feature "Client Checkins" do
 end
 
 feature "Self Checkin" do
+  fixtures :clients, :users
+
   background do
-    @admin = create :admin_user
-    @client = create :client_with_badge
+    Location.destroy_all
+    @admin = users :admin_user
+    @client = clients :badged_client
     sign_in @admin
     visit root_path
     click_link 'Show Checkins'
@@ -61,7 +68,7 @@ feature "Self Checkin" do
   end
 
   scenario "selfcheck with one location" do
-    create :location
+    Location.create! name: "My location"
 
     click_link 'Start Self Checkins'
     expect(page).to have_no_content("A Location is required for checkins")
@@ -73,9 +80,9 @@ feature "Self Checkin" do
   end
 
   scenario "selfcheck with multiple locations" do
-    loc_1 = create :location
-    loc_2 = create :location
-    loc_3 = create :location
+    loc_1 = Location.create! name: "prime"
+    loc_2 = Location.create! name: "second"
+    loc_3 = Location.create! name: "third"
     click_link 'Start Self Checkins'
 
     fill_in 'login', with: @client.checkin_code
