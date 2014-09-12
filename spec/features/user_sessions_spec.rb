@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 feature 'User Sessions' do
+  fixtures :users
   background do
     @login_header = "Please Sign In"
-    @user = create :admin_user
+    @user = users :admin_user
     visit root_path
   end
 

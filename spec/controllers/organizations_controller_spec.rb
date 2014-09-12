@@ -2,8 +2,11 @@ require 'spec_helper'
 
 describe OrganizationsController do
   fixtures :organizations, :users
+
   setup :activate_authlogic
+
   let(:organization) { organizations :prime }
+
   let(:attributes) do
     attributes = Hash.new.tap do |h|
       h[:name] = "second"
@@ -19,9 +22,11 @@ describe OrganizationsController do
     end
 
     context "GET index" do
-      before { get :index }
-
       it "is accessible" do
+        admin = users :site_admin_user
+        session = login admin
+        p session
+        get :index
         expect(response).to be_success
       end
     end

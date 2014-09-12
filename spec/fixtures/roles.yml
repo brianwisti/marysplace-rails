@@ -1,8 +1,8 @@
+site_admin:
+  name: "site_admin"
 admin:
   name: "admin"
 staff:
   name: "staff"
-site_admin:
-  name: "site_admin"
 front_desk:
   name: "front_desk"

@@ -3,9 +3,8 @@ module LoginMacros
   # A session starter that talks directly to the database
   def login(user)
     expect(user).to_not be_nil
-    session = UserSession.create!(user, false)
-    expect(session).to be_valid
-    session.save
+    session = UserSession.create! user
+    expect(controller.session['user_credentials']).to eql(user.persistence_token)
     return session
   end
 
