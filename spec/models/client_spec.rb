@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe Client, type: :model do
-  fixtures :users, :clients, :points_entry_types, :client_flags, :locations
-  let(:user)   { users :staff_user }
-  let(:client) { Client.create! current_alias: "Amy A.", added_by: user }
+  let(:user)   { create :staff_user }
+  let(:client) { create :client, added_by: user }
 
   describe "validation" do
     context "the current alias" do
@@ -39,10 +38,10 @@ describe Client, type: :model do
 
   describe "quicksearch" do
     before do
-      Client.create! current_alias: "Amy A.", added_by: user
-      Client.create! current_alias: "Amy B.", added_by: user
-      Client.create! current_alias: "S. Amy", other_aliases: "Deborah", added_by: user
-      Client.create! current_alias: "Amy C.", added_by: user, is_active: false
+      create :client, current_alias: "Amy A."
+      create :client, current_alias: "Amy B."
+      create :client, current_alias: "S. Amy", other_aliases: "Deborah"
+      create :client, current_alias: "Amy C.", is_active: false
     end
 
     it "returns a case-insensitive substring match of active Clients" do
@@ -147,33 +146,27 @@ describe Client, type: :model do
     end
 
     context "Purchase PointsEntries" do
-      let(:purchase_type) { points_entry_types :purchase }
-      let(:location) { locations :prime }
+      let(:purchase_type) { create :points_entry_type, name: "Purchase" }
+      let(:location) { create :location }
 
       it "count as shopping visits" do
-        PointsEntry.create! do |entry|
-          entry.client            = client
-          entry.added_by          = user
-          entry.points_entry_type = purchase_type
-          entry.location          = location
-          entry.points            = -100
-          entry.performed_on      = Date.today
-          entry.location          = locations :prime
-        end
-
+       FactoryGirl.create :points_entry,
+         client: client,
+         points_entry_type: purchase_type,
+         location: location
         client.reload
 
         expect(client.has_shopped?).to be_truthy
       end
 
       it "is tracked for last shopping visit" do
-        entry_type = points_entry_types :purchase
+        entry_type = PointsEntryType.create(name: 'Purchase')
         entry = client.points_entries.create! do |entry|
           entry.points_entry_type = entry_type
           entry.added_by          = user
           entry.points            = -100
           entry.performed_on      = Date.today
-          entry.location          = locations :prime
+          entry.location          = create(:location)
         end
         client.reload
         expect(client.last_shopped_at.to_i).to eql(entry.performed_on.to_time.to_i)
@@ -186,7 +179,7 @@ describe Client, type: :model do
 
     context "cannot-shop" do
       it "includes Clients who have unresolved shop-blocking flags" do
-        flag = client_flags :bail_flag
+        flag = FactoryGirl.create(:bail_flag)
         expect(Client.cannot_shop).to include(flag.client)
       end
 
@@ -196,19 +189,19 @@ describe Client, type: :model do
       end
 
       it "does not include Clients with simple warning Flags" do
-        flag = client_flags :warning_flag
+        flag = FactoryGirl.create(:client_flag)
         expect(Client.cannot_shop).not_to include(flag.client)
       end
 
       it "does not include Clients with expired shop-blocking flags" do
-        flag = client_flags :bail_flag
-        flag.update_attributes! expires_on: 1.day.ago
+        flag = FactoryGirl.create(:bail_flag,
+                                  expires_on: 1.day.ago)
         expect(Client.cannot_shop).not_to include(flag.client)
       end
 
       it "does not include Clients with resolved shop-blocking flags" do
-        flag = client_flags :bail_flag
-        flag.update_attributes! resolved_on: 1.day.ago
+        flag = FactoryGirl.create(:bail_flag,
+                                  resolved_on: 1.day.ago)
         expect(Client.cannot_shop).not_to include(flag.client)
       end
 

@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe Checkin, type: :model do
-  fixtures :checkins, :clients, :locations, :users
-  let(:checkin) { checkins :first }
+  let(:checkin) { create :checkin }
 
   it "should be unique per client per location per day" do
     dupe = Checkin.new do |ch|
@@ -17,8 +16,8 @@ describe Checkin, type: :model do
 
   it "should have a Location" do
     placeless = Checkin.create do |ch|
-      ch.user       = users :staff_user
-      ch.client     = clients :normal_client
+      ch.user       = create(:user)
+      ch.client     = create(:client)
       ch.checkin_at = checkin.checkin_at
     end
 
@@ -33,12 +32,7 @@ describe Checkin, type: :model do
     end
 
     it "should note checkins made today" do
-      checkin = Checkin.create! do |ch|
-        ch.user       = users :staff_user
-        ch.client     = clients :normal_client
-        ch.checkin_at = DateTime.now
-        ch.location   = locations :prime
-      end
+      create :checkin, checkin_at: DateTime.now
       count = Checkin.today.count
       expect(count).to eql(1)
     end

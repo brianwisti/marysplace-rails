@@ -1,30 +1,20 @@
 require 'spec_helper'
 
 describe OrganizationsController do
-  fixtures :organizations, :users
-
   setup :activate_authlogic
-
-  let(:organization) { organizations :prime }
-
-  let(:attributes) do
-    attributes = Hash.new.tap do |h|
-      h[:name] = "second"
-    end
-  end
+  let(:organization) { create :organization }
 
   describe "Site Admin User" do
-    let(:user) { users :site_admin_user }
+    let(:user) { create :site_admin_user }
 
     before do
       login user
     end
 
     context "GET index" do
+      before { get :index }
+
       it "is accessible" do
-        admin = users :site_admin_user
-        session = login admin
-        get :index
         expect(response).to be_success
       end
     end
@@ -47,13 +37,13 @@ describe OrganizationsController do
 
     context "POST create" do
       it "is accessible" do
-        post :create, organization: attributes
+        post :create, organization: attributes_for(:organization)
         expect(response).to be_redirect
       end
 
       it "creates an Organization" do
         expect {
-          post :create, organization: attributes
+          post :create, organization: attributes_for(:organization)
         }.to change(Organization, :count).by(1)
       end
     end
@@ -70,7 +60,7 @@ describe OrganizationsController do
 
     context "PUT update" do
       it "is accessible" do
-        put :update, id: organization, organization: attributes
+        put :update, id: organization, organization: attributes_for(:organization)
         expect(response).to redirect_to(organization)
       end
     end
@@ -91,7 +81,7 @@ describe OrganizationsController do
   end
 
   describe "Admin User" do
-    let(:user) { users :admin_user }
+    let(:user) { create :admin_user }
 
     before do
       UserSession.create user
@@ -123,7 +113,7 @@ describe OrganizationsController do
 
     context "POST create" do
       it "is not accessible" do
-        post :create, organization: attributes
+        post :create, organization: attributes_for(:organization)
         expect_forbidden response
       end
     end
@@ -138,7 +128,7 @@ describe OrganizationsController do
 
     context "PUT update" do
       it "is not accessible" do
-        put :update, id: organization, organization: attributes
+        put :update, id: organization, organization: attributes_for(:organization)
         expect_forbidden response
       end
     end
