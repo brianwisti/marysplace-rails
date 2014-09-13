@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe PointsEntryType, type: :model do
-  fixtures :points_entry_types
-  let(:entry_type) { points_entry_types :am_dishes }
+  let (:entry_type) { create :points_entry_type }
 
   it "requires a name" do
     unnamed = PointsEntryType.new do |entry_type|
@@ -14,6 +13,7 @@ describe PointsEntryType, type: :model do
   end
 
   it "requires a unique name" do
+    entry_type = create :points_entry_type
     dupe = PointsEntryType.new do |e|
       e.name = entry_type.name
     end
@@ -28,8 +28,8 @@ describe PointsEntryType, type: :model do
 
     context "membership" do
       subject { PointsEntryType.active }
-      let(:active) { points_entry_types :am_dishes }
-      let(:inactive) { points_entry_types :inactive }
+      let(:active) { create :points_entry_type, is_active: true }
+      let(:inactive) { create :points_entry_type, is_active: false }
 
       it { should include(active) }
       it { should_not include(inactive) }
@@ -37,6 +37,11 @@ describe PointsEntryType, type: :model do
   end
 
   context "quicksearch" do
+    before do
+      create :points_entry_type, name: "AM Bathroom"
+      create :points_entry_type, name: "PM Bathroom"
+    end
+
     it "can return an exact match" do
       results = PointsEntryType.quicksearch "AM Bathroom"
       expect(results.length).to eql(1)

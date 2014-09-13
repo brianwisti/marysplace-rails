@@ -1,5 +1,0 @@
-first:
-  client: normal_client
-  user: staff_user
-  location: prime
-  checkin_at: <%= 1.day.ago %>

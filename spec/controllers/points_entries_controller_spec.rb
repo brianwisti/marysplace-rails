@@ -1,19 +1,9 @@
 require 'spec_helper'
 
 describe PointsEntriesController do
-  fixtures :clients, :users, :points_entries, :points_entry_types
   setup :activate_authlogic
 
-  let(:entry) { points_entries :dishes }
-  let(:attributes) do
-    Hash.new.tap do |h|
-      h[:added_by_id] = entry.added_by.id
-      h[:client_id]  = entry.client.id
-      h[:points_entry_type_id] = entry.points_entry_type.id
-      h[:location_id] = entry.location.id
-      h[:points_entered] = entry.points_entered
-    end
-  end
+  let(:entry) { create :points_entry }
 
   describe "Anonymous user" do
     # require_user at top of controller means we don't need to test all
@@ -25,10 +15,10 @@ describe PointsEntriesController do
   end
 
   describe "Staff user" do
-    let(:staff_user) { users :staff_user }
+    let(:staff_user) { create :staff_user }
 
     before do
-      UserSession.create staff_user
+      login staff_user
     end
 
     it "can access index" do
@@ -67,16 +57,17 @@ describe PointsEntriesController do
     end
 
     it "can access create" do
-      post :create, points_entry: attributes
+      post :create, points_entry: build_attributes(:points_entry)
       expect(response).to redirect_to(assigns(:points_entry))
     end
 
     context "creating a PointsEntry" do
+      let(:submission) { build_attributes :points_entry }
 
       context "with client ID & entry-type ID" do
         it "creates a PointsEntry" do
           expect {
-            post :create, points_entry: attributes
+            post :create, points_entry: submission
           }.to change(PointsEntry, :count).by(1)
         end
       end
@@ -87,49 +78,50 @@ describe PointsEntriesController do
         let(:expected)       { points_entered * multiple }
 
         before do
-          attributes[:multiple] = multiple
-          attributes[:points_entered] = points_entered
+          submission[:multiple] = multiple
+          submission[:points_entered] = points_entered
         end
 
         it "creates a PointsEntry" do
           expect {
-            post :create, points_entry: attributes
+            post :create, points_entry: submission
           }.to change(PointsEntry, :count).by(1)
         end
 
         it "applies the multiple" do
-          post :create, points_entry: attributes
+          post :create, points_entry: submission
           new_entry = assigns(:points_entry)
           new_entry.points { should eq(expected) }
         end
       end
 
       context "with client name & entry-type ID" do
-        let(:client) { clients :normal_client }
+        let(:client) { create :client }
 
         it "creates a PointsEntry" do
-          attributes.delete :client_id
+          submission.delete :client_id
 
           expect {
-            post :create, points_entry: attributes, current_alias: client.current_alias
+            post :create, points_entry: submission, current_alias: client.current_alias
           }.to change(PointsEntry, :count).by(1)
         end
       end
 
       context "with client ID & entry-type name" do
-        let(:entry_type) { points_entry_types :am_dishes }
+        let(:entry_type) { create :points_entry_type }
 
         it "creates a PointsEntry" do
-          attributes.delete :points_entry_type_id
-          post :create, points_entry: attributes,
+          submission.delete :points_entry_type_id
+          post :create, points_entry: submission,
             points_entry_type: entry_type.name
-          expect(flash[:notice]).to eql("Points entry was successfully created")
+          expect(flash[:notice]).to have_content("Points entry was successfully created")
         end
       end
     end
 
     it "can access update" do
-      put :update, id: entry, points_entry: attributes
+      put :update, id: entry,
+        points_entry: attributes_for(:points_entry)
       expect(response).to redirect_to(entry)
     end
 
@@ -139,7 +131,7 @@ describe PointsEntriesController do
     end
 
     it "can destroy a PointsEntry" do
-      entry = points_entries :dishes
+      entry = create :points_entry
 
       expect {
         delete :destroy, id: entry

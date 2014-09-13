@@ -1,9 +1,0 @@
-dishes:
-  client: normal_client
-  points_entry_type: am_dishes
-  points_entered: 50
-  multiple: 1
-  points: 50
-  performed_on: <%= 1.day.ago %>
-  location: prime
-  added_by: staff_user
