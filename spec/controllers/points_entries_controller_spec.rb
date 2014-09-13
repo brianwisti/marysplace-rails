@@ -123,7 +123,7 @@ describe PointsEntriesController do
           attributes.delete :points_entry_type_id
           post :create, points_entry: attributes,
             points_entry_type: entry_type.name
-          expect(flash[:notice]).to have_content("Points entry was successfully created")
+          expect(flash[:notice]).to eql("Points entry was successfully created")
         end
       end
     end
