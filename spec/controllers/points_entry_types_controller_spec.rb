@@ -1,21 +1,20 @@
 require 'spec_helper'
 
 describe PointsEntryTypesController do
+  fixtures :users, :points_entry_types
+
   setup :activate_authlogic
-  let(:staff_user) { create :staff_user }
+
+  let(:staff_user) { users :staff_user }
 
   describe "JSON" do
 
     context "GET /points_entry_types.json" do
-      before do
-        50.times { create :points_entry_type }
+      it "should have items" do
         login staff_user
-      end
-
-      it "should have 50 items" do
         get :index, format: :json
         json = JSON.parse response.body
-        expect(json.length).to eq(50)
+        expect(json.length).to eq(PointsEntryType.active.length)
       end
     end
   end
