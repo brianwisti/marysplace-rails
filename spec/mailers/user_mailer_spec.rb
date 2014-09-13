@@ -1,7 +1,9 @@
 require "spec_helper"
 
 describe UserMailer do
-  let(:user) { create :user }
+  fixtures :users
+
+  let(:user) { users :basic_user }
 
   before :all do
     ActionMailer::Base.delivery_method = :test

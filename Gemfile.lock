@@ -63,17 +63,6 @@ GEM
       sass (~> 3.2)
     builder (3.1.4)
     cancan (1.6.10)
-    capybara (2.2.1)
-      mime-types (>= 1.16)
-      nokogiri (>= 1.3.3)
-      rack (>= 1.0.0)
-      rack-test (>= 0.5.4)
-      xpath (~> 2.0)
-    capybara-webkit (1.1.0)
-      capybara (~> 2.0, >= 2.0.2)
-      json
-    childprocess (0.5.3)
-      ffi (~> 1.0, >= 1.0.11)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.4)
@@ -93,7 +82,6 @@ GEM
       term-ansicolor
       thor
     daemons (1.1.9)
-    database_cleaner (1.2.0)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -106,11 +94,6 @@ GEM
     eventmachine (1.0.3)
     excon (0.37.0)
     execjs (2.2.0)
-    factory_girl (4.2.0)
-      activesupport (>= 3.0.0)
-    factory_girl_rails (4.2.1)
-      factory_girl (~> 4.2.0)
-      railties (>= 3.0.0)
     faker (1.3.0)
       i18n (~> 0.5)
     ffi (1.9.3)
@@ -215,7 +198,6 @@ GEM
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
       rspec-mocks (~> 2.99.0)
-    rubyzip (1.1.4)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -225,11 +207,6 @@ GEM
     scrypt (1.2.1)
       ffi-compiler (>= 0.0.2)
       rake
-    selenium-webdriver (2.42.0)
-      childprocess (>= 0.5.0)
-      multi_json (~> 1.0)
-      rubyzip (~> 1.0)
-      websocket (~> 1.0.4)
     simplecov (0.8.2)
       docile (~> 1.1.0)
       multi_json
@@ -262,9 +239,6 @@ GEM
     uglifier (2.5.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    websocket (1.0.7)
-    xpath (2.0.0)
-      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
@@ -284,14 +258,10 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass (~> 3.1.1)
   cancan
-  capybara (~> 2.2.1)
-  capybara-webkit
   coffee-rails (~> 4.0.1)
   coveralls
-  database_cleaner (~> 1.2.0)
   dotenv-rails
   excon
-  factory_girl_rails (~> 4.2.1)
   faker (= 1.3.0)
   haml-rails
   has_barcode
@@ -315,7 +285,6 @@ DEPENDENCIES
   sass (~> 3.2.13)
   sass-rails (~> 4.0.3)
   scrypt
-  selenium-webdriver (~> 2.0)
   simplecov
   thin
   uglifier (>= 1.3.0)

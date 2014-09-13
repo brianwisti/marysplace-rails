@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe MessagesController do
+  fixtures :messages, :users
   setup :activate_authlogic
-  let(:message) { create :message }
+  let(:message) { messages :simple }
 
   describe "Anonymous user" do
     it "cannot access index" do
@@ -26,16 +27,20 @@ describe MessagesController do
     end
 
     it "cannot access create" do
-      post :create, message: build_attributes(:message)
+      post :create, message: { title: "New Message", content: "A new message" }
       expect_login response
     end
   end
 
   describe "Staff user" do
-    let(:staff_user) { create :staff_user }
+    let(:staff_user) { users :staff_user }
 
     before do
       login staff_user
+    end
+
+    after do
+      logout staff_user
     end
 
     it "can access index" do

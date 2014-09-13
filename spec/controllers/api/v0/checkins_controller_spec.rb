@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe API::V0::CheckinsController do
+  fixtures :clients, :locations, :users
   setup :activate_authlogic
 
   skip "requires authentication" do
@@ -11,9 +12,9 @@ describe API::V0::CheckinsController do
   it "requires authorization"
 
   describe "POST /api/v0/checkins/create" do
-    let(:staff_user) { create :staff_user }
-    let(:client)     { create :client_with_badge }
-    let(:location)   { create :location }
+    let(:staff_user) { users :staff_user }
+    let(:client)     { clients :badged_client }
+    let(:location)   { locations :prime }
 
     before do
       login staff_user

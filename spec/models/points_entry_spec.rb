@@ -2,7 +2,8 @@ require 'spec_helper'
 require 'pp'
 
 describe PointsEntry, type: :model do
-  let (:points_entry) { create :points_entry }
+  fixtures :points_entries
+  let (:points_entry) { points_entries :dishes }
 
   it "should have been added by a User" do
     entry = PointsEntry.create do |entry|
@@ -28,7 +29,7 @@ describe PointsEntry, type: :model do
   end
 
   context "points multiple" do
-    let(:entry) { create :points_entry }
+    let (:entry) { points_entries :dishes }
 
     context "applied to a new entry" do
 
@@ -76,14 +77,14 @@ describe PointsEntry, type: :model do
     end
 
     context "updating an existing entry" do
-      let(:points)     { 50 }
+      let(:points)     { points_entries(:dishes).points_entered }
       let(:multiple)   { 2 }
       let(:new_points) { multiple * points }
-      let(:entry)      { create :points_entry, points: points }
+      let(:entry)      { points_entries :dishes }
 
       it "can change the multiple" do
-        entry.multiple = multiple
-        entry.save
+        entry.update_attributes multiple: multiple
+        entry.reload
 
         expect(entry.points).to eq(new_points)
       end
@@ -124,7 +125,8 @@ describe PointsEntry, type: :model do
     end
 
     it "registers new PointsEntry" do
-      create :points_entry
+      entry = points_entries :dishes
+      entry.update_attributes! performed_on: Date.today
       expect(PointsEntry.daily_count).to eq(1)
     end
   end

@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe User, type: :model do
+  fixtures :users, :roles
+
   context "login" do
     let(:user) { User.new }
     subject { user.errors[:login] }
@@ -10,16 +12,16 @@ describe User, type: :model do
     end
 
     context "must be unique" do
-      let(:first) { create :user }
-      let(:dupe) { build :user, login: user.login }
+      let(:first) { users :basic_user }
+      let(:dupe) { User.new login: first.login }
       subject { first.errors[:login] }
       it { should_not be(:empty?) }
     end
   end
 
   context "Role" do
-    let(:role) { create :role }
-    let(:user) { create :user }
+    let(:role) { Role.create name: "test_role" }
+    let(:user) { users :basic_user }
     subject { user }
 
     it { should respond_to(:roles) }
@@ -41,7 +43,7 @@ describe User, type: :model do
     it { should respond_to(:accept_role) }
 
     context "Accepting" do
-      let(:user) { create :user }
+      let(:user) { users :basic_user }
       before { user.accept_role role }
 
       subject { user.role? role.name }
@@ -51,7 +53,7 @@ describe User, type: :model do
     it { should respond_to(:withdraw_role) }
 
     context "Withdrawing" do
-      let(:user) { create :user }
+      let(:user) { users :basic_user }
       before { user.accept_role role }
 
       it "removes the role" do
@@ -64,10 +66,10 @@ describe User, type: :model do
     it { should respond_to(:establish_roles) }
 
     context "Establishing multiple roles" do
-      let(:user) { create :user }
-      let(:admin_role) { create :admin_role }
-      let(:staff_role) { create :staff_role }
-      let(:front_desk_role) { create :front_desk_role }
+      let(:user) { users :basic_user }
+      let(:admin_role) { roles :admin }
+      let(:staff_role) { roles :staff }
+      let(:front_desk_role) { roles :front_desk }
       let(:is_admin) { user.role? :admin }
       let(:is_staff) { user.role? :staff }
       let(:is_front_desk) { user.role? :front_desk }
@@ -121,7 +123,7 @@ describe User, type: :model do
     end
 
     it "uses saved values if set" do
-      user = create :user
+      user = users :basic_user
       user.remember_preference client_fields: %w{ point_balance }
       prefs = user.preference_for :client_fields
       expect(prefs).to include('point_balance')

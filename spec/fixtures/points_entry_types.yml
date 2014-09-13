@@ -1,0 +1,11 @@
+purchase:
+  name: "Purchase"
+inactive:
+  name: "Inactive"
+  is_active: false
+am_bathroom:
+  name: "AM Bathroom"
+am_dishes:
+  name: "AM Dishes"
+pm_bathroom:
+  name: "PM Bathroom"

@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe CatalogItem, type: :model do
-
-  before(:all) do
-    @user = create(:user)
-  end
+  fixtures :users
+  let(:user) { users :staff_user }
 
   context "the name" do
     it "must be present" do
@@ -17,7 +15,7 @@ describe CatalogItem, type: :model do
       item = CatalogItem.create do |i|
         i.name     = "General"
         i.cost     = 1000
-        i.added_by = @user
+        i.added_by = user
       end
 
       dupe = CatalogItem.new name: "General"
@@ -41,18 +39,12 @@ describe CatalogItem, type: :model do
   end
 
   it "is created by a User" do
-    user = User.create do |u|
-      u.login                 = "admin"
-      u.password              = "waffle"
-      u.password_confirmation = "waffle"
-    end
-
     item = CatalogItem.create do |i|
       i.name     = "General"
       i.cost     = 1000
-      i.added_by = @user
+      i.added_by = user
     end
 
-    expect(item.added_by).to eq(@user)
+    expect(item.added_by).to eq(user)
   end
 end
