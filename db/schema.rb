@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140728211829) do
+ActiveRecord::Schema.define(version: 20140924231605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,27 +215,6 @@ ActiveRecord::Schema.define(version: 20140728211829) do
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
-
-  create_table "signup_entries", force: true do |t|
-    t.integer  "signup_list_id"
-    t.integer  "client_id"
-    t.integer  "points_entry_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "signup_entries", ["client_id"], name: "index_signup_entries_on_client_id", using: :btree
-  add_index "signup_entries", ["points_entry_id"], name: "index_signup_entries_on_points_entry_id", using: :btree
-  add_index "signup_entries", ["signup_list_id"], name: "index_signup_entries_on_signup_list_id", using: :btree
-
-  create_table "signup_lists", force: true do |t|
-    t.integer  "points_entry_type_id"
-    t.date     "signup_date"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "signup_lists", ["points_entry_type_id"], name: "index_signup_lists_on_points_entry_type_id", using: :btree
 
   create_table "store_cart_items", force: true do |t|
     t.integer  "store_cart_id"
