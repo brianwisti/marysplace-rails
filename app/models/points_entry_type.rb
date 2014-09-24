@@ -3,8 +3,6 @@ require 'anonymizable'
 class PointsEntryType < ActiveRecord::Base
   extend Anonymizable
 
-  attr_accessible :default_points, :description, :name, :is_active
-
   validates :name,
     presence: true,
     uniqueness: true

@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def create
     authorize! :create, User
 
-    @user = User.new(params[:user])
+    @user = User.new user_params
 
     if @user.save
       flash[:notice] = "User created!"
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
       @user.establish_roles roles
     end
 
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes user_params
       flash[:notice] = "Account updated!"
       redirect_to @user
     else
@@ -105,5 +105,12 @@ class UsersController < ApplicationController
     end
 
     redirect_to clients_path
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name, :login, :password, :password_confirmation,
+                                :email, :organization_id)
   end
 end

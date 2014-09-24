@@ -3,8 +3,6 @@ require 'anonymizable'
 class Location < ActiveRecord::Base
   extend Anonymizable
 
-  attr_accessible :name, :phone_number, :address, :city, :state, :postal_code
-
   validates :name,
     presence:   true,
     uniqueness: true

@@ -9,9 +9,6 @@ class PointsEntry < ActiveRecord::Base
   belongs_to :added_by,
     class_name: "User"
   belongs_to :location
-  attr_accessible :bailed, :performed_on, :points,
-    :client_id, :points_entry_type_id, :added_by_id,
-    :is_finalized, :location_id, :multiple, :points_entered
 
   validates :added_by_id,
     presence: true

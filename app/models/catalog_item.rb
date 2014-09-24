@@ -1,5 +1,4 @@
 class CatalogItem < ActiveRecord::Base
-  attr_accessible :cost, :description, :is_available, :name, :added_by_id
   validates :cost,
     presence: true,
     numericality: {

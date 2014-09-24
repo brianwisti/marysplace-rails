@@ -15,7 +15,7 @@ class OrganizationsController < ApplicationController
   end
 
   def create
-    @organization = Organization.new params[:organization]
+    @organization = Organization.new organization_params
     @organization.creator = current_user
 
     if @organization.save
@@ -32,7 +32,7 @@ class OrganizationsController < ApplicationController
   def update
     @organization = Organization.find params[:id]
 
-    if @organization.update_attributes params[:organization]
+    if @organization.update_attributes organization_params
       redirect_to @organization, notice: 'Organization updated'
     else
       render :edit
@@ -43,5 +43,11 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find params[:id]
     @organization.destroy
     redirect_to organizations_url
+  end
+
+  private
+
+  def organization_params
+    params.require(:organization).permit(:name)
   end
 end

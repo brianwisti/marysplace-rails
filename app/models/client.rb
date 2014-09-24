@@ -8,14 +8,6 @@ class Client < ActiveRecord::Base
   extend Anonymizable
   include HasBarcode
 
-  attr_accessible :added_by, :added_by_id, :birthday, :current_alias,
-    :full_name, :last_edited_by, :last_edited_by_id, :notes, :oriented_on,
-    :other_aliases, :phone_number, :point_balance, :is_active, :is_flagged,
-    :signed_covenant, :email_address, :emergency_contact, :case_manager_info,
-    :family_info, :medical_info, :staying_at, :mailing_list_address,
-    :on_mailing_list, :personal_goal, :community_goal, :checkin_code,
-    :picture, :picture_file_name
-
   attr_accessor :picture
 
   has_attached_file :picture,

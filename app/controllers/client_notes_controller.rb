@@ -57,7 +57,7 @@ class ClientNotesController < ApplicationController
   # POST /client_notes.json
   def create
     authorize! :create, ClientNote
-    @client_note = ClientNote.new(params[:client_note])
+    @client_note = ClientNote.new client_note_params
     @client_note.user = current_user
 
     respond_to do |format|
@@ -78,7 +78,7 @@ class ClientNotesController < ApplicationController
     authorize! :edit, @client_note
 
     respond_to do |format|
-      if @client_note.update_attributes(params[:client_note])
+      if @client_note.update_attributes client_note_params
         format.html { redirect_to @client_note, notice: 'Client note was successfully updated.' }
         format.json { head :no_content }
       else
@@ -99,5 +99,11 @@ class ClientNotesController < ApplicationController
       format.html { redirect_to client_notes_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def client_note_params
+    params.require(:client_note).permit(:title, :content, :client_id, :user_id)
   end
 end

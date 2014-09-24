@@ -29,7 +29,7 @@ class LocationsController < ApplicationController
   def create
     authorize! :create, Location
 
-    @location = Location.new params[:location]
+    @location = Location.new location_params
 
     respond_to do |format|
       if @location.save
@@ -46,7 +46,7 @@ class LocationsController < ApplicationController
 
     @location = Location.find(params[:id])
 
-    if @location.update_attributes(params[:location])
+    if @location.update_attributes location_params
       redirect_to @location, notice: "Location was updated"
     else
       render :edit
@@ -61,5 +61,12 @@ class LocationsController < ApplicationController
     @location.destroy
 
     redirect_to locations_url
+  end
+
+  private
+
+  def location_params
+    params.require(:location).permit(:name, :phone_number, :address, :city,
+                                     :state, :postal_code)
   end
 end

@@ -3,9 +3,6 @@ require 'anonymizable'
 class ClientFlag < ActiveRecord::Base
   extend Anonymizable
 
-  attr_accessible :action_required, :consequence, :client_id, :created_by, :created_by_id,
-    :description, :expires_on, :is_blocking, :resolved_by_id, :resolved_on, :can_shop
-
   belongs_to :client
   belongs_to :created_by,
     class_name: "User"

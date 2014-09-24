@@ -1,6 +1,4 @@
 class Organization < ActiveRecord::Base
-  attr_accessible :creator_id, :name,
-    :logo, :logo_file_name, :card_template, :card_template_file_name
   attr_accessor :logo
   attr_accessor :card_template
 

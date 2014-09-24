@@ -64,7 +64,7 @@ class ClientsController < ApplicationController
   # POST /clients.json
   def create
     authorize! :create, Client
-    @client = Client.new(params[:client])
+    @client = Client.new client_params
     @client.added_by_id = current_user.id
 
     if @client.save
@@ -80,7 +80,7 @@ class ClientsController < ApplicationController
     authorize! :update, Client
     @client = Client.find(params[:id])
 
-    if @client.update_attributes(params[:client])
+    if @client.update_attributes client_params
         redirect_to @client, notice: 'Client was successfully updated.'
     else
       render :edit
@@ -190,6 +190,16 @@ class ClientsController < ApplicationController
 
   private
 
+  def client_params
+    params.require(:client).permit(:current_alias, :full_name, :other_aliases,
+                                  :oriented_on, :birthday, :phone_number, :notes,
+                                  :is_active, :organization_id, :case_manager_info,
+                                  :family_info, :community_goal, :email_address,
+                                  :emergency_contact, :medical_info,
+                                  :mailing_list_address, :personal_goal,
+                                  :signed_covenant, :staying_at, :on_mailing_list)
+  end
+
   def load_clients
     sort_rule = "#{sort_column} #{sort_direction}"
     @clients = Client.filtered_by(params[:filters])
@@ -210,4 +220,5 @@ class ClientsController < ApplicationController
 
     %{asc desc}.include?(params[:direction]) ? params[:direction] : "asc"
   end
+
 end

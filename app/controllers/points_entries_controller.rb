@@ -33,7 +33,7 @@ class PointsEntriesController < ApplicationController
   # POST /points_entries
   def create
     params[:points_entry][:added_by_id] = current_user.id
-    @points_entry = PointsEntry.new(params[:points_entry])
+    @points_entry = PointsEntry.new points_entry_params
 
     unless @points_entry.client_id
       submitted_alias = params[:current_alias]
@@ -61,7 +61,7 @@ class PointsEntriesController < ApplicationController
   # PUT /points_entries/1
   def update
     @points_entry = PointsEntry.find(params[:id])
-    updated = @points_entry.update_attributes params[:points_entry]
+    updated = @points_entry.update_attributes points_entry_params
 
     if updated
       redirect_to @points_entry,
@@ -77,5 +77,13 @@ class PointsEntriesController < ApplicationController
     @points_entry.destroy
 
     redirect_to points_entries_url
+  end
+
+  private
+
+  def points_entry_params
+    params.require(:points_entry).permit(:client_id, :points_entry_type_id,
+                                        :performed_on, :bailed, :added_by_id,
+                                        :location_id, :multiple, :points_entered)
   end
 end

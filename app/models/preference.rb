@@ -12,8 +12,6 @@ class PreferencesValidator < ActiveModel::Validator
 end
 
 class Preference < ActiveRecord::Base
-  attr_accessible :user, :user_id, :client_fields
-
   validates :user_id,
     presence: true,
     uniqueness: true

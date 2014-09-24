@@ -39,7 +39,7 @@ class CheckinsController < ApplicationController
   def create
     authorize! :create, Checkin
 
-    @checkin = Checkin.with_alternatives params[:checkin],
+    @checkin = Checkin.with_alternatives checkin_params,
       user: current_user,
       current_alias: params[:current_alias]
 
@@ -58,7 +58,7 @@ class CheckinsController < ApplicationController
 
     @checkin = Checkin.find(params[:id])
 
-    if @checkin.update_attributes(params[:checkin])
+    if @checkin.update_attributes checkin_params
       redirect_to @checkin, notice: 'Checkin was successfully updated.'
     else
       render :edit
@@ -161,5 +161,11 @@ class CheckinsController < ApplicationController
 
     flash.keep
     redirect_to selfcheck_checkins_path
+  end
+
+  private
+
+  def checkin_params
+    params.require(:checkin).permit(:client_id, :user_id, :checkin_at, :notes, :location_id)
   end
 end

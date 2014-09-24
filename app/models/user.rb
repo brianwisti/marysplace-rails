@@ -7,10 +7,6 @@ class User < ActiveRecord::Base
   extend Anonymizable
   include HasBarcode
 
-  attr_accessible :login, :name, :email,
-    :password, :password_confirmation,
-    :avatar, :avatar_file_name,
-    :last_message_check, :organization_id
   attr_accessor :avatar
 
   acts_as_authentic do |c|
