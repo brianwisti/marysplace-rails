@@ -1,14 +1,15 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'simplecov'
-#require 'coveralls'
 
-#SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-#  SimpleCov::Formatter::HTMLFormatter,
-#  Coveralls::SimpleCov::Formatter
-#]
+# For https://coveralls.io/r/brianwisti/marysplace-rails
+require 'coveralls'
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
 
 SimpleCov.start 'rails'
-#Coveralls.wear!
 
 ENV["RAILS_ENV"]          ||= 'test'
 ENV["ADMIN_NAME"]         ||= "Testy McTesterson"
