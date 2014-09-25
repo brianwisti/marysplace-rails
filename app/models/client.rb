@@ -62,10 +62,6 @@ class Client < ActiveRecord::Base
     dependent: :destroy
   has_many :client_flags,
     dependent: :destroy
-  has_many :purchases,
-    class_name: 'StoreCart',
-    foreign_key: :shopper_id,
-    dependent: :destroy
   has_many :staff_notes,
     class_name: 'ClientNote',
     dependent: :destroy
@@ -98,8 +94,6 @@ class Client < ActiveRecord::Base
           from clients
         left outer join client_flags cf
           on cf.client_id = clients.id
-        left outer join store_carts sc
-          on sc.shopper_id = clients.id
         left outer join points_entries pe
           on pe.client_id = clients.id
         left outer join points_entry_types pet
@@ -114,15 +108,12 @@ class Client < ActiveRecord::Base
           )
         )
         or (
-          sc.finished_at between ? and ?
-        )
-        or (
           pet.name = 'Purchase'
           and pe.performed_on between ? and ?
         )
         group by clients.id
         order by clients.current_alias
-      }, now.beginning_of_week, now, now.beginning_of_week, now ]
+      }, now.beginning_of_week, now ]
   end
 
   before_save do
@@ -157,16 +148,6 @@ class Client < ActiveRecord::Base
     return self.flags.unresolved.count > 0
   end
 
-  # Does this client have an open StoreCart?
-  def is_shopping?
-    return self.purchases.where('finished_at is null').count > 0
-  end
-
-  # The current open cart for this client, or nothing.
-  def cart
-    return self.purchases.where('finished_at is null').first
-  end
-
   # Can this client make purchases?
   def can_shop?
     if self.flags.unresolved.where(can_shop: false).count > 0
@@ -190,32 +171,17 @@ class Client < ActiveRecord::Base
 
   # Have I ever shopped?
   def has_shopped?
-    self.purchases.count > 0 || self.has_purchase_entry?
+    self.has_purchase_entry?
   end
 
   # When was my last completed shopping trip?
   def last_shopped_at
-    last_purchase = self.last_purchase
-    last_purchase_entry = self.last_purchase_entry
-
-    if last_purchase && last_purchase_entry
-      [last_purchase, last_purchase_entry].max
-    elsif last_purchase
-      last_purchase
-    elsif last_purchase_entry
-      last_purchase_entry
-    end
+    self.last_purchase_entry
   end
 
   def has_purchase_entry?
     purchase_type = PointsEntryType.where(name: 'Purchase').first
     self.points_entries.where(points_entry_type_id: purchase_type).count > 0
-  end
-
-  def last_purchase
-    if self.purchases.count > 0
-      self.purchases.order('finished_at DESC').first.finished_at
-    end
   end
 
   def last_purchase_entry
@@ -237,11 +203,8 @@ class Client < ActiveRecord::Base
   end
 
   def update_points!
-    entries_total = self.points_entries.sum(:points)
-    purchase_total = self.purchases.where('finished_at is not null')
-      .sum(:total)
-    new_balance = entries_total - purchase_total
-    self.update_attributes(point_balance: new_balance)
+    latest_balance = self.points_entries.sum(:points)
+    self.update_attributes point_balance: latest_balance
   end
 
   def self.filtered_by filters

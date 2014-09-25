@@ -20,12 +20,10 @@ class Ability
       can [ :show, :create ], ClientNote
       can [ :edit, :delete ], ClientNote, user_id: user.id
       can :show, Message
-      can :manage, StoreCart
       can :show, Location
     end
 
     if user.role? :admin
-      can :manage, CatalogItem
       can :manage, Client
       can :manage, User
       can :manage, PointsEntryType
@@ -35,7 +33,6 @@ class Ability
       can :manage, ClientNote
       can :manage, ClientNote, user_id: user.id
       can :manage, Message
-      can :manage, StoreCart
       can :manage, Location
     end
 

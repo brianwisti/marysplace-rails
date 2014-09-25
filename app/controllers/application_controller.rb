@@ -76,11 +76,6 @@ class ApplicationController < ActionController::Base
           url: client_flags_path,
           active: 'client_flags' == current_controller
         },
-        StoreCart => {
-          title: "Store",
-          url: store_path,
-          active: 'store' == current_controller
-        },
         Location => {
           title: "Locations",
           url: locations_path,

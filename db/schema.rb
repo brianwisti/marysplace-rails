@@ -11,22 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140924231605) do
+ActiveRecord::Schema.define(version: 20140924232453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "catalog_items", force: true do |t|
-    t.string   "name"
-    t.integer  "cost"
-    t.text     "description"
-    t.boolean  "is_available", default: true
-    t.integer  "added_by_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  add_index "catalog_items", ["added_by_id"], name: "index_catalog_items_on_added_by_id", using: :btree
 
   create_table "checkins", force: true do |t|
     t.integer  "client_id"
@@ -215,31 +203,6 @@ ActiveRecord::Schema.define(version: 20140924231605) do
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
-
-  create_table "store_cart_items", force: true do |t|
-    t.integer  "store_cart_id"
-    t.integer  "catalog_item_id"
-    t.integer  "cost"
-    t.string   "detail"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "store_cart_items", ["catalog_item_id"], name: "index_store_cart_items_on_catalog_item_id", using: :btree
-  add_index "store_cart_items", ["store_cart_id"], name: "index_store_cart_items_on_store_cart_id", using: :btree
-
-  create_table "store_carts", force: true do |t|
-    t.integer  "shopper_id"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.integer  "handled_by_id"
-    t.integer  "total"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "store_carts", ["handled_by_id"], name: "index_store_carts_on_handled_by_id", using: :btree
-  add_index "store_carts", ["shopper_id"], name: "index_store_carts_on_shopper_id", using: :btree
 
   create_table "user_sessions", force: true do |t|
     t.string   "session_id", null: false

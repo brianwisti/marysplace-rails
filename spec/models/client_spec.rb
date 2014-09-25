@@ -87,63 +87,11 @@ describe Client, type: :model do
     end
   end
 
-  context "when not shopping" do
-    it "knows it's not shopping" do
-      expect(client.is_shopping?).to be_falsey
-    end
-
-    it "has no cart" do
-      expect(client.cart).to be_nil
-    end
-  end
-
-  context "when shopping" do
-    before do
-      @cart = StoreCart.start(client, user)
-    end
-
-    it "has a cart" do
-      expect(client.cart).to eql(@cart)
-    end
-
-    it "knows it is shoppings" do
-      expect(client.is_shopping?).to be_truthy
-    end
-  end
-
   it "can open a Shopping Cart if it has no flags" do
     expect(client.can_shop?).to be_truthy
   end
 
   describe "Shopping Cart" do
-    it "is not allowed if Client has unresolved shop-blocking flags" do
-      flag = ClientFlag.create do |f|
-        f.created_by = user
-        f.client     = client
-        f.can_shop   = false
-      end
-      expect(client.can_shop?).to be_falsey
-    end
-
-    it "is not allowed if Client has already shopped this week" do
-      StoreCart.start(client, user).finish
-      expect(client.can_shop?).to be_falsey
-    end
-
-    it "knows if the Client has never shopped" do
-      expect(client.has_shopped?).to be_falsey
-    end
-
-    it "knows if the Client has shopped" do
-      StoreCart.start(client, user).finish
-      expect(client.has_shopped?).to be_truthy
-    end
-
-    it "remembers the Client's last shopping session" do
-      cart = StoreCart.start(client, @user)
-      cart.finish
-      expect(client.last_shopped_at.to_i).to eql(cart.finished_at.to_i)
-    end
 
     context "Purchase PointsEntries" do
       let(:purchase_type) { create :points_entry_type, name: "Purchase" }
@@ -184,7 +132,17 @@ describe Client, type: :model do
       end
 
       it "includes Clients who have already shopped this week" do
-        StoreCart.start(client, user).finish
+        entry_type = PointsEntryType.create(name: 'Purchase')
+        client = create :client
+
+        entry = client.points_entries.create! do |entry|
+          entry.points_entry_type = entry_type
+          entry.added_by          = user
+          entry.points            = -100
+          entry.performed_on      = Date.today
+          entry.location          = create(:location)
+        end
+
         expect(Client.cannot_shop).to include(client)
       end
 

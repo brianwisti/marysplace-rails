@@ -182,10 +182,8 @@ class ClientsController < ApplicationController
 
   def purchases
     authorize! :show, Client
-    authorize! :show, StoreCart
 
     @client = Client.find(params[:id])
-    @carts = @client.purchases
   end
 
   private

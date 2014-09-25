@@ -9,9 +9,6 @@
     <% if can? :show, ClientFlag -%>
       <li><%= link_to "Flags", flags_client_path(client) %></li>
     <% end -%>
-    <% if can? :show, StoreCart -%>
-      <li><%= link_to "Purchases", purchases_client_path(client) %></li>
-    <% end -%>
     <% if can? :create, PointsEntry -%>
       <li><%= link_to "Log Points for #{client.current_alias}", entry_client_path(client) %></li>
     <% end -%>
