@@ -20,12 +20,12 @@ class PasswordResetsController < ApplicationController
 
     if !login.empty?
       @user = User.where(login: login).first
-    elsif !login.empty?
+    elsif !email.empty?
       @user = User.where(email: email).first
     end
 
     if @user
-      @user.deliver_password_reset_instructions!
+      @user.deliver_password_reset_instructions
       flash[:notice] = "Check your email for a link to reset your password."
       redirect_to login_url
     else

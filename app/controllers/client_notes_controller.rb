@@ -1,3 +1,4 @@
+# Routes for notes from staff about specific clients
 class ClientNotesController < ApplicationController
   before_filter :require_user
 

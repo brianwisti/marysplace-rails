@@ -3,15 +3,18 @@ require 'barby'
 require 'barby/outputter/svg_outputter'
 require 'barby/barcode/code_128'
 
+# Anything that can directly use this application.
+# 
+# Usually but not necessarily a person.
 class User < ActiveRecord::Base
   extend Anonymizable
   include HasBarcode
 
   attr_accessor :avatar
 
-  acts_as_authentic do |c|
-    c.login_field = 'login'
-    c.validate_email_field = false
+  acts_as_authentic do |config|
+    config.login_field          = 'login'
+    config.validate_email_field = false
   end
 
   has_and_belongs_to_many :roles
@@ -44,7 +47,7 @@ class User < ActiveRecord::Base
   has_barcode :barcode,
     outputter: :svg,
     type: Barby::Code128B,
-    value: Proc.new { |u| u.login }
+    value: Proc.new { |user| user.login }
 
   def bare_barcode
     barcode = Barby::Code128B.new( self.login )
@@ -64,7 +67,7 @@ class User < ActiveRecord::Base
     to:     :organization,
     prefix: true
 
-  def messages_checked!
+  def messages_checked
     self.update_attributes(last_message_check: DateTime.now)
     self.reload
   end
@@ -94,13 +97,11 @@ class User < ActiveRecord::Base
 
   # Get user preference for setting, or default if not set.
   def preference_for setting
-    default = Preference.default_for setting
 
-    return default unless self.preference
-
-    pref = self.preference.attributes[setting.to_s]
-
-    return pref unless pref.empty?
+    if preferences = self.preference
+      pref = preferences.attributes[setting.to_s]
+      return pref unless pref.empty?
+    end
 
     Preference.default_for setting
   end
@@ -111,7 +112,7 @@ class User < ActiveRecord::Base
     self.preference.update settings
   end
 
-  def deliver_password_reset_instructions!
+  def deliver_password_reset_instructions
     reset_perishable_token!
     UserMailer.password_reset_notification(self).deliver
   end

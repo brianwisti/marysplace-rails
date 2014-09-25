@@ -1,3 +1,4 @@
+# Routes for client checkins - handy for usage counts and record keeping.
 class CheckinsController < ApplicationController
   before_filter :require_user
 

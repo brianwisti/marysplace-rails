@@ -1,3 +1,4 @@
+# Routes for client flags - issues that affect client usage of resources
 class ClientFlagsController < ApplicationController
   before_filter :require_user
 

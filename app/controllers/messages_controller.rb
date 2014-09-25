@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
   def index
     authorize! :show, Message
     @messages = Message.order("created_at DESC")
-    current_user.messages_checked!
+    current_user.messages_checked
   end
 
   # GET /messages/1

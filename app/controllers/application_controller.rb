@@ -1,3 +1,4 @@
+# Provides controller helpers for authorization and access levels
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user, :sections, :message_count

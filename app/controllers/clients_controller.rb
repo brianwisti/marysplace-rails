@@ -1,6 +1,6 @@
 require 'open-uri'
 
-# /clients
+# Finding and CRUDing clients
 class ClientsController < ApplicationController
   before_filter :require_user
   authorize_resource
