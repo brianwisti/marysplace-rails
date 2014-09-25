@@ -15,13 +15,12 @@ class ApplicationController < ActionController::Base
     end
 
     def message_count
-      return 0 unless current_user
+      user = current_user
 
-      if current_user.last_message_check
-        Message.since(current_user.last_message_check)
-      else
-        Message.since(current_user.created_at)
-      end
+      return 0 unless user
+
+      threshold = user.last_message_check || user.created_at
+      Message.since threshold
     end
 
     def require_user
