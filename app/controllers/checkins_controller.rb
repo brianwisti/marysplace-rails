@@ -17,16 +17,8 @@ class CheckinsController < ApplicationController
   # GET /checkins/new
   def new
     authorize! :create, Checkin
-    @checkin = Checkin.new
-    @locations = Location.all
-
-    last_checkin = current_user.checkins.last
-
-    if last_checkin
-      @default_location = last_checkin.location
-    else
-      @default_location = @locations.first
-    end
+    build_checkin
+    load_locations
   end
 
   # GET /checkins/1/edit
@@ -175,5 +167,18 @@ class CheckinsController < ApplicationController
 
   def load_checkin
     @checkin ||= Checkin.find(params[:id])
+  end
+
+  def build_checkin
+    @checkin ||= Checkin.new
+  end
+
+  def load_locations
+    @locations ||= Location.all
+    @default_location ||= if current_user.checkins
+                            current_user.checkins.last
+                          else
+                            @locations.first
+                          end
   end
 end
