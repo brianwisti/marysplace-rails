@@ -1,5 +1,18 @@
 # An attempt to encapsulate functionality required by summary reports.
 module Reportable
+
+  def set_report_year
+    @year ||= params[:year].to_i
+  end
+
+  def set_report_month
+    @month ||= params[:month].to_i
+  end
+
+  def set_report_day
+    @day ||= params[:day].to_i || 1
+  end
+
   def set_report_span
     @span = Time.zone.local(@year, @month, @day, 0, 0)
   end

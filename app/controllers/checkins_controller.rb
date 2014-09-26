@@ -83,6 +83,7 @@ class CheckinsController < ApplicationController
   def selfcheck
     authorize! :create, Checkin
     @checkins = Checkin.today.order('checkin_at DESC')
+    load_locations
     @locations = Location.all
 
     last_checkin = current_user.checkins.last
@@ -183,18 +184,6 @@ class CheckinsController < ApplicationController
     use_annual_report_range
     load_report_rows
     count_reported_checkins
-  end
-
-  def set_report_year
-    @year ||= params[:year].to_i
-  end
-
-  def set_report_month
-    @month ||= params[:month].to_i
-  end
-
-  def set_report_day
-    @day ||= params[:day].to_i || 1
   end
 
   def load_report_rows
