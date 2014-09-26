@@ -48,8 +48,7 @@ class CheckinsController < ApplicationController
   # DELETE /checkins/1
   def destroy
     authorize! :destroy, Checkin
-
-    @checkin = Checkin.find(params[:id])
+    load_checkin
     @checkin.destroy
 
     redirect_to checkins_url
@@ -59,7 +58,7 @@ class CheckinsController < ApplicationController
     authorize! :show, Checkin
 
     @span = Date.today
-    @year = @span.year
+    set_report_year
     @time_range = @span.strftime("%A, %B %d %Y")
     @checkins = Checkin.today
 
@@ -69,7 +68,7 @@ class CheckinsController < ApplicationController
   def annual_report
     authorize! :show, Checkin
 
-    @year = params[:year].to_i
+    set_report_year
     @rows = Checkin.per_month_in(@year)
     @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
   end
@@ -77,7 +76,7 @@ class CheckinsController < ApplicationController
   def monthly_report
     authorize! :show, Checkin
 
-    @year = params[:year].to_i
+    set_report_year
     @month = params[:month].to_i
     @rows = Checkin.per_day_in(@year, @month)
     @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
@@ -89,7 +88,7 @@ class CheckinsController < ApplicationController
   def daily_report
     authorize! :show, Checkin
 
-    @year  = params[:year].to_i
+    set_report_year
     @month = params[:month].to_i
     @day   = params[:day].to_i
     @span = Time.zone.local(@year, @month, @day, 0, 0)
@@ -183,5 +182,13 @@ class CheckinsController < ApplicationController
       redirect_to @checkin,
         notice: 'Checkin was successfully updated.'
     end
+  end
+
+  def set_report_year
+    @year ||= if params[:year]
+                params[:year].to_i
+              else
+                Date.today.year
+              end
   end
 end
