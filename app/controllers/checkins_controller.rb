@@ -11,8 +11,7 @@ class CheckinsController < ApplicationController
   # GET /checkins/1
   def show
     authorize! :show, Checkin
-
-    @checkin = Checkin.find(params[:id])
+    load_checkin
   end
 
   # GET /checkins/new
@@ -172,5 +171,9 @@ class CheckinsController < ApplicationController
 
   def load_checkins
     @checkins ||= Checkin.order('checkin_at DESC').page params[:page]
+  end
+
+  def load_checkin
+    @checkin ||= Checkin.find(params[:id])
   end
 end
