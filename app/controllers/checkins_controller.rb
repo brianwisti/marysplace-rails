@@ -70,7 +70,7 @@ class CheckinsController < ApplicationController
 
     set_report_year
     load_report_rows
-    @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
+    count_reported_checkins
   end
 
   def monthly_report
@@ -194,5 +194,9 @@ class CheckinsController < ApplicationController
 
   def load_report_rows
     @rows ||= Checkin.per_month_in @year
+  end
+
+  def count_reported_checkins
+    @total_checkins ||= @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
   end
 end
