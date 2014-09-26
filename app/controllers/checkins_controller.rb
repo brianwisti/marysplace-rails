@@ -24,7 +24,7 @@ class CheckinsController < ApplicationController
   # GET /checkins/1/edit
   def edit
     authorize! :update, Checkin
-    @checkin = Checkin.find(params[:id])
+    load_checkin
   end
 
   # POST /checkins
