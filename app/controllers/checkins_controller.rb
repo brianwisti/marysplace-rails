@@ -5,7 +5,7 @@ class CheckinsController < ApplicationController
   # GET /checkins
   def index
     authorize! :show, Checkin
-    @checkins = Checkin.order('checkin_at DESC').page params[:page]
+    load_checkins
   end
 
   # GET /checkins/1
@@ -168,5 +168,9 @@ class CheckinsController < ApplicationController
 
   def checkin_params
     params.require(:checkin).permit(:client_id, :user_id, :checkin_at, :notes, :location_id)
+  end
+
+  def load_checkins
+    @checkins ||= Checkin.order('checkin_at DESC').page params[:page]
   end
 end
