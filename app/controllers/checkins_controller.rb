@@ -41,14 +41,8 @@ class CheckinsController < ApplicationController
   # PUT /checkins/1
   def update
     authorize! :update, Checkin
-
-    @checkin = Checkin.find(params[:id])
-
-    if @checkin.update_attributes checkin_params
-      redirect_to @checkin, notice: 'Checkin was successfully updated.'
-    else
-      render :edit
-    end
+    load_checkin
+    update_checkin or render :edit
   end
 
   # DELETE /checkins/1
@@ -181,6 +175,13 @@ class CheckinsController < ApplicationController
       client = @checkin.client_current_alias
       redirect_to new_checkin_path,
         notice: "Checkin for #{client} was successfully created."
+    end
+  end
+
+  def update_checkin
+    if @checkin.update_attributes checkin_params
+      redirect_to @checkin,
+        notice: 'Checkin was successfully updated.'
     end
   end
 end
