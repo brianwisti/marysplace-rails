@@ -1,7 +1,8 @@
 # Provides controller helpers for authorization and access levels
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user_session, :current_user, :sections, :message_count
+  helper_method :current_user_session, :current_controller, :current_user,
+    :message_count
 
   private
     def current_user_session
@@ -45,62 +46,8 @@ class ApplicationController < ActionController::Base
       redirect_to root_url
     end
 
-    def sections
-      current_controller = params[:controller]
-      # There's *got* to be a prettier way to do this.
-      arr = []
-      sections = {
-        User => {
-          title: "Users",
-          url: users_path,
-          permission: :manage,
-          active: 'users' == current_controller
-        },
-        Client => {
-          title: "Clients",
-          url: clients_path,
-          active: 'clients' == current_controller
-        },
-        PointsEntry => {
-          title: "Points Log",
-          url: points_entries_path,
-          active: 'points_entries' == current_controller
-        },
-        Checkin => {
-          title: "Checkins",
-          url: checkins_path,
-          active: 'checkins' == current_controller
-        },
-        ClientFlag => {
-          title: "Client Flags",
-          url: client_flags_path,
-          active: 'client_flags' == current_controller
-        },
-        Location => {
-          title: "Locations",
-          url: locations_path,
-          active: 'locations' == current_controller
-        },
-        ClientNote => {
-          title: "Client Notes",
-          url: client_notes_path,
-          active: 'client_notes' == current_controller
-        },
-        Organization => {
-          title: "Organizations",
-          url:   organizations_path,
-          active: 'organizations' == current_controller
-        }
-      }
-
-      sections.each do |model, details|
-        permission = details[:permission] || :show
-        if can? permission, model
-          arr.push details
-        end
-      end
-
-      return arr
+    def current_controller
+      params[:controller]
     end
 
     def store_location

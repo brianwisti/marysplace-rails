@@ -1,0 +1,11 @@
+<% if can? :show, section[:model] -%>
+  <% if current_controller == section[:active] -%>
+    <li class="active">
+      <%= link_to section[:title], section[:url] %>
+    </li>
+  <% else -%>
+    <li>
+      <%= link_to section[:title], section[:url] %>
+    </li>
+  <% end -%>
+<% end -%>

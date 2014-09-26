@@ -1,0 +1,50 @@
+<ul class="nav nav-sidebar">
+  <%= render 'sidebar_entry', section: {
+    model:  User,
+    title:  "Users",
+    url:    users_path,
+    active: 'users'
+  } -%>
+  <%= render 'sidebar_entry', section: {
+    model: Client,
+    title: "Clients",
+    url: clients_path,
+    active: 'clients'
+  } -%>
+  <%= render 'sidebar_entry', section: {
+    model: PointsEntry,
+    title: "Points Log",
+    url: points_entries_path,
+    active: 'points_entries'
+  } -%>
+  <%= render 'sidebar_entry', section: {
+    model: Checkin,
+    title: "Checkins",
+    url: checkins_path,
+    active: 'checkins'
+  } -%>
+  <%= render 'sidebar_entry', section: {
+    model: ClientFlag,
+    title: "Client Flags",
+    url: client_flags_path,
+    active: 'client_flags'
+  } -%>
+  <%= render 'sidebar_entry', section: {
+    model: Location,
+    title: "Locations",
+    url: locations_path,
+    active: 'locations'
+  } -%>
+  <%= render 'sidebar_entry', section: {
+    model: ClientNote,
+    title: "Client Notes",
+    url: client_notes_path,
+    active: 'client_notes'
+  } -%>
+  <%= render 'sidebar_entry', section: {
+    model: Organization,
+    title: "Organizations",
+    url:   organizations_path,
+    active: 'organizations'
+  } -%>
+</ul>
