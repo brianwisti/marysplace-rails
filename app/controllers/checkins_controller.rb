@@ -83,7 +83,8 @@ class CheckinsController < ApplicationController
   def selfcheck
     authorize! :create, Checkin
     @checkins = Checkin.today.order('checkin_at DESC')
-    load_locations
+    # For some reason @default_locations does not get set here by
+    # calling load_locations. So we duplicate.
     @locations = Location.all
 
     last_checkin = current_user.checkins.last
@@ -97,32 +98,8 @@ class CheckinsController < ApplicationController
 
   def selfcheck_post
     authorize! :create, Checkin
-    checkin_code = params[:login]
-    location   = Location.find(params[:location_id])
-    checkin_at = Time.zone.now
-
-    client = Client.where(checkin_code: checkin_code).first
-    if client
-      checkin = Checkin.new do |c|
-        c.client     = client
-        c.user       = current_user
-        c.checkin_at = checkin_at
-        c.location   = location
-      end
-
-      if checkin.valid?
-        checkin.save
-        flash[:notice] = "Checked in #{client.current_alias}"
-      elsif checkin.errors[:client_id]
-        flash[:alert] = "#{client.current_alias} #{checkin.errors[:client_id].join(', ')}"
-      else
-        flash[:alert] = "Unable to checkin #{client.current_alias}"
-      end
-    else
-      flash[:alert] = "No client found for #{checkin_code}"
-    end
-
-    flash.keep
+    build_selfcheckin
+    save_selfcheckin
     redirect_to selfcheck_checkins_path
   end
 
@@ -146,11 +123,7 @@ class CheckinsController < ApplicationController
 
   def load_locations
     @locations ||= Location.all
-    @default_location ||= if current_user.checkins
-                            current_user.checkins.last
-                          else
-                            @locations.first
-                          end
+    @default_location ||= current_user.checkins.last || @locations.first
   end
 
   def save_checkin
@@ -166,6 +139,27 @@ class CheckinsController < ApplicationController
       redirect_to @checkin,
         notice: 'Checkin was successfully updated.'
     end
+  end
+
+  def build_selfcheckin
+    checkin_code = params[:login]
+    @checkin = Checkin.new do |checkin|
+      checkin.client     = Client.where(checkin_code: checkin_code).first
+      checkin.user       = current_user
+      checkin.checkin_at = Time.zone.now
+      checkin.location   = Location.find params[:location_id]
+    end
+  end
+
+  def save_selfcheckin
+    if @checkin.save
+      client = @checkin.client.current_alias
+      flash[:notice] = "Checked in #{client}"
+    else
+      flash[:alert] = "Unable to checkin"
+    end
+
+    flash.keep
   end
 
   def load_daily_report
