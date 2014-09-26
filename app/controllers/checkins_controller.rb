@@ -35,13 +35,7 @@ class CheckinsController < ApplicationController
       user: current_user,
       current_alias: params[:current_alias]
 
-    if @checkin.save
-      client = @checkin.client_current_alias
-      redirect_to new_checkin_path,
-      notice: "Checkin for #{client} was successfully created."
-    else
-      render :new
-    end
+    save_checkin or render :new
   end
 
   # PUT /checkins/1
@@ -180,5 +174,13 @@ class CheckinsController < ApplicationController
                           else
                             @locations.first
                           end
+  end
+
+  def save_checkin
+    if @checkin.save
+      client = @checkin.client_current_alias
+      redirect_to new_checkin_path,
+        notice: "Checkin for #{client} was successfully created."
+    end
   end
 end
