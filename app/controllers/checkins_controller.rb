@@ -69,7 +69,7 @@ class CheckinsController < ApplicationController
     authorize! :show, Checkin
 
     set_report_year
-    @rows = Checkin.per_month_in(@year)
+    load_report_rows
     @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
   end
 
@@ -190,5 +190,9 @@ class CheckinsController < ApplicationController
               else
                 Date.today.year
               end
+  end
+
+  def load_report_rows
+    @rows ||= Checkin.per_month_in @year
   end
 end
