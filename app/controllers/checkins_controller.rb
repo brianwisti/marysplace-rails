@@ -1,5 +1,8 @@
+require 'reportable'
+
 # Routes for client checkins - handy for usage counts and record keeping.
 class CheckinsController < ApplicationController
+  include Reportable
   before_filter :require_user
 
   # GET /checkins
@@ -56,45 +59,25 @@ class CheckinsController < ApplicationController
 
   def today
     authorize! :show, Checkin
-
-    @span = Date.today
-    set_report_year
-    @time_range = @span.strftime("%A, %B %d %Y")
-    @checkins = Checkin.today
+    use_today
+    load_daily_report
 
     render :daily_report
   end
 
   def annual_report
     authorize! :show, Checkin
-
-    set_report_year
-    load_report_rows
-    count_reported_checkins
+    load_annual_report
   end
 
   def monthly_report
     authorize! :show, Checkin
-
-    set_report_year
-    @month = params[:month].to_i
-    @rows = Checkin.per_day_in(@year, @month)
-    @total_checkins = @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
-
-    @span = Time.zone.local(@year, @month, 1, 0, 0)
-    @time_range = @span.strftime("%B %Y")
+    load_monthly_report
   end
 
   def daily_report
     authorize! :show, Checkin
-
-    set_report_year
-    @month = params[:month].to_i
-    @day   = params[:day].to_i
-    @span = Time.zone.local(@year, @month, @day, 0, 0)
-    @time_range = @span.strftime("%A, %B %d %Y")
-    @checkins = Checkin.on(@span)
-    @total_checkins = @checkins.count
+    load_daily_report
   end
 
   def selfcheck
@@ -184,19 +167,65 @@ class CheckinsController < ApplicationController
     end
   end
 
+  def load_daily_report
+    use_daily_report_range
+    @checkins = Checkin.on(@span)
+    count_reported_checkins
+  end
+
+  def load_monthly_report
+    use_monthly_report_range
+    load_report_rows
+    count_reported_checkins
+  end
+
+  def load_annual_report
+    use_annual_report_range
+    load_report_rows
+    count_reported_checkins
+  end
+
   def set_report_year
-    @year ||= if params[:year]
-                params[:year].to_i
-              else
-                Date.today.year
-              end
+    @year ||= params[:year].to_i
+  end
+
+  def set_report_month
+    @month ||= params[:month].to_i
+  end
+
+  def set_report_day
+    @day ||= params[:day].to_i || 1
   end
 
   def load_report_rows
-    @rows ||= Checkin.per_month_in @year
+    @rows ||= load_daily_rows || load_monthly_rows
+  end
+
+  def load_daily_rows
+    if @year and @month
+      Checkin.per_day_in @year, @month
+    end
+  end
+
+  def load_monthly_rows
+    if @year
+      Checkin.per_month_in @year
+    end
   end
 
   def count_reported_checkins
-    @total_checkins ||= @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
+    @total_checkins ||= count_rows || count_checkins || 0
+  end
+
+  def count_rows
+    if @rows
+      @rows.inject(0) { |sum, row| sum += row.checkins.to_i }
+    end
+  end
+
+  def count_checkins
+    if @checkins
+      @checkins.count
+    end
   end
 end
