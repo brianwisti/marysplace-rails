@@ -25,7 +25,8 @@ class ClientNotesController < ApplicationController
 
   # GET /client_notes/1/edit
   def edit
-    @client_note = ClientNote.find(params[:id])
+    load_client_note
+
     if @client_note
       authorize! :edit, @client_note
       @client = @client_note.client
@@ -49,7 +50,7 @@ class ClientNotesController < ApplicationController
   # PUT /client_notes/1
   # PUT /client_notes/1.json
   def update
-    @client_note = ClientNote.find(params[:id])
+    load_client_note
     authorize! :edit, @client_note
 
     if @client_note.update_attributes client_note_params
@@ -62,7 +63,8 @@ class ClientNotesController < ApplicationController
   # DELETE /client_notes/1
   # DELETE /client_notes/1.json
   def destroy
-    @client_note = ClientNote.find(params[:id])
+    load_client_note
+
     authorize! :destroy, @client_note
     @client_note.destroy
     redirect_to client_notes_url
