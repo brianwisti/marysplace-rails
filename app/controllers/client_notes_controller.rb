@@ -6,7 +6,7 @@ class ClientNotesController < ApplicationController
   # GET /client_notes.json
   def index
     authorize! :show, ClientNote
-    @client_notes = ClientNote.page params[:page]
+    load_client_notes
   end
 
   # GET /client_notes/1
@@ -79,5 +79,9 @@ class ClientNotesController < ApplicationController
 
   def client_note_params
     params.require(:client_note).permit(:title, :content, :client_id, :user_id)
+  end
+
+  def load_client_notes
+    @client_notes ||= ClientNote.page params[:page]
   end
 end
