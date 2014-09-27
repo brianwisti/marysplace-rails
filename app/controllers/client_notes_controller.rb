@@ -7,11 +7,6 @@ class ClientNotesController < ApplicationController
   def index
     authorize! :show, ClientNote
     @client_notes = ClientNote.page params[:page]
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @client_notes }
-    end
   end
 
   # GET /client_notes/1
@@ -19,11 +14,6 @@ class ClientNotesController < ApplicationController
   def show
     authorize! :show, ClientNote
     @client_note = ClientNote.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @client_note }
-    end
   end
 
   # GET /client_notes/new
@@ -38,11 +28,6 @@ class ClientNotesController < ApplicationController
 
     @client ||= Client.new
     @client_note.client = @client
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @client_note }
-    end
   end
 
   # GET /client_notes/1/edit
@@ -61,14 +46,10 @@ class ClientNotesController < ApplicationController
     @client_note = ClientNote.new client_note_params
     @client_note.user = current_user
 
-    respond_to do |format|
-      if @client_note.save
-        format.html { redirect_to @client_note, notice: 'Client note was successfully created.' }
-        format.json { render json: @client_note, status: :created, location: @client_note }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @client_note.errors, status: :unprocessable_entity }
-      end
+    if @client_note.save
+      redirect_to @client_note
+    else
+      render :new
     end
   end
 
@@ -78,14 +59,10 @@ class ClientNotesController < ApplicationController
     @client_note = ClientNote.find(params[:id])
     authorize! :edit, @client_note
 
-    respond_to do |format|
-      if @client_note.update_attributes client_note_params
-        format.html { redirect_to @client_note, notice: 'Client note was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @client_note.errors, status: :unprocessable_entity }
-      end
+    if @client_note.update_attributes client_note_params
+      redirect_to @client_note
+    else
+      render :edit
     end
   end
 
@@ -95,11 +72,7 @@ class ClientNotesController < ApplicationController
     @client_note = ClientNote.find(params[:id])
     authorize! :destroy, @client_note
     @client_note.destroy
-
-    respond_to do |format|
-      format.html { redirect_to client_notes_url }
-      format.json { head :no_content }
-    end
+    redirect_to client_notes_url
   end
 
   private
