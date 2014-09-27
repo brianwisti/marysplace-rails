@@ -84,7 +84,6 @@ describe ClientNotesController do
         # specifies that the ClientNote created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        ClientNote.any_instance.should_receive(:update_attributes).with({ "title" => "MyString" })
         put :update, {:id => client_note.to_param, :client_note => { "title" => "MyString" }}
       end
 

@@ -37,8 +37,7 @@ class ClientNotesController < ApplicationController
   # POST /client_notes.json
   def create
     authorize! :create, ClientNote
-    @client_note = ClientNote.new client_note_params
-    @client_note.user = current_user
+    build_client_note
 
     if @client_note.save
       redirect_to @client_note
@@ -52,8 +51,9 @@ class ClientNotesController < ApplicationController
   def update
     load_client_note
     authorize! :edit, @client_note
+    build_client_note
 
-    if @client_note.update_attributes client_note_params
+    if @client_note.save
       redirect_to @client_note
     else
       render :edit
@@ -73,7 +73,13 @@ class ClientNotesController < ApplicationController
   private
 
   def client_note_params
-    params.require(:client_note).permit(:title, :content, :client_id, :user_id)
+    client_note_params = params[:client_note]
+
+    if client_note_params
+      client_note_params.permit(:title, :content, :client_id, :user_id)
+    else
+      {}
+    end
   end
 
   def load_client_notes
@@ -86,10 +92,13 @@ class ClientNotesController < ApplicationController
 
   def build_client_note
     @client_note ||= ClientNote.new
+    @client_note.attributes = client_note_params
 
     if params[:client]
       @client ||= Client.find params[:client]
       @client_note.client = @client
     end
+
+    @client_note.user ||= current_user
   end
 end
