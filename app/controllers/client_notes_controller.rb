@@ -38,12 +38,7 @@ class ClientNotesController < ApplicationController
   def create
     authorize! :create, ClientNote
     build_client_note
-
-    if @client_note.save
-      redirect_to @client_note
-    else
-      render :new
-    end
+    save_client_note or render :new
   end
 
   # PUT /client_notes/1
@@ -52,12 +47,7 @@ class ClientNotesController < ApplicationController
     load_client_note
     authorize! :edit, @client_note
     build_client_note
-
-    if @client_note.save
-      redirect_to @client_note
-    else
-      render :edit
-    end
+    save_client_note or render :edit
   end
 
   # DELETE /client_notes/1
@@ -100,5 +90,11 @@ class ClientNotesController < ApplicationController
     end
 
     @client_note.user ||= current_user
+  end
+
+  def save_client_note
+    if @client_note.save
+      redirect_to @client_note
+    end
   end
 end
