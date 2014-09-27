@@ -20,14 +20,7 @@ class ClientNotesController < ApplicationController
   # GET /client_notes/new.json
   def new
     authorize! :create, ClientNote
-    @client_note = ClientNote.new
-
-    if params[:client]
-      @client = Client.find params[:client]
-    end
-
-    @client ||= Client.new
-    @client_note.client = @client
+    build_client_note
   end
 
   # GET /client_notes/1/edit
@@ -87,5 +80,14 @@ class ClientNotesController < ApplicationController
 
   def load_client_note
     @client_note ||= ClientNote.find(params[:id])
+  end
+
+  def build_client_note
+    @client_note ||= ClientNote.new
+
+    if params[:client]
+      @client ||= Client.find params[:client]
+      @client_note.client = @client
+    end
   end
 end
