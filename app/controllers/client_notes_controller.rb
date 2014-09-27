@@ -13,7 +13,7 @@ class ClientNotesController < ApplicationController
   # GET /client_notes/1.json
   def show
     authorize! :show, ClientNote
-    @client_note = ClientNote.find(params[:id])
+    load_client_note
   end
 
   # GET /client_notes/new
@@ -83,5 +83,9 @@ class ClientNotesController < ApplicationController
 
   def load_client_notes
     @client_notes ||= ClientNote.page params[:page]
+  end
+
+  def load_client_note
+    @client_note ||= ClientNote.find(params[:id])
   end
 end
