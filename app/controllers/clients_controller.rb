@@ -10,45 +10,37 @@ class ClientsController < ApplicationController
   # GET /all.json
   def all
     load_clients
-    @prefs = current_user.preference_for :client_fields
+    load_preferences
   end
 
   # GET /clients
   # GET /clients.json
   def index
     load_clients
-    @prefs = current_user.preference_for :client_fields
+    load_preferences
   end
 
   # GET /search
   # GET /search.json
   def search
-    @query = params[:q]
-    @clients = Client.quicksearch(@query)
-    mapping = @clients.map { |c| c.to_hash }
-
-    respond_to do |format|
-      format.html # search.html.haml
-      format.json {
-        render json: mapping
-      }
-    end
+    find_clients
+    render_clients
   end
 
   # GET /clients/1
   # GET /clients/1.json
   def show
-    @client = Client.find(params[:id])
+    load_client
   end
 
   # GET /clients/new
   # GET /clients/new.json
   def new
-    @client = Client.new
+    build_client
   end
 
   def entry
-    @client = Client.find(params[:id])
+    load_client
     @points_entry = PointsEntry.new
     @points_entry_type = PointsEntryType.new
     @points_entry.client = @client
@@ -57,7 +49,7 @@ class ClientsController < ApplicationController
   # GET /clients/1/edit
   def edit
     authorize! :update, Client
-    @client = Client.find(params[:id])
+    load_client
   end
 
   # POST /clients
@@ -78,7 +70,7 @@ class ClientsController < ApplicationController
   # PUT /clients/1.json
   def update
     authorize! :update, Client
-    @client = Client.find(params[:id])
+    load_client
 
     if @client.update_attributes client_params
         redirect_to @client, notice: 'Client was successfully updated.'
@@ -89,7 +81,7 @@ class ClientsController < ApplicationController
 
   def checkin_code
     authorize! :manage, Client
-    @client = Client.find params[:id]
+    load_client
     @client.update_checkin_code!
     redirect_to @client
   end
@@ -98,7 +90,7 @@ class ClientsController < ApplicationController
   # DELETE /clients/1.json
   def destroy
     authorize! :destroy, Client
-    @client = Client.find(params[:id])
+    load_client
     @client.destroy
 
     redirect_to clients_url
@@ -107,31 +99,31 @@ class ClientsController < ApplicationController
   # GET /clients/1/entries
   # GET /clients/1/entries.json
   def entries
-    @client = Client.find(params[:id])
+    load_client
     @entries = @client.points_entries.page params[:page]
     @prefs = current_user.preference_for :client_fields
   end
 
   def checkins
     authorize! :show, Checkin
-    @client = Client.find(params[:id])
+    load_client
     @checkins = @client.checkins.order('checkin_at DESC').page params[:page]
   end
 
   def flags
     authorize! :show, ClientFlag
-    @client = Client.find(params[:id])
+    load_client
     @flags = @client.client_flags.order('expires_on DESC')
   end
 
   def new_login
     authorize! :create, User
-    @client = Client.find(params[:id])
+    load_client
   end
 
   def create_login
     authorize! :create, User
-    @client = Client.find(params[:id])
+    load_client
     password = params[:password]
     password_confirmation = params[:password_confirmation]
 
@@ -160,7 +152,7 @@ class ClientsController < ApplicationController
   def card
     authorize! :manage, Client
 
-    @client = Client.find(params[:id].to_i)
+    load_client
     # open(@client.organization.card_template.url) { |io| content = io.read }
     @picture_url = if @client.picture_file_name
                      @client.picture.url(:square)
@@ -182,8 +174,7 @@ class ClientsController < ApplicationController
 
   def purchases
     authorize! :show, Client
-
-    @client = Client.find(params[:id])
+    load_client
   end
 
   private
@@ -200,8 +191,34 @@ class ClientsController < ApplicationController
 
   def load_clients
     sort_rule = "#{sort_column} #{sort_direction}"
-    @clients = Client.filtered_by(params[:filters])
+    @clients ||= Client.filtered_by(params[:filters])
         .order(sort_rule).page params[:page]
+  end
+
+  def find_clients
+    @query ||= params[:q]
+    @clients = Client.quicksearch @query
+  end
+
+  def load_client
+    @client = Client.find params[:id]
+  end
+
+  def build_client
+    @client = Client.new
+  end
+
+  def render_clients
+    respond_to do |format|
+      format.html # search.html.haml
+      format.json {
+        render json: @clients.map { |client| client.to_hash }
+      }
+    end
+  end
+
+  def load_preferences
+    @prefs ||= current_user.preference_for :client_fields
   end
 
   def sort_column
