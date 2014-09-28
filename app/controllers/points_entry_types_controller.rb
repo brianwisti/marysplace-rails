@@ -139,15 +139,25 @@ class PointsEntryTypesController < ApplicationController
     authorize! :show, Client
     authorize! :create, PointsEntry
 
-    @points_entry_type = PointsEntryType.find(params[:id])
-    @client = Client.new
-    @points_entry = PointsEntry.new do |entry|
+    load_points_entry_type
+    build_client
+    build_points_entry
+  end
+
+  private
+
+  def load_points_entry_type
+    @points_entry_type ||= PointsEntryType.find params[:id]
+  end
+
+  def build_client
+    @client ||= Client.new
+  end
+
+  def build_points_entry
+    @points_entry ||= PointsEntry.new do |entry|
       entry.points_entry_type = @points_entry_type
       entry.points            = @points_entry_type.default_points
-    end
-
-    respond_to do |format|
-      format.html
     end
   end
 end
