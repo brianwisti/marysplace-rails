@@ -5,7 +5,7 @@ class PointsEntryTypesController < ApplicationController
   # GET /points_entry_types.json
   def index
     authorize! :show, PointsEntryType
-    @points_entry_types = PointsEntryType.active.order('name')
+    load_active_points_entry_types
 
     respond_to do |format|
       format.html do
@@ -16,17 +16,18 @@ class PointsEntryTypesController < ApplicationController
     end
   end
 
+  # GET /points_entry_types/all
+  # GET /points_entry_types/all.json
   def all
     authorize! :show, PointsEntryType
-    @points_entry_types = PointsEntryType.order('name').page params[:page]
+    load_all_points_entry_types
   end
 
   # GET /points_entry_types/search
   # GET /points_entry_types/search.json
   def search
     authorize! :show, PointsEntryType
-    @query = params[:q]
-    @points_entry_types = PointsEntryType.quicksearch(@query)
+    search_points_entry_types
 
     respond_to do |format|
       #format.html # actually, no.
@@ -97,6 +98,19 @@ class PointsEntryTypesController < ApplicationController
 
   def points_entry_type_params
     params[:points_entry_type] || {}
+  end
+
+  def load_active_points_entry_types
+    @points_entry_types ||= PointsEntryType.active.order('name')
+  end
+
+  def load_all_points_entry_types
+    @points_entry_types ||= PointsEntryType.order('name').page params[:page]
+  end
+
+  def search_points_entry_types
+    @query = params[:q]
+    @points_entry_types = PointsEntryType.quicksearch(@query)
   end
 
   def load_points_entry_type
