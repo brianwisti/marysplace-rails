@@ -73,26 +73,8 @@ class PointsEntryTypesController < ApplicationController
   # POST /points_entry_types.json
   def create
     authorize! :create, PointsEntryType
-    @points_entry_type = PointsEntryType.new(params[:points_entry_type])
-
-    respond_to do |format|
-      if @points_entry_type.save
-        format.html {
-          redirect_to @points_entry_type,
-            notice: 'Points entry type was successfully created.'
-        }
-        format.json {
-          render json: @points_entry_type,
-            status: :created, location: @points_entry_type
-        }
-      else
-        format.html { render :new }
-        format.json {
-          render json: @points_entry_type.errors,
-            status: :unprocessable_entity
-        }
-      end
-    end
+    build_points_entry_type
+    save_points_entry_type or render :new
   end
 
   # PUT /points_entry_types/1
