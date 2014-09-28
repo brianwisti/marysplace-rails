@@ -121,15 +121,9 @@ class PointsEntryTypesController < ApplicationController
   # DELETE /points_entry_types/1
   # DELETE /points_entry_types/1.json
   def destroy
-    @points_entry_type = PointsEntryType.find(params[:id])
+    load_points_entry_type
     authorize! :destroy, @points_entry_type
-
-    @points_entry_type.destroy
-
-    respond_to do |format|
-      format.html { redirect_to points_entry_types_url }
-      format.json { head :no_content }
-    end
+    destroy_points_entry_type
   end
 
   # GET /points_entry_types/1/entry
@@ -148,6 +142,10 @@ class PointsEntryTypesController < ApplicationController
 
   def load_points_entry_type
     @points_entry_type ||= PointsEntryType.find params[:id]
+  end
+
+  def destroy_points_entry_type
+    @points_entry_type.destroy
   end
 
   def build_client
