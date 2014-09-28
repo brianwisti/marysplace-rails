@@ -150,17 +150,4 @@ class PointsEntryTypesController < ApplicationController
       format.html
     end
   end
-
-  def signup_lists
-    authorize! :show, PointsEntryType
-    authorize! :show, SignupList
-
-    @points_entry_type = PointsEntryType.find(params[:id].to_i)
-    @signup_lists = @points_entry_type.signup_lists
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
 end
