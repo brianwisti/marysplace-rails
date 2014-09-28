@@ -65,7 +65,7 @@ class PointsEntryTypesController < ApplicationController
 
   # GET /points_entry_types/1/edit
   def edit
-    @points_entry_type = PointsEntryType.find(params[:id])
+    load_points_entry_type
     authorize! :update, @points_entry_type
   end
 
