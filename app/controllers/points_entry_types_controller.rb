@@ -98,24 +98,10 @@ class PointsEntryTypesController < ApplicationController
   # PUT /points_entry_types/1
   # PUT /points_entry_types/1.json
   def update
-    @points_entry_type = PointsEntryType.find(params[:id])
+    load_points_entry_type
     authorize! :update, @points_entry_type
-
-    respond_to do |format|
-      if @points_entry_type.update_attributes(params[:points_entry_type])
-        format.html {
-          redirect_to @points_entry_type,
-            notice: 'Points entry type was successfully updated.'
-        }
-        format.json { head :no_content }
-      else
-        format.html { render :edit }
-        format.json {
-          render json: @points_entry_type.errors,
-            status: :unprocessable_entity
-        }
-      end
-    end
+    build_points_entry_type
+    save_points_entry_type or redirect_to :edit
   end
 
   # DELETE /points_entry_types/1
@@ -140,8 +126,23 @@ class PointsEntryTypesController < ApplicationController
 
   private
 
+  def points_entry_type_params
+    params[:points_entry_type] || {}
+  end
+
   def load_points_entry_type
     @points_entry_type ||= PointsEntryType.find params[:id]
+  end
+
+  def build_points_entry_type
+    @points_entry_type ||= PointsEntryType.new
+    @points_entry_type.attributes = points_entry_type_params
+  end
+
+  def save_points_entry_type
+    if @points_entry_type.save
+      redirect_to @points_entry_type
+    end
   end
 
   def destroy_points_entry_type
