@@ -40,15 +40,7 @@ class PointsEntryTypesController < ApplicationController
   # GET /points_entry_types/1.json
   def show
     authorize! :show, PointsEntryType
-    @points_entry_type = PointsEntryType.find(params[:id])
-    @points_entries = @points_entry_type.points_entries
-      .order('performed_on DESC')
-      .page(params[:page])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @points_entry_type }
-    end
+    load_points_entry_type
   end
 
   # GET /points_entry_types/new
@@ -124,6 +116,12 @@ class PointsEntryTypesController < ApplicationController
 
   def destroy_points_entry_type
     @points_entry_type.destroy
+  end
+
+  def load_entries_for_type
+    @points_entries = @points_entry_type.points_entries
+      .order('performed_on DESC')
+      .page(params[:page])
   end
 
   def build_client
