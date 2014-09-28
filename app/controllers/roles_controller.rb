@@ -2,11 +2,17 @@ class RolesController < ApplicationController
   before_filter :require_user
 
   def show
-    @roles = Role.order(:name)
-    @role = Role.find(params[:id])
+    load_roles
+    load_role
+  end
 
-    respond_to do |format|
-      format.html
-    end
+  private
+
+  def load_roles
+    @roles ||= Role.order :name
+  end
+
+  def load_role
+    @role ||= Role.find params[:id]
   end
 end
