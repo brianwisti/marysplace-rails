@@ -55,12 +55,7 @@ class PointsEntryTypesController < ApplicationController
   # GET /points_entry_types/new.json
   def new
     authorize! :create, PointsEntryType
-    @points_entry_type = PointsEntryType.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @points_entry_type }
-    end
+    build_points_entry_type
   end
 
   # GET /points_entry_types/1/edit
