@@ -9,19 +9,13 @@ class UsersController < ApplicationController
 
   def new
     authorize! :create, User
-    @user = User.new
-    site_admin_role = 'site_admin'
-    @roles = if current_user.role? site_admin_role
-               Role.all.load.to_a
-             else
-               Role.org_roles.load.to_a
-             end
+    build_user
+    load_assignable_roles
   end
 
   def create
     authorize! :create, User
-
-    @user = User.new user_params
+    build_user
 
     if @user.save
       flash[:notice] = "User created!"
@@ -110,8 +104,14 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :login, :password, :password_confirmation,
-                                :email, :organization_id)
+    user_params = params[:user]
+
+    if user_params
+      user_params.permit(:name, :login, :password, :password_confirmation,
+                         :email, :organization_id)
+    else
+      {}
+    end
   end
 
   def load_users
@@ -120,5 +120,19 @@ class UsersController < ApplicationController
 
   def load_roles
     @roles ||= Role.order :name
+  end
+
+  def load_assignable_roles
+    site_admin_role = 'site_admin'
+    @roles ||= if current_user.role? site_admin_role
+                 Role.all.load.to_a
+               else
+                 Role.org_roles.load.to_a
+               end
+  end
+
+  def build_user
+    @user ||= User.new
+    @user.attributes = user_params
   end
 end
