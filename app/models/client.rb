@@ -130,18 +130,15 @@ class Client < ActiveRecord::Base
   #
   # short enough to type, but not just straight current_alias
   # (which can change)
-  def generate_login_code
+  def generate_checkin_code
     source = "RE|#{self.current_alias}|#{Time.now.to_i}"
     login_code = sprintf "%08x", Zlib.crc32(source)
     return login_code
   end
 
   def update_checkin_code!
-    self.update_attributes checkin_code: self.generate_login_code
+    self.update_attributes checkin_code: self.generate_checkin_code
   end
-
-  # part of deprecation process for client logins
-  alias_method :generate_checkin_code, :generate_login_code
 
   # Does this client have unresolved flags?
   def is_flagged?
