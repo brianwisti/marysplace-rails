@@ -42,6 +42,7 @@ class PointsEntryTypesController < ApplicationController
   def show
     authorize! :show, PointsEntryType
     load_points_entry_type
+    load_points_entries
   end
 
   # GET /points_entry_types/new
@@ -115,6 +116,10 @@ class PointsEntryTypesController < ApplicationController
 
   def load_points_entry_type
     @points_entry_type ||= PointsEntryType.find params[:id]
+  end
+
+  def load_points_entries
+    @points_entries ||= @points_entry_type.points_entries.page params[:page]
   end
 
   def build_points_entry_type
