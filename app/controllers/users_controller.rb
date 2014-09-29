@@ -3,8 +3,8 @@ class UsersController < ApplicationController
 
   def index
     authorize! :manage, User
-    @users = User.order('login ASC')
-    @roles = Role.order(:name)
+    load_users
+    load_roles
   end
 
   def new
@@ -112,5 +112,13 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :login, :password, :password_confirmation,
                                 :email, :organization_id)
+  end
+
+  def load_users
+    @users ||= User.order 'login ASC'
+  end
+
+  def load_roles
+    @roles ||= Role.order :name
   end
 end
