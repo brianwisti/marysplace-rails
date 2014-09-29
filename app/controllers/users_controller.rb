@@ -38,14 +38,8 @@ class UsersController < ApplicationController
   end
 
   def entries
-    @user = User.find(params[:id])
-
-    # Anyone can view themselves, but all else requires auth.
-    if @user != @current_user
-      authorize! :show, User
-    end
-
-    @entries = @user.points_entries.order('performed_on DESC, id DESC').page params[:page]
+    load_user
+    load_points_entries
   end
 
   def preference
@@ -127,5 +121,9 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to @user, notice: "User created!"
     end
+  end
+
+  def load_points_entries
+    @entries = @user.points_entries.order('performed_on DESC, id DESC').page params[:page]
   end
 end
