@@ -33,6 +33,10 @@ class PointsEntry < ActiveRecord::Base
 
   default_scope { order 'performed_on DESC, id DESC' }
 
+  scope :purchases, -> {
+    joins(:points_entry_type).merge(PointsEntryType.purchase)
+  }
+
   delegate :current_alias,
     to:     :client,
     prefix: true

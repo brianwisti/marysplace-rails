@@ -36,6 +36,20 @@ describe PointsEntryType, type: :model do
     end
   end
 
+  context "purchase scope" do
+    subject { PointsEntryType }
+    it { should respond_to(:purchase) }
+
+    context "membership" do
+      subject { PointsEntryType.purchase }
+      let(:purchase) { create :points_entry_type, name: "Purchase" }
+      let(:dishes)   { create :points_entry_type, name: "Dishes" }
+
+      it { should include(purchase) }
+      it { should_not include(dishes) }
+    end
+  end
+
   context "quicksearch" do
     before do
       create :points_entry_type, name: "AM Bathroom"

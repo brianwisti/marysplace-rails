@@ -87,35 +87,6 @@ class Client < ActiveRecord::Base
     self.login.login
   end
 
-  def self.cannot_shop
-    now = Time.now
-    find_by_sql [ %{
-        select clients.*
-          from clients
-        left outer join client_flags cf
-          on cf.client_id = clients.id
-        left outer join points_entries pe
-          on pe.client_id = clients.id
-        left outer join points_entry_types pet
-          on pet.id = pe.points_entry_type_id
-        where (
-          ( cf.is_blocking is null or cf.is_blocking = 'f' )
-          and cf.can_shop = 'f'
-          and (
-            ( cf.resolved_on is null and cf.expires_on is null )
-            or
-            ( cf.resolved_on is null and cf.expires_on > now() )
-          )
-        )
-        or (
-          pet.name = 'Purchase'
-          and pe.performed_on between ? and ?
-        )
-        group by clients.id
-        order by clients.current_alias
-      }, now.beginning_of_week, now ]
-  end
-
   before_save do
     self.point_balance ||= 0
 
@@ -168,16 +139,13 @@ class Client < ActiveRecord::Base
 
   # Have I ever shopped?
   def has_shopped?
-    purchase_type = PointsEntryType.where(name: 'Purchase').first
-    self.points_entries.where(points_entry_type_id: purchase_type).count > 0
+    self.points_entries.purchases.count > 0
   end
 
   # When was my last completed shopping trip?
   def last_shopped_at
     if self.has_shopped?
-      purchase_type = PointsEntryType.where(name: 'Purchase').first
-      self.points_entries.where(points_entry_type_id: purchase_type)
-        .last.performed_on.to_time
+      self.points_entries.purchases.last.performed_on.to_time
     end
   end
 

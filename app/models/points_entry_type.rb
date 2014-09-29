@@ -10,7 +10,12 @@ class PointsEntryType < ActiveRecord::Base
   has_many :points_entries
   has_many :signup_lists
 
-  scope :active, ->{ where(:is_active => true) }
+  scope :active, -> { where(:is_active => true) }
+
+  # Awkward side effect of the app's excel sheet ancestry
+  def self.purchase
+    where name: "Purchase"
+  end
 
   def self.quicksearch(query)
     starts_with = "#{query}%"

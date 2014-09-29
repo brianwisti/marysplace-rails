@@ -128,4 +128,21 @@ describe PointsEntry, type: :model do
       expect(PointsEntry.daily_count).to eq(1)
     end
   end
+
+  context "purchases scope" do
+    subject { PointsEntry }
+
+    it { should respond_to(:purchases) }
+
+    context "membership" do
+      subject { PointsEntry.purchases }
+      let(:purchase_type) { create :points_entry_type, name: "Purchase" }
+      let(:dishes_type)   { create :points_entry_type, name: "Dishes" }
+      let(:purchase) { create :points_entry, points_entry_type: purchase_type }
+      let(:dishes)   { create :points_entry, points_entry_type: dishes_type }
+
+      it { should include(purchase) }
+      it { should_not include(dishes) }
+    end
+  end
 end
