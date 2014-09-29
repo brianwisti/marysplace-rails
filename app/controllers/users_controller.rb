@@ -20,13 +20,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @roles = Role.order(:name)
-
-    # Anyone can view themselves, but all else requires auth.
-    if @user != @current_user
-      authorize! :show, User
-    end
+    load_user
+    load_roles
   end
 
   def edit
@@ -110,6 +105,15 @@ class UsersController < ApplicationController
 
   def load_users
     @users ||= User.order 'login ASC'
+  end
+
+  def load_user
+    @user ||= User.find(params[:id])
+
+    # Anyone can view themselves, but all else requires auth.
+    if @user != @current_user
+      authorize! :show, User
+    end
   end
 
   def load_roles
