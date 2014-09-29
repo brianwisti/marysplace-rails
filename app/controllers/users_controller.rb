@@ -25,17 +25,8 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
-
-    if @user != @current_user
-      authorize! :manage, User
-      site_admin_role = 'site_admin'
-      @roles = if current_user.role? site_admin_role
-                 Role.all
-               else
-                 Role.where 'name != ?', site_admin_role
-               end
-    end
+    load_user
+    build_user
   end
 
   # The U in CRUD
@@ -132,6 +123,11 @@ class UsersController < ApplicationController
   def build_user
     @user ||= User.new
     @user.attributes = user_params
+
+    if @user != @current_user
+      authorize! :manage, User
+      load_assignable_roles
+    end
   end
 
   def save_user
