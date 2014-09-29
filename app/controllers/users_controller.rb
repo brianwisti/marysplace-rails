@@ -29,30 +29,12 @@ class UsersController < ApplicationController
     build_user
   end
 
-  # The U in CRUD
-  #
   # User forms include a list of roles that this user has accepted
   def update
-    @user = User.find(params[:id])
-
-    if @user != @current_user
-      authorize! :manage, User
-      roles = []
-      role_ids = params[:role_ids]
-
-      if role_ids
-        roles = Role.find role_ids
-      end
-
-      @user.establish_roles roles
-    end
-
-    if @user.update_attributes user_params
-      flash[:notice] = "Account updated!"
-      redirect_to @user
-    else
-      render :edit
-    end
+    load_user
+    build_user
+    assign_roles
+    save_user or render :edit
   end
 
   def entries
@@ -128,6 +110,17 @@ class UsersController < ApplicationController
       authorize! :manage, User
       load_assignable_roles
     end
+  end
+
+  def assign_roles
+    roles = []
+    role_ids = params[:role_ids]
+
+    if role_ids
+      roles = Role.find role_ids
+    end
+
+    @user.establish_roles roles
   end
 
   def save_user
