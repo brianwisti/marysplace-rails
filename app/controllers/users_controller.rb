@@ -16,13 +16,7 @@ class UsersController < ApplicationController
   def create
     authorize! :create, User
     build_user
-
-    if @user.save
-      flash[:notice] = "User created!"
-      redirect_to @user
-    else
-      render :new
-    end
+    save_user or render :new
   end
 
   def show
@@ -134,5 +128,11 @@ class UsersController < ApplicationController
   def build_user
     @user ||= User.new
     @user.attributes = user_params
+  end
+
+  def save_user
+    if @user.save
+      redirect_to @user, notice: "User created!"
+    end
   end
 end
