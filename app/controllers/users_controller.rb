@@ -43,17 +43,8 @@ class UsersController < ApplicationController
   end
 
   def preference
-    @user = User.find(params[:id])
-    group = params[:section]
-    submitted = params[:group]
-    settings = submitted.find_all { |k,v| v == "on" }.map { |i| i[0] }
-
-    if @user.remember_preference( group => settings )
-      flash[:notice] = "Preference updated!"
-    else
-      flash[:error] = "Unable to update preference!"
-    end
-
+    load_user
+    save_preferences
     redirect_to clients_path
   end
 
@@ -125,5 +116,17 @@ class UsersController < ApplicationController
 
   def load_points_entries
     @entries = @user.points_entries.order('performed_on DESC, id DESC').page params[:page]
+  end
+
+  def save_preferences
+    group = params[:section]
+    submitted = params[:group]
+    settings = submitted.find_all { |k,v| v == "on" }.map { |i| i[0] }
+
+    if @user.remember_preference( group => settings )
+      flash[:notice] = "Preference updated!"
+    else
+      flash[:error] = "Unable to update preference!"
+    end
   end
 end
