@@ -174,10 +174,6 @@ class Client < ActiveRecord::Base
 
   # When was my last completed shopping trip?
   def last_shopped_at
-    self.last_purchase_entry
-  end
-
-  def last_purchase_entry
     if self.has_shopped?
       purchase_type = PointsEntryType.where(name: 'Purchase').first
       self.points_entries.where(points_entry_type_id: purchase_type)
