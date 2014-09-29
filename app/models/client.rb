@@ -168,7 +168,8 @@ class Client < ActiveRecord::Base
 
   # Have I ever shopped?
   def has_shopped?
-    self.has_purchase_entry?
+    purchase_type = PointsEntryType.where(name: 'Purchase').first
+    self.points_entries.where(points_entry_type_id: purchase_type).count > 0
   end
 
   # When was my last completed shopping trip?
@@ -176,13 +177,8 @@ class Client < ActiveRecord::Base
     self.last_purchase_entry
   end
 
-  def has_purchase_entry?
-    purchase_type = PointsEntryType.where(name: 'Purchase').first
-    self.points_entries.where(points_entry_type_id: purchase_type).count > 0
-  end
-
   def last_purchase_entry
-    if self.has_purchase_entry?
+    if self.has_shopped?
       purchase_type = PointsEntryType.where(name: 'Purchase').first
       self.points_entries.where(points_entry_type_id: purchase_type)
         .last.performed_on.to_time
