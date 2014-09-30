@@ -98,7 +98,13 @@ class PointsEntryTypesController < ApplicationController
   private
 
   def points_entry_type_params
-    params[:points_entry_type] || {}
+    entry_type_params = params[:points_entry_type]
+
+    if entry_type_params
+      entry_type_params.permit :name, :is_active, :default_points, :description
+    else
+      {}
+    end
   end
 
   def load_active_points_entry_types
