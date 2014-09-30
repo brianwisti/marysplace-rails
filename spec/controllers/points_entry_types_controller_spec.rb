@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PointsEntryTypesController do
+describe PointsEntryTypesController, :type => :controller do
   setup :activate_authlogic
   let(:staff_user) { create :staff_user }
   let(:admin_user) { create :admin_user }

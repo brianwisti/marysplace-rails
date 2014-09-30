@@ -24,29 +24,29 @@ describe PointsEntryType, type: :model do
   context "active scope" do
     subject { PointsEntryType }
 
-    it { should respond_to(:active) }
+    it { is_expected.to respond_to(:active) }
 
     context "membership" do
       subject { PointsEntryType.active }
       let(:active) { create :points_entry_type, is_active: true }
       let(:inactive) { create :points_entry_type, is_active: false }
 
-      it { should include(active) }
-      it { should_not include(inactive) }
+      it { is_expected.to include(active) }
+      it { is_expected.not_to include(inactive) }
     end
   end
 
   context "purchase scope" do
     subject { PointsEntryType }
-    it { should respond_to(:purchase) }
+    it { is_expected.to respond_to(:purchase) }
 
     context "membership" do
       subject { PointsEntryType.purchase }
       let(:purchase) { create :points_entry_type, name: "Purchase" }
       let(:dishes)   { create :points_entry_type, name: "Dishes" }
 
-      it { should include(purchase) }
-      it { should_not include(dishes) }
+      it { is_expected.to include(purchase) }
+      it { is_expected.not_to include(dishes) }
     end
   end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WelcomeController do
+describe WelcomeController, :type => :controller do
   setup :activate_authlogic
 
   context "Anonymous access" do

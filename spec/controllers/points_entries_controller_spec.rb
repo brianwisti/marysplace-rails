@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PointsEntriesController do
+describe PointsEntriesController, :type => :controller do
   setup :activate_authlogic
 
   let(:entry) { create :points_entry }
@@ -91,7 +91,7 @@ describe PointsEntriesController do
         it "applies the multiple" do
           post :create, points_entry: submission
           new_entry = assigns(:points_entry)
-          new_entry.points { should eq(expected) }
+          new_entry.points { is_expected.to eq(expected) }
         end
       end
 

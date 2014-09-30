@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ClientNotesController do
+describe ClientNotesController, :type => :controller do
   setup :activate_authlogic
 
   let(:admin_user) { create :admin_user }
@@ -12,7 +12,7 @@ describe ClientNotesController do
     it "assigns all client_notes as @client_notes" do
       client_note = ClientNote.create! valid_attributes
       get :index
-      assigns(:client_notes).should eq([client_note])
+      expect(assigns(:client_notes)).to eq([client_note])
     end
   end
 
@@ -20,14 +20,14 @@ describe ClientNotesController do
     it "assigns the requested client_note as @client_note" do
       client_note = ClientNote.create! valid_attributes
       get :show, {:id => client_note.to_param}
-      assigns(:client_note).should eq(client_note)
+      expect(assigns(:client_note)).to eq(client_note)
     end
   end
 
   describe "GET new" do
     it "assigns a new client_note as @client_note" do
       get :new
-      assigns(:client_note).should be_a_new(ClientNote)
+      expect(assigns(:client_note)).to be_a_new(ClientNote)
     end
   end
 
@@ -35,7 +35,7 @@ describe ClientNotesController do
     it "assigns the requested client_note as @client_note" do
       client_note = ClientNote.create! valid_attributes
       get :edit, {:id => client_note.to_param}
-      assigns(:client_note).should eq(client_note)
+      expect(assigns(:client_note)).to eq(client_note)
     end
   end
 
@@ -49,29 +49,29 @@ describe ClientNotesController do
 
       it "assigns a newly created client_note as @client_note" do
         post :create, {:client_note => valid_attributes}
-        assigns(:client_note).should be_a(ClientNote)
-        assigns(:client_note).should be_persisted
+        expect(assigns(:client_note)).to be_a(ClientNote)
+        expect(assigns(:client_note)).to be_persisted
       end
 
       it "redirects to the created client_note" do
         post :create, {:client_note => valid_attributes}
-        response.should redirect_to(ClientNote.last)
+        expect(response).to redirect_to(ClientNote.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved client_note as @client_note" do
         # Trigger the behavior that occurs when invalid params are submitted
-        ClientNote.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(ClientNote).to receive(:save).and_return(false)
         post :create, {:client_note => { "content" => nil }}
-        assigns(:client_note).should be_a_new(ClientNote)
+        expect(assigns(:client_note)).to be_a_new(ClientNote)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        ClientNote.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(ClientNote).to receive(:save).and_return(false)
         post :create, {:client_note => { "title" => "invalid value" }}
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -90,13 +90,13 @@ describe ClientNotesController do
       it "assigns the requested client_note as @client_note" do
         client_note = ClientNote.create! valid_attributes
         put :update, {:id => client_note.to_param, :client_note => valid_attributes}
-        assigns(:client_note).should eq(client_note)
+        expect(assigns(:client_note)).to eq(client_note)
       end
 
       it "redirects to the client_note" do
         client_note = ClientNote.create! valid_attributes
         put :update, {:id => client_note.to_param, :client_note => valid_attributes}
-        response.should redirect_to(client_note)
+        expect(response).to redirect_to(client_note)
       end
     end
 
@@ -104,17 +104,17 @@ describe ClientNotesController do
       it "assigns the client_note as @client_note" do
         client_note = ClientNote.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        ClientNote.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(ClientNote).to receive(:save).and_return(false)
         put :update, {:id => client_note.to_param, :client_note => { "title" => "invalid value" }}
-        assigns(:client_note).should eq(client_note)
+        expect(assigns(:client_note)).to eq(client_note)
       end
 
       it "re-renders the 'edit' template" do
         client_note = ClientNote.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        ClientNote.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(ClientNote).to receive(:save).and_return(false)
         put :update, {:id => client_note.to_param, :client_note => { "title" => "invalid value" }}
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -130,7 +130,7 @@ describe ClientNotesController do
     it "redirects to the client_notes list" do
       client_note = ClientNote.create! valid_attributes
       delete :destroy, {:id => client_note.to_param}
-      response.should redirect_to(client_notes_url)
+      expect(response).to redirect_to(client_notes_url)
     end
   end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CheckinsController do
+describe CheckinsController, :type => :controller do
   setup :activate_authlogic
 
   let(:checkin) { create :checkin }

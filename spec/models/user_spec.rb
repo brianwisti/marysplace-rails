@@ -6,14 +6,14 @@ describe User, type: :model do
     subject { user.errors[:login] }
 
     context "cannot be empty" do
-      it { should_not be(:empty?) }
+      it { is_expected.not_to be(:empty?) }
     end
 
     context "must be unique" do
       let(:first) { create :user }
       let(:dupe) { build :user, login: user.login }
       subject { first.errors[:login] }
-      it { should_not be(:empty?) }
+      it { is_expected.not_to be(:empty?) }
     end
   end
 
@@ -22,33 +22,33 @@ describe User, type: :model do
     let(:user) { create :user }
     subject { user }
 
-    it { should respond_to(:roles) }
-    it { should respond_to(:role?) }
+    it { is_expected.to respond_to(:roles) }
+    it { is_expected.to respond_to(:role?) }
 
     context "Checking" do
       subject { user.role? role.name }
 
       context "when user does not have a role" do
-        it { should be(false) }
+        it { is_expected.to be(false) }
       end
 
       context "when user has a role" do
         before { user.roles.push role }
-        it { should be(true) }
+        it { is_expected.to be(true) }
       end
     end
 
-    it { should respond_to(:accept_role) }
+    it { is_expected.to respond_to(:accept_role) }
 
     context "Accepting" do
       let(:user) { create :user }
       before { user.accept_role role }
 
       subject { user.role? role.name }
-      it { should be(true) }
+      it { is_expected.to be(true) }
     end
 
-    it { should respond_to(:withdraw_role) }
+    it { is_expected.to respond_to(:withdraw_role) }
 
     context "Withdrawing" do
       let(:user) { create :user }
@@ -61,7 +61,7 @@ describe User, type: :model do
       end
     end
 
-    it { should respond_to(:establish_roles) }
+    it { is_expected.to respond_to(:establish_roles) }
 
     context "Establishing multiple roles" do
       let(:user) { create :user }

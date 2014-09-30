@@ -132,7 +132,7 @@ describe PointsEntry, type: :model do
   context "purchases scope" do
     subject { PointsEntry }
 
-    it { should respond_to(:purchases) }
+    it { is_expected.to respond_to(:purchases) }
 
     context "membership" do
       subject { PointsEntry.purchases }
@@ -141,8 +141,8 @@ describe PointsEntry, type: :model do
       let(:purchase) { create :points_entry, points_entry_type: purchase_type }
       let(:dishes)   { create :points_entry, points_entry_type: dishes_type }
 
-      it { should include(purchase) }
-      it { should_not include(dishes) }
+      it { is_expected.to include(purchase) }
+      it { is_expected.not_to include(dishes) }
     end
   end
 end

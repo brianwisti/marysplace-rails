@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe API::V0::CheckinsController do
+describe API::V0::CheckinsController, :type => :controller do
   setup :activate_authlogic
 
   skip "requires authentication" do

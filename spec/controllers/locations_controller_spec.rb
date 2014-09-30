@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe LocationsController do
+describe LocationsController, :type => :controller do
   setup :activate_authlogic
   let(:location) { create :location }
 

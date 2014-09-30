@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Preference do
+describe Preference, :type => :model do
   let(:user) { create :user }
 
   context "user association" do

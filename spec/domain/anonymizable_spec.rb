@@ -10,26 +10,26 @@ describe Anonymizable do
   describe ".define_anonymization_rule rule_name { rule }" do
     subject { anonymizable }
 
-    it { should respond_to(:define_anonymization_rule) }
+    it { is_expected.to respond_to(:define_anonymization_rule) }
 
     context "creating" do
       let(:rule_name) { :fnorder }
       let(:rule)      { Proc.new { "fnord" } }
       subject { anonymizable.define_anonymization_rule(rule_name, &rule) }
 
-      it { should eq(rule) }
+      it { is_expected.to eq(rule) }
     end
   end
 
   describe ".has_anonymization_rule? rule_name" do
     subject { anonymizable }
 
-    it { should respond_to(:has_anonymization_rule?) }
+    it { is_expected.to respond_to(:has_anonymization_rule?) }
 
     context "for nonexistent rule" do
       subject { anonymizable.has_anonymization_rule? :no_such_rule }
 
-      it { should be_falsey }
+      it { is_expected.to be_falsey }
     end
 
     context "for existing rule" do
@@ -40,14 +40,14 @@ describe Anonymizable do
       end
 
       subject { anonymizable.has_anonymization_rule? rule_name }
-      it { should be_truthy }
+      it { is_expected.to be_truthy }
     end
   end
 
   describe ".get_anonymization_rule rule_name" do
     subject { anonymizable }
 
-    it { should respond_to(:get_anonymization_rule) }
+    it { is_expected.to respond_to(:get_anonymization_rule) }
 
     context "when rule exists" do
       let(:rule_name) { :fnorder }
@@ -58,18 +58,18 @@ describe Anonymizable do
       end
 
       subject { anonymizable.get_anonymization_rule rule_name }
-      it { should eq(rule) }
+      it { is_expected.to eq(rule) }
     end
 
     context "when rule does not exist" do
       subject { anonymizable.get_anonymization_rule :no_such_rule }
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
   end
 
   describe ".forget_anonymization_rule rule_name" do
     subject { anonymizable }
-    it { should respond_to(:forget_anonymization_rule) }
+    it { is_expected.to respond_to(:forget_anonymization_rule) }
 
     context "existence of a deleted rule" do
       let(:rule) { :my_rule }
@@ -80,14 +80,14 @@ describe Anonymizable do
       end
 
       subject { anonymizable.has_anonymization_rule? rule }
-      it      { should be_falsey }
+      it      { is_expected.to be_falsey }
     end
   end
 
   describe ".apply_rule rule_name" do
     subject { anonymizable }
 
-    it { should respond_to(:apply_rule) }
+    it { is_expected.to respond_to(:apply_rule) }
 
     context "with a rule defined" do
 
@@ -111,13 +111,13 @@ describe Anonymizable do
   describe ".anonymization_rule" do
     subject(:aliased) { anonymizable.method(:anonymization_rule) }
     it {
-      should eq(anonymizable.method(:define_anonymization_rule))
+      is_expected.to eq(anonymizable.method(:define_anonymization_rule))
     }
   end
 
   describe ".anonymizes(:field) { rule }" do
     subject { anonymizable }
-    it      { should respond_to(:anonymizes) }
+    it      { is_expected.to respond_to(:anonymizes) }
 
     context "for an existing field" do
       let(:field)      { :x }
@@ -128,7 +128,7 @@ describe Anonymizable do
       end
 
       subject(:return) { anonymizable.anonymizes(field, &rule) }
-      it               { should be_an_instance_of Proc }
+      it               { is_expected.to be_an_instance_of Proc }
 
       context "when applied" do
         let(:thing) { anonymizable.new }
@@ -143,7 +143,7 @@ describe Anonymizable do
 
   describe ".anonymize!" do
     subject { anonymizable }
-    it      { should respond_to(:anonymize!) }
+    it      { is_expected.to respond_to(:anonymize!) }
 
     before do
       anonymizable.define_anonymization_rule :change_x do |a|

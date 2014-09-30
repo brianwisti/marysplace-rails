@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OrganizationsController do
+describe OrganizationsController, :type => :controller do
   setup :activate_authlogic
   let(:organization) { create :organization }
 

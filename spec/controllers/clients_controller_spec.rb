@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ClientsController do
+describe ClientsController, :type => :controller do
   setup :activate_authlogic
   let(:client) { create :client }
   let(:staff_user) { create :staff_user }

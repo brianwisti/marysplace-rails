@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PasswordResetsController do
+describe PasswordResetsController, :type => :controller do
   setup :activate_authlogic
   let(:user) { create :user }
 
