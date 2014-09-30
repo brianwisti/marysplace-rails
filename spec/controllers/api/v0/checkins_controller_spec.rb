@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe API::V0::CheckinsController, :type => :controller do
   setup :activate_authlogic

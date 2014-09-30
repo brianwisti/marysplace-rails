@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PointsEntryTypesController, :type => :controller do
   setup :activate_authlogic

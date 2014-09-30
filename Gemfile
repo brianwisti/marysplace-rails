@@ -62,7 +62,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'capybara', '~> 2.2.1'
+  gem 'capybara', '~> 2.4.2'
   gem 'database_cleaner', '~> 1.2.0'
   gem 'launchy', '~> 2.2.0'
 end

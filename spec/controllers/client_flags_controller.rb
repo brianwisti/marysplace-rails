@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ClientFlagsController do
   setup :activate_authlogic
