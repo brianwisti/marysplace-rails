@@ -90,7 +90,7 @@ describe CheckinsController do
         expect(response).to render_template(:daily_report)
       end
 
-      pending "shows today's checkins" do
+      skip "shows today's checkins" do
         post :create, checkin: build_attributes(:checkin)
         get :today
         expect(assigns(:checkins)).to include(checkin)
