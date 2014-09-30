@@ -60,7 +60,8 @@ class Client < ActiveRecord::Base
     dependent: :destroy
   has_many :checkins,
     dependent: :destroy
-  has_many :client_flags,
+  has_many :flags,
+    class_name: 'ClientFlag',
     dependent: :destroy
   has_many :staff_notes,
     class_name: 'ClientNote',
@@ -72,10 +73,6 @@ class Client < ActiveRecord::Base
   delegate :login,
     to: :last_edited_by,
     prefix: true
-
-  # TODO: Replace alias hack w/renaming the relationship.
-  #       That means digging through templates too.
-  alias :flags :client_flags
 
   # The generated barcode used for automated checkin
   def barcode(args={})

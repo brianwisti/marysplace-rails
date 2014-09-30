@@ -113,7 +113,7 @@ class ClientsController < ApplicationController
   def flags
     authorize! :show, ClientFlag
     load_client
-    @flags = @client.client_flags.order('expires_on DESC')
+    @flags = @client.flags.order('expires_on DESC')
   end
 
   def new_login

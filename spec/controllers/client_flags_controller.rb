@@ -14,7 +14,7 @@ describe ClientFlagsController do
       it "should be unavailable" do
         get :index
         expect_login response
-        expect(assigns(:client_flags).to be_nil
+        expect(assigns(:flags).to be_nil
       end
     end
 
@@ -22,7 +22,7 @@ describe ClientFlagsController do
       it "should be unavailable" do
         get :resolved
         expect_login response
-        expect(assigns(:client_flags).to be_nil
+        expect(assigns(:flags).to be_nil
       end
     end
   end
@@ -44,7 +44,7 @@ describe ClientFlagsController do
 
       it "should present some ClientFlags" do
         get :index
-        expect(assigns(:client_flags).length).to eql(2)
+        expect(assigns(:flags).length).to eql(2)
       end
     end
 

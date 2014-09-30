@@ -73,6 +73,7 @@ describe Client, type: :model do
   end
 
   describe "Flag tracking" do
+
     it "knows when it has unresolved flags" do
       flag = ClientFlag.create do |f|
         f.created_by = user
