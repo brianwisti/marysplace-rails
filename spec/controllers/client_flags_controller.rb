@@ -22,7 +22,7 @@ describe ClientFlagsController do
       it "should be unavailable" do
         get :resolved
         expect_login response
-        expect(assigns(:flags).to be_nil
+        expect(assigns(:flags)).to be_nil
       end
     end
   end
@@ -52,6 +52,18 @@ describe ClientFlagsController do
       it "should be available" do
         get :resolved
         expect(response).to render_template(:resolved)
+      end
+    end
+
+    describe "show" do
+      before { get :show, id: unresolved_flag }
+
+      it "should be available" do
+        expect(response).to render_template(:show)
+      end
+
+      it "should present a ClientFlag" do
+        expect(assigns(:client_flag)).to be(unresolved)
       end
     end
   end

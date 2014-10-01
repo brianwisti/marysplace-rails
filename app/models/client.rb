@@ -8,8 +8,6 @@ class Client < ActiveRecord::Base
   extend Anonymizable
   include HasBarcode
 
-  attr_accessor :picture
-
   has_attached_file :picture,
     styles: {
       thumb:  '100x100>',

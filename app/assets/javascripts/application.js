@@ -19,4 +19,3 @@
 //= require checkins
 //= require clients
 //= require points_entries
-//= require typeahead

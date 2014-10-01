@@ -269,7 +269,7 @@ DEPENDENCIES
   bcrypt
   better_errors
   binding_of_caller
-  bootstrap-sass (~> 3.2.0.2)
+  bootstrap-sass (~> 3.2.0)
   cancan
   capybara (~> 2.4.2)
   coffee-rails (~> 4.0.1)
