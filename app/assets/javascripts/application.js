@@ -15,7 +15,6 @@
 //= require bootstrap
 //= require typeahead
 //= require app
-//= require catalog_items
 //= require checkins
 //= require clients
 //= require points_entries
