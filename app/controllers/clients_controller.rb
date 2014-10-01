@@ -186,7 +186,8 @@ class ClientsController < ApplicationController
                                   :family_info, :community_goal, :email_address,
                                   :emergency_contact, :medical_info,
                                   :mailing_list_address, :personal_goal,
-                                  :signed_covenant, :staying_at, :on_mailing_list)
+                                  :signed_covenant, :staying_at, :on_mailing_list,
+                                  :picture, :picture_file_name)
   end
 
   def load_clients
