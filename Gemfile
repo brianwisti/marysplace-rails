@@ -5,7 +5,7 @@ ruby "2.1.2"
 # Load ENV variables from .env
 gem 'dotenv-rails', groups: [ :development ]
 
-gem 'rails', '4.0.5'
+gem 'rails', '4.0.10'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -13,16 +13,16 @@ gem 'rails', '4.0.5'
 
 gem 'rails4_upgrade'
 
-gem 'actionpack-action_caching', '~>1.0.0'
-gem 'actionpack-page_caching', '~>1.0.0'
-gem 'actionpack-xml_parser', '~>1.0.0'
+gem 'actionpack-action_caching', '~>1.1.1'
+gem 'actionpack-page_caching', '~>1.0.2'
+gem 'actionpack-xml_parser', '~>1.0.1'
 gem 'actionview-encoded_mail_to', '~>1.0.4'
-gem 'activerecord-session_store', '~>0.0.1'
-gem 'activeresource', '~>4.0.0.beta1'
+gem 'activerecord-session_store', '~>0.1.0'
+gem 'activeresource', '~>4.0.0'
 gem 'active_type'
 gem 'authlogic'
 gem 'aws-sdk'
-gem 'bootstrap-sass','~> 3.1.1'
+gem 'bootstrap-sass','~> 3.2.0.2'
 gem 'cancan'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'excon'
@@ -35,9 +35,8 @@ gem 'markdownizer'
 gem 'newrelic_rpm'
 gem 'paperclip'
 gem 'pg'
-#gem 'protected_attributes', '~>1.0.1'
-gem 'rails-observers', '~>0.1.1'
-gem 'rails-perftest', '~>0.0.2'
+gem 'rails-observers', '~>0.1.2'
+gem 'rails-perftest', '~>0.0.5'
 gem 'rmagick'
 gem 'sass', '~> 3.2.13' # Specify to prevent cache errors on heroku
 gem 'sass-rails',   '~> 4.0.3'
