@@ -22,7 +22,7 @@ class ClientFlagsController < ApplicationController
   # GET /client_flags/1
   def show
     authorize! :show, ClientFlag
-    @client_flag = ClientFlag.find(params[:id])
+    load_client_flag
   end
 
   # GET /client_flags/new
@@ -103,5 +103,9 @@ class ClientFlagsController < ApplicationController
 
   def load_unresolved_client_flags
     @client_flags = ClientFlag.unresolved.page params[:page]
+  end
+
+  def load_client_flag
+    @client_flag = ClientFlag.find(params[:id])
   end
 end
