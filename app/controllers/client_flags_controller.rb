@@ -61,7 +61,7 @@ class ClientFlagsController < ApplicationController
   end
 
   def resolve
-    @client_flag = ClientFlag.find(params[:id])
+    load_client_flag
   end
 
   def resolve_store
