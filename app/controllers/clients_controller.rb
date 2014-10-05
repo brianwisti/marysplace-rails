@@ -41,9 +41,7 @@ class ClientsController < ApplicationController
 
   def entry
     load_client
-    @points_entry = PointsEntry.new
-    @points_entry_type = PointsEntryType.new
-    @points_entry.client = @client
+    build_points_entry
   end
 
   # GET /clients/1/edit
@@ -237,4 +235,9 @@ class ClientsController < ApplicationController
     %{asc desc}.include?(params[:direction]) ? params[:direction] : "asc"
   end
 
+  def build_points_entry
+    @points_entry ||= PointsEntry.new
+    @points_entry_type ||= PointsEntryType.new
+    @points_entry.client ||= @client
+  end
 end
