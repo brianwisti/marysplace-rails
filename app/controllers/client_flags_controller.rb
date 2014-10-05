@@ -47,22 +47,16 @@ class ClientFlagsController < ApplicationController
   # PUT /client_flags/1
   def update
     authorize! :update, ClientFlag
-    @client_flag = ClientFlag.find(params[:id])
-
-    if @client_flag.update_attributes(params[:client_flag])
-      redirect_to @client_flag,
-        notice: 'Client flag was successfully updated.'
-    else
-      render :edit
-    end
+    load_client_flag
+    build_client_flag
+    save_client_flag or render :edit
   end
 
   # DELETE /client_flags/1
   def destroy
     authorize! :destroy, ClientFlag
-    @client_flag = ClientFlag.find(params[:id])
-    @client_flag.destroy
-
+    load_client_flag
+    destroy_client_flag
     redirect_to client_flags_url
   end
 
@@ -127,8 +121,11 @@ class ClientFlagsController < ApplicationController
     @client_flag.created_by ||= current_user
 
     if @client_flag.save
-      redirect_to @client_flag,
-        notice: 'Client flag was successfully created'
+      redirect_to @client_flag
     end
+  end
+
+  def destroy_client_flag
+    @client_flag.destroy
   end
 end
