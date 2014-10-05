@@ -16,7 +16,7 @@ class ClientFlagsController < ApplicationController
 
   def unresolved
     authorize! :show, ClientFlag
-    @client_flags = ClientFlag.unresolved.page params[:page]
+    load_unresolved_client_flags
   end
 
   # GET /client_flags/1
@@ -99,5 +99,9 @@ class ClientFlagsController < ApplicationController
 
   def load_resolved_client_flags
     @client_flags = ClientFlag.resolved.page params[:page]
+  end
+
+  def load_unresolved_client_flags
+    @client_flags = ClientFlag.unresolved.page params[:page]
   end
 end
