@@ -65,17 +65,8 @@ class ClientFlagsController < ApplicationController
   end
 
   def resolve_store
-    @client_flag = ClientFlag.find(params[:id])
-    @client_flag.resolved_by = current_user
-    @client_flag.resolved_on = Date.today
-
-    if @client_flag.save
-      redirect_to @client_flag,
-        notice: "Issue was resolved"
-    else
-      redirect_to @client_flag,
-        notice: "Unable to resolve issue."
-    end
+    load_client_flag
+    resolve_client_flag
   end
 
   private
@@ -127,5 +118,18 @@ class ClientFlagsController < ApplicationController
 
   def destroy_client_flag
     @client_flag.destroy
+  end
+
+  def resolve_client_flag
+    @client_flag.resolved_by = current_user
+    @client_flag.resolved_on = Date.today
+
+    if @client_flag.save
+      redirect_to @client_flag,
+        notice: "Issue was resolved"
+    else
+      redirect_to @client_flag,
+        notice: "Unable to resolve issue."
+    end
   end
 end
