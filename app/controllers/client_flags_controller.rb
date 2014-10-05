@@ -34,7 +34,7 @@ class ClientFlagsController < ApplicationController
   # GET /client_flags/1/edit
   def edit
     authorize! :edit, ClientFlag
-    @client_flag = ClientFlag.find(params[:id])
+    load_client_flag
   end
 
   # POST /client_flags
