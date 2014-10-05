@@ -28,7 +28,7 @@ class ClientFlagsController < ApplicationController
   # GET /client_flags/new
   def new
     authorize! :create, ClientFlag
-    @client_flag = ClientFlag.new
+    build_client_flag
   end
 
   # GET /client_flags/1/edit
@@ -94,18 +94,22 @@ class ClientFlagsController < ApplicationController
   private
 
   def load_client_flags
-    @client_flags = ClientFlag.page params[:page]
+    @client_flags ||= ClientFlag.page params[:page]
   end
 
   def load_resolved_client_flags
-    @client_flags = ClientFlag.resolved.page params[:page]
+    @client_flags ||= ClientFlag.resolved.page params[:page]
   end
 
   def load_unresolved_client_flags
-    @client_flags = ClientFlag.unresolved.page params[:page]
+    @client_flags ||= ClientFlag.unresolved.page params[:page]
   end
 
   def load_client_flag
-    @client_flag = ClientFlag.find(params[:id])
+    @client_flag ||= ClientFlag.find(params[:id])
+  end
+
+  def build_client_flag
+    @client_flag ||= ClientFlag.new
   end
 end
