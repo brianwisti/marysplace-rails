@@ -5,7 +5,7 @@ class ClientFlagsController < ApplicationController
   # GET /client_flags
   def index
     authorize! :show, ClientFlag
-    @client_flags = ClientFlag.page params[:page]
+    load_client_flags
   end
 
   # GET /client_flags/resolved
@@ -89,5 +89,11 @@ class ClientFlagsController < ApplicationController
       redirect_to @client_flag,
         notice: "Unable to resolve issue."
     end
+  end
+
+  private
+
+  def load_client_flags
+    @client_flags = ClientFlag.page params[:page]
   end
 end
