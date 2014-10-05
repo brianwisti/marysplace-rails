@@ -40,15 +40,8 @@ class ClientFlagsController < ApplicationController
   # POST /client_flags
   def create
     authorize! :create, ClientFlag
-    params[:client_flag][:created_by] = current_user
-    @client_flag = ClientFlag.new(params[:client_flag])
-
-    if @client_flag.save
-      redirect_to @client_flag,
-        notice: 'Client flag was successfully created.'
-    else
-      render :new
-    end
+    build_client_flag
+    save_client_flag or render :new
   end
 
   # PUT /client_flags/1
@@ -93,6 +86,22 @@ class ClientFlagsController < ApplicationController
 
   private
 
+  def client_flag_params
+    client_flag_params = params[:client_flag]
+
+    if client_flag_params
+      client_flag_params.permit(:client_id,
+                                :is_blocking,
+                                :can_shop,
+                                :expires_on,
+                                :description,
+                                :consequence,
+                                :action_required)
+    else
+      {}
+    end
+  end
+
   def load_client_flags
     @client_flags ||= ClientFlag.page params[:page]
   end
@@ -111,5 +120,15 @@ class ClientFlagsController < ApplicationController
 
   def build_client_flag
     @client_flag ||= ClientFlag.new
+    @client_flag.attributes ||= client_flag_params
+  end
+
+  def save_client_flag
+    @client_flag.created_by ||= current_user
+
+    if @client_flag.save
+      redirect_to @client_flag,
+        notice: 'Client flag was successfully created'
+    end
   end
 end
