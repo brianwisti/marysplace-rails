@@ -78,7 +78,7 @@ class ClientsController < ApplicationController
   def destroy
     authorize! :destroy, Client
     load_client
-    @client.destroy
+    destroy_client
 
     redirect_to clients_url
   end
@@ -231,6 +231,10 @@ class ClientsController < ApplicationController
     if @client.save
       redirect_to @client
     end
+  end
+
+  def destroy_client
+    @client.destroy
   end
 
   def update_client_checkin_code
