@@ -101,9 +101,7 @@ Marysplace::Application.routes.draw do
       get 'entries'
       get 'entry'
       get 'flags'
-      get 'new_login'
       get 'notes'
-      put 'create_login'
       get 'purchases'
     end
   end

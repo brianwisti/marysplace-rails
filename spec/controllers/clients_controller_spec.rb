@@ -99,10 +99,6 @@ describe ClientsController, :type => :controller do
       expect(response).to render_template(:flags)
     end
 
-    it "can access new_login" do
-      get :new_login, id: client
-    end
-
     context ":checkin_code" do
       before do
         post :checkin_code, id: client
@@ -117,14 +113,6 @@ describe ClientsController, :type => :controller do
         updated_code = assigns(:client).checkin_code
         expect(updated_code).to_not eql(old_code)
       end
-    end
-
-    it "can access create_login" do
-      password = "waffle"
-      post :create_login, id: client,
-        password: password,
-        password_confirmation: password
-      expect(response).to redirect_to(client_url(assigns(:client)))
     end
 
     it "can access purchases" do

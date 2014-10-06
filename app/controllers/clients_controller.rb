@@ -103,35 +103,6 @@ class ClientsController < ApplicationController
     @flags = @client.flags.order('expires_on DESC')
   end
 
-  def new_login
-    authorize! :create, User
-    load_client
-  end
-
-  def create_login
-    authorize! :create, User
-    load_client
-    password = params[:password]
-    password_confirmation = params[:password_confirmation]
-
-    if password == password_confirmation
-      @client.create_login(password: password,
-                           password_confirmation: password_confirmation)
-      if @client.login
-        flash[:notice] = "Login created"
-      end
-    else
-      flash[:error] = "Password and confirmation do not match"
-    end
-
-
-    if @client.login
-      redirect_to @client
-    else
-      render :new_login
-    end
-  end
-
   def barcode
     @client = Client.find params[:id]
   end
