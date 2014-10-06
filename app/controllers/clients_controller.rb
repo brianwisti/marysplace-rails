@@ -112,23 +112,8 @@ class ClientsController < ApplicationController
     authorize! :manage, Client
 
     load_client
-    # open(@client.organization.card_template.url) { |io| content = io.read }
-    @picture_url = if @client.picture_file_name
-                     @client.picture.url(:square)
-                   else
-                      "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/" +
-                      "marys-place/avatars/thumb/blank.png"
-                   end
-
-    respond_to do |format|
-      if @client.checkin_code
-        format.svg
-        format.html { render layout: 'card' }
-      else
-        flash[:error] = "#{@client.current_alias} has no login yet."
-        redirect_to @client
-      end
-    end
+    load_card_picture
+    render_card
   end
 
   def purchases
@@ -228,6 +213,27 @@ class ClientsController < ApplicationController
 
   def load_flags
     @flags = @client.flags.order('expires_on DESC')
+  end
+
+  def load_card_picture
+    @picture_url = if @client.picture_file_name
+                     @client.picture.url(:square)
+                   else
+                      "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/" +
+                      "marys-place/avatars/thumb/blank.png"
+                   end
+  end
+
+  def render_card
+    respond_to do |format|
+      if @client.checkin_code
+        format.svg
+        format.html { render layout: 'card' }
+      else
+        flash[:error] = "#{@client.current_alias} has no login yet."
+        redirect_to @client
+      end
+    end
   end
 
   def sort_column
