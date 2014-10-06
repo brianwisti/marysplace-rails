@@ -70,8 +70,7 @@ class ClientsController < ApplicationController
   def checkin_code
     authorize! :manage, Client
     load_client
-    @client.update_checkin_code!
-    redirect_to @client
+    update_client_checkin_code
   end
 
   # DELETE /clients/1
@@ -232,6 +231,11 @@ class ClientsController < ApplicationController
     if @client.save
       redirect_to @client
     end
+  end
+
+  def update_client_checkin_code
+    @client.update_checkin_code!
+    redirect_to @client
   end
 
   def load_preferences

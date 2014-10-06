@@ -103,8 +103,20 @@ describe ClientsController, :type => :controller do
       get :new_login, id: client
     end
 
-    it "can POST checkin_code" do
-      post :checkin_code, id: client
+    context ":checkin_code" do
+      before do
+        post :checkin_code, id: client
+      end
+
+      it "can POST checkin_code" do
+        expect(response).to redirect_to(client_url(assigns(:client)))
+      end
+
+      it "changes client checkin_code" do
+        old_code = client.checkin_code
+        updated_code = assigns(:client).checkin_code
+        expect(updated_code).to_not eql(old_code)
+      end
     end
 
     it "can access create_login" do
