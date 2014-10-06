@@ -14,8 +14,7 @@ class LocationsController < ApplicationController
   # GET /locations/new
   def new
     authorize! :create, Location
-
-    @location = Location.new
+    build_location
   end
 
   # GET /locations/1/edit
@@ -85,6 +84,10 @@ class LocationsController < ApplicationController
   end
 
   def load_location
-    @location = Location.find(params[:id])
+    @location ||= Location.find(params[:id])
+  end
+
+  def build_location
+    @location ||= Location.new
   end
 end
