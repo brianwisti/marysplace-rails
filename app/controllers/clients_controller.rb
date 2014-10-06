@@ -100,7 +100,7 @@ class ClientsController < ApplicationController
   def flags
     authorize! :show, ClientFlag
     load_client
-    @flags = @client.flags.order('expires_on DESC')
+    load_flags
   end
 
   def barcode
@@ -223,6 +223,10 @@ class ClientsController < ApplicationController
 
   def load_checkins
     @checkins = @client.checkins.order('checkin_at DESC').page params[:page]
+  end
+
+  def load_flags
+    @flags = @client.flags.order('expires_on DESC')
   end
 
   def sort_column
