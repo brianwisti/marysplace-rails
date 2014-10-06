@@ -63,12 +63,8 @@ class ClientsController < ApplicationController
   def update
     authorize! :update, Client
     load_client
-
-    if @client.update_attributes client_params
-        redirect_to @client, notice: 'Client was successfully updated.'
-    else
-      render :edit
-    end
+    build_client
+    save_client or render :edit
   end
 
   def checkin_code
@@ -214,7 +210,7 @@ class ClientsController < ApplicationController
   end
 
   def load_client
-    @client = Client.find params[:id]
+    @client ||= Client.find params[:id]
   end
 
   def build_client

@@ -56,9 +56,21 @@ describe ClientsController, :type => :controller do
       }.to change(Client, :count).by(1)
     end
 
-    it "can access update" do
-      client = create :client
-      post :update, id: client, client: attributes_for(:client)
+    context ':update' do
+      before do
+        attributes = attributes_for :client
+        attributes[:current_alias] = "something new"
+        post :update, id: client, client: attributes
+      end
+
+      it "is accessible" do
+        expect(response).to redirect_to(client_url(assigns(:client)))
+      end
+
+      it "applies changes" do
+        updated = assigns :client
+        expect(updated.current_alias).to eql("something new")
+      end
     end
 
     it "can access edit" do
