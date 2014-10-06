@@ -94,7 +94,7 @@ class ClientsController < ApplicationController
   def checkins
     authorize! :show, Checkin
     load_client
-    @checkins = @client.checkins.order('checkin_at DESC').page params[:page]
+    load_checkins
   end
 
   def flags
@@ -219,6 +219,10 @@ class ClientsController < ApplicationController
 
   def load_entries
     @entries ||= @client.points_entries.page params[:page]
+  end
+
+  def load_checkins
+    @checkins = @client.checkins.order('checkin_at DESC').page params[:page]
   end
 
   def sort_column
