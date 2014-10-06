@@ -104,7 +104,8 @@ class ClientsController < ApplicationController
   end
 
   def barcode
-    @client = Client.find params[:id]
+    authorize! :show, Client
+    load_client
   end
 
   def card
