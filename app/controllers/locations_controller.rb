@@ -3,7 +3,7 @@ class LocationsController < ApplicationController
 
   # GET /locations
   def index
-    @locations = Location.order('name ASC')
+    load_locations
   end
 
   # GET /locations/1
@@ -66,7 +66,21 @@ class LocationsController < ApplicationController
   private
 
   def location_params
-    params.require(:location).permit(:name, :phone_number, :address, :city,
-                                     :state, :postal_code)
+    location_params = params[:location]
+
+    if location_params
+      location_params.permit(:name,
+                             :phone_number,
+                             :address,
+                             :city,
+                             :state,
+                             :postal_code)
+    else
+      {}
+    end
+  end
+
+  def load_locations
+    @locations ||= Location.order 'name ASC'
   end
 end
