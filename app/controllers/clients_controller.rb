@@ -87,8 +87,8 @@ class ClientsController < ApplicationController
   # GET /clients/1/entries.json
   def entries
     load_client
-    @entries = @client.points_entries.page params[:page]
-    @prefs = current_user.preference_for :client_fields
+    load_entries
+    load_preferences
   end
 
   def checkins
@@ -244,6 +244,10 @@ class ClientsController < ApplicationController
 
   def load_preferences
     @prefs ||= current_user.preference_for :client_fields
+  end
+
+  def load_entries
+    @entries ||= @client.points_entries.page params[:page]
   end
 
   def sort_column
