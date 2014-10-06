@@ -54,14 +54,8 @@ class ClientsController < ApplicationController
   # POST /clients.json
   def create
     authorize! :create, Client
-    @client = Client.new client_params
-    @client.added_by_id = current_user.id
-
-    if @client.save
-      redirect_to @client, notice: 'Client was successfully created.'
-    else
-      render :new
-    end
+    build_client
+    save_client or render :new
   end
 
   # PUT /clients/1
@@ -178,14 +172,34 @@ class ClientsController < ApplicationController
   private
 
   def client_params
-    params.require(:client).permit(:current_alias, :full_name, :other_aliases,
-                                  :oriented_on, :birthday, :phone_number, :notes,
-                                  :is_active, :organization_id, :case_manager_info,
-                                  :family_info, :community_goal, :email_address,
-                                  :emergency_contact, :medical_info,
-                                  :mailing_list_address, :personal_goal,
-                                  :signed_covenant, :staying_at, :on_mailing_list,
-                                  :picture, :picture_file_name)
+    client_params = params[:client]
+
+    if client_params
+      client_params.permit(:current_alias,
+                           :full_name,
+                           :other_aliases,
+                           :oriented_on,
+                           :birthday,
+                           :phone_number,
+                           :notes,
+                           :is_active,
+                           :organization_id,
+                           :case_manager_info,
+                           :family_info,
+                           :community_goal,
+                           :email_address,
+                           :emergency_contact,
+                           :medical_info,
+                           :mailing_list_address,
+                           :personal_goal,
+                           :signed_covenant,
+                           :staying_at,
+                           :on_mailing_list,
+                           :picture,
+                           :picture_file_name)
+    else
+      {}
+    end
   end
 
   def load_clients
@@ -204,7 +218,9 @@ class ClientsController < ApplicationController
   end
 
   def build_client
-    @client = Client.new
+    @client ||= Client.new
+    @client.attributes = client_params
+    @client.added_by ||= current_user
   end
 
   def render_clients
@@ -213,6 +229,12 @@ class ClientsController < ApplicationController
       format.json {
         render json: @clients.map { |client| client.to_hash }
       }
+    end
+  end
+
+  def save_client
+    if @client.save
+      redirect_to @client
     end
   end
 
