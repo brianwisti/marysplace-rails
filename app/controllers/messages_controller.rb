@@ -29,14 +29,8 @@ class MessagesController < ApplicationController
   # POST /messages
   def create
     authorize! :create, Message
-    @message = Message.new params[:message]
-    @message.author = current_user
-
-    if @message.save
-      redirect_to @message, notice: 'Message was successfully created.'
-    else
-      render :new
-    end
+    build_message
+    save_message or render :new
   end
 
   # PUT /messages/1
@@ -62,6 +56,16 @@ class MessagesController < ApplicationController
 
   private
 
+  def message_params
+    message_params = params[:message]
+
+    if message_params
+      message_params.permit(:content)
+    else
+      {}
+    end
+  end
+
   def load_messages
     @messages ||= Message.order("created_at DESC")
   end
@@ -72,5 +76,13 @@ class MessagesController < ApplicationController
 
   def build_message
     @message = Message.new
+    @message.attributes = message_params
+    @message.author ||= current_user
+  end
+
+  def save_message
+    if @message.save
+      redirect_to @message
+    end
   end
 end
