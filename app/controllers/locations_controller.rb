@@ -20,8 +20,7 @@ class LocationsController < ApplicationController
   # GET /locations/1/edit
   def edit
     authorize! :update, Location
-
-    @location = Location.find(params[:id])
+    load_location
   end
 
   # POST /locations
