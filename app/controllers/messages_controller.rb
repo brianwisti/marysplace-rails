@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   # GET /messages
   def index
     authorize! :show, Message
-    @messages = Message.order("created_at DESC")
+    load_messages
     current_user.messages_checked
   end
 
@@ -58,5 +58,11 @@ class MessagesController < ApplicationController
     @message.destroy
 
     redirect_to messages_url
+  end
+
+  private
+
+  def load_messages
+    @messages ||= Message.order("created_at DESC")
   end
 end
