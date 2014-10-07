@@ -33,14 +33,9 @@ class LocationsController < ApplicationController
   # PUT /locations/1
   def update
     authorize! :update, Location
-
-    @location = Location.find(params[:id])
-
-    if @location.update_attributes location_params
-      redirect_to @location, notice: "Location was updated"
-    else
-      render :edit
-    end
+    load_location
+    build_location
+    save_location or render :edit
   end
 
   # DELETE /locations/1
