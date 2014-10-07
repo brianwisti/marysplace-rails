@@ -15,24 +15,10 @@ class PasswordResetsController < ApplicationController
 
   # POST /
   def create
-    login = params[:login]
-    email = params[:email]
-
-    if !login.empty?
-      @user = User.where(login: login).first
-    elsif !email.empty?
-      @user = User.where(email: email).first
-    end
-
-    if @user
-      @user.deliver_password_reset_instructions
-      flash[:notice] = "Check your email for a link to reset your password."
-      redirect_to login_url
-    else
-      flash[:alert] = "Unable to find a user with that login or email"
-      render :new, layout: 'bare'
-    end
-
+    load_user
+    start_password_reset or render(:new,
+                                   layout: 'bare',
+                                   alert: "Unable to find user")
   end
 
   def edit
@@ -59,6 +45,25 @@ class PasswordResetsController < ApplicationController
         "from your email into your browser or restarting the " +
         "reset password process."
       redirect_to root_url
+    end
+  end
+
+  def load_user
+    login = params[:login]
+    email = params[:email]
+
+    if !login.empty?
+      @user = User.where(login: login).first
+    elsif !email.empty?
+      @user = User.where(email: email).first
+    end
+  end
+
+  def start_password_reset
+    if @user
+      @user.deliver_password_reset_instructions
+      flash[:notice] = "Check your email for a link to reset your password."
+      redirect_to login_url
     end
   end
 end
