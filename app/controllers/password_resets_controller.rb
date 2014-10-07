@@ -1,4 +1,6 @@
 class PasswordResetsController < ApplicationController
+  layout 'bare'
+
   before_filter :require_no_user,
     only: [ :new ]
   before_filter :load_user_using_perishable_token,
@@ -10,19 +12,18 @@ class PasswordResetsController < ApplicationController
 
   # GET /password_resets/new
   def new
-    render layout: 'bare'
+    render
   end
 
   # POST /
   def create
     load_user
     start_password_reset or render(:new,
-                                   layout: 'bare',
                                    alert: "Unable to find user")
   end
 
   def edit
-    render layout: 'bare'
+    render
   end
 
   def update
