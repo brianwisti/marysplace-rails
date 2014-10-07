@@ -36,13 +36,9 @@ class MessagesController < ApplicationController
   # PUT /messages/1
   def update
     authorize! :update, Message
-    @message = Message.find params[:id]
-
-    if @message.update_attributes params[:message]
-      redirect_to @message, notice: 'Message was successfully updated.'
-    else
-      render :edit
-    end
+    load_message
+    build_message
+    save_message or render :edit
   end
 
   # DELETE /messages/1
