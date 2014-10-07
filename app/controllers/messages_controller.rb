@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
   # GET /messages/1
   def show
     authorize! :show, Message
-    @message = Message.find params[:id]
+    load_message
   end
 
   # GET /messages/new
@@ -64,5 +64,9 @@ class MessagesController < ApplicationController
 
   def load_messages
     @messages ||= Message.order("created_at DESC")
+  end
+
+  def load_message
+    @message ||= Message.find params[:id]
   end
 end
