@@ -41,9 +41,8 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   def destroy
     authorize! :destroy, Location
-
-    @location = Location.find(params[:id])
-    @location.destroy
+    load_location
+    destroy_location
 
     redirect_to locations_url
   end
@@ -82,5 +81,9 @@ class LocationsController < ApplicationController
     if @location.save
       redirect_to @location
     end
+  end
+
+  def destroy_location
+    @location.destroy
   end
 end
