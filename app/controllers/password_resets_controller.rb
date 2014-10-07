@@ -27,17 +27,22 @@ class PasswordResetsController < ApplicationController
   end
 
   def update
-    @user.password = params[:user][:password]
-    @user.password_confirmation = params[:user][:password_confirmation]
-    if @user.save
-      flash[:notice] = "Password successfully updated"
-      redirect_to current_user
-    else
-      render :action => :edit
-    end
+    build_user_password
+    save_user or render :edit
   end
 
   private
+
+  def password_params
+    params.require(:user).permit(:password, :password_confirmation)
+  end
+
+  def build_user_password
+    params = password_params
+    @user.password = params[:password]
+    @user.password_confirmation = params[:password_confirmation]
+  end
+
   def load_user_using_perishable_token
     @user = User.find_using_perishable_token(params[:id])
     unless @user
@@ -46,6 +51,13 @@ class PasswordResetsController < ApplicationController
         "from your email into your browser or restarting the " +
         "reset password process."
       redirect_to root_url
+    end
+  end
+
+  def save_user
+    if @user.save
+      flash[:notice] = "Password successfully updated"
+      redirect_to current_user
     end
   end
 

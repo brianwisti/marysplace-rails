@@ -5,6 +5,13 @@ describe PasswordResetsController, :type => :controller do
   let(:user) { create :user }
 
   context "Anonymous user" do
+    context ":index" do
+      it "redirects to :new" do
+        get :index
+        expect(response).to redirect_to(new_password_reset_url)
+      end
+    end
+
     context ":new" do
       it "loads successfully for anonymous" do
         get :new
