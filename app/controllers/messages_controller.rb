@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
   # GET /messages/1/edit
   def edit
     authorize! :edit, Message
-    @message = Message.find params[:id]
+    load_message
   end
 
   # POST /messages
