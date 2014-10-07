@@ -17,7 +17,7 @@ class MessagesController < ApplicationController
   # GET /messages/new
   def new
     authorize! :create, Message
-    @message = Message.new
+    build_message
   end
 
   # GET /messages/1/edit
@@ -68,5 +68,9 @@ class MessagesController < ApplicationController
 
   def load_message
     @message ||= Message.find params[:id]
+  end
+
+  def build_message
+    @message = Message.new
   end
 end
