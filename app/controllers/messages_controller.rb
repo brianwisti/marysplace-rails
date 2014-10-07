@@ -44,8 +44,8 @@ class MessagesController < ApplicationController
   # DELETE /messages/1
   def destroy
     authorize! :destroy, Message
-    @message = Message.find params[:id]
-    @message.destroy
+    load_message
+    destroy_message
 
     redirect_to messages_url
   end
@@ -80,5 +80,9 @@ class MessagesController < ApplicationController
     if @message.save
       redirect_to @message
     end
+  end
+
+  def destroy_message
+    @message.destroy
   end
 end
