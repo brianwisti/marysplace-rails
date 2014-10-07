@@ -11,51 +11,63 @@ class OrganizationsController < ApplicationController
   end
 
   def new
-    @organization = Organization.new
+    build_organization
   end
 
   def create
-    @organization = Organization.new organization_params
-    @organization.creator = current_user
-
-    if @organization.save
-      redirect_to @organization
-    else
-      render :new
-    end
+    build_organization
+    save_organization or render :new
   end
 
   def edit
-    @organization = Organization.find params[:id]
+    load_organization
   end
 
   def update
-    @organization = Organization.find params[:id]
-
-    if @organization.update_attributes organization_params
-      redirect_to @organization, notice: 'Organization updated'
-    else
-      render :edit
-    end
+    load_organization
+    build_organization
+    save_organization or render :edit
   end
 
   def destroy
-    @organization = Organization.find params[:id]
-    @organization.destroy
+    load_organization
+    destroy_organization
     redirect_to organizations_url
   end
 
   private
 
   def organization_params
-    params.require(:organization).permit(:name)
+    organization_params = params[:organization]
+    
+    if organization_params
+      organization_params.permit(:name)
+    else
+      {}
+    end
   end
 
   def load_organizations
-    @organizations = Organization.all
+    @organizations ||= Organization.all
   end
 
   def load_organization
-    @organization = Organization.find params[:id]
+    @organization ||= Organization.find params[:id]
+  end
+
+  def build_organization
+    @organization ||= Organization.new
+    @organization.attributes = organization_params
+    @organization.creator ||= current_user
+  end
+
+  def save_organization
+    if @organization.save
+      redirect_to @organization
+    end
+  end
+
+  def destroy_organization
+    @organization.destroy
   end
 end
