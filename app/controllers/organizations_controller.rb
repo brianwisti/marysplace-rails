@@ -3,7 +3,7 @@ class OrganizationsController < ApplicationController
   authorize_resource
 
   def index
-    @organizations = Organization.all
+    load_organizations
   end
 
   def show
@@ -49,5 +49,9 @@ class OrganizationsController < ApplicationController
 
   def organization_params
     params.require(:organization).permit(:name)
+  end
+
+  def load_organizations
+    @organizations = Organization.all
   end
 end
