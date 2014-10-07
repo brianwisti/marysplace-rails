@@ -7,7 +7,7 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @organization = Organization.find params[:id]
+    load_organization
   end
 
   def new
@@ -53,5 +53,9 @@ class OrganizationsController < ApplicationController
 
   def load_organizations
     @organizations = Organization.all
+  end
+
+  def load_organization
+    @organization = Organization.find params[:id]
   end
 end
