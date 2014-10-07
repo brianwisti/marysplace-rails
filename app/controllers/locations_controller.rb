@@ -26,16 +26,8 @@ class LocationsController < ApplicationController
   # POST /locations
   def create
     authorize! :create, Location
-
-    @location = Location.new location_params
-
-    respond_to do |format|
-      if @location.save
-        format.html { redirect_to @location, notice: "Location created" }
-      else
-        format.html { render :new }
-      end
-    end
+    build_location
+    save_location or render :new
   end
 
   # PUT /locations/1
@@ -88,5 +80,12 @@ class LocationsController < ApplicationController
 
   def build_location
     @location ||= Location.new
+    @location.attributes = location_params
+  end
+
+  def save_location
+    if @location.save
+      redirect_to @location
+    end
   end
 end
