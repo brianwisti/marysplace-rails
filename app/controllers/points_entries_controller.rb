@@ -5,76 +5,43 @@ class PointsEntriesController < ApplicationController
 
   # GET /points_entries
   def index
-    @points_entries = PointsEntry.order("id DESC").page params[:page]
+    load_points_entries
   end
 
   # GET /points_entries/1
   def show
     authorize! :show, PointsEntry
-    @points_entry = PointsEntry.find(params[:id])
+    load_points_entry
   end
 
   # GET /points_entries/new
   def new
-    @points_entry      = PointsEntry.new
-    @client            = Client.new
-    @points_entry_type = PointsEntryType.new
-    @bail_penalty      = PointsEntry.bail_penalty
+    build_points_entry
   end
 
   # GET /points_entries/1/edit
   def edit
-    @points_entry      = PointsEntry.find(params[:id])
-    @client            = @points_entry.client
-    @points_entry_type = @points_entry.points_entry_type
-    @bail_penalty      = PointsEntry.bail_penalty
+    load_points_entry
+    build_points_entry
   end
 
   # POST /points_entries
   def create
-    params[:points_entry][:added_by_id] = current_user.id
-    @points_entry = PointsEntry.new points_entry_params
-
-    unless @points_entry.client_id
-      submitted_alias = params[:current_alias]
-      client = Client.where('current_alias = ?', submitted_alias).first
-      @points_entry.client = client if client
-    end
-
-    unless @points_entry.points_entry_type_id
-      submitted_entry_type = params[:points_entry_type]
-      entry_type = PointsEntryType.where(name: submitted_entry_type).first
-      @points_entry.points_entry_type = entry_type if entry_type
-    end
-
-    if @points_entry.save
-      redirect_to @points_entry,
-        notice: 'Points entry was successfully created'
-    else
-      @client = @points_entry.client || Client.new
-      @points_entry_type = @points_entry.points_entry_type ||
-        PointsEntryType.new
-      render :new
-    end
+    build_points_entry
+    save_points_entry or render :new
   end
 
   # PUT /points_entries/1
   def update
-    @points_entry = PointsEntry.find(params[:id])
-    updated = @points_entry.update_attributes points_entry_params
-
-    if updated
-      redirect_to @points_entry,
-        notice: 'Entry was successfully updated.'
-    else
-      render :edit
-    end
+    load_points_entry
+    build_points_entry
+    save_points_entry or render :edit
   end
 
   # DELETE /points_entries/1
   def destroy
-    @points_entry = PointsEntry.find(params[:id])
-    @points_entry.destroy
+    load_points_entry
+    destroy_points_entry
 
     redirect_to points_entries_url
   end
@@ -82,8 +49,54 @@ class PointsEntriesController < ApplicationController
   private
 
   def points_entry_params
-    params.require(:points_entry).permit(:client_id, :points_entry_type_id,
-                                        :performed_on, :bailed, :added_by_id,
-                                        :location_id, :multiple, :points_entered)
+    points_entry_params = params[:points_entry]
+
+    if points_entry_params
+      points_entry_params.permit(:client_id,
+                                 :points_entry_type_id,
+                                 :performed_on,
+                                 :bailed,
+                                 :added_by_id,
+                                 :location_id,
+                                 :multiple,
+                                 :points_entered)
+    else
+      {}
+    end
+  end
+
+  def load_points_entries
+    @points_entries ||= PointsEntry.order("id DESC").page params[:page]
+  end
+
+  def load_points_entry
+    @points_entry ||= PointsEntry.find(params[:id])
+  end
+
+  def build_points_entry
+    @points_entry            ||= PointsEntry.new
+    @points_entry.attributes   = points_entry_params
+    @points_entry.added_by   ||= current_user
+
+    if !@points_entry.client_id and submitted_alias = params[:current_alias]
+      client = Client.where('current_alias = ?', submitted_alias).first
+      @points_entry.client = client if client
+    end
+
+    if !@points_entry.points_entry_type_id and submitted_entry_type = params[:points_entry_type]
+      entry_type = PointsEntryType.where(name: submitted_entry_type).first
+      @points_entry.points_entry_type = entry_type if entry_type
+    end
+  end
+
+  def save_points_entry
+    if @points_entry.save
+      redirect_to @points_entry,
+        notice: 'Points entry was successfully created'
+    end
+  end
+
+  def destroy_points_entry
+    @points_entry.destroy
   end
 end

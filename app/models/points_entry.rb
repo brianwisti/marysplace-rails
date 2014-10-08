@@ -37,20 +37,19 @@ class PointsEntry < ActiveRecord::Base
     joins(:points_entry_type).merge(PointsEntryType.purchase)
   }
 
-  delegate :current_alias,
-    to:     :client,
-    prefix: true
+  delegate :current_alias, :is_flagged, :can_shop?, :point_balance,
+    to:        :client,
+    prefix:    true,
+    allow_nil: true
   delegate :login,
     to:     :added_by,
     prefix: true
-  delegate :name,
-    to:     :points_entry_type,
-    prefix: true
+  delegate :name, :default_points,
+    to:        :points_entry_type,
+    prefix:    'type',
+    allow_nil: true
   delegate :name,
     to:     :location,
-    prefix: true
-  delegate :point_balance,
-    to:     :client,
     prefix: true
 
   # Many PointsEntries were created before 'points_entered' was a thing.
@@ -78,6 +77,10 @@ class PointsEntry < ActiveRecord::Base
                                 can_shop: false,
                                 expires_on: Date.today + 2.weeks)
     end
+  end
+
+  def bail_penalty
+    self.class.bail_penalty
   end
 
   # how many PointsEntry objects  were +performed_on+ today?

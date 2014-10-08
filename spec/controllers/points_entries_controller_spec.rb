@@ -112,9 +112,10 @@ describe PointsEntriesController, :type => :controller do
 
         it "creates a PointsEntry" do
           submission.delete :points_entry_type_id
-          post :create, points_entry: submission,
-            points_entry_type: entry_type.name
-          expect(flash[:notice]).to have_content("Points entry was successfully created")
+          expect {
+            post :create, points_entry: submission,
+              points_entry_type: entry_type.name
+          }.to change(PointsEntry, :count).by(1)
         end
       end
     end

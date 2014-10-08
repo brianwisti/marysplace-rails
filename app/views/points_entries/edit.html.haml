@@ -4,7 +4,4 @@
 = content_for(:context_navigation) do
   = render 'context_navigation', points_entry: @points_entry
 
-= render 'form', points_entry: @points_entry,
-  client: @client,
-  points_entry_type: @points_entry_type,
-  bail_penalty: @bail_penalty
+= render 'form', entry: @points_entry

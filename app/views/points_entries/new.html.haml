@@ -1,7 +1,4 @@
 = content_for(:title) do
   Add Points Entry
 
-= render 'form', points_entry: @points_entry,
-  client: @client,
-  points_entry_type: @points_entry_type,
-  bail_penalty: @bail_penalty
+= render 'form', entry: @points_entry

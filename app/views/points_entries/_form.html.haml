@@ -1,22 +1,22 @@
-= form_for points_entry, role: 'form' do |f|
-  - if points_entry.errors.any?
+= form_for entry, role: 'form' do |f|
+  - if entry.errors.any?
     #error_explanation
-      %h2= pluralize points_entry.errors.count, "error"
+      %h2= pluralize entry.errors.count, "error"
       %ul
-        - points_entry.errors.full_messages.each do |msg|
+        - entry.errors.full_messages.each do |msg|
           %li= msg
   .form-group
     = f.label :client_id, class: 'control-label'
-    = text_field_tag "current_alias", client.current_alias,
+    = text_field_tag "current_alias", entry.client_current_alias,
       data: { provide: 'typeahead', field: 'points_entry_client_id', balance: 0 },
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
       placeholder: 'The name they go by...',
       class: 'client-typeahead form-control'
     %span.hint
-      - if client.is_flagged
+      - if entry.client_is_flagged
         %span.is-flagged
           %span.icon-flag
-          - if !client.can_shop?
+          - if !entry.client.can_shop?
             %span.label.label-danger No Shopping
           = link_to "flagged", flags_client_path(client), class: "text-error"
       - else
@@ -28,7 +28,7 @@
         = link_to "Add Client", new_client_path
   .form-group
     = f.label :points_entry_type_id, class: 'control-label'
-    = text_field_tag "points_entry_type", points_entry_type.name,
+    = text_field_tag "points_entry_type", entry.type_name,
       data: { provide: 'typeahead', field: 'points_entry_points_entry_type_id', pointsfield: 'points_entry_points_entered' },
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
       placeholder: 'What they did...',
@@ -36,17 +36,17 @@
   .checkbox
     = f.label :bailed do
       = f.check_box :bailed, 
-        data: { field: 'points_entry_points_entered', penalty: bail_penalty }, 
+        data: { field: 'points_entry_points_entered', penalty: entry.bail_penalty }, 
         class: 'bailed'
       Bailed
   .form-group
     .col-xs-2.well
-      %span.point-balance.text-info= number_with_delimiter client.point_balance
+      %span.point-balance.text-info= number_with_delimiter entry.client_point_balance
       +
     .col-xs-4
       = f.label :points, class: 'control-label'
       = f.number_field :points_entered, 
-        data: { default: points_entry_type.default_points }, 
+        data: { default: entry.type_default_points }, 
         placeholder: 'How many points gained or spent...',
         autocomplete: 'off', class: 'form-control'
     .col-xs-4
@@ -61,7 +61,7 @@
   .form-group
     = f.label :location_id
     = location_select f, :location_id, current_user
-  - unless points_entry.new_record?
+  - unless entry.new_record?
     .row
       .form-group
         = f.label :performed_on
