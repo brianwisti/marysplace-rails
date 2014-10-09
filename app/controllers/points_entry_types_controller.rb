@@ -8,10 +8,7 @@ class PointsEntryTypesController < ApplicationController
     load_active_points_entry_types
 
     respond_to do |format|
-      format.html do
-        @points_entry_types = @points_entry_types.page params[:page]
-      end
-
+      format.html
       format.json { render json: @points_entry_types }
     end
   end
@@ -108,7 +105,7 @@ class PointsEntryTypesController < ApplicationController
   end
 
   def load_active_points_entry_types
-    @points_entry_types ||= PointsEntryType.active.order('name')
+    @points_entry_types ||= PointsEntryType.active.order('name').page params[:page]
   end
 
   def load_all_points_entry_types

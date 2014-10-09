@@ -39,14 +39,14 @@ describe PointsEntryTypesController, :type => :controller do
   describe "JSON" do
     context "GET /points_entry_types.json" do
       before do
-        50.times { create :points_entry_type }
         login staff_user
       end
 
-      it "should have 50 items" do
+      it "should have 10 items" do
+        10.times { create :points_entry_type }
         get :index, format: :json
         json = JSON.parse response.body
-        expect(json.length).to eq(50)
+        expect(json.length).to eq(10)
       end
     end
   end
