@@ -20,7 +20,7 @@ gem 'actionview-encoded_mail_to', '~>1.0.4'
 gem 'activerecord-session_store', '~>0.1.0'
 gem 'activeresource', '~>4.0.0'
 gem 'active_type'
-gem 'authlogic'
+gem 'authlogic', '~> 3.4.3'
 gem 'aws-sdk'
 gem 'bootstrap-sass','~> 3.2.0'
 gem 'cancan'
@@ -54,16 +54,17 @@ group :production do
 end
 
 group :development, :test do
-  gem 'faker', '1.3.0'  # for db:anonymize and test factories
-  gem 'rspec-rails', '3.1.0' # until deprecations fully resolved
-  gem 'factory_girl_rails', '~> 4.2.1'
+  gem 'faker', '~> 1.4.3'  # for db:anonymize and test factories
+  gem 'rspec-rails', '~> 3.1.0' # until deprecations fully resolved
+  gem 'factory_girl_rails', '~> 4.4.1'
 end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'capybara', '~> 2.4.2'
-  gem 'database_cleaner', '~> 1.2.0'
-  gem 'launchy', '~> 2.2.0'
+  gem 'capybara', '~> 2.4.3'
+  gem 'database_cleaner', '~> 1.3.0'
+  gem 'launchy', '~> 2.4.2'
+  gem 'selenium-webdriver', '~> 2.43.0'
 end
 
 # To use ActiveModel has_secure_password
@@ -72,7 +73,7 @@ end
 # Presumably security-related stuff. Couldn't get rake tasks to run
 # without these installed by Bundler.
 gem 'bcrypt'
-gem 'scrypt'
+gem 'scrypt', '~> 1.2.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
