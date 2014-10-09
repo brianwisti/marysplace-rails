@@ -55,7 +55,9 @@ describe OrganizationsController, :type => :controller do
         expect(response).to be_success
       end
 
-      skip "loads the organization"
+      it "loads the organization" do
+        expect(assigns(:organization)).to eql(organization)
+      end
     end
 
     context "PUT update" do
@@ -72,9 +74,10 @@ describe OrganizationsController, :type => :controller do
         expect(response).to redirect_to(organizations_url)
       end
 
-      skip "destroys the organization" do
+      it "destroys the organization" do
+        org = create :organization
         expect {
-          delete :destroy, id: organization
+          delete :destroy, id: org
         }.to change(Organization, :count).by(-1)
       end
     end
