@@ -44,6 +44,8 @@ class Checkin < ActiveRecord::Base
   end
 
   def no_checkin_for_client_on_same_day
+    return unless checkin_at
+
     time = Time.new(checkin_at.year, checkin_at.month, checkin_at.day, 0, 0)
 
 

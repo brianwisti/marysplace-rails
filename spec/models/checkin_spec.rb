@@ -1,26 +1,18 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Checkin, type: :model do
-  let(:checkin) { create :checkin }
 
   it "should be unique per client per location per day" do
-    dupe = Checkin.new do |ch|
-      ch.user       = checkin.user
-      ch.client     = checkin.client
-      ch.checkin_at = checkin.checkin_at
-    end
+    checkin = create :checkin
+    dupe = Checkin.new
+    dupe.attributes = checkin.attributes
 
     dupe.valid?
     expect(dupe.errors[:client_id].size).to eq(1)
   end
 
   it "should have a Location" do
-    placeless = Checkin.create do |ch|
-      ch.user       = create(:user)
-      ch.client     = create(:client)
-      ch.checkin_at = checkin.checkin_at
-    end
-
+    placeless = Checkin.new
     placeless.valid?
     expect(placeless.errors[:location_id].size).to eq(1)
   end
