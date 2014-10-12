@@ -19,7 +19,7 @@
         - unless hide.include? :client
           %td= link_to entry.client_current_alias, entry.client
         - unless hide.include? :points_entry_type
-          %td= link_to entry.points_entry_type_name, entry.points_entry_type
+          %td= link_to entry.type_name, entry.points_entry_type
         %td= link_to entry.location_name, entry.location
         %td
           - if entry.bailed
