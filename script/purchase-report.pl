@@ -4,8 +4,18 @@ use warnings;
 use DBI;
 use Excel::Writer::XLSX;
 
-my $start_date = '2013-01-01';
-my $end_date   = '2013-12-31';
+my $year = shift @ARGV
+    or die "Usage: $0 <year>";
+
+if ( $year =~ m[\A (\d+) \z]x ) {
+    $year = $1;
+}
+else {
+    die "'$year' doesn't look like a year!";
+}
+
+my $start_date = "$year-01-01";
+my $end_date   = "$year-12-31";
 my $dsn        = "dbi:Pg:dbname=marysplace_dev";
 my $dbh        = DBI->connect( $dsn, '', '', { RaiseError => 1 }  );
 
@@ -46,10 +56,12 @@ END_SQL
 
 sub write_entries {
   my ( $dbh, $start_date, $end_date ) = @_;
+  my $year = (split /-/, $start_date)[0];
+  my $filename = "$year-purchase-report.xlsx";
   my $sth = load_entries( $dbh, $start_date, $end_date );
 
-  my $workbook = Excel::Writer::XLSX->new( 'purchase-report.xlsx' )
-    or die "Unable to create 'purchase-report.xlsx': $!";
+  my $workbook = Excel::Writer::XLSX->new( $filename )
+    or die "Unable to create '$filename': $!";
   my $summaries_worksheet = $workbook->add_worksheet();
   my $entries_worksheet   = $workbook->add_worksheet();
 
@@ -91,7 +103,7 @@ sub write_entries {
     my $points = $total_for->{ $month }{points};
     $total_points += $points;
     $total_entries += $entries;
-    $summaries_worksheet->write( $summary_row, 0, "$month/2013" );
+    $summaries_worksheet->write( $summary_row, 0, "$month/$year" );
     $summaries_worksheet->write( $summary_row, 1, $entries      );
     $summaries_worksheet->write( $summary_row, 2, $points       );
     $summary_row++;
