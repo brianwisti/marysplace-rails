@@ -129,11 +129,7 @@ class User < ActiveRecord::Base
 
   # Login names are strong candidates for PII
   anonymizes :login do |user|
-    if user.client
-      user.client.generate_login_code
-    else
-      Faker::Internet.user_name user.name
-    end
+    Faker::Internet.user_name user.name
   end
 
   # IP addresses are potential PII
