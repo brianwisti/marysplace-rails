@@ -17,6 +17,9 @@
 *.xlsx
 *.xls
 
+# Database backups
+db_backups
+
 # Ignore all logfiles and tempfiles.
 /log/*.log
 \#*
