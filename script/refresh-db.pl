@@ -8,16 +8,18 @@ use Data::Dump 'pp';
 my $heroku = "/usr/local/heroku/bin/heroku";
 my $dir    = "db_backups";
 
-sub grab_backup_for( $id ) {
+sub grab_backup_for( $entry ) {
+  my ( $id, $date, $time ) = @$entry;
   ( my $url = (split "\n", `$heroku pg:backups public-url $id`)[-1] ) =~ s/^\s+'(.+?)'$/$1/g;
-  my $dumpfile = "$dir/$id.dump";
+  my $stub = join '-', $id, $date;
+  my $dumpfile = "$dir/$stub.dump";
 
   if ( -f $dumpfile ) {
     say "$id -> $dumpfile already exists";
     return;
   }
 
-  my $curl = "/opt/local/bin/curl";
+  my $curl = "/usr/bin/curl";
   my @curl_command = ( $curl, "-o", $dumpfile, $url );
   say "@curl_command";
 
@@ -28,17 +30,17 @@ sub grab_backup_for( $id ) {
   say "$id -> $dumpfile downloaded";
 }
 
-my @ids = map  { (split)[0]      } # From the first column of each line
-          grep { $_ =~ /^(b\d+)/ } # Where a backup is mentioned.
+my @entries = sort { $a->[1] cmp $b->[1] || $a->[2] cmp $b->[2] } # compare start date/times
+          map  { [ (split)[ 0, 1, 2 ] ] } # name, date started, and time started.
+          grep { $_ =~ /^([a-z]\d+)/ } # Where a backup is mentioned.
           split "\n", `$heroku pg:backups 2>/dev/null`;
 
-my $id_count = @ids;
-say "$id_count backups to check";
+my $entry_count = @entries;
+say "$entry_count backups to check";
 
-for my $id ( @ids ) {
-  grab_backup_for $id;
+for my $entry ( @entries ) {
+  grab_backup_for $entry;
 }
-
 
 my $dumpfile = "$dir/" . `ls -1t $dir/ | head -n 1`;
 chomp $dumpfile;
