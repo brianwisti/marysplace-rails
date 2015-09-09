@@ -20,7 +20,7 @@ This application was created to help the staff and volunteers of [Mary's Place][
 
 ## Requirements
 
-* Ruby 2.1.0
+* Ruby 2.2.3
 * NodeJS for JS runtime 
 
 ### Assumed Environment Variables
