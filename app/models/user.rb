@@ -114,7 +114,8 @@ class User < ActiveRecord::Base
 
   def deliver_password_reset_instructions
     reset_perishable_token!
-    UserMailer.password_reset_notification(self).deliver
+    # TODO: use a job queue.
+    UserMailer.password_reset_notification(self).deliver_now
   end
 
   # Names are obvious PII

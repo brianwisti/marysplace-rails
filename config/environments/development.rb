@@ -30,6 +30,9 @@ Marysplace::Application.configure do
 
   config.action_mailer.default_url_options = { host: ENV['APP_HOSTNAME'] }
 
+  # Propagate errors that show up after_rollback / after_commit
+  config.active_record.raise_in_transactional_callbacks = true
+
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 

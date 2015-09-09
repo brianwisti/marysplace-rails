@@ -22,7 +22,7 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
 
-  Capybara.default_wait_time = 5
+  Capybara.default_max_wait_time = 5
   Capybara.javascript_driver = :webkit
 
   # ## Mock Framework

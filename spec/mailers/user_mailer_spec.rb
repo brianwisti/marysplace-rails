@@ -11,7 +11,7 @@ describe UserMailer, :type => :mailer do
 
   before :each do
     user.reset_perishable_token!
-    UserMailer.password_reset_notification(user).deliver
+    UserMailer.password_reset_notification(user).deliver_now
   end
 
   after :each do
