@@ -1,7 +1,7 @@
 cache: bundler
 language: ruby
 rvm:
-  - "2.1.2"
+  - "2.2.3"
 sudo: false
 env:
   RAILS_ENV=test
