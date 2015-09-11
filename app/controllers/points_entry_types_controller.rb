@@ -20,6 +20,18 @@ class PointsEntryTypesController < ApplicationController
     load_all_points_entry_types
   end
 
+  # GET /poinst_entry_types/unpaged
+  # GET /poinst_entry_types/unpaged.json
+  def unpaged
+    authorize! :show, PointsEntryType
+    load_active_points_entry_types_unpaginated
+
+    respond_to do |format|
+      # No HTML
+      format.json { render json: @points_entry_types }
+    end
+  end
+
   # GET /points_entry_types/search
   # GET /points_entry_types/search.json
   def search
@@ -106,6 +118,10 @@ class PointsEntryTypesController < ApplicationController
 
   def load_active_points_entry_types
     @points_entry_types ||= PointsEntryType.active.order('name').page params[:page]
+  end
+
+  def load_active_points_entry_types_unpaginated
+    @points_entry_types ||= PointsEntryType.active.order('name')
   end
 
   def load_all_points_entry_types

@@ -6,4 +6,8 @@
 = content_for(:context_navigation) do
   = render 'context_navigation'
 
-= render 'points_entries/form'
+= render 'points_entries/form',
+  client: @client, entry: @points_entry,
+  points_entry_type: @points_entry_type,
+  bail_penalty: PointsEntry.bail_penalty, locations: Location.all,
+  default_location: Location.default_location_for(current_user)

@@ -5,7 +5,7 @@
 points_entry_types =  []
 $entryTypeTypeahead = $('.pointsentrytype-typeahead')
 
-$.getJSON '/points_entry_types.json', (data) ->
+$.getJSON '/points_entry_types/unpaged.json', (data) ->
     points_entry_types = $.grep(data, (item) -> item.is_active == true)
     points_entry_types = $.map(points_entry_types, (item) -> item.name)
     $entryTypeTypeahead
