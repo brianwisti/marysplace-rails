@@ -4,8 +4,7 @@ feature "Client Flags" do
   fixtures :clients, :client_flags, :users
 
   background do
-    @admin = users :admin
-    sign_in @admin
+    sign_in users :admin
   end
 
   scenario "Displaying an resolved flag in a row" do

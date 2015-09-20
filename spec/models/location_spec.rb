@@ -22,58 +22,31 @@ describe Location, type: :model do
   end
 
   describe "default location for user" do
-    let(:user) { users :staff }
-
-    before do
-      @new_user = User.create! do |u|
-        u.login = "New Staff"
-        u.password = "waffle"
-        u.password_confirmation = "waffle"
-        u.email = "waffle@example.com"
-      end
-      @new_user.roles << roles(:staff)
-    end
+    let(:staff) { users :staff }
+    let(:new_staff) { users :new_staff }
 
     context "with no locations" do
       it "should be nothing" do
         Location.destroy_all
-        loc = Location.default_location_for user
+        loc = Location.default_location_for new_staff
         expect(loc).to be_nil
       end
     end
 
-    context "with one location and no points entries for the user" do
-      it "should be the location" do
-        loc = locations :day_shelter
-        result = Location.default_location_for user
-        expect(result).to eq(loc)
-      end
-    end
-
     context "with two locations and no points entries for the user" do
-
       it "should be the first location" do
         preferred = Location.order(:created_at).first
-        result    = Location.default_location_for @new_user
+        result    = Location.default_location_for new_staff
 
         expect(result).to eq(preferred)
       end
     end
 
-    context "with two locations and a points entry for the user" do
+    context "with multiple locations and a points entry for the user" do
       it "should be the location for the points entry" do
-        second = locations :overnight
-
-        PointsEntry.create! do |entry|
-          entry.client = clients :amy_a
-          entry.added_by = @new_user
-          entry.location = second
-          entry.points_entry_type = points_entry_types :dishes
-          entry.points = 50
-        end
-
-        result = Location.default_location_for @new_user
-        expect(result).to eq(second)
+        expected = staff.points_entries.last.location
+        result = Location.default_location_for new_staff
+        expect(result).to eq(expected)
       end
     end
   end
