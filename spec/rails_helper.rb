@@ -62,12 +62,6 @@ RSpec.configure do |config|
   config.include LoginMacros
 end
 
-def build_attributes(*args)
-  FactoryGirl.build(*args).attributes.delete_if do |k, v|
-    ["id", "created_at", "updated_at"].member?(k)
-  end
-end
-
 # response should indicate no access
 def expect_forbidden(response)
   expect(response).to redirect_to(root_url)
