@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe ClientNote, type: :model do
-  let(:user) { create :user }
-  let(:client) { create :client }
+  fixtures :clients, :users
+
+  let(:user) { users :simple }
+  let(:client) { clients :amy_a }
 
   describe "fields" do
     let(:note) { ClientNote.new }

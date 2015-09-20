@@ -2,12 +2,19 @@ require 'rails_helper'
 
 describe UsersController, :type => :controller do
   setup :activate_authlogic
+  fixtures :roles, :users
+  
+  before do
+    @attributes = {
+      email: "waffle@example.com"
+    }
+  end
 
   context "admin user" do
-    let(:admin_user) { create :admin_user }
-    let(:user) { create :user }
-    let(:first_role) { create :role }
-    let(:second_role) { create :role }
+    let(:admin_user) { users :admin }
+    let(:user) { users :simple }
+    let(:first_role) { roles :volunteer }
+    let(:second_role) { roles :front_desk }
 
     before do
       login admin_user
@@ -27,7 +34,7 @@ describe UsersController, :type => :controller do
     it "can set user roles" do
       role_ids = [ first_role.id, second_role.id ]
       put :update, id: user,
-        user: attributes_for(:user),
+        user: @attributes,
         role_ids: role_ids
       expect(response).to redirect_to(user)
       loaded_user = assigns(:user)
@@ -37,7 +44,7 @@ describe UsersController, :type => :controller do
     it "can clear user roles" do
       user.accept_role first_role
       put :update, id: user,
-        user: attributes_for(:user)
+        user: @attributes
       loaded_user = assigns(:user)
       expect(loaded_user.roles.length).to eq(0)
     end

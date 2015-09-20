@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe WelcomeController, :type => :controller do
   setup :activate_authlogic
+  fixtures :users
 
   context "Anonymous access" do
     it "should be redirected" do
@@ -11,7 +12,7 @@ describe WelcomeController, :type => :controller do
   end
 
   context "Admin Access" do
-    let(:user) { create :admin_user }
+    let(:user) { users :admin }
 
     before do
       login user

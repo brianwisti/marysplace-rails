@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Location, type: :model do
+  fixtures :users, :clients, :locations, :points_entry_types, :roles
+
   describe "Name" do
     it "is required" do
       location = Location.new
@@ -9,7 +11,7 @@ describe Location, type: :model do
     end
 
     it "must be unique" do
-      first = FactoryGirl.create(:location)
+      first = locations :day_shelter
       second = Location.new do |location|
         location.name = first.name
       end
@@ -20,10 +22,21 @@ describe Location, type: :model do
   end
 
   describe "default location for user" do
-    let(:user) { create :staff_user }
+    let(:user) { users :staff }
+
+    before do
+      @new_user = User.create! do |u|
+        u.login = "New Staff"
+        u.password = "waffle"
+        u.password_confirmation = "waffle"
+        u.email = "waffle@example.com"
+      end
+      @new_user.roles << roles(:staff)
+    end
 
     context "with no locations" do
       it "should be nothing" do
+        Location.destroy_all
         loc = Location.default_location_for user
         expect(loc).to be_nil
       end
@@ -31,20 +44,17 @@ describe Location, type: :model do
 
     context "with one location and no points entries for the user" do
       it "should be the location" do
-        loc = create :location
+        loc = locations :day_shelter
         result = Location.default_location_for user
         expect(result).to eq(loc)
       end
     end
 
     context "with two locations and no points entries for the user" do
+
       it "should be the first location" do
-        # Create a new user to minimize noise from other specds
-        new_user  = create :staff_user
-        first     = create :location
-        second    = create :location
-        preferred = Location.order(:id).first
-        result    = Location.default_location_for new_user
+        preferred = Location.order(:created_at).first
+        result    = Location.default_location_for @new_user
 
         expect(result).to eq(preferred)
       end
@@ -52,10 +62,17 @@ describe Location, type: :model do
 
     context "with two locations and a points entry for the user" do
       it "should be the location for the points entry" do
-        first = create :location
-        second = create :location
-        entry = create :points_entry, added_by: user, location: second
-        result = Location.default_location_for user
+        second = locations :overnight
+
+        PointsEntry.create! do |entry|
+          entry.client = clients :amy_a
+          entry.added_by = @new_user
+          entry.location = second
+          entry.points_entry_type = points_entry_types :dishes
+          entry.points = 50
+        end
+
+        result = Location.default_location_for @new_user
         expect(result).to eq(second)
       end
     end

@@ -1,0 +1,24 @@
+amy_a:
+  current_alias: "Amy A."
+  added_by: staff
+amy_b:
+  current_alias: "Amy B."
+  added_by: staff
+amy_c:
+  current_alias: "Amy C."
+  added_by: staff
+  is_active: false
+anna_a:
+  current_alias: "Anna A."
+  added_by: staff
+badged_brenda:
+  current_alias: "B. Brenda"
+  added_by: staff
+  checkin_code: abcdefgh
+blocked_betty:
+  current_alias: "B. Betty"
+  added_by: staff
+s_amy:
+  current_alias: "S. Amy"
+  added_by: staff
+  other_aliases: "Deborah"

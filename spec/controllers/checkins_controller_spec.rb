@@ -2,15 +2,23 @@ require 'rails_helper'
 
 describe CheckinsController, :type => :controller do
   setup :activate_authlogic
+  fixtures :checkins, :clients, :locations, :users
 
-  let(:checkin) { create :checkin }
-  let(:today) { Date.today }
+  let(:checkin) { checkins :amy_a_overnight }
+  let(:today)   { Date.today }
+
+  before do
+    @attributes = {
+      client_id: clients(:amy_b),
+      location_id: locations(:overnight),
+      checkin_at: DateTime.now
+    }
+  end
 
   describe "Staff user" do
-    let(:staff_user) { create :staff_user }
 
     before do
-      login staff_user
+      login users :staff
     end
 
     it "can access index" do
@@ -49,23 +57,24 @@ describe CheckinsController, :type => :controller do
     end
 
     it "can access create" do
-      post :create, checkin: build_attributes(:checkin)
+      post :create, checkin: @attributes
       expect(response).to redirect_to(new_checkin_url)
     end
 
     it "can create a Checkin" do
       expect {
-        post :create, checkin: build_attributes(:checkin)
+        post :create, checkin: @attributes
       }.to change(Checkin, :count).by(1)
     end
 
     it "can access update" do
-      put :update, id: checkin, checkin: attributes_for(:checkin, notes: "Notes here")
+      put :update, id: checkin, checkin: @attributes
       expect(response).to redirect_to(checkin)
     end
 
     it "can update a Checkin" do
-      put :update, id: checkin, checkin: attributes_for(:checkin, notes: "Notes here")
+      @attributes[:notes] = "Notes here"
+      put :update, id: checkin, checkin: @attributes
       expect(checkin.reload.notes).to eq("Notes here")
     end
 
@@ -77,8 +86,6 @@ describe CheckinsController, :type => :controller do
     it "can destroy a Checkin" do
       # Specify now or checking will be created in the expect block
       # TODO: Figure out why FactoryGirl does that.
-      checkin = create :checkin
-
       expect {
         delete :destroy, id: checkin
       }.to change(Checkin, :count).by(-1)
@@ -91,7 +98,7 @@ describe CheckinsController, :type => :controller do
       end
 
       skip "shows today's checkins" do
-        post :create, checkin: build_attributes(:checkin)
+        post :create, checkin: @attributes
         get :today
         expect(assigns(:checkins)).to include(checkin)
       end
@@ -118,8 +125,8 @@ describe CheckinsController, :type => :controller do
     end
 
     context "selfcheck" do
-      let(:badged_client) { create :client_with_badge }
-      let(:location) { create :location }
+      let(:badged_client) { clients :badged_brenda }
+      let(:location) { locations :overnight }
 
       it "can access selfcheck_post" do
         post :selfcheck_post, login: badged_client.checkin_code, location_id: location.id

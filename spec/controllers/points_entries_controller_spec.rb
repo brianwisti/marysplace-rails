@@ -2,8 +2,22 @@ require 'rails_helper'
 
 describe PointsEntriesController, :type => :controller do
   setup :activate_authlogic
+  fixtures :clients, :users, :locations, :points_entries, :points_entry_types
 
-  let(:entry) { create :points_entry }
+  before do
+    @staff_user = users :staff
+    @attributes = {
+      client_id:            clients(:amy_a),
+      points_entry_type_id: points_entry_types(:boil_eggs),
+      location_id:          locations(:overnight),
+      performed_on:      Date.today,
+      points_entered:    25,
+      multiple:          1,
+      points:            25,
+    }
+  end
+
+  let(:entry) { points_entries :amy_a_day_shelter_dishes }
 
   describe "Anonymous user" do
     # require_user at top of controller means we don't need to test all
@@ -15,10 +29,9 @@ describe PointsEntriesController, :type => :controller do
   end
 
   describe "Staff user" do
-    let(:staff_user) { create :staff_user }
 
     before do
-      login staff_user
+      login @staff_user
     end
 
     it "can access index" do
@@ -57,12 +70,12 @@ describe PointsEntriesController, :type => :controller do
     end
 
     it "can access create" do
-      post :create, points_entry: build_attributes(:points_entry)
+      post :create, points_entry: @attributes
       expect(response).to redirect_to(assigns(:points_entry))
     end
 
     context "creating a PointsEntry" do
-      let(:submission) { build_attributes :points_entry }
+      let(:submission) { @attributes }
 
       context "with client ID & entry-type ID" do
         it "creates a PointsEntry" do
@@ -96,7 +109,7 @@ describe PointsEntriesController, :type => :controller do
       end
 
       context "with client name & entry-type ID" do
-        let(:client) { create :client }
+        let(:client) { clients :amy_b }
 
         it "creates a PointsEntry" do
           submission.delete :client_id
@@ -108,7 +121,7 @@ describe PointsEntriesController, :type => :controller do
       end
 
       context "with client ID & entry-type name" do
-        let(:entry_type) { create :points_entry_type }
+        let(:entry_type) { points_entry_types :dishes }
 
         it "creates a PointsEntry" do
           submission.delete :points_entry_type_id
@@ -122,7 +135,7 @@ describe PointsEntriesController, :type => :controller do
 
     it "can access update" do
       put :update, id: entry,
-        points_entry: attributes_for(:points_entry)
+        points_entry: @attributes
       expect(response).to redirect_to(entry)
     end
 
@@ -132,8 +145,6 @@ describe PointsEntriesController, :type => :controller do
     end
 
     it "can destroy a PointsEntry" do
-      entry = create :points_entry
-
       expect {
         delete :destroy, id: entry
       }.to change(PointsEntry, :count).by(-1)

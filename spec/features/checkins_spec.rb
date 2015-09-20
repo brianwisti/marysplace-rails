@@ -1,36 +1,38 @@
 require 'spec_helper'
 
 feature "Client Checkins" do
+  fixtures :clients, :locations, :users
+
   background do
-    @admin = create :admin_user
-    @client = create :client
+    @admin = users :admin
+    @client = clients :anna_a
     sign_in @admin
     visit root_path
     click_link 'Show Checkins'
   end
 
   scenario "with no locations is impossible" do
+    Location.destroy_all
     click_link 'New Checkin'
     expect(page).to have_content("A Location is required.")
   end
 
   scenario "with one location" do
-    loc = create :location
+    loc = locations :overnight
     click_link 'New Checkin'
     expect(page).to have_no_content("A Location is required for checkins")
 
     expect {
       fill_in 'current_alias', with: @client.current_alias
-      click_button "Create Checkin"
       select loc.name, from: 'Location'
+      click_button "Create Checkin"
     }.to change(Checkin, :count).by(1)
   end
 
 
   scenario "with multiple locations" do
-    loc_1 = create :location
-    loc_2 = create :location
-    loc_3 = create :location
+    loc_1 = locations :day_shelter
+    loc_2 = locations :overnight
 
     click_link 'New Checkin'
     fill_in 'current_alias', with: @client.current_alias
@@ -46,23 +48,24 @@ feature "Client Checkins" do
 end
 
 feature "Self Checkin" do
+  fixtures :clients, :locations, :users
+
   background do
-    @admin = create :admin_user
-    @client = create :client_with_badge
+    @admin = users :admin
+    @client = clients :badged_brenda
     sign_in @admin
     visit root_path
     click_link 'Show Checkins'
   end
 
   scenario "selfcheck with no locations is impossible" do
+    Location.destroy_all
     click_link 'Start Self Checkins'
     expect(page).to have_content("A Location is required for checkins")
     expect(page).to have_no_button("Checkin")
   end
 
   scenario "selfcheck with one location" do
-    create :location
-
     click_link 'Start Self Checkins'
     expect(page).to have_no_content("A Location is required for checkins")
 
@@ -73,9 +76,8 @@ feature "Self Checkin" do
   end
 
   scenario "selfcheck with multiple locations" do
-    loc_1 = create :location
-    loc_2 = create :location
-    loc_3 = create :location
+    loc_1 = locations :day_shelter
+    loc_2 = locations :overnight
     click_link 'Start Self Checkins'
 
     fill_in 'login', with: @client.checkin_code

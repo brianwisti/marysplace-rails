@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe Preference, :type => :model do
-  let(:user) { create :user }
+  fixtures :users
+
+  let(:user) { users :simple }
 
   context "user association" do
     it "is required" do

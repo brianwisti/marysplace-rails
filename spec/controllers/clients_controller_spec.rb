@@ -2,8 +2,16 @@ require 'rails_helper'
 
 describe ClientsController, :type => :controller do
   setup :activate_authlogic
-  let(:client) { create :client }
-  let(:staff_user) { create :staff_user }
+  fixtures :clients, :users
+
+  let(:staff_user) { users :staff }
+  let(:client) { clients :amy_a }
+
+  before do
+    @attributes = {
+      current_alias: "New Alias"
+    }
+  end
 
   describe "staff user" do
 
@@ -46,21 +54,19 @@ describe ClientsController, :type => :controller do
     end
 
     it "can access create" do
-      post :create, client: attributes_for(:client)
+      post :create, client: @attributes
       expect(response).to redirect_to(client_url(assigns(:client)))
     end
 
     it "can create a client" do
       expect {
-        post :create, client: attributes_for(:client)
+        post :create, client: @attributes
       }.to change(Client, :count).by(1)
     end
 
     context ':update' do
       before do
-        attributes = attributes_for :client
-        attributes[:current_alias] = "something new"
-        post :update, id: client, client: attributes
+        post :update, id: client, client: @attributes
       end
 
       it "is accessible" do
@@ -69,7 +75,7 @@ describe ClientsController, :type => :controller do
 
       it "applies changes" do
         updated = assigns :client
-        expect(updated.current_alias).to eql("something new")
+        expect(updated.current_alias).to eql(@attributes[:current_alias])
       end
     end
 
@@ -79,7 +85,6 @@ describe ClientsController, :type => :controller do
     end
 
     it "can access destroy" do
-      client = create :client
       delete :destroy, id: client
       expect(response).to redirect_to(clients_url)
     end

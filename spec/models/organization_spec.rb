@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Organization, type: :model do
-  let(:site_admin) { create :user }
-  let(:first) { Organization.create name: "First", creator_id: 1 }
+  fixtures :users
+
+  let(:site_admin) { users :site_admin }
+  let(:first) { Organization.create! name: "First", creator: site_admin }
 
   context "name" do
     it "must be present" do

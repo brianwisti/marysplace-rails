@@ -1,13 +1,21 @@
 require 'spec_helper'
 
 feature 'User Management' do
+  fixtures :users
+
   scenario "add a new User" do
-    attributes = attributes_for :user
-    admin = create(:admin_user)
+    attributes = {
+      login: "New User",
+      password: "waffle",
+      password_confirmation: "waffle",
+      email: "waffle@example.com"
+    }
+
+    admin = users :admin
 
     visit root_path
     fill_in "Login",    with: admin.login
-    fill_in "Password", with: admin.password
+    fill_in "Password", with: "waffle"
     click_button "Sign In"
 
     visit root_path

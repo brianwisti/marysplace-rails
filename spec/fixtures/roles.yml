@@ -6,3 +6,5 @@ site_admin:
   name: "site_admin"
 front_desk:
   name: "front_desk"
+volunteer:
+  name: "volunteer"

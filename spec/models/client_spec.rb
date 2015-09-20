@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Client, type: :model do
-  let(:user)   { create :staff_user }
-  let(:client) { create :client, added_by: user }
+  fixtures :users, :clients, :locations, :points_entry_types
+
+  let(:user)   { users :staff }
+  let(:client) { clients :anna_a }
 
   describe "validation" do
     context "the current alias" do
@@ -37,12 +39,6 @@ describe Client, type: :model do
   end
 
   describe "quicksearch" do
-    before do
-      create :client, current_alias: "Amy A."
-      create :client, current_alias: "Amy B."
-      create :client, current_alias: "S. Amy", other_aliases: "Deborah"
-      create :client, current_alias: "Amy C.", is_active: false
-    end
 
     it "returns a case-insensitive substring match of active Clients" do
       results = Client.quicksearch "Amy"
@@ -95,27 +91,28 @@ describe Client, type: :model do
   describe "Shopping Cart" do
 
     context "Purchase PointsEntries" do
-      let(:purchase_type) { create :points_entry_type, name: "Purchase" }
-      let(:location) { create :location }
+      let(:purchase_type) { points_entry_types :purchase }
+      let(:day_shelter) { locations :day_shelter }
 
       it "count as shopping visits" do
-       FactoryGirl.create :points_entry,
-         client: client,
-         points_entry_type: purchase_type,
-         location: location
+        PointsEntry.create do |entry|
+          entry.client = client
+          entry.added_by = user
+          entry.points_entry_type = purchase_type
+          entry.location = day_shelter
+        end
         client.reload
 
         expect(client.has_shopped?).to be_truthy
       end
 
       it "is tracked for last shopping visit" do
-        entry_type = PointsEntryType.create(name: 'Purchase')
         entry = client.points_entries.create! do |entry|
-          entry.points_entry_type = entry_type
+          entry.points_entry_type = purchase_type
           entry.added_by          = user
           entry.points            = -100
           entry.performed_on      = Date.today
-          entry.location          = create(:location)
+          entry.location          = day_shelter
         end
         client.reload
         expect(client.last_shopped_at.to_i).to eql(entry.performed_on.to_time.to_i)

@@ -2,10 +2,18 @@ require 'rails_helper'
 
 describe OrganizationsController, :type => :controller do
   setup :activate_authlogic
-  let(:organization) { create :organization }
+  fixtures :users, :organizations
+
+  let(:organization) { organizations :the_place }
+
+  before do
+    @attributes =  {
+      name: "The Other Place"
+    }
+  end
 
   describe "Site Admin User" do
-    let(:user) { create :site_admin_user }
+    let(:user) { users :site_admin }
 
     before do
       login user
@@ -36,14 +44,15 @@ describe OrganizationsController, :type => :controller do
     end
 
     context "POST create" do
+
       it "is accessible" do
-        post :create, organization: attributes_for(:organization)
+        post :create, organization: @attributes
         expect(response).to be_redirect
       end
 
       it "creates an Organization" do
         expect {
-          post :create, organization: attributes_for(:organization)
+          post :create, organization: @attributes
         }.to change(Organization, :count).by(1)
       end
     end
@@ -62,7 +71,7 @@ describe OrganizationsController, :type => :controller do
 
     context "PUT update" do
       it "is accessible" do
-        put :update, id: organization, organization: attributes_for(:organization)
+        put :update, id: organization, organization: @attributes
         expect(response).to redirect_to(organization)
       end
     end
@@ -75,16 +84,15 @@ describe OrganizationsController, :type => :controller do
       end
 
       it "destroys the organization" do
-        org = create :organization
         expect {
-          delete :destroy, id: org
+          delete :destroy, id: organization
         }.to change(Organization, :count).by(-1)
       end
     end
   end
 
   describe "Admin User" do
-    let(:user) { create :admin_user }
+    let(:user) { users :admin }
 
     before do
       UserSession.create user
@@ -116,7 +124,7 @@ describe OrganizationsController, :type => :controller do
 
     context "POST create" do
       it "is not accessible" do
-        post :create, organization: attributes_for(:organization)
+        post :create, organization: @attributes
         expect_forbidden response
       end
     end
@@ -131,7 +139,7 @@ describe OrganizationsController, :type => :controller do
 
     context "PUT update" do
       it "is not accessible" do
-        put :update, id: organization, organization: attributes_for(:organization)
+        put :update, id: organization, organization: @attributes
         expect_forbidden response
       end
     end

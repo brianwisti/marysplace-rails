@@ -14,7 +14,7 @@ describe ClientFlagsController do
       it "should be unavailable" do
         get :index
         expect_login response
-        expect(assigns(:flags).to be_nil
+        expect(assigns(:flags)).to be_nil
       end
     end
 

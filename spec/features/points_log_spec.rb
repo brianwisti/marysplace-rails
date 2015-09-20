@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 feature 'Points Log' do
+  fixtures :clients, :locations, :points_entry_types, :users
   background do
-    @admin      = create :admin_user
-    @location   = create :location
-    @client     = create :client
-    @entry_type = create :points_entry_type
+    @admin      = users :admin
+    @location   = locations :overnight
+    @client     = clients :amy_a
+    @entry_type = points_entry_types :dishes
 
     sign_in @admin, password: 'waffle'
   end

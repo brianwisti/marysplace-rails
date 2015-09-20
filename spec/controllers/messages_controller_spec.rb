@@ -2,7 +2,17 @@ require 'rails_helper'
 
 describe MessagesController, :type => :controller do
   setup :activate_authlogic
-  let(:message) { create :message }
+  fixtures :messages, :users
+
+  let(:message) { messages :site_update }
+
+  before do
+    @attributes = {
+      title: "New Title",
+      content: "New Content",
+      author_id: users(:admin)
+    }
+  end
 
   describe "Anonymous user" do
     it "cannot access index" do
@@ -26,13 +36,13 @@ describe MessagesController, :type => :controller do
     end
 
     it "cannot access create" do
-      post :create, message: build_attributes(:message)
+      post :create, message: @attributes
       expect_login response
     end
   end
 
   describe "Staff user" do
-    let(:staff_user) { create :staff_user }
+    let(:staff_user) { users :staff }
 
     before do
       login staff_user

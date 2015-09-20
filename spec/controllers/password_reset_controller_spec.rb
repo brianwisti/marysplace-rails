@@ -2,7 +2,9 @@ require 'rails_helper'
 
 describe PasswordResetsController, :type => :controller do
   setup :activate_authlogic
-  let(:user) { create :user }
+  fixtures :users
+
+  let(:user) { users :simple }
 
   context "Anonymous user" do
     context ":index" do

@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 feature "Client Notes" do
+  fixtures :users
+
   background do
-    @staff_amy = create :staff_user
-    @fd_bella  = create :front_desk_user
+    @staff_amy = users :staff
+    @fd_bella  = users :front_desk
   end
 
   scenario "Staff user sees Client Notes link" do

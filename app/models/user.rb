@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   acts_as_authentic do |config|
     config.login_field          = 'login'
     config.validate_email_field = false
+    config.transition_from_crypto_providers = [Authlogic::CryptoProviders::Sha512]
+    config.crypto_provider = Authlogic::CryptoProviders::SCrypt
   end
 
   has_and_belongs_to_many :roles

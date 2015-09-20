@@ -2,7 +2,9 @@ require 'spec_helper'
 require 'pp'
 
 describe PointsEntry, type: :model do
-  let (:points_entry) { create :points_entry }
+  fixtures :clients, :locations, :points_entries, :points_entry_types, :users
+
+  let (:points_entry) { points_entries :amy_a_day_shelter_dishes }
 
   it "should have been added by a User" do
     entry = PointsEntry.create do |entry|
@@ -28,7 +30,7 @@ describe PointsEntry, type: :model do
   end
 
   context "points multiple" do
-    let(:entry) { create :points_entry }
+    let(:entry) { points_entries :amy_a_day_shelter_dishes }
 
     context "applied to a new entry" do
 
@@ -76,10 +78,10 @@ describe PointsEntry, type: :model do
     end
 
     context "updating an existing entry" do
-      let(:points)     { 50 }
+      let(:points)     { 25 }
       let(:multiple)   { 2 }
       let(:new_points) { multiple * points }
-      let(:entry)      { create :points_entry, points: points }
+      let(:entry)      { points_entries :amy_a_day_shelter_dishes }
 
       it "can change the multiple" do
         entry.multiple = multiple
@@ -119,12 +121,22 @@ describe PointsEntry, type: :model do
   end
 
   context "daily_count" do
+    before { PointsEntry.destroy_all }
+
     it "starts at zero" do
+      PointsEntry.destroy_all
       expect(PointsEntry.daily_count).to eq(0)
     end
 
     it "registers new PointsEntry" do
-      create :points_entry
+      PointsEntry.create do |entry|
+        entry.client = clients :amy_a
+        entry.added_by = users :staff
+        entry.location = locations :overnight
+        entry.points_entry_type = points_entry_types :dishes
+        entry.points = 25
+      end
+
       expect(PointsEntry.daily_count).to eq(1)
     end
   end
@@ -136,10 +148,8 @@ describe PointsEntry, type: :model do
 
     context "membership" do
       subject { PointsEntry.purchases }
-      let(:purchase_type) { create :points_entry_type, name: "Purchase" }
-      let(:dishes_type)   { create :points_entry_type, name: "Dishes" }
-      let(:purchase) { create :points_entry, points_entry_type: purchase_type }
-      let(:dishes)   { create :points_entry, points_entry_type: dishes_type }
+      let(:purchase) { points_entries :amy_a_day_shelter_purchase }
+      let(:dishes)   { points_entries :amy_a_day_shelter_dishes }
 
       it { is_expected.to include(purchase) }
       it { is_expected.not_to include(dishes) }
