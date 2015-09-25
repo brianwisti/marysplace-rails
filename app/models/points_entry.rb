@@ -69,7 +69,7 @@ class PointsEntry < ActiveRecord::Base
 
   before_create do
     if self.bailed == true
-      entry_type = self.points_entry_type_name
+      entry_type = self.type_name
       message = "Bailed on #{entry_type} - #{self.performed_on}"
       flag = ClientFlag.create!(client_id: self.client.id,
                                 created_by_id: self.added_by_id,
