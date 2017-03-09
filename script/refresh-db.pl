@@ -2,10 +2,11 @@ use 5.20.0;
 use experimental 'signatures';
 use warnings;
 no warnings 'experimental';
+use autodie;
 
 use Data::Dump 'pp';
 
-my $heroku = "/usr/local/heroku/bin/heroku";
+chomp( my $heroku = `which heroku` );
 my $dir    = "db_backups";
 
 sub grab_backup_for( $entry ) {
@@ -30,6 +31,11 @@ sub grab_backup_for( $entry ) {
   say "$id -> $dumpfile downloaded";
 }
 
+unless ( -d $dir ) {
+  say "Creating $dir";
+  mkdir $dir;
+}
+
 my @entries = sort { $a->[1] cmp $b->[1] || $a->[2] cmp $b->[2] } # compare start date/times
           map  { [ (split)[ 0, 1, 2 ] ] } # name, date started, and time started.
           grep { $_ =~ /^([a-z]\d+)/ } # Where a backup is mentioned.
@@ -48,7 +54,7 @@ say $dumpfile;
 
 # pg_restore --verbose --clean --no-acl --no-owner -h localhost -U myuser -d mydb latest.dump
 my $database = "marysplace_dev";
-my $pg_restore = "/opt/local/bin/pg_restore";
+chomp( my $pg_restore = `which pg_restore` );
 my @restore_command = ( $pg_restore,
 			"--verbose",
 			"--clean",
