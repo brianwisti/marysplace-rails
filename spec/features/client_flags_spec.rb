@@ -7,6 +7,10 @@ feature "Client Flags" do
     sign_in users :admin
   end
 
+  after do
+    sign_out users :admin
+  end
+
   scenario "Displaying an resolved flag in a row" do
     click_link 'Client Flags'
     expect(page).to have_css('table tr.success')

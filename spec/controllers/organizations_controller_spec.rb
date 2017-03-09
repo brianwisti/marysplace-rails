@@ -19,6 +19,10 @@ describe OrganizationsController, :type => :controller do
       login user
     end
 
+    after do
+      logout user
+    end
+
     context "GET index" do
       before { get :index }
 
@@ -95,7 +99,11 @@ describe OrganizationsController, :type => :controller do
     let(:user) { users :admin }
 
     before do
-      UserSession.create user
+      login user
+    end
+
+    after do
+      logout user
     end
 
     context "GET index" do

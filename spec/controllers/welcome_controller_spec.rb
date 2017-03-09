@@ -18,6 +18,10 @@ describe WelcomeController, :type => :controller do
       login user
     end
 
+    after do
+      logout user
+    end
+
     it "should load the welcome page" do
       get :index
       expect(response).to_not redirect_to(new_user_session_url)

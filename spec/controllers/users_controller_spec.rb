@@ -20,6 +20,10 @@ describe UsersController, :type => :controller do
       login admin_user
     end
 
+    after do
+      logout admin_user
+    end
+
     it "can access any user page" do
       get :show, id: user
       expect(response).to render_template(:show)

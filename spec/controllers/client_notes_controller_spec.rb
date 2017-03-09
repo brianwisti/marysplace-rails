@@ -21,6 +21,10 @@ describe ClientNotesController, :type => :controller do
     login users :admin
   end
 
+  after do
+    logout users :admin
+  end
+
   describe "GET index" do
     it "assigns all client_notes as client_notes" do
       get :index

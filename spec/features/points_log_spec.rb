@@ -11,6 +11,10 @@ feature 'Points Log' do
     sign_in @admin, password: 'waffle'
   end
 
+  after do
+    sign_out @admin
+  end
+
   scenario "Entering Points" do
     click_link 'Enter Points'
     fill_in 'current_alias', with: @client.current_alias

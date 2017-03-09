@@ -13,6 +13,10 @@ describe PointsEntryTypesController, :type => :controller do
       login staff_user
     end
 
+    after do
+      logout staff_user
+    end
+
     it "should include entries of this type" do
       get :show, id: entry_type
       expect(assigns(:points_entries)).to_not be_nil

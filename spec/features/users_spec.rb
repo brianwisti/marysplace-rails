@@ -3,6 +3,15 @@ require 'spec_helper'
 feature 'User Management' do
   fixtures :users
 
+  background do
+    @admin = users :admin
+    sign_in @admin
+  end
+
+  after do
+    sign_out @admin
+  end
+
   scenario "add a new User" do
     attributes = {
       login: "New User",
@@ -10,13 +19,6 @@ feature 'User Management' do
       password_confirmation: "waffle",
       email: "waffle@example.com"
     }
-
-    admin = users :admin
-
-    visit root_path
-    fill_in "Login",    with: admin.login
-    fill_in "Password", with: "waffle"
-    click_button "Sign In"
 
     visit root_path
     expect {

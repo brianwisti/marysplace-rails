@@ -21,6 +21,10 @@ describe CheckinsController, :type => :controller do
       login users :staff
     end
 
+    after do
+      logout users :staff
+    end
+
     it "can access index" do
       get :index
       expect(response).to render_template(:index)

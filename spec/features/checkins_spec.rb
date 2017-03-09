@@ -11,6 +11,10 @@ feature "Client Checkins" do
     click_link 'Show Checkins'
   end
 
+  after do
+    sign_out @admin
+  end
+
   scenario "with no locations is impossible" do
     Location.destroy_all
     click_link 'New Checkin'

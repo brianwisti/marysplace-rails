@@ -69,6 +69,10 @@ describe LocationsController, :type => :controller do
       login user
     end
 
+    after do
+      logout user
+    end
+
     it "can access index" do
       get :index
       expect(response).to be_success
@@ -122,6 +126,10 @@ describe LocationsController, :type => :controller do
 
     before do
       login admin_user
+    end
+
+    after do
+      logout admin_user
     end
 
     it "can access index" do

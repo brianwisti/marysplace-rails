@@ -10,6 +10,10 @@ describe ClientFlagsController do
       login user
     end
 
+    after do
+      logout user
+    end
+
     describe "index" do
       it "should be unavailable" do
         get :index
@@ -34,6 +38,10 @@ describe ClientFlagsController do
 
     before do
       login staff_user
+    end
+    
+    after do
+      logout staff_user
     end
 
     describe "index" do

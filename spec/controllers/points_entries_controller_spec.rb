@@ -34,6 +34,10 @@ describe PointsEntriesController, :type => :controller do
       login @staff_user
     end
 
+    after do
+      logout @staff_user
+    end
+
     it "can access index" do
       get :index
       expect(response).to render_template(:index)
