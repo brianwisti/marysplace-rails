@@ -63,7 +63,7 @@ group :test do
   gem 'capybara', '~> 2.5.0'
   gem 'launchy', '~> 2.4.3'
   # gem 'selenium-webdriver', '~> 2.47.1'
-  gem 'poltergeist'
+  # gem 'poltergeist'
 end
 
 # To use ActiveModel has_secure_password

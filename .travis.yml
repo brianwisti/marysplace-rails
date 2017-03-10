@@ -5,7 +5,8 @@ env:
   RAILS_ENV=test
   DB=postgresql
   SECRET_KEY_BASE="$(bundle exec rake secret)"
-script: 
-  - RAILS_ENV=test bundle exec rake db:setup
-  - bundle exec rake spec
-before_script:
+before_script: 
+  - rake db:create
+  - rake db:schema:load
+script:
+  - rake spec
