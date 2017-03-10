@@ -62,7 +62,8 @@ group :test do
   gem 'simplecov', require: false
   gem 'capybara', '~> 2.5.0'
   gem 'launchy', '~> 2.4.3'
-  gem 'selenium-webdriver', '~> 2.47.1'
+  # gem 'selenium-webdriver', '~> 2.47.1'
+  gem 'poltergeist'
 end
 
 # To use ActiveModel has_secure_password
