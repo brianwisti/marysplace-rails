@@ -5,6 +5,12 @@ require 'csv'
 require 'highline/import'
 require 'pp'
 
+puts "Creating core roles..."
+site_admin_role = Role.create! name: 'site_admin'
+admin_role = Role.create! name: 'admin'
+staff_role = Role.create! name: 'staff'
+front_desk_role = Role.create! name: 'front_desk'
+
 puts "Creating site admin user..."
 print "Enter an email address: "
 email = ask("Enter an email address: ")

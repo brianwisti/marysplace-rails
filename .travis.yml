@@ -1,12 +1,15 @@
-cache: bundler
 language: ruby
-sudo: false
+rvm:
+  - 2.2.3
+bundler_args: --jobs=2
 env:
-  RAILS_ENV=test
-  DB=postgresql
   SECRET_KEY_BASE="$(bundle exec rake secret)"
-before_script: 
-  - rake db:create
-  - rake db:schema:load
+#   DB=postgresql
 script:
-  - rake spec
+  - bundle exec rake db:setup
+  - bundle exec rake spec
+cache: bundler
+services:
+  - postgresql
+addons:
+  postgresql: "9.4"

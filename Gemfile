@@ -55,7 +55,7 @@ end
 
 group :development, :test do
   gem 'faker', '~> 1.5.0'  # for db:anonymize and test factories
-  gem 'rspec-rails', '~> 3.3.0' # until deprecations fully resolved
+  gem 'rspec-rails', '~> 3.5.2' # until deprecations fully resolved
 end
 
 group :test do
