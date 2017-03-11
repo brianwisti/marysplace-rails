@@ -1,0 +1,4 @@
+site_update:
+  title: "Site Updated!"
+  content: "OMG everything works better like magic now!"
+  author: site_admin

@@ -7,7 +7,7 @@ env:
 #   DB=postgresql
 script:
   - bundle exec rake db:setup
-  - bundle exec rake spec
+  - bundle exec rake test
 cache: bundler
 services:
   - postgresql

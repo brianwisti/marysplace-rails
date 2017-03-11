@@ -1,0 +1,23 @@
+am_bathroom:
+  name: "AM Bathroom"
+  is_active: true
+  default_points: 25
+boil_eggs:
+  name: "Boil Eggs"
+  is_active: true
+  default_points: 25
+dishes:
+  name: "Dishes"
+  is_active: true
+  default_points: 50
+inactive_chore:
+  name: "Inactive Chore"
+  is_active: false
+  default_points: 50
+pm_bathroom:
+  name: "PM Bathroom"
+  is_active: true
+  default_points: 25
+purchase:
+  name: "Purchase"
+  default_points: 0

@@ -1,0 +1,6 @@
+day_shelter:
+  name: "Day shelter"
+  created_at: <%= 10.days.ago %>
+overnight:
+  name: "Overnight"
+  created_at: <%= 5.days.ago %>
