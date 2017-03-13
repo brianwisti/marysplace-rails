@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.2.3"
+ruby "2.2.5"
 
 # Load ENV variables from .env
 gem 'dotenv-rails', groups: [ :development ]

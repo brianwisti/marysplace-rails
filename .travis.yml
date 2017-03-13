@@ -1,9 +1,10 @@
 language: ruby
 rvm:
-  - 2.2.3
+  - 2.2.5
 bundler_args: --jobs=2
 env:
-  SECRET_KEY_BASE="$(bundle exec rake secret)"
+  - SECRET_KEY_BASE="$(bundle exec rake secret)"
+  - TESTOPTS='-v --seed 3717' # Looking for consistent failure
 #   DB=postgresql
 script:
   - bundle exec rake db:setup

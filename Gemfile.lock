@@ -349,7 +349,7 @@ DEPENDENCIES
   uglifier (>= 2.7.2)
 
 RUBY VERSION
-   ruby 2.2.3p173
+   ruby 2.2.5p319
 
 BUNDLED WITH
    1.14.6
