@@ -28,17 +28,19 @@ class PointsEntryType < ActiveRecord::Base
 
   anonymizes(:description) { Faker::Lorem.sentence }
   anonymizes :name do
-    timings  = [ "Morning", "Afternoon" ]
+    timings  = [ "All-Day", "Morning", "Afternoon", "Evening", "Overnight" ]
     locations = [
       "Kitchen",     "Meeting Room", "Elevator",
       "Dining Room", "Bathroom",     "Grounds",
       "Shower",      "Store",        "Office" ,
       "Garbage",     "Donations",    "Breakfast",
-      "Lunch"
+      "Lunch",       "Movie Room",   "Stairwell",
     ]
     tasks     = [
       "Setup", "Breakdown", "Sweep",
-      "Mop",   "Clean"
+      "Mop",   "Clean",     "Vacuum",
+      "Wipe",  "Put Away",  "Lease",
+      "Prep",  "Dry",       "Monitor",
     ]
 
     descriptives = []

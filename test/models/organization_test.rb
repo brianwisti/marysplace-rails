@@ -17,7 +17,7 @@ class OrganizationTest < ActiveSupport::TestCase
     assert_equal dupe.errors[:name].size, 1
   end
 
-  test "orgnization requires a creator" do
+  test "organization requires a creator" do
     org = Organization.new
     org.valid?
     assert_equal org.errors[:creator_id].size, 1

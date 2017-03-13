@@ -14,3 +14,12 @@ amy_a_day_shelter_purchase:
   location: day_shelter
   points: -25
   performed_on: <%= Date.today %>
+amy_a_day_shelter_boil_eggs_yesterday:
+  client: amy_a
+  added_by: staff
+  points_entry_type: dishes
+  location: day_shelter
+  points_entered: 25
+  multiple: 1
+  points: 25
+  performed_on: <%= Date.yesterday %>

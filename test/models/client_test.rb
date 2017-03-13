@@ -73,7 +73,8 @@ class ClientTest < ActiveSupport::TestCase
   end
 
   test "a flagged client cannot shop" do
-    refute @amy_c.can_shop?
+    refute @amy_c.can_shop?,
+      "Client has flags which block them from shopping"
   end
 
   test "a client knows when they've shopped" do
