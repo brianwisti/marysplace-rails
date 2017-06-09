@@ -1,36 +1,31 @@
 source 'https://rubygems.org'
 
-ruby "2.2.3"
+ruby "2.4.1"
 
 # Load ENV variables from .env
 gem 'dotenv-rails', groups: [ :development ]
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 
-gem 'rails4_upgrade'
-
-gem 'actionpack-action_caching', '~>1.1.1'
-gem 'actionpack-page_caching', '~>1.0.2'
-gem 'actionpack-xml_parser', '~>1.0.1'
-gem 'actionview-encoded_mail_to', '~>1.0.4'
-gem 'activerecord-session_store', '~>0.1.0'
-gem 'activeresource', '~>4.0.0'
-gem 'active_type'
-gem 'authlogic', '~> 3.4.6'
+# gem 'actionpack-action_caching', '~>1.2.0'
+# gem 'actionview-encoded_mail_to', '~>1.0.4'
+gem 'activerecord-session_store', '~>1.1.0'
+# gem 'activeresource', '~>4.0.0'
+gem 'active_type', '~>0.7.0' # TODO: Note that Rails 5 has .attribute so consider this deprecated
+gem 'authlogic', '~> 3.4.6'  # TODO: Tests failed on trying 3.6.0. Investigate
 gem 'aws-sdk'
 gem 'bootstrap-sass','~> 3.3.5.1'
 gem 'cancan'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 gem 'excon'
 gem 'haml-rails'
 gem 'has_barcode'
 gem 'jquery-rails'
 gem 'kaminari'
-gem 'mandrill-api'
 gem 'markdownizer'
 gem 'newrelic_rpm'
 gem 'paperclip'

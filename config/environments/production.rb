@@ -53,18 +53,6 @@ Marysplace::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
   
-  # Hook mailer up to Mandrill
-  config.action_mailer.smtp_settings = {
-    port:           '587',
-    address:        'smtp.mandrillapp.com',
-    user_name:      ENV['MANDRILL_USERNAME'],
-    password:       ENV['MANDRILL_APIKEY'],
-    domain:         'heroku.com',
-    authentication: :plain
-  }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: ENV['APP_HOSTNAME'] }
-
   # Enable threaded mode
   # config.threadsafe!
 

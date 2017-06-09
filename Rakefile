@@ -4,4 +4,13 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+# `rake test` was failing with complaints about undefined method last_comment
+module TempFixForRakeLastComment
+  def last_comment
+    last_description
+  end
+end
+
+Rake::Application.send :include, TempFixForRakeLastComment
+
 Marysplace::Application.load_tasks

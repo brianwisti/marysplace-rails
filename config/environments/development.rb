@@ -12,24 +12,6 @@ Marysplace::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
-  # Hook mailer up to Mandrill
-  # password = "SIy9MtE_ZHp6JAsDt-_EKw"
-  # user_name = "app9012384@heroku.com"
-  config.action_mailer.smtp_settings = {
-    port:           '587',
-    address:        'smtp.mandrillapp.com',
-    user_name:      ENV['MANDRILL_USERNAME'],
-    password:       ENV['MANDRILL_APIKEY'],
-    domain:         'heroku.com',
-    authentication: :plain
-  }
-  config.action_mailer.delivery_method = :smtp
-
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = true
-
-  config.action_mailer.default_url_options = { host: ENV['APP_HOSTNAME'] }
-
   # Propagate errors that show up after_rollback / after_commit
   config.active_record.raise_in_transactional_callbacks = true
 
@@ -45,4 +27,6 @@ Marysplace::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  # https://github.com/thoughtbot/paperclip says I need this.
+  Paperclip.options[:command_path] = "/usr/local/bin"
 end
