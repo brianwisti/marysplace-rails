@@ -2,10 +2,11 @@ source 'https://rubygems.org'
 
 ruby "2.2.10"
 
+gem 'rake', '11.3.0'
 # Load ENV variables from .env
 gem 'dotenv-rails', groups: [ :development ]
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.10'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -34,7 +35,7 @@ gem 'mandrill-api'
 gem 'markdownizer'
 gem 'newrelic_rpm'
 gem 'paperclip'
-gem 'pg'
+gem 'pg', '~> 0.21'
 gem 'rails-observers', '~>0.1.2'
 gem 'rails-perftest', '~>0.0.6'
 gem 'rmagick'
