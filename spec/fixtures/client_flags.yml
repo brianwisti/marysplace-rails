@@ -3,7 +3,7 @@ amy_c_bail:
   is_blocking: false
   created_by: staff
   client: amy_c
-  expires_on: <%= Date.tomorrow %>
+  expires_on: <%= 7.days.from_now %>
   resolved_on: null
 amy_c_bail_resolved:
   can_shop: false
@@ -18,4 +18,4 @@ b_betty_blocked:
   created_by: staff
   client: blocked_betty
   resolved_on: null
-  expires_on: <%= Date.tomorrow %>
+  expires_on: <%= 7.days.from_now %>
