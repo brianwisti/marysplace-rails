@@ -6,7 +6,8 @@
 development:
   adapter: postgresql
   database: marysplace_dev
-  host: localhost
+  username: postgres
+  host: <%= ENV['PGSQL_DB_HOST'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -14,9 +15,10 @@ development:
 test:
   adapter: postgresql
   database: marysplace_test
-  host: localhost
+  username: postgres
+  host: <%= ENV['PGSQL_DB_HOST'] %>
 
 production:
   adapter: postgresql
   database: marysplace_development
-  host: localhost
+  host: <%= ENV['PGSQL_DB_HOST'] %>

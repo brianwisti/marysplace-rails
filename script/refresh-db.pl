@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 use 5.20.0;
 use experimental 'signatures';
 use warnings;
@@ -48,26 +50,3 @@ for my $entry ( @entries ) {
   grab_backup_for $entry;
 }
 
-my $dumpfile = "$dir/" . `ls -1t $dir/ | head -n 1`;
-chomp $dumpfile;
-say $dumpfile;
-
-# pg_restore --verbose --clean --no-acl --no-owner -h localhost -U myuser -d mydb latest.dump
-my $database = "marysplace_dev";
-chomp( my $pg_restore = `which pg_restore` );
-my @restore_command = ( $pg_restore,
-			"--verbose",
-			"--clean",
-			"--no-acl",
-			"--no-owner",
-			"-h", "localhost",
-			"-d", $database,
-			$dumpfile );
-
-say "@restore_command";
-if ( 0 == system @restore_command ) {
-    say "$database now matches $dumpfile";
-}
-else {
-    die "`@restore_command` failed: $?";
-}

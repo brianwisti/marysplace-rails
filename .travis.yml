@@ -1,10 +1,11 @@
 cache: bundler
 language: ruby
 rvm:
-  - "2.2.3"
+  - "2.2.10"
 sudo: false
 env:
   RAILS_ENV=test
+  PGSQL_DB_HOST=localhost
   DB=postgresql
   SECRET_KEY_BASE="$(bundle exec rake secret)"
 script: 
