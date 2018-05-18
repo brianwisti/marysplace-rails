@@ -18,9 +18,11 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-COPY Gemfile Gemfile.lock ./
+COPY Gemfile .
 RUN gem install bundler && \
   bundle install --jobs 20 --retry 5
+
+COPY . ./
 
 # Make port 3000 available to the world
 EXPOSE 3000
