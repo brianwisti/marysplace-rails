@@ -1,0 +1,5 @@
+amy_a_overnight:
+  client: amy_a
+  user: staff
+  location: overnight
+  checkin_at: <%= DateTime.now.utc %>

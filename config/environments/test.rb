@@ -39,4 +39,6 @@ Marysplace::Application.configure do
 
   # Default test environment is not threadsafe
   config.allow_concurrency = false
+
+  config.active_support.test_order = :random
 end

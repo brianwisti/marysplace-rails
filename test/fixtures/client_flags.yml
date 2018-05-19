@@ -1,0 +1,21 @@
+amy_c_bail:
+  can_shop: false
+  is_blocking: false
+  created_by: staff
+  client: amy_c
+  expires_on: <%= 7.days.from_now %>
+  resolved_on: null
+amy_c_bail_resolved:
+  can_shop: false
+  is_blocking: false
+  created_by: staff
+  client: amy_c
+  resolved_on: <%= Date.yesterday %>
+  resolved_by: staff
+b_betty_blocked:
+  can_shop: false
+  is_blocking: true
+  created_by: staff
+  client: blocked_betty
+  resolved_on: null
+  expires_on: <%= 7.days.from_now %>
