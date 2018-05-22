@@ -2,4 +2,5 @@ amy_a_overnight:
   client: amy_a
   user: staff
   location: overnight
+  notes: 'amy_a checked in at overnight by staff'
   checkin_at: <%= DateTime.now.utc %>
