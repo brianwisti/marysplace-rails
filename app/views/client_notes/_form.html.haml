@@ -7,7 +7,7 @@
           %li= msg
   .form-group
     = f.label :client
-    = text_field_tag "current_alias", client.current_alias,
+    = text_field_tag "current_alias", @client_note.client_current_alias,
       data: { provide: 'typeahead', field: 'client_note_client_id' },
       autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off',
       class: 'client-typeahead form-control'

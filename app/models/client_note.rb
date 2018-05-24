@@ -10,4 +10,8 @@ class ClientNote < ActiveRecord::Base
     presence: true
 
   markdownize! :content
+
+  def client_current_alias
+    @client ? @client.current_alias : ''
+  end
 end
