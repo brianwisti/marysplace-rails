@@ -4,17 +4,7 @@ class CheckinsControllerTest < ActionController::TestCase
   include Authlogic::TestCase
 
 
-  def setup
-    # Why are test methods forgetting about @checkin?
-    @checkin = checkins :amy_a_overnight
-    @today = Date.today
-    @attributes = {
-      client_id: clients(:amy_b),
-      location_id: locations(:overnight),
-      checkin_at: DateTime.now,
-    }
-    activate_authlogic
-  end
+  setup :initialize_variables
 
   test "staff user can access index" do
     UserSession.create users(:staff)
@@ -31,12 +21,11 @@ class CheckinsControllerTest < ActionController::TestCase
   end
 
   test "staff user can access show" do
-    checkin = checkins :amy_a_overnight
     UserSession.create users(:staff)
-    get :show, id: checkin
+    get :show, id: @checkin
 
     assert_template :show
-    assert_equal checkin, assigns(:checkin),
+    assert_equal @checkin, assigns(:checkin),
       "... and can see the checkin"
   end
 
@@ -49,11 +38,10 @@ class CheckinsControllerTest < ActionController::TestCase
 
   test "staff user can access edit" do
     UserSession.create users(:staff)
-    checkin = checkins :amy_a_overnight
-    get :edit, id: checkin
+    get :edit, id: @checkin
 
     assert_template :edit
-    assert_equal checkin, assigns(:checkin)
+    assert_equal @checkin, assigns(:checkin)
   end
 
   test "staff user can create a checkin" do
@@ -67,12 +55,11 @@ class CheckinsControllerTest < ActionController::TestCase
   end
 
   test "staff user can update a checkin" do
-    checkin = checkins :amy_a_overnight
     UserSession.create users(:staff)
     @attributes[:notes] = "Notes here"
-    put :update, id: checkin, checkin: @attributes
+    put :update, id: @checkin, checkin: @attributes
 
-    assert_equal @attributes[:notes], checkin.reload.notes
+    assert_equal @attributes[:notes], @checkin.reload.notes
   end
 
   test "staff user can destroy a checkin" do
@@ -90,9 +77,8 @@ class CheckinsControllerTest < ActionController::TestCase
     UserSession.create users(:staff)
     get :today
 
-    checking = checkins :amy_a_overnight
     assert_template :daily_report
-    assert_includes assigns(:checkins), checkin
+    assert_includes assigns(:checkins), @checkin
   end
 
   # TODO: Fix or remove checkin reports
@@ -137,5 +123,19 @@ class CheckinsControllerTest < ActionController::TestCase
     assert_equal expected_count, Checkin.count
     assert_not_nil flash[:notice]
   end
+
+  private
+
+    def initialize_variables
+      activate_authlogic
+
+      @checkin = checkins :amy_a_overnight
+      @today = Date.today
+      @attributes = {
+        client_id: clients(:amy_b),
+        location_id: locations(:overnight),
+        checkin_at: DateTime.now,
+      }
+    end
 
 end
