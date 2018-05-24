@@ -10,6 +10,6 @@ env:
   SECRET_KEY_BASE="$(bundle exec rake secret)"
 script: 
   - RAILS_ENV=test bundle exec rake db:schema:load
-  - bundle exec rake spec
+  - bundle exec rake test
 before_script:
   - psql -c 'create database marysplace_test' -U postgres
