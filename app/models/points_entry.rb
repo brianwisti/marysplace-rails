@@ -79,6 +79,10 @@ class PointsEntry < ActiveRecord::Base
     end
   end
 
+  after_save do
+    self.client.update_last_activity!
+  end
+
   def bail_penalty
     self.class.bail_penalty
   end
