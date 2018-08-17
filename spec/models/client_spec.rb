@@ -120,4 +120,35 @@ describe Client, type: :model do
     end
 
   end
+
+  describe "Last Activity" do
+    let(:idra) { clients(:idle_idra) }
+    let(:dishes) { points_entry_types :dishes }
+    let(:day_shelter) { locations :day_shelter }
+
+    it "defaults to a Client's creation date for new clients" do
+      client = Client.create do |c|
+        c.current_alias = "new client"
+        c.added_by      = user
+      end
+      expect(client.last_activity_on).to eql(client.created_at.to_date)
+    end
+
+    it "is the client creation date while they have no points entries" do
+      idra.update_last_activity!
+      idra.reload
+      expect(idra.last_activity_on).to eql(idra.created_at.to_date)
+    end
+
+    it "is updated when the client gets a new points entry" do
+      entry = PointsEntry.create do |entry|
+        entry.client = idra
+        entry.added_by = user
+        entry.points_entry_type = dishes
+        entry.location = day_shelter
+      end
+
+      expect(idra.last_activity_on).to eql(entry.performed_on)
+    end
+  end
 end

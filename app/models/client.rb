@@ -82,6 +82,30 @@ class Client < ActiveRecord::Base
     self.login.login
   end
 
+  def update_last_activity
+    if self.created_at
+      last_activity_on = self.last_activity_on || self.created_at.to_date
+    end
+
+    latest_entry = self.points_entries.order('performed_on DESC').first
+
+    if latest_entry and latest_entry.performed_on > last_activity_on
+      last_activity_on = latest_entry.performed_on
+    end
+
+    if self.last_activity_on and last_activity_on <= self.last_activity_on
+      # Nothing to change
+      return
+    end
+
+    self.last_activity_on = last_activity_on
+  end
+
+  def update_last_activity!
+    self.update_last_activity
+    self.save!
+  end
+
   before_save do
     self.point_balance ||= 0
 
@@ -90,6 +114,10 @@ class Client < ActiveRecord::Base
         self.organization = self.added_by.organization
       end
     end
+  end
+
+  before_create do
+    self.last_activity_on = Date.today
   end
 
   # Generate a sufficiently unique checkin code

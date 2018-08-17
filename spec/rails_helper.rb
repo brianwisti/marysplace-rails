@@ -61,6 +61,9 @@ RSpec.configure do |config|
   config.include LoginMacros
 end
 
+# This helps the test db stay caught up with migrations
+ActiveRecord::Migration.maintain_test_schema!
+
 # response should indicate no access
 def expect_forbidden(response)
   expect(response).to redirect_to(root_url)
