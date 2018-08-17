@@ -7,12 +7,7 @@
 .panel.panel-default
   .panel-body
     .row
-      .col-xs-12.col-sm-4.text-center
-        - if @client.picture_file_name
-          = image_tag @client.picture.url(:square)
-        - else
-          = image_tag "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/square/blank.png"
-      .col-xs-12.col-sm-8
+      .col-xs-12
         %ul.nav.nav-tabs{ role: "tablist" }
           %li#general.active
             %a{ href: '#client-general', role: 'tab', data: { toggle: 'tab' } }

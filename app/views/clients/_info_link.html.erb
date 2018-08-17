@@ -1,12 +1,4 @@
-<% picture = false unless defined?(picture) %>
 <span>
-  <% if picture %>
-    <% if client.picture_file_name %>
-      <%= image_tag client.picture.url(:thumb) %>
-    <% else %>
-      <%= image_tag "https://s3.amazonaws.com/elasticbeanstalk-us-east-1-820256515611/marys-place/avatars/thumb/blank.png" %>
-    <% end %>
-  <% end %>
   <% unless client.is_active %>
     <span class="label label-info">Inactive</span>
   <% end %>
