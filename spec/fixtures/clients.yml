@@ -22,3 +22,7 @@ s_amy:
   current_alias: "S. Amy"
   added_by: staff
   other_aliases: "Deborah"
+idle_idra:
+  current_alias: "Idra"
+  added_by: staff
+  created_at: <%= 7.days.ago %>
