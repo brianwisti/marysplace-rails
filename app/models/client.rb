@@ -8,21 +8,6 @@ class Client < ActiveRecord::Base
   extend Anonymizable
   include HasBarcode
 
-  has_attached_file :picture,
-    styles: {
-      thumb:  '100x100>',
-      square: '200x200#',
-      medium: '300x300>'
-    },
-    default_url: "https://s3.amazonaws.com/" +
-                 "elasticbeanstalk-us-east-1-820256515611/" +
-                 "marys-place/pictures/:style/blank.png"
-
-  validates_attachment :picture,
-    content_type: {
-      content_type: %w( image/jpeg image/png image/gif )
-    }
-
   has_barcode :barcode,
     outputter: :svg,
     type: Barby::Code128B,
@@ -200,14 +185,6 @@ class Client < ActiveRecord::Base
       filtered = filtered.where(is_active: is_active)
     else
       filtered = filtered.where(is_active: true)
-    end
-
-    if has_picture = filters[:has_picture]
-      if has_picture == "true"
-        filtered = filtered.where('picture_file_name is not null')
-      elsif has_picture == "false"
-        filtered = filtered.where('picture_file_name is null')
-      end
     end
 
     return filtered
