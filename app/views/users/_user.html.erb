@@ -1,14 +1,11 @@
 <tr>
   <td>
-    <%= image_tag user.avatar.url :thumb %>
-  </td>
-  <td>
     <%= link_to user.login, user %>
     <% if user == current_user -%>
       <em>That's you!</em>
     <% end %>
     <% if user.client -%>
-      <em><%= link_to user.client_current_alias, user.client %></em>
+      <em>(<%= link_to user.client_current_alias, user.client %>)</em>
     <% end -%>
   </td>
   <td>
