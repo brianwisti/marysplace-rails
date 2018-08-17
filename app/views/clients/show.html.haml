@@ -52,14 +52,9 @@
                   .panel.panel-default
                     .panel-heading
                       %h3.panel-title
-                        Checkin Code
+                        Last Activity On
                     .panel-body 
-                      - if @client.checkin_code
-                        = @client.checkin_code
-                      - else
-                        %span.label.label-info None
-                        - if can? :manage, @client
-                          = button_to "Generate One", checkin_code_client_path(@client)
+                      = @client.last_activity_on
                 .col-md-6
                   .panel.panel-default
                     .panel-heading

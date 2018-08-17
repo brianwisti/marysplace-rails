@@ -22,7 +22,7 @@ class Preference < ActiveRecord::Base
   def self.default_for preference
     case preference.to_sym
     when :client_fields
-      [ 'point_balance', 'created_at' ]
+      [ 'point_balance', 'last_activity_on' ]
     end
   end
 end

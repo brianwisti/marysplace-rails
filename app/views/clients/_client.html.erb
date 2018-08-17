@@ -31,6 +31,9 @@
         <% end %>
       </td>
     <% end %>
+    <% if prefs.include? "last_activity_on" %>
+      <td><%= client.last_activity_on %></td>
+    <% end %>
     <% if prefs.include? "birthday" %>
       <td>
         <% if client.birthday %>
