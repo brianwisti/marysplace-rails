@@ -17,6 +17,9 @@
         <% if prefs.include? "oriented_on" %>
           <th><%= sortable "oriented_on" %></th>
         <% end %>
+        <% if prefs.include? "last_activity_on" %>
+          <th><%= sortable "last_activity_on" %></th>
+        <% end %>
         <% if prefs.include? "birthday" %>
           <th><%= sortable "birthday" %></th>
         <% end %>
