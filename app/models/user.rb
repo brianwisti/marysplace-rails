@@ -10,8 +10,6 @@ class User < ActiveRecord::Base
   extend Anonymizable
   include HasBarcode
 
-  attr_accessor :avatar
-
   acts_as_authentic do |config|
     config.login_field          = 'login'
     config.validate_email_field = false
@@ -30,21 +28,6 @@ class User < ActiveRecord::Base
   # Some users are also clients
   has_one :client,
     foreign_key: :login_id
-
-  has_attached_file :avatar,
-    styles: {
-      thumb:  '100x100>',
-      square: '200x200#',
-      medium: '300x300>'
-    },
-    default_url: "https://s3.amazonaws.com/" +
-                 "elasticbeanstalk-us-east-1-820256515611/" +
-                 "marys-place/avatars/:style/blank.png"
-
-  validates_attachment :avatar,
-    content_type: {
-      content_type: %w( image/jpeg image/png image/gif )
-    }
 
   has_barcode :barcode,
     outputter: :svg,
@@ -147,14 +130,6 @@ class User < ActiveRecord::Base
     if user.login_count > 0
       Faker::Internet.ip_v4_address
     end
-  end
-
-  # User avatars are strong candidates for PII
-  # (Depending on organization policy they may be obvious PII)
-  #
-  # NOTE: Initial anonymization version just deletes avatar
-  anonymization_rule :avatar do |user|
-    user.avatar = nil
   end
 
   # Simplify password for demo and anonymize to complicate

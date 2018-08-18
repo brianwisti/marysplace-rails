@@ -39,11 +39,6 @@
       </div>
     </div>
     <div class="col-md-6">
-      <div class="form-group">
-        <%= f.label :avatar %>
-        <%= f.file_field :avatar, class: "form-control" %>
-        <%= image_tag user.avatar.url(:square) %>
-      </div>
       <% if can? :manage, Organization -%>
         <div class="form-group">
           <%= f.label :organization %>
