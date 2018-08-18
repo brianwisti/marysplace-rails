@@ -5,5 +5,15 @@
 <% end -%>
 
 <table class="table">
+  <tr>
+    <th>Login <em>(client info)</em></th>
+    <th>Roles</th>
+    <% if can? :show, Organization -%>
+      <th>Organization</th>
+    <% end -%>
+    <% if can? :manage, User -%>
+      <th>Email</th>
+      <% end -%>
+  </tr>
   <%= render @users %>
 </table>

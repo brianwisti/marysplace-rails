@@ -1,7 +1,7 @@
 <% prefs = current_user.preference_for :client_fields %>
 <tr>
   <td>
-    <%= render '/clients/info_link', client: client, picture: prefs.include?("picture") %>
+    <%= render '/clients/info_link', client: client %>
     <% if prefs.include? "other_aliases" %>
       <% if client.other_aliases %>
         <em><%= client.other_aliases %></em>

@@ -21,8 +21,8 @@ describe Preference, :type => :model do
         expect(default).to include('point_balance')
       end
 
-      it "contains created_at" do
-        expect(default).to include('created_at')
+      it "contains last_activity_on" do
+        expect(default).to include('last_activity_on')
       end
 
     end

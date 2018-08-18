@@ -673,7 +673,6 @@ GEM
       xpath (~> 2.0)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
-    climate_control (0.2.0)
     coderay (1.1.2)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -768,7 +767,6 @@ GEM
     mime-types (3.2.2)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2018.0812)
-    mimemagic (0.3.2)
     mini_mime (1.0.1)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
@@ -776,12 +774,6 @@ GEM
     newrelic_rpm (5.3.0.346)
     nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
-    paperclip (6.1.0)
-      activemodel (>= 4.2.0)
-      activesupport (>= 4.2.0)
-      mime-types
-      mimemagic (~> 0.3.0)
-      terrapin (~> 0.6.0)
     pg (0.21.0)
     public_suffix (3.0.3)
     rack (1.6.10)
@@ -826,7 +818,6 @@ GEM
     rdiscount (2.2.0.1)
     request_store (1.4.1)
       rack (>= 1.4)
-    rmagick (2.16.0)
     rspec-core (3.3.2)
       rspec-support (~> 3.3.0)
     rspec-expectations (3.3.1)
@@ -880,8 +871,6 @@ GEM
       tins (~> 1.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
-    terrapin (0.6.0)
-      climate_control (>= 0.0.3, < 1.0)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -932,7 +921,6 @@ DEPENDENCIES
   mandrill-api
   markdownizer
   newrelic_rpm
-  paperclip
   pg (~> 0.21)
   rails (= 4.2.10)
   rails-observers (~> 0.1.2)
@@ -940,7 +928,6 @@ DEPENDENCIES
   rails4_upgrade
   rails_12factor
   rake (= 11.3.0)
-  rmagick
   rspec-rails (~> 3.3.0)
   sass (~> 3.4.18)
   sass-rails (~> 5.0.4)

@@ -12,9 +12,6 @@
       %dt Created By
       %dd= link_to @organization.creator.login, @organization.creator
   .col-sm-6
-    - if @organization.logo
-      .well
-        = image_tag @organization.logo, class: 'img-responsive'
     - if @organization.card_template
       .well
         = image_tag @organization.card_template, class: 'img-responsive'

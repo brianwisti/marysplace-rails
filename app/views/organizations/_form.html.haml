@@ -12,15 +12,6 @@
         = f.label :name
         = f.text_field :name, class: 'form-control'
       .form-group
-        = f.label :logo
-        = f.file_field :logo, class: 'form-control'
-        %p.help-block
-          - if organization.logo_file_name
-            Currently
-            %em= organization.logo_file_name
-          - else
-            %em None
-      .form-group
         = f.label :card_template
         = f.file_field :card_template, class: 'form-control'
         %p.help-block
