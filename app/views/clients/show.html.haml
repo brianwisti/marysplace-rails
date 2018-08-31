@@ -6,211 +6,72 @@
 
 .panel.panel-default
   .panel-body
-    .row
-      .col-xs-12
-        %ul.nav.nav-tabs{ role: "tablist" }
-          %li#general.active
-            %a{ href: '#client-general', role: 'tab', data: { toggle: 'tab' } }
-              General
-          %li#contacting
-            %a{ href: '#client-contact', role: 'tab', data: { toggle: 'tab' } }
-              Contacting
-          %li#goals
-            %a{ href: '#client-goals', role: 'tab', data: { toggle: 'tab' } }
-              Goals
-          %li#notes
-            %a{ href: '#client-notes', role: 'tab', data: { toggle: 'tab' } }
-              Notes
-        .panel
-          .panel-body.tab-content
-            #client-general.tab-pane.active
-              .row
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Current Alias
-                    .panel-body
-                      - unless @client.is_active
-                        %span.label.label-info Inactive
-                      - if @client.is_blocked?
-                        %span.label.label-danger Blocked
-                      = @client.current_alias
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Point Balance
-                    .panel-body= number_with_delimiter @client.point_balance
-              .row
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Last Activity On
-                    .panel-body 
-                      = @client.last_activity_on
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Other Aliases
-                    .panel-body 
-                      - if @client.other_aliases != ''
-                        = @client.other_aliases
-                      - else
-                        Not given
-              - if can? :manage, @client
-                .row
-                  .col-md-6
-                    .panel.panel-default
-                      .panel-heading
-                        %h3.panel-title
-                          Full Name
-                      .panel-body= @client.full_name || 'Not Given'
-                  .col-md-6
-                    .panel.panel-default
-                      .panel-heading
-                        %h3.panel-title
-                          Oriented On
-                      .panel-body
-                        - if @client.oriented_on
-                          = @client.oriented_on
-                        - else
-                          Not oriented
-                      .panel-footer
-                        - if @client.signed_covenant
-                          Has signed covenant.
-                        - else
-                          Has
-                          %b
-                            not
-                          signed covenant.
-                .row
-                  .col-md-6
-                    .panel.panel-default
-                      .panel-heading
-                        %h3.panel-title
-                          Birthday
-                      .panel-body
-                        - if @client.birthday
-                          = @client.birthday
-                        - else
-                          Not given
-                  .col-md-6
-                    .panel.panel-default
-                      .panel-heading
-                        %h3.panel-title
-                          Added By
-                      .panel-body
-                        = link_to @client.added_by_login, @client.added_by
-            #client-contact.tab-pane
-              .row
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Phone Number
-                    .panel-body
-                      - if @client.phone_number
-                        = @client.phone_number
-                      - else
-                        Not given
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Email Address
-                    .panel-body
-                      - if @client.email_address != ''
-                        = mail_to @client.email_address
-                      - else
-                        Not given
-              .row
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Emergency Contact
-                    .panel-body
-                      = @client.emergency_contact
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Case Manager Info
-                    .panel-body
-                      = @client.case_manager_info
-              .row
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Family Info
-                    .panel-body
-                      = simple_format @client.family_info
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Medical Info
-                    .panel-body
-                      = simple_format @client.medical_info
-              .row
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Staying At
-                    .panel-body
-                      = @client.staying_at
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Mailing List Address
-                    .panel-body
-                      = simple_format @client.mailing_list_address
-                    .panel-footer
-                      - if @client.on_mailing_list
-                        On mailing list.
-                      - else
-                        %b
-                          Not
-                        on mailing list.
-            #client-goals.tab-pane
-              .row
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Community Goal
-                    .panel-body= simple_format @client.community_goal
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Personal Goal
-                    .panel-body= simple_format @client.personal_goal
-            #client-notes.tab-pane
-              .row
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Notes
-                    .panel-body= simple_format @client.notes
-                .col-md-6
-                  .panel.panel-default
-                    .panel-heading
-                      %h3.panel-title
-                        Staff Notes
-                    .panel-body
-                      %ul.list-group
-                        - if @client.staff_notes
-                          - @client.staff_notes.each do |note|
-                            %li.list-group-item= link_to note.title, note
-                    .panel-footer
-                      = link_to "Add Note", 
-                        new_client_note_url(client: @client), 
-                        class: "btn btn-default btn-block"
+    .panel
+      .panel-body.tab-content
+        #client-general.tab-pane.active
+          .row
+            .col-md-6
+              .panel.panel-default
+                .panel-heading
+                  %h3.panel-title
+                    Current Alias
+                .panel-body
+                  - unless @client.is_active
+                    %span.label.label-info Inactive
+                  - if @client.is_blocked?
+                    %span.label.label-danger Blocked
+                  = @client.current_alias
+            .col-md-6
+              .panel.panel-default
+                .panel-heading
+                  %h3.panel-title
+                    Full Name
+                .panel-body= @client.full_name || 'Not Given'
+          .row
+            .col-md-6
+              .panel.panel-default
+                .panel-heading
+                  %h3.panel-title
+                    Point Balance
+                .panel-body= number_with_delimiter @client.point_balance
+            .col-md-6
+              .panel.panel-default
+                .panel-heading
+                  %h3.panel-title
+                    Last Activity On
+                .panel-body
+                  = @client.last_activity_on
+          .row
+            .col-md-6
+              .panel.panel-default
+                .panel-heading
+                  %h3.panel-title
+                    Added By
+                .panel-body
+                  = link_to @client.added_by_login, @client.added_by
+            - if @client.birthday
+              .col-md-6
+                .panel.panel-default
+                  .panel-heading
+                    %h3.panel-title
+                      Birthday
+                  .panel-body
+                    = @client.birthday
+          - if @client.other_aliases != ''
+            .row
+              .col-md-12
+                .panel.panel-default
+                  .panel-heading
+                    %h3.panel-title
+                      Other Aliases
+                  .panel-body
+                    = @client.other_aliases
+          - if @client.notes != ''
+            .row
+              .col-md-12
+                .panel.panel-default
+                  .panel-heading
+                    %h3.panel-title
+                      Notes
+                  .panel-body
+                    = @client.notes
